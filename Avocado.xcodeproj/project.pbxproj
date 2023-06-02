@@ -7,10 +7,16 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		04D2FCF82A2A51F100253028 /* RxCocoa in Frameworks */ = {isa = PBXBuildFile; productRef = 04D2FCF72A2A51F100253028 /* RxCocoa */; };
+		04D2FCFA2A2A51F100253028 /* RxRelay in Frameworks */ = {isa = PBXBuildFile; productRef = 04D2FCF92A2A51F100253028 /* RxRelay */; };
+		04D2FCFC2A2A51F100253028 /* RxSwift in Frameworks */ = {isa = PBXBuildFile; productRef = 04D2FCFB2A2A51F100253028 /* RxSwift */; };
+		04D2FD022A2A528200253028 /* SnapKit in Frameworks */ = {isa = PBXBuildFile; productRef = 04D2FD012A2A528200253028 /* SnapKit */; };
+		04D2FD052A2A529600253028 /* Then in Frameworks */ = {isa = PBXBuildFile; productRef = 04D2FD042A2A529600253028 /* Then */; };
+		04D2FD082A2A530F00253028 /* UIViewController+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04D2FD072A2A530F00253028 /* UIViewController+Extension.swift */; };
+		04D2FD0A2A2A532100253028 /* UIView+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04D2FD092A2A532100253028 /* UIView+Extension.swift */; };
+		04D2FD112A2A576C00253028 /* BaseVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04D2FD102A2A576C00253028 /* BaseVC.swift */; };
 		B2198B982A2A36EA0019032D /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2198B972A2A36EA0019032D /* AppDelegate.swift */; };
 		B2198B9A2A2A36EA0019032D /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2198B992A2A36EA0019032D /* SceneDelegate.swift */; };
-		B2198B9C2A2A36EA0019032D /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2198B9B2A2A36EA0019032D /* ViewController.swift */; };
-		B2198B9F2A2A36EA0019032D /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B2198B9D2A2A36EA0019032D /* Main.storyboard */; };
 		B2198BA22A2A36EA0019032D /* Avocado.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = B2198BA02A2A36EA0019032D /* Avocado.xcdatamodeld */; };
 		B2198BA42A2A36EB0019032D /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B2198BA32A2A36EB0019032D /* Assets.xcassets */; };
 		B2198BA72A2A36EB0019032D /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B2198BA52A2A36EB0019032D /* LaunchScreen.storyboard */; };
@@ -37,11 +43,12 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		04D2FD072A2A530F00253028 /* UIViewController+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIViewController+Extension.swift"; sourceTree = "<group>"; };
+		04D2FD092A2A532100253028 /* UIView+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView+Extension.swift"; sourceTree = "<group>"; };
+		04D2FD102A2A576C00253028 /* BaseVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseVC.swift; sourceTree = "<group>"; };
 		B2198B942A2A36EA0019032D /* Avocado.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Avocado.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		B2198B972A2A36EA0019032D /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		B2198B992A2A36EA0019032D /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
-		B2198B9B2A2A36EA0019032D /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
-		B2198B9E2A2A36EA0019032D /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		B2198BA12A2A36EA0019032D /* Avocado.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Avocado.xcdatamodel; sourceTree = "<group>"; };
 		B2198BA32A2A36EB0019032D /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		B2198BA62A2A36EB0019032D /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
@@ -58,6 +65,11 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				04D2FD052A2A529600253028 /* Then in Frameworks */,
+				04D2FCFC2A2A51F100253028 /* RxSwift in Frameworks */,
+				04D2FD022A2A528200253028 /* SnapKit in Frameworks */,
+				04D2FCFA2A2A51F100253028 /* RxRelay in Frameworks */,
+				04D2FCF82A2A51F100253028 /* RxCocoa in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -78,6 +90,34 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		04D2FCF52A2A515500253028 /* SupportingFiles */ = {
+			isa = PBXGroup;
+			children = (
+				B2198BA02A2A36EA0019032D /* Avocado.xcdatamodeld */,
+				B2198BA32A2A36EB0019032D /* Assets.xcassets */,
+				B2198BA52A2A36EB0019032D /* LaunchScreen.storyboard */,
+				B2198BA82A2A36EB0019032D /* Info.plist */,
+			);
+			path = SupportingFiles;
+			sourceTree = "<group>";
+		};
+		04D2FD062A2A52E800253028 /* Extension */ = {
+			isa = PBXGroup;
+			children = (
+				04D2FD072A2A530F00253028 /* UIViewController+Extension.swift */,
+				04D2FD092A2A532100253028 /* UIView+Extension.swift */,
+			);
+			path = Extension;
+			sourceTree = "<group>";
+		};
+		04D2FD0F2A2A575000253028 /* Common */ = {
+			isa = PBXGroup;
+			children = (
+				04D2FD102A2A576C00253028 /* BaseVC.swift */,
+			);
+			path = Common;
+			sourceTree = "<group>";
+		};
 		B2198B8B2A2A36EA0019032D = {
 			isa = PBXGroup;
 			children = (
@@ -103,12 +143,9 @@
 			children = (
 				B2198B972A2A36EA0019032D /* AppDelegate.swift */,
 				B2198B992A2A36EA0019032D /* SceneDelegate.swift */,
-				B2198B9B2A2A36EA0019032D /* ViewController.swift */,
-				B2198B9D2A2A36EA0019032D /* Main.storyboard */,
-				B2198BA32A2A36EB0019032D /* Assets.xcassets */,
-				B2198BA52A2A36EB0019032D /* LaunchScreen.storyboard */,
-				B2198BA82A2A36EB0019032D /* Info.plist */,
-				B2198BA02A2A36EA0019032D /* Avocado.xcdatamodeld */,
+				04D2FD0F2A2A575000253028 /* Common */,
+				04D2FD062A2A52E800253028 /* Extension */,
+				04D2FCF52A2A515500253028 /* SupportingFiles */,
 			);
 			path = Avocado;
 			sourceTree = "<group>";
@@ -146,6 +183,13 @@
 			dependencies = (
 			);
 			name = Avocado;
+			packageProductDependencies = (
+				04D2FCF72A2A51F100253028 /* RxCocoa */,
+				04D2FCF92A2A51F100253028 /* RxRelay */,
+				04D2FCFB2A2A51F100253028 /* RxSwift */,
+				04D2FD012A2A528200253028 /* SnapKit */,
+				04D2FD042A2A529600253028 /* Then */,
+			);
 			productName = Avocado;
 			productReference = B2198B942A2A36EA0019032D /* Avocado.app */;
 			productType = "com.apple.product-type.application";
@@ -198,6 +242,7 @@
 				TargetAttributes = {
 					B2198B932A2A36EA0019032D = {
 						CreatedOnToolsVersion = 14.3;
+						LastSwiftMigration = 1430;
 					};
 					B2198BAC2A2A36EC0019032D = {
 						CreatedOnToolsVersion = 14.3;
@@ -218,6 +263,11 @@
 				Base,
 			);
 			mainGroup = B2198B8B2A2A36EA0019032D;
+			packageReferences = (
+				04D2FCF62A2A51F100253028 /* XCRemoteSwiftPackageReference "RxSwift" */,
+				04D2FD002A2A528200253028 /* XCRemoteSwiftPackageReference "SnapKit" */,
+				04D2FD032A2A529600253028 /* XCRemoteSwiftPackageReference "Then" */,
+			);
 			productRefGroup = B2198B952A2A36EA0019032D /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
@@ -236,7 +286,6 @@
 			files = (
 				B2198BA72A2A36EB0019032D /* LaunchScreen.storyboard in Resources */,
 				B2198BA42A2A36EB0019032D /* Assets.xcassets in Resources */,
-				B2198B9F2A2A36EA0019032D /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -261,9 +310,11 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				B2198B9C2A2A36EA0019032D /* ViewController.swift in Sources */,
+				04D2FD082A2A530F00253028 /* UIViewController+Extension.swift in Sources */,
+				04D2FD112A2A576C00253028 /* BaseVC.swift in Sources */,
 				B2198BA22A2A36EA0019032D /* Avocado.xcdatamodeld in Sources */,
 				B2198B982A2A36EA0019032D /* AppDelegate.swift in Sources */,
+				04D2FD0A2A2A532100253028 /* UIView+Extension.swift in Sources */,
 				B2198B9A2A2A36EA0019032D /* SceneDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -301,14 +352,6 @@
 /* End PBXTargetDependency section */
 
 /* Begin PBXVariantGroup section */
-		B2198B9D2A2A36EA0019032D /* Main.storyboard */ = {
-			isa = PBXVariantGroup;
-			children = (
-				B2198B9E2A2A36EA0019032D /* Base */,
-			);
-			name = Main.storyboard;
-			sourceTree = "<group>";
-		};
 		B2198BA52A2A36EB0019032D /* LaunchScreen.storyboard */ = {
 			isa = PBXVariantGroup;
 			children = (
@@ -439,14 +482,15 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = 55M8D74RGH;
 				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_FILE = Avocado/Info.plist;
+				INFOPLIST_FILE = Avocado/SupportingFiles/Info.plist;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
-				INFOPLIST_KEY_UIMainStoryboardFile = Main;
+				INFOPLIST_KEY_UIMainStoryboardFile = "";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -457,6 +501,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.avocadojapan.Avocado;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
@@ -467,14 +512,15 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = 55M8D74RGH;
 				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_FILE = Avocado/Info.plist;
+				INFOPLIST_FILE = Avocado/SupportingFiles/Info.plist;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
-				INFOPLIST_KEY_UIMainStoryboardFile = Main;
+				INFOPLIST_KEY_UIMainStoryboardFile = "";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -606,6 +652,61 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		04D2FCF62A2A51F100253028 /* XCRemoteSwiftPackageReference "RxSwift" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/ReactiveX/RxSwift.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 6.0.0;
+			};
+		};
+		04D2FD002A2A528200253028 /* XCRemoteSwiftPackageReference "SnapKit" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/SnapKit/SnapKit.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 5.0.0;
+			};
+		};
+		04D2FD032A2A529600253028 /* XCRemoteSwiftPackageReference "Then" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/devxoul/Then";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 3.0.0;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		04D2FCF72A2A51F100253028 /* RxCocoa */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 04D2FCF62A2A51F100253028 /* XCRemoteSwiftPackageReference "RxSwift" */;
+			productName = RxCocoa;
+		};
+		04D2FCF92A2A51F100253028 /* RxRelay */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 04D2FCF62A2A51F100253028 /* XCRemoteSwiftPackageReference "RxSwift" */;
+			productName = RxRelay;
+		};
+		04D2FCFB2A2A51F100253028 /* RxSwift */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 04D2FCF62A2A51F100253028 /* XCRemoteSwiftPackageReference "RxSwift" */;
+			productName = RxSwift;
+		};
+		04D2FD012A2A528200253028 /* SnapKit */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 04D2FD002A2A528200253028 /* XCRemoteSwiftPackageReference "SnapKit" */;
+			productName = SnapKit;
+		};
+		04D2FD042A2A529600253028 /* Then */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 04D2FD032A2A529600253028 /* XCRemoteSwiftPackageReference "Then" */;
+			productName = Then;
+		};
+/* End XCSwiftPackageProductDependency section */
 
 /* Begin XCVersionGroup section */
 		B2198BA02A2A36EA0019032D /* Avocado.xcdatamodeld */ = {
