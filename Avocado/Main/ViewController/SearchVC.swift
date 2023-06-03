@@ -8,22 +8,32 @@
 import UIKit
 
 class SearchVC: BaseVC {
+    
+    lazy var searchBarV = SearchBarV()
 
     override func viewDidLoad() {
         super.viewDidLoad()
-
-        // Do any additional setup after loading the view.
     }
     
 
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
+    override func setLayout() {
+        view.addSubview(searchBarV)
     }
-    */
-
+    
+    override func setConstraint() {
+        searchBarV.snp.makeConstraints {
+            $0.horizontalEdges.equalToSuperview().inset(10)
+            $0.top.equalToSuperview().offset(5)
+        }
+    }
 }
+
+#if DEBUG && canImport(SwiftUI)
+import SwiftUI
+import RxSwift
+struct SearchVCPreview: PreviewProvider {
+    static var previews: some View {
+        return SearchVC().toPreview()
+    }
+}
+#endif

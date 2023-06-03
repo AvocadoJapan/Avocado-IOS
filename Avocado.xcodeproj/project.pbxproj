@@ -30,6 +30,8 @@
 		04D2FD082A2A530F00253028 /* UIViewController+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04D2FD072A2A530F00253028 /* UIViewController+Extension.swift */; };
 		04D2FD0A2A2A532100253028 /* UIView+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04D2FD092A2A532100253028 /* UIView+Extension.swift */; };
 		04D2FD112A2A576C00253028 /* BaseVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04D2FD102A2A576C00253028 /* BaseVC.swift */; };
+		B20AFE682A2BAE73004A646B /* SearchBarV.swift in Sources */ = {isa = PBXBuildFile; fileRef = B20AFE672A2BAE73004A646B /* SearchBarV.swift */; };
+		B20AFE6A2A2BB259004A646B /* Constant.swift in Sources */ = {isa = PBXBuildFile; fileRef = B20AFE692A2BB259004A646B /* Constant.swift */; };
 		B2198B982A2A36EA0019032D /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2198B972A2A36EA0019032D /* AppDelegate.swift */; };
 		B2198B9A2A2A36EA0019032D /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2198B992A2A36EA0019032D /* SceneDelegate.swift */; };
 		B2198BA22A2A36EA0019032D /* Avocado.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = B2198BA02A2A36EA0019032D /* Avocado.xcdatamodeld */; };
@@ -77,6 +79,8 @@
 		04D2FD072A2A530F00253028 /* UIViewController+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIViewController+Extension.swift"; sourceTree = "<group>"; };
 		04D2FD092A2A532100253028 /* UIView+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView+Extension.swift"; sourceTree = "<group>"; };
 		04D2FD102A2A576C00253028 /* BaseVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseVC.swift; sourceTree = "<group>"; };
+		B20AFE672A2BAE73004A646B /* SearchBarV.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchBarV.swift; sourceTree = "<group>"; };
+		B20AFE692A2BB259004A646B /* Constant.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constant.swift; sourceTree = "<group>"; };
 		B2198B942A2A36EA0019032D /* Avocado.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Avocado.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		B2198B972A2A36EA0019032D /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		B2198B992A2A36EA0019032D /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -174,6 +178,7 @@
 				04C835FA2A2B5FCF00731E3E /* MainHeaderRV.swift */,
 				04C835FC2A2B5FE100731E3E /* MainFooterRV.swift */,
 				04C835FE2A2B5FEF00731E3E /* BannerFooterRV.swift */,
+				B20AFE672A2BAE73004A646B /* SearchBarV.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -210,6 +215,7 @@
 			isa = PBXGroup;
 			children = (
 				04D2FD102A2A576C00253028 /* BaseVC.swift */,
+				B20AFE692A2BB259004A646B /* Constant.swift */,
 				04C835F52A2B3A9900731E3E /* Protocol */,
 				04D2FD062A2A52E800253028 /* Extension */,
 			);
@@ -421,6 +427,7 @@
 				04C835F12A2B2CFA00731E3E /* MainDataM.swift in Sources */,
 				B2198BA22A2A36EA0019032D /* Avocado.xcdatamodeld in Sources */,
 				04C835EF2A2B2CC500731E3E /* BannerM.swift in Sources */,
+				B20AFE6A2A2BB259004A646B /* Constant.swift in Sources */,
 				04C835F72A2B46B600731E3E /* BannerCC.swift in Sources */,
 				04BA13292A2AE0990004E2FB /* ProductCC.swift in Sources */,
 				04C835FF2A2B5FEF00731E3E /* BannerFooterRV.swift in Sources */,
@@ -431,6 +438,7 @@
 				04BA13212A2ADA160004E2FB /* MainVC.swift in Sources */,
 				04BA13262A2ADAEE0004E2FB /* MainVM.swift in Sources */,
 				B29D78932A2B6FCF008B6945 /* SearchVM.swift in Sources */,
+				B20AFE682A2BAE73004A646B /* SearchBarV.swift in Sources */,
 				04C835FD2A2B5FE100731E3E /* MainFooterRV.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
