@@ -12,8 +12,12 @@ final class MainVC: BaseVC {
     
     private var viewModel: MainVM
     private lazy var collectionView = UICollectionView(frame: .zero, collectionViewLayout: getCompositionalLayout()).then {
-        $0.register(MainHeaderRV.self, forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier: MainHeaderRV.identifier)
+        $0.register(BannerCC.self, forCellWithReuseIdentifier: BannerCC.identifier)
+        $0.register(MainCategoryCC.self, forCellWithReuseIdentifier: MainCategoryCC.identifier)
         $0.register(ProductCC.self, forCellWithReuseIdentifier: ProductCC.identifier)
+        
+        $0.register(MainHeaderRV.self, forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier: MainHeaderRV.identifier)
+        $0.register(MainFooterRV.self, forSupplementaryViewOfKind: UICollectionView.elementKindSectionFooter, withReuseIdentifier: MainFooterRV.identifier)
     }
     private let disposeBag = DisposeBag()
     
@@ -23,39 +27,52 @@ final class MainVC: BaseVC {
     }
     
     override func bindUI() {
-        let dataSource = RxCollectionViewSectionedReloadDataSource<MainSectionM> { dataSource, collectionView, indexPath, item in
+        var dataSource = RxCollectionViewSectionedReloadDataSource<SectionOfMainData> { dataSource, collectionView, indexPath, item in
             
-            guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: ProductCC.identifier, for: indexPath) as? ProductCC else {
-             return UICollectionViewCell()
-            }
-            cell.configureCell()
-            
-            
-            return cell
-        } configureSupplementaryView: { dataSource, collectionview, title, indexPath in
-            switch (indexPath.section) {
-            case 0:
-                guard let header = collectionview.dequeueReusableSupplementaryView(ofKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier: MainHeaderRV.identifier, for: indexPath) as? MainHeaderRV else {
-                    return UICollectionReusableView()
+            switch(item) {
+            case .banner(data: let banner):
+                guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: BannerCC.identifier, for: indexPath) as? BannerCC else {
+                    return UICollectionViewCell()
                 }
                 
-                return header
-            case 1:
-                return UICollectionReusableView()
+                cell.configureCell()
                 
-            case 2:
-                return UICollectionReusableView()
+                return cell
                 
-            default:
-                return UICollectionReusableView()
+            case .category(data: let category):
+                
+                guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: MainCategoryCC.identifier, for: indexPath) as? MainCategoryCC else {
+                    return UICollectionViewCell()
+                }
+                
+                return cell
+                
+            case .product(data: let product):
+                guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: ProductCC.identifier, for: indexPath) as? ProductCC else {
+                    return UICollectionViewCell()
+                }
+                
+                cell.configureCell()
+                return cell
+            }
+            
+        } configureSupplementaryView: { dataSource, collectionView, kind, indexPath in
+            
+            
+            if (kind == UICollectionView.elementKindSectionHeader) {
+                let header = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: MainHeaderRV.identifier, for: indexPath) as? MainHeaderRV
+                
+                return header ?? MainHeaderRV()
+            }
+            else {
+                let footer = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: MainFooterRV.identifier, for: indexPath) as? MainFooterRV
+                
+                return footer ?? MainFooterRV()
             }
         }
         
-        viewModel.mainDataOb.accept(
-            MainData(bannerList: [], recommandProductList: [], friendProductList: [], fruitProductList: [])
-        )
-        
-        viewModel.mainDataOb.bind(to: collectionView.rx.items(dataSource: dataSource))
+        viewModel.sectionData
+            .bind(to: collectionView.rx.items(dataSource: dataSource))
             .disposed(by: disposeBag)
     }
     
@@ -69,14 +86,13 @@ final class MainVC: BaseVC {
         }
     }
     
-    init(vm viewModel: MainVM) {
+    init(vm viewModel: MainVM = MainVM()) {
         self.viewModel = viewModel
         super.init(nibName: nil, bundle: nil)
     }
     
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
-        viewModel = MainVM()
     }
     
     //MARK: - Custom Method
@@ -103,19 +119,39 @@ extension MainVC: CollectionViewLayoutable {
             
             switch(sectionIndex) {
             case 0:
-                let headerSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1), heightDimension: .absolute(300))
-                let header = NSCollectionLayoutBoundarySupplementaryItem(layoutSize: headerSize, elementKind: UICollectionView.elementKindSectionHeader, alignment: .top)
-                header.pinToVisibleBounds = true
+                let itemSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1), heightDimension: .fractionalHeight(1))
+                let item = NSCollectionLayoutItem(layoutSize: itemSize)
+                let groupSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1), heightDimension: .absolute(200))
+                let group = NSCollectionLayoutGroup.horizontal(layoutSize: groupSize, subitem: item, count: 1)
+                let section = NSCollectionLayoutSection(group: group)
+                section.orthogonalScrollingBehavior = .paging
                 
-                section.boundarySupplementaryItems = [header, footer]
+                section.boundarySupplementaryItems = [footer]
                 return section
             case 1:
+                let itemSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1), heightDimension: .fractionalHeight(1))
+                let item = NSCollectionLayoutItem(layoutSize: itemSize)
+                let groupSize = NSCollectionLayoutSize(widthDimension: .absolute(60), heightDimension: .absolute(80))
+                let group = NSCollectionLayoutGroup.horizontal(layoutSize: groupSize, subitem: item, count: 1)
+                
+                let section = NSCollectionLayoutSection(group: group)
+                section.orthogonalScrollingBehavior = .continuous
+                
+                section.boundarySupplementaryItems = [footer]
+                return section
+            case 2:
                 let headerSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1), heightDimension: .absolute(56))
                 let header = NSCollectionLayoutBoundarySupplementaryItem(layoutSize: headerSize, elementKind: UICollectionView.elementKindSectionHeader, alignment: .top)
                 section.boundarySupplementaryItems = [header, footer]
                 return section
                 
-            case 2:
+            case 3:
+                let headerSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1), heightDimension: .absolute(56))
+                let header = NSCollectionLayoutBoundarySupplementaryItem(layoutSize: headerSize, elementKind: UICollectionView.elementKindSectionHeader, alignment: .top)
+                section.boundarySupplementaryItems = [header, footer]
+                return section
+                
+            case 4:
                 let headerSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1), heightDimension: .absolute(56))
                 let header = NSCollectionLayoutBoundarySupplementaryItem(layoutSize: headerSize, elementKind: UICollectionView.elementKindSectionHeader, alignment: .top)
                 section.boundarySupplementaryItems = [header, footer]

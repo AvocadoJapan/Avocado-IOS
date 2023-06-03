@@ -27,6 +27,7 @@ final class ProductCC: UICollectionViewCell, CollectionCellIdentifierable {
     private lazy var locationLabel = UILabel().then {
         $0.text = "東京都渋谷区"
         $0.font = UIFont.boldSystemFont(ofSize: 12)
+        $0.textColor = .lightGray
     }
     
     override init(frame: CGRect) {

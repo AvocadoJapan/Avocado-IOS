@@ -8,40 +8,23 @@
 import Foundation
 import Differentiator
 
-struct MainTitleItem {
-    let imageList: [String]
-    let categoryList: [String]
-    let title: String
+struct SectionOfMainData {
+    var items: [Item]
 }
 
-enum MainSectionM {
-    case SectionTitle(header:MainTitleItem, items:[Product])
-    case SectionCategory(header:String, items: [Product])
+enum SectionMainItem {
+    case banner(data:Banner)
+    case product(data:Product)
+    case category(data:MainCategory)
 }
 
-extension MainSectionM: SectionModelType {
-    
-    typealias Item = Product
-    
-    var items: [Product] {
-        switch self {
-        case let .SectionTitle(header: _, items: items):
-            return items.map { $0 }
-        case let .SectionCategory(header: _, items: items):
-            return items.map { $0 }
-        }
+extension SectionOfMainData: SectionModelType {
+    typealias Item = SectionMainItem
+
+    init(original: SectionOfMainData, items: [SectionMainItem]) {
+        self = original
+        self.items = items
     }
     
-    init(original: MainSectionM, items: [Product]) {
-        switch original {
-            
-        case let .SectionTitle(header: header, items: items):
-            self = .SectionTitle(header: header, items: items)
-            
-        case let .SectionCategory(header: header, items: items):
-            self = .SectionCategory(header: header, items: items)
-            
-        
-        }
-    }
+    
 }
