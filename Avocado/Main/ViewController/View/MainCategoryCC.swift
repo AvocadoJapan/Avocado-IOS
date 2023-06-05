@@ -6,9 +6,15 @@
 //
 
 import UIKit
-
+import RxSwift
+/**
+ * ##화면 명: 메인화면 카테고리 셀
+ */
 final class MainCategoryCC: UICollectionViewCell, CollectionCellIdentifierable {
+    typealias T = MainCategory
     static var identifier: String = "MainCategoryCC"
+    var onData: AnyObserver<MainCategory>
+    var disposeBag = DisposeBag()
     
     private lazy var iconImageView = UIImageView().then {
         $0.image = UIImage(systemName: "person.crop.circle")
@@ -21,12 +27,16 @@ final class MainCategoryCC: UICollectionViewCell, CollectionCellIdentifierable {
     }
     
     override init(frame: CGRect) {
+        let cellData = PublishSubject<MainCategory>()
+        onData = cellData.asObserver()
         super.init(frame: frame)
         
+        //setLayout
         [iconImageView, nameLabel].forEach {
             addSubview($0)
         }
         
+        //setConstraint
         iconImageView.snp.makeConstraints {
             $0.top.left.right.equalToSuperview()
             $0.height.equalTo(60)
@@ -36,14 +46,17 @@ final class MainCategoryCC: UICollectionViewCell, CollectionCellIdentifierable {
             $0.top.equalTo(iconImageView.snp.bottom)
             $0.left.right.bottom.equalToSuperview()
         }
+        //bindUI
+        cellData.observe(on: MainScheduler.instance)
+            .subscribe(onNext: { [weak self] data in
+                self?.iconImageView.image = UIImage(systemName: data.categoryImage)
+                self?.nameLabel.text = data.categoryName
+            })
+            .disposed(by: disposeBag)
     }
     
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
-    }
-    
-    public func configureCell() {
-        
     }
 }
 
