@@ -7,10 +7,15 @@
 
 import UIKit
 import RxDataSources
-
-final class MainVC: BaseVC {
+import RxRelay
+/**
+ *##화면 명: Avocado 메인화면 (배너, 카테고리 별 상품 정보를 확인가능)
+ */
+ final class MainVC: BaseVC {
     
     private var viewModel: MainVM
+    private let disposeBag = DisposeBag()
+    
     private lazy var collectionView = UICollectionView(frame: .zero, collectionViewLayout: getCompositionalLayout()).then {
         $0.register(BannerCC.self, forCellWithReuseIdentifier: BannerCC.identifier)
         $0.register(MainCategoryCC.self, forCellWithReuseIdentifier: MainCategoryCC.identifier)
@@ -18,8 +23,8 @@ final class MainVC: BaseVC {
         
         $0.register(MainHeaderRV.self, forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier: MainHeaderRV.identifier)
         $0.register(MainFooterRV.self, forSupplementaryViewOfKind: UICollectionView.elementKindSectionFooter, withReuseIdentifier: MainFooterRV.identifier)
+        $0.register(BannerFooterRV.self, forSupplementaryViewOfKind: UICollectionView.elementKindSectionFooter, withReuseIdentifier: BannerFooterRV.identifier)
     }
-    private let disposeBag = DisposeBag()
     
     //MARK: - View Life Cycle
     override func viewDidLoad() {
@@ -27,7 +32,7 @@ final class MainVC: BaseVC {
     }
     
     override func bindUI() {
-        var dataSource = RxCollectionViewSectionedReloadDataSource<SectionOfMainData> { dataSource, collectionView, indexPath, item in
+        let dataSource = RxCollectionViewSectionedReloadDataSource<SectionOfMainData> { dataSource, collectionView, indexPath, item in
             
             switch(item) {
             case .banner(data: let banner):
@@ -35,8 +40,7 @@ final class MainVC: BaseVC {
                     return UICollectionViewCell()
                 }
                 
-                cell.configureCell()
-                
+                cell.onData.onNext(banner)
                 return cell
                 
             case .category(data: let category):
@@ -45,6 +49,7 @@ final class MainVC: BaseVC {
                     return UICollectionViewCell()
                 }
                 
+                cell.onData.onNext(category)
                 return cell
                 
             case .product(data: let product):
@@ -52,25 +57,40 @@ final class MainVC: BaseVC {
                     return UICollectionViewCell()
                 }
                 
-                cell.configureCell()
+                cell.onData.onNext(product)
                 return cell
             }
             
-        } configureSupplementaryView: { dataSource, collectionView, kind, indexPath in
-            
+        } configureSupplementaryView: { [weak self] dataSource, collectionView, kind, indexPath in
             
             if (kind == UICollectionView.elementKindSectionHeader) {
                 let header = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: MainHeaderRV.identifier, for: indexPath) as? MainHeaderRV
                 
+                let title = dataSource[indexPath.section].title
+                header?.configureTitle(to: title ?? "")
+                
                 return header ?? MainHeaderRV()
             }
             else {
-                let footer = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: MainFooterRV.identifier, for: indexPath) as? MainFooterRV
-                
-                return footer ?? MainFooterRV()
+                switch (indexPath.section) {
+                case 0:
+                    let footer = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: BannerFooterRV.identifier, for: indexPath) as? BannerFooterRV
+                   
+                    if let self = self {
+                        footer?.bind(to: self.viewModel.currentBannerPage.asObservable(), totalPage: dataSource[indexPath.section].items.count)
+                    }
+                    
+                    return footer ?? BannerFooterRV()
+                    
+                default:
+                    let footer = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: MainFooterRV.identifier, for: indexPath) as? MainFooterRV
+
+                    return footer ?? MainFooterRV()
+                }
             }
         }
         
+        // Collection View Bind
         viewModel.sectionData
             .bind(to: collectionView.rx.items(dataSource: dataSource))
             .disposed(by: disposeBag)
@@ -85,7 +105,8 @@ final class MainVC: BaseVC {
             $0.edges.equalToSuperview()
         }
     }
-    
+     
+    //MARK: - Initalize Method
     init(vm viewModel: MainVM = MainVM()) {
         self.viewModel = viewModel
         super.init(nibName: nil, bundle: nil)
@@ -101,63 +122,77 @@ final class MainVC: BaseVC {
 extension MainVC: CollectionViewLayoutable {
     func getCompositionalLayout() -> UICollectionViewCompositionalLayout {
         return UICollectionViewCompositionalLayout { sectionIndex, env in
-            let itemFractionalWidthFraction = 1.0 / 3.0
-            let itemInset:CGFloat = 5
-            
-            let itemSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(itemFractionalWidthFraction), heightDimension: .fractionalHeight(1))
-            let item = NSCollectionLayoutItem(layoutSize: itemSize)
-            item.contentInsets = NSDirectionalEdgeInsets(top: itemInset, leading: itemInset, bottom: itemInset, trailing: itemInset)
-            
-            let groupSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1), heightDimension: .absolute(200))
-            let group = NSCollectionLayoutGroup.horizontal(layoutSize: groupSize, subitem: item, count: 3)
-            
-            let section = NSCollectionLayoutSection(group: group)
-            section.contentInsets = NSDirectionalEdgeInsets(top: itemInset, leading: itemInset, bottom: itemInset, trailing: itemInset)
-            
-            let footerSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1), heightDimension: .absolute(50))
-            let footer = NSCollectionLayoutBoundarySupplementaryItem(layoutSize: footerSize, elementKind: UICollectionView.elementKindSectionFooter, alignment: .bottom)
             
             switch(sectionIndex) {
             case 0:
+                // Banner Item 사이즈 및 셀 레이아웃 설정
                 let itemSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1), heightDimension: .fractionalHeight(1))
                 let item = NSCollectionLayoutItem(layoutSize: itemSize)
-                let groupSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1), heightDimension: .absolute(200))
+                
+                // Banner Item을 넣을 Group 사이즈 및 레이아웃 설정 높이는 전체 화면의 3분의 1로 지정
+                let groupSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1), heightDimension: .fractionalHeight(0.3))
                 let group = NSCollectionLayoutGroup.horizontal(layoutSize: groupSize, subitem: item, count: 1)
+                
+                // Banner Section 설정 스크롤 방향 설정 스크롤은 페이징 형식으로 진행 되며 횡스크롤 사용
                 let section = NSCollectionLayoutSection(group: group)
                 section.orthogonalScrollingBehavior = .paging
                 
+                // Banner 하단 페이지 컨트롤 추가를 위한 Footer추가 높이는 20으로 고정
+                let footerSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1), heightDimension: .absolute(20))
+                let footer = NSCollectionLayoutBoundarySupplementaryItem(layoutSize: footerSize, elementKind: UICollectionView.elementKindSectionFooter, alignment: .bottom)
+                
                 section.boundarySupplementaryItems = [footer]
+                section.visibleItemsInvalidationHandler = { [weak self] _, contentOffset, environment in
+                    let bannerIndex = Int(max(0, round(contentOffset.x/environment.container.contentSize.width)))
+                    if (environment.container.contentSize.height < environment.container.contentSize.width) {
+                        self?.viewModel.currentBannerPage.accept(bannerIndex)
+                    }
+                    
+                }
                 return section
+                
             case 1:
+                // Category Item 사이즈 및 레이아웃 설정
                 let itemSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1), heightDimension: .fractionalHeight(1))
                 let item = NSCollectionLayoutItem(layoutSize: itemSize)
-                let groupSize = NSCollectionLayoutSize(widthDimension: .absolute(60), heightDimension: .absolute(80))
-                let group = NSCollectionLayoutGroup.horizontal(layoutSize: groupSize, subitem: item, count: 1)
                 
+                // Category Item을 넣을 Group 사이즈 및 레이아웃 설정, 한 화면에 6개가 보이고 높이는 80으로 고정
+                let groupSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1), heightDimension: .absolute(80))
+                let group = NSCollectionLayoutGroup.horizontal(layoutSize: groupSize, subitem: item, count: 6)
+                
+                // Category Section 설정 , 횡스크롤 사용 및 상하단 인셋 값 지정
                 let section = NSCollectionLayoutSection(group: group)
+                section.contentInsets = NSDirectionalEdgeInsets(top: 10, leading: 0, bottom: 10, trailing: 0)
                 section.orthogonalScrollingBehavior = .continuous
                 
-                section.boundarySupplementaryItems = [footer]
-                return section
-            case 2:
-                let headerSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1), heightDimension: .absolute(56))
-                let header = NSCollectionLayoutBoundarySupplementaryItem(layoutSize: headerSize, elementKind: UICollectionView.elementKindSectionHeader, alignment: .top)
-                section.boundarySupplementaryItems = [header, footer]
-                return section
-                
-            case 3:
-                let headerSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1), heightDimension: .absolute(56))
-                let header = NSCollectionLayoutBoundarySupplementaryItem(layoutSize: headerSize, elementKind: UICollectionView.elementKindSectionHeader, alignment: .top)
-                section.boundarySupplementaryItems = [header, footer]
-                return section
-                
-            case 4:
-                let headerSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1), heightDimension: .absolute(56))
-                let header = NSCollectionLayoutBoundarySupplementaryItem(layoutSize: headerSize, elementKind: UICollectionView.elementKindSectionHeader, alignment: .top)
-                section.boundarySupplementaryItems = [header, footer]
                 return section
                 
             default:
+                
+                let itemInset:CGFloat = 5 // 인셋 값
+                
+                // 상품에 대한 사이즈 및 레이아웃 설정 + 아이템 별 인셋 값 추가
+                let itemSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1), heightDimension: .fractionalHeight(1))
+                let item = NSCollectionLayoutItem(layoutSize: itemSize)
+                item.contentInsets = NSDirectionalEdgeInsets(top: itemInset, leading: itemInset, bottom: itemInset, trailing: itemInset)
+                
+                // 상품을 넣을 Group 사이즈 설정 및 레이아웃 설정, 한 화면에 3개가 보이고 높이는 전체 사이즈의 3분의 1로 설정
+                let groupSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1), heightDimension: .fractionalHeight(0.3))
+                let group = NSCollectionLayoutGroup.horizontal(layoutSize: groupSize, subitem: item, count: 3)
+                
+                // 상품 Section 설정, 인셋 값을 추가하고 스크롤은 종 스크롤을 사용
+                let section = NSCollectionLayoutSection(group: group)
+                section.contentInsets = NSDirectionalEdgeInsets(top: itemInset, leading: itemInset, bottom: itemInset, trailing: itemInset)
+                
+                // 상품 하단 더보기 푸터 추가, 높이는 50으로 고정
+                let footerSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1), heightDimension: .absolute(50))
+                let footer = NSCollectionLayoutBoundarySupplementaryItem(layoutSize: footerSize, elementKind: UICollectionView.elementKindSectionFooter, alignment: .bottom)
+                
+                //상품 상단 타이틀 헤더 추가, 높이는 56으로 고정
+                let headerSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1), heightDimension: .absolute(56))
+                let header = NSCollectionLayoutBoundarySupplementaryItem(layoutSize: headerSize, elementKind: UICollectionView.elementKindSectionHeader, alignment: .top)
+                section.boundarySupplementaryItems = [header, footer]
+                
                 return section
             }
         }

@@ -6,7 +6,9 @@
 //
 
 import UIKit
-
+/**
+ *## 화면명: 메인화면 상품정보 하단에 들어갈 푸터
+ */
 final class MainFooterRV: UICollectionReusableView {
     static var identifier = "MainFooterRV"
     
@@ -19,6 +21,8 @@ final class MainFooterRV: UICollectionReusableView {
         $0.layer.borderWidth = 1
         $0.layer.masksToBounds = true
     }
+    
+    //MARK: Property
     
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -35,6 +39,7 @@ final class MainFooterRV: UICollectionReusableView {
     }
         
 }
+
 #if DEBUG && canImport(SwiftUI)
 import SwiftUI
 struct MainFooterRVPreview:PreviewProvider {

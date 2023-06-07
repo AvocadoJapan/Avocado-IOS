@@ -6,10 +6,15 @@
 //
 
 import UIKit
-
+import RxSwift
+/**
+ * ##화면 명: 상품 셀
+ */
 final class ProductCC: UICollectionViewCell, CollectionCellIdentifierable {
-    
+    typealias T = Product
     static var identifier: String = "ProductCC"
+    var onData: AnyObserver<Product>
+    var disposeBag = DisposeBag()
     
     private lazy var productImageView = UIImageView().then {
         $0.backgroundColor = .black
@@ -31,13 +36,15 @@ final class ProductCC: UICollectionViewCell, CollectionCellIdentifierable {
     }
     
     override init(frame: CGRect) {
+        let cellData = PublishSubject<Product>()
+        onData = cellData.asObserver()
+        
         super.init(frame: frame)
-        
-        
+        //setLayout
         [productImageView, productNameLabel, priceLabel, locationLabel].forEach {
             addSubview($0)
         }
-        
+        //setConstraint
         productImageView.snp.makeConstraints {
             $0.top.left.right.equalToSuperview()
             $0.height.equalTo(productImageView.snp.width)
@@ -55,24 +62,31 @@ final class ProductCC: UICollectionViewCell, CollectionCellIdentifierable {
         }
         
         locationLabel.snp.makeConstraints {
-            $0.top.equalTo(priceLabel.snp.bottom).offset(5)
+            $0.top.equalTo(priceLabel.snp.bottom)
             $0.left.right.equalTo(productImageView)
             $0.bottom.equalToSuperview()
         }
+        
+        //setProperty
         productNameLabel.setContentHuggingPriority(.defaultHigh, for: .vertical)
         priceLabel.setContentHuggingPriority(.defaultHigh, for: .vertical)
         locationLabel.setContentHuggingPriority(.defaultLow, for: .vertical)
+        
+        //bindUI
+        cellData
+            .observe(on: MainScheduler.instance)
+            .subscribe(onNext: { [weak self] data in
+                self?.productNameLabel.text = data.name
+                self?.productImageView.image = UIImage(named: data.imageURL)
+                self?.locationLabel.text = data.location
+                self?.priceLabel.text = data.price
+            })
+            .disposed(by: disposeBag)
     }
     
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-    
-    public func configureCell() {
-        
-    }
-    
-    
 }
 
 #if DEBUG && canImport(SwiftUI)

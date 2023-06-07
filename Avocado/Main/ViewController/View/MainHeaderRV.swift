@@ -6,11 +6,13 @@
 //
 
 import UIKit
-
+/**
+ * ##화면명: 메인 상품정보 상단에 타이블 헤더
+ */
 final class MainHeaderRV: UICollectionReusableView {
     static var identifier = "MainHeaderRV"
     
-    lazy var titleLabel = UILabel().then {
+    private lazy var titleLabel = UILabel().then {
         $0.text = """
                     もふもふの
                     お友達
@@ -33,13 +35,12 @@ final class MainHeaderRV: UICollectionReusableView {
     required init?(coder: NSCoder) {
         fatalError("init Error")
     }
-}
-
-#if DEBUG && canImport(SwiftUI)
-import SwiftUI
-struct MainHeaderRVPreview:PreviewProvider {
-    static var previews: some View {
-        return MainHeaderRV().toPreview().previewLayout(.fixed(width: 414, height: 56))
+    
+    /**
+     * - Description 헤더 타이틀 UILabel 값을 업데이트하는 함수
+     * - Parameter title: 업데이트할 헤더 타이틀 값
+     */
+    public func configureTitle(to title:String) {
+        titleLabel.text = title
     }
 }
-#endif
