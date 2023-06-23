@@ -32,6 +32,9 @@
 		04D2FD112A2A576C00253028 /* BaseVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04D2FD102A2A576C00253028 /* BaseVC.swift */; };
 		B20AFE682A2BAE73004A646B /* SearchBarV.swift in Sources */ = {isa = PBXBuildFile; fileRef = B20AFE672A2BAE73004A646B /* SearchBarV.swift */; };
 		B20AFE6A2A2BB259004A646B /* Constant.swift in Sources */ = {isa = PBXBuildFile; fileRef = B20AFE692A2BB259004A646B /* Constant.swift */; };
+		B212D5872A45E8F40008DAD1 /* LoginVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = B212D5862A45E8F40008DAD1 /* LoginVC.swift */; };
+		B212D5892A45EAF90008DAD1 /* Variant.swift in Sources */ = {isa = PBXBuildFile; fileRef = B212D5882A45EAF90008DAD1 /* Variant.swift */; };
+		B212D58B2A45F1740008DAD1 /* InputView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B212D58A2A45F1740008DAD1 /* InputView.swift */; };
 		B2198B982A2A36EA0019032D /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2198B972A2A36EA0019032D /* AppDelegate.swift */; };
 		B2198B9A2A2A36EA0019032D /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2198B992A2A36EA0019032D /* SceneDelegate.swift */; };
 		B2198BA22A2A36EA0019032D /* Avocado.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = B2198BA02A2A36EA0019032D /* Avocado.xcdatamodeld */; };
@@ -81,6 +84,9 @@
 		04D2FD102A2A576C00253028 /* BaseVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseVC.swift; sourceTree = "<group>"; };
 		B20AFE672A2BAE73004A646B /* SearchBarV.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchBarV.swift; sourceTree = "<group>"; };
 		B20AFE692A2BB259004A646B /* Constant.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constant.swift; sourceTree = "<group>"; };
+		B212D5862A45E8F40008DAD1 /* LoginVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginVC.swift; sourceTree = "<group>"; };
+		B212D5882A45EAF90008DAD1 /* Variant.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Variant.swift; sourceTree = "<group>"; };
+		B212D58A2A45F1740008DAD1 /* InputView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InputView.swift; sourceTree = "<group>"; };
 		B2198B942A2A36EA0019032D /* Avocado.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Avocado.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		B2198B972A2A36EA0019032D /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		B2198B992A2A36EA0019032D /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -165,6 +171,7 @@
 				04BA13272A2AE07E0004E2FB /* View */,
 				04BA13202A2ADA160004E2FB /* MainVC.swift */,
 				B29D78902A2B6FB1008B6945 /* SearchVC.swift */,
+				B212D5862A45E8F40008DAD1 /* LoginVC.swift */,
 			);
 			path = ViewController;
 			sourceTree = "<group>";
@@ -177,6 +184,7 @@
 				04C835F62A2B46B600731E3E /* BannerCC.swift */,
 				04C835FA2A2B5FCF00731E3E /* MainHeaderRV.swift */,
 				04C835FC2A2B5FE100731E3E /* MainFooterRV.swift */,
+				B212D58A2A45F1740008DAD1 /* InputView.swift */,
 				04C835FE2A2B5FEF00731E3E /* BannerFooterRV.swift */,
 				B20AFE672A2BAE73004A646B /* SearchBarV.swift */,
 			);
@@ -216,6 +224,7 @@
 			children = (
 				04D2FD102A2A576C00253028 /* BaseVC.swift */,
 				B20AFE692A2BB259004A646B /* Constant.swift */,
+				B212D5882A45EAF90008DAD1 /* Variant.swift */,
 				04C835F52A2B3A9900731E3E /* Protocol */,
 				04D2FD062A2A52E800253028 /* Extension */,
 			);
@@ -425,13 +434,16 @@
 				B29D78912A2B6FB1008B6945 /* SearchVC.swift in Sources */,
 				04D2FD112A2A576C00253028 /* BaseVC.swift in Sources */,
 				04C835F12A2B2CFA00731E3E /* MainDataM.swift in Sources */,
+				B212D5872A45E8F40008DAD1 /* LoginVC.swift in Sources */,
 				B2198BA22A2A36EA0019032D /* Avocado.xcdatamodeld in Sources */,
 				04C835EF2A2B2CC500731E3E /* BannerM.swift in Sources */,
 				B20AFE6A2A2BB259004A646B /* Constant.swift in Sources */,
 				04C835F72A2B46B600731E3E /* BannerCC.swift in Sources */,
 				04BA13292A2AE0990004E2FB /* ProductCC.swift in Sources */,
+				B212D58B2A45F1740008DAD1 /* InputView.swift in Sources */,
 				04C835FF2A2B5FEF00731E3E /* BannerFooterRV.swift in Sources */,
 				B2198B982A2A36EA0019032D /* AppDelegate.swift in Sources */,
+				B212D5892A45EAF90008DAD1 /* Variant.swift in Sources */,
 				04BD03F72A2B058500330D8A /* MainCategoryCC.swift in Sources */,
 				04D2FD0A2A2A532100253028 /* UIView+Extension.swift in Sources */,
 				B2198B9A2A2A36EA0019032D /* SceneDelegate.swift in Sources */,
@@ -615,19 +627,24 @@
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UIMainStoryboardFile = "";
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
+				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.0;
+				MARKETING_VERSION = 1.0.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.avocadojapan.Avocado;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
+				SUPPORTS_MACCATALYST = NO;
+				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
+				SUPPORTS_XR_DESIGNED_FOR_IPHONE_IPAD = NO;
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Debug;
 		};
@@ -645,18 +662,23 @@
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UIMainStoryboardFile = "";
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
+				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.0;
+				MARKETING_VERSION = 1.0.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.avocadojapan.Avocado;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
+				SUPPORTS_MACCATALYST = NO;
+				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
+				SUPPORTS_XR_DESIGNED_FOR_IPHONE_IPAD = NO;
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Release;
 		};
