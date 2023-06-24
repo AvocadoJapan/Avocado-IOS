@@ -45,6 +45,8 @@
 		B2198BBE2A2A36EC0019032D /* AvocadoUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2198BBD2A2A36EC0019032D /* AvocadoUITestsLaunchTests.swift */; };
 		B29D78912A2B6FB1008B6945 /* SearchVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = B29D78902A2B6FB1008B6945 /* SearchVC.swift */; };
 		B29D78932A2B6FCF008B6945 /* SearchVM.swift in Sources */ = {isa = PBXBuildFile; fileRef = B29D78922A2B6FCF008B6945 /* SearchVM.swift */; };
+		B2E186CE2A474B4C00ABE98F /* SignupVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2E186CD2A474B4C00ABE98F /* SignupVC.swift */; };
+		B2E2AC802A4772D3003DAE88 /* WelcomeVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2E2AC7F2A4772D3003DAE88 /* WelcomeVC.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -101,6 +103,8 @@
 		B2198BBD2A2A36EC0019032D /* AvocadoUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AvocadoUITestsLaunchTests.swift; sourceTree = "<group>"; };
 		B29D78902A2B6FB1008B6945 /* SearchVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchVC.swift; sourceTree = "<group>"; };
 		B29D78922A2B6FCF008B6945 /* SearchVM.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchVM.swift; sourceTree = "<group>"; };
+		B2E186CD2A474B4C00ABE98F /* SignupVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignupVC.swift; sourceTree = "<group>"; };
+		B2E2AC7F2A4772D3003DAE88 /* WelcomeVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WelcomeVC.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -171,7 +175,7 @@
 				04BA13272A2AE07E0004E2FB /* View */,
 				04BA13202A2ADA160004E2FB /* MainVC.swift */,
 				B29D78902A2B6FB1008B6945 /* SearchVC.swift */,
-				B212D5862A45E8F40008DAD1 /* LoginVC.swift */,
+				B2E2AC7E2A477296003DAE88 /* AccountVC */,
 			);
 			path = ViewController;
 			sourceTree = "<group>";
@@ -257,7 +261,6 @@
 				B2198B972A2A36EA0019032D /* AppDelegate.swift */,
 				B2198B992A2A36EA0019032D /* SceneDelegate.swift */,
 				04BA131F2A2AD9FB0004E2FB /* Main */,
-				04D2FD0F2A2A575000253028 /* Common */,
 				04D2FCF52A2A515500253028 /* SupportingFiles */,
 			);
 			path = Avocado;
@@ -278,6 +281,17 @@
 				B2198BBD2A2A36EC0019032D /* AvocadoUITestsLaunchTests.swift */,
 			);
 			path = AvocadoUITests;
+			sourceTree = "<group>";
+		};
+		B2E2AC7E2A477296003DAE88 /* AccountVC */ = {
+			isa = PBXGroup;
+			children = (
+				B212D5862A45E8F40008DAD1 /* LoginVC.swift */,
+				B2E186CD2A474B4C00ABE98F /* SignupVC.swift */,
+				B2E2AC7F2A4772D3003DAE88 /* WelcomeVC.swift */,
+				04D2FD0F2A2A575000253028 /* Common */,
+			);
+			path = AccountVC;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -446,11 +460,13 @@
 				B212D5892A45EAF90008DAD1 /* Variant.swift in Sources */,
 				04BD03F72A2B058500330D8A /* MainCategoryCC.swift in Sources */,
 				04D2FD0A2A2A532100253028 /* UIView+Extension.swift in Sources */,
+				B2E2AC802A4772D3003DAE88 /* WelcomeVC.swift in Sources */,
 				B2198B9A2A2A36EA0019032D /* SceneDelegate.swift in Sources */,
 				04BA13212A2ADA160004E2FB /* MainVC.swift in Sources */,
 				04BA13262A2ADAEE0004E2FB /* MainVM.swift in Sources */,
 				B29D78932A2B6FCF008B6945 /* SearchVM.swift in Sources */,
 				B20AFE682A2BAE73004A646B /* SearchBarV.swift in Sources */,
+				B2E186CE2A474B4C00ABE98F /* SignupVC.swift in Sources */,
 				04C835FD2A2B5FE100731E3E /* MainFooterRV.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
