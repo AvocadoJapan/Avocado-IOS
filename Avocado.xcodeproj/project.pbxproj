@@ -30,6 +30,22 @@
 		04D2FD082A2A530F00253028 /* UIViewController+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04D2FD072A2A530F00253028 /* UIViewController+Extension.swift */; };
 		04D2FD0A2A2A532100253028 /* UIView+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04D2FD092A2A532100253028 /* UIView+Extension.swift */; };
 		04D2FD112A2A576C00253028 /* BaseVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04D2FD102A2A576C00253028 /* BaseVC.swift */; };
+		9816F6D62A49491E00A7A284 /* BaseTarget.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9816F6D52A49491E00A7A284 /* BaseTarget.swift */; };
+		9816F6D92A49495500A7A284 /* Moya in Frameworks */ = {isa = PBXBuildFile; productRef = 9816F6D82A49495500A7A284 /* Moya */; };
+		9816F6DB2A49495500A7A284 /* RxMoya in Frameworks */ = {isa = PBXBuildFile; productRef = 9816F6DA2A49495500A7A284 /* RxMoya */; };
+		9816F6DE2A494A1B00A7A284 /* AWSCognitoAuthPlugin in Frameworks */ = {isa = PBXBuildFile; productRef = 9816F6DD2A494A1B00A7A284 /* AWSCognitoAuthPlugin */; };
+		9816F6E02A494A1B00A7A284 /* Amplify in Frameworks */ = {isa = PBXBuildFile; productRef = 9816F6DF2A494A1B00A7A284 /* Amplify */; };
+		9816F6E22A494A5900A7A284 /* BaseAPIService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9816F6E12A494A5900A7A284 /* BaseAPIService.swift */; };
+		9816F6E42A494A6F00A7A284 /* Logger.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9816F6E32A494A6F00A7A284 /* Logger.swift */; };
+		9816F6E62A494A8F00A7A284 /* KeychainUtil.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9816F6E52A494A8F00A7A284 /* KeychainUtil.swift */; };
+		9816F6E92A494AC800A7A284 /* amplifyconfiguration.json in Resources */ = {isa = PBXBuildFile; fileRef = 9816F6E82A494AC800A7A284 /* amplifyconfiguration.json */; };
+		9816F6EB2A494AF400A7A284 /* DTOResponseable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9816F6EA2A494AF400A7A284 /* DTOResponseable.swift */; };
+		9816F6ED2A494B0900A7A284 /* BasePagenationResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9816F6EC2A494B0900A7A284 /* BasePagenationResponse.swift */; };
+		9816F6EF2A494B1B00A7A284 /* NetworkError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9816F6EE2A494B1B00A7A284 /* NetworkError.swift */; };
+		9816F6F22A494B3C00A7A284 /* NetworkLoggerPlugin.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9816F6F12A494B3C00A7A284 /* NetworkLoggerPlugin.swift */; };
+		9816F6F42A494B5400A7A284 /* APIRequestInterceptor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9816F6F32A494B5400A7A284 /* APIRequestInterceptor.swift */; };
+		981A598A2A494F5C0031A917 /* SignUpVM.swift in Sources */ = {isa = PBXBuildFile; fileRef = 981A59892A494F5B0031A917 /* SignUpVM.swift */; };
+		981A598D2A494FAE0031A917 /* AuthService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 981A598C2A494FAE0031A917 /* AuthService.swift */; };
 		B20AFE682A2BAE73004A646B /* SearchBarV.swift in Sources */ = {isa = PBXBuildFile; fileRef = B20AFE672A2BAE73004A646B /* SearchBarV.swift */; };
 		B20AFE6A2A2BB259004A646B /* Constant.swift in Sources */ = {isa = PBXBuildFile; fileRef = B20AFE692A2BB259004A646B /* Constant.swift */; };
 		B212D5872A45E8F40008DAD1 /* LoginVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = B212D5862A45E8F40008DAD1 /* LoginVC.swift */; };
@@ -84,6 +100,18 @@
 		04D2FD072A2A530F00253028 /* UIViewController+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIViewController+Extension.swift"; sourceTree = "<group>"; };
 		04D2FD092A2A532100253028 /* UIView+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView+Extension.swift"; sourceTree = "<group>"; };
 		04D2FD102A2A576C00253028 /* BaseVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseVC.swift; sourceTree = "<group>"; };
+		9816F6D52A49491E00A7A284 /* BaseTarget.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseTarget.swift; sourceTree = "<group>"; };
+		9816F6E12A494A5900A7A284 /* BaseAPIService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseAPIService.swift; sourceTree = "<group>"; };
+		9816F6E32A494A6F00A7A284 /* Logger.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Logger.swift; sourceTree = "<group>"; };
+		9816F6E52A494A8F00A7A284 /* KeychainUtil.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeychainUtil.swift; sourceTree = "<group>"; };
+		9816F6E82A494AC800A7A284 /* amplifyconfiguration.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = amplifyconfiguration.json; sourceTree = "<group>"; };
+		9816F6EA2A494AF400A7A284 /* DTOResponseable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DTOResponseable.swift; sourceTree = "<group>"; };
+		9816F6EC2A494B0900A7A284 /* BasePagenationResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BasePagenationResponse.swift; sourceTree = "<group>"; };
+		9816F6EE2A494B1B00A7A284 /* NetworkError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkError.swift; sourceTree = "<group>"; };
+		9816F6F12A494B3C00A7A284 /* NetworkLoggerPlugin.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkLoggerPlugin.swift; sourceTree = "<group>"; };
+		9816F6F32A494B5400A7A284 /* APIRequestInterceptor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIRequestInterceptor.swift; sourceTree = "<group>"; };
+		981A59892A494F5B0031A917 /* SignUpVM.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpVM.swift; sourceTree = "<group>"; };
+		981A598C2A494FAE0031A917 /* AuthService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthService.swift; sourceTree = "<group>"; };
 		B20AFE672A2BAE73004A646B /* SearchBarV.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchBarV.swift; sourceTree = "<group>"; };
 		B20AFE692A2BB259004A646B /* Constant.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constant.swift; sourceTree = "<group>"; };
 		B212D5862A45E8F40008DAD1 /* LoginVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginVC.swift; sourceTree = "<group>"; };
@@ -113,10 +141,14 @@
 			buildActionMask = 2147483647;
 			files = (
 				04D2FD052A2A529600253028 /* Then in Frameworks */,
+				9816F6E02A494A1B00A7A284 /* Amplify in Frameworks */,
 				04D2FCFC2A2A51F100253028 /* RxSwift in Frameworks */,
 				04D2FD022A2A528200253028 /* SnapKit in Frameworks */,
 				04C835F42A2B315300731E3E /* RxDataSources in Frameworks */,
 				04D2FCFA2A2A51F100253028 /* RxRelay in Frameworks */,
+				9816F6DE2A494A1B00A7A284 /* AWSCognitoAuthPlugin in Frameworks */,
+				9816F6D92A49495500A7A284 /* Moya in Frameworks */,
+				9816F6DB2A49495500A7A284 /* RxMoya in Frameworks */,
 				04D2FCF82A2A51F100253028 /* RxCocoa in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -144,6 +176,7 @@
 				04BA13232A2ADAC10004E2FB /* Model */,
 				04BA13222A2ADAB90004E2FB /* ViewModel */,
 				04BA13242A2ADAD00004E2FB /* ViewController */,
+				981A59902A496A6F0031A917 /* Service */,
 			);
 			path = Main;
 			sourceTree = "<group>";
@@ -153,6 +186,7 @@
 			children = (
 				04BA13252A2ADAEE0004E2FB /* MainVM.swift */,
 				B29D78922A2B6FCF008B6945 /* SearchVM.swift */,
+				981A59892A494F5B0031A917 /* SignUpVM.swift */,
 			);
 			path = ViewModel;
 			sourceTree = "<group>";
@@ -231,8 +265,56 @@
 				B212D5882A45EAF90008DAD1 /* Variant.swift */,
 				04C835F52A2B3A9900731E3E /* Protocol */,
 				04D2FD062A2A52E800253028 /* Extension */,
+				9816F6E32A494A6F00A7A284 /* Logger.swift */,
+				9816F6E52A494A8F00A7A284 /* KeychainUtil.swift */,
 			);
 			path = Common;
+			sourceTree = "<group>";
+		};
+		9816F6D32A4948BE00A7A284 /* Network */ = {
+			isa = PBXGroup;
+			children = (
+				9816F6F02A494B2600A7A284 /* Plugin */,
+				9816F6D42A49490A00A7A284 /* Base */,
+			);
+			path = Network;
+			sourceTree = "<group>";
+		};
+		9816F6D42A49490A00A7A284 /* Base */ = {
+			isa = PBXGroup;
+			children = (
+				9816F6D52A49491E00A7A284 /* BaseTarget.swift */,
+				9816F6E12A494A5900A7A284 /* BaseAPIService.swift */,
+				9816F6EA2A494AF400A7A284 /* DTOResponseable.swift */,
+				9816F6EC2A494B0900A7A284 /* BasePagenationResponse.swift */,
+				9816F6EE2A494B1B00A7A284 /* NetworkError.swift */,
+			);
+			path = Base;
+			sourceTree = "<group>";
+		};
+		9816F6E72A494AA900A7A284 /* Amplify */ = {
+			isa = PBXGroup;
+			children = (
+				9816F6E82A494AC800A7A284 /* amplifyconfiguration.json */,
+			);
+			path = Amplify;
+			sourceTree = "<group>";
+		};
+		9816F6F02A494B2600A7A284 /* Plugin */ = {
+			isa = PBXGroup;
+			children = (
+				9816F6F12A494B3C00A7A284 /* NetworkLoggerPlugin.swift */,
+				9816F6F32A494B5400A7A284 /* APIRequestInterceptor.swift */,
+			);
+			path = Plugin;
+			sourceTree = "<group>";
+		};
+		981A59902A496A6F0031A917 /* Service */ = {
+			isa = PBXGroup;
+			children = (
+				981A598C2A494FAE0031A917 /* AuthService.swift */,
+			);
+			path = Service;
 			sourceTree = "<group>";
 		};
 		B2198B8B2A2A36EA0019032D = {
@@ -261,6 +343,8 @@
 				B2198B972A2A36EA0019032D /* AppDelegate.swift */,
 				B2198B992A2A36EA0019032D /* SceneDelegate.swift */,
 				04BA131F2A2AD9FB0004E2FB /* Main */,
+				9816F6D32A4948BE00A7A284 /* Network */,
+				9816F6E72A494AA900A7A284 /* Amplify */,
 				04D2FCF52A2A515500253028 /* SupportingFiles */,
 			);
 			path = Avocado;
@@ -317,6 +401,10 @@
 				04D2FD012A2A528200253028 /* SnapKit */,
 				04D2FD042A2A529600253028 /* Then */,
 				04C835F32A2B315300731E3E /* RxDataSources */,
+				9816F6D82A49495500A7A284 /* Moya */,
+				9816F6DA2A49495500A7A284 /* RxMoya */,
+				9816F6DD2A494A1B00A7A284 /* AWSCognitoAuthPlugin */,
+				9816F6DF2A494A1B00A7A284 /* Amplify */,
 			);
 			productName = Avocado;
 			productReference = B2198B942A2A36EA0019032D /* Avocado.app */;
@@ -396,6 +484,8 @@
 				04D2FD002A2A528200253028 /* XCRemoteSwiftPackageReference "SnapKit" */,
 				04D2FD032A2A529600253028 /* XCRemoteSwiftPackageReference "Then" */,
 				04C835F22A2B315300731E3E /* XCRemoteSwiftPackageReference "RxDataSources" */,
+				9816F6D72A49495500A7A284 /* XCRemoteSwiftPackageReference "Moya" */,
+				9816F6DC2A494A1B00A7A284 /* XCRemoteSwiftPackageReference "amplify-swift" */,
 			);
 			productRefGroup = B2198B952A2A36EA0019032D /* Products */;
 			projectDirPath = "";
@@ -414,6 +504,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				B2198BA72A2A36EB0019032D /* LaunchScreen.storyboard in Resources */,
+				9816F6E92A494AC800A7A284 /* amplifyconfiguration.json in Resources */,
 				B2198BA42A2A36EB0019032D /* Assets.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -440,12 +531,16 @@
 			buildActionMask = 2147483647;
 			files = (
 				04C835ED2A2B2BE700731E3E /* ProductM.swift in Sources */,
+				981A598A2A494F5C0031A917 /* SignUpVM.swift in Sources */,
 				04C835E92A2B24CB00731E3E /* CollectionView+Protocol.swift in Sources */,
+				9816F6ED2A494B0900A7A284 /* BasePagenationResponse.swift in Sources */,
 				04D2FD082A2A530F00253028 /* UIViewController+Extension.swift in Sources */,
 				04C835F92A2B5E6500731E3E /* MainCategoryM.swift in Sources */,
 				04C835EB2A2B280A00731E3E /* MainSectionM.swift in Sources */,
+				981A598D2A494FAE0031A917 /* AuthService.swift in Sources */,
 				04C835FB2A2B5FCF00731E3E /* MainHeaderRV.swift in Sources */,
 				B29D78912A2B6FB1008B6945 /* SearchVC.swift in Sources */,
+				9816F6E42A494A6F00A7A284 /* Logger.swift in Sources */,
 				04D2FD112A2A576C00253028 /* BaseVC.swift in Sources */,
 				04C835F12A2B2CFA00731E3E /* MainDataM.swift in Sources */,
 				B212D5872A45E8F40008DAD1 /* LoginVC.swift in Sources */,
@@ -459,7 +554,10 @@
 				B2198B982A2A36EA0019032D /* AppDelegate.swift in Sources */,
 				B212D5892A45EAF90008DAD1 /* Variant.swift in Sources */,
 				04BD03F72A2B058500330D8A /* MainCategoryCC.swift in Sources */,
+				9816F6F42A494B5400A7A284 /* APIRequestInterceptor.swift in Sources */,
 				04D2FD0A2A2A532100253028 /* UIView+Extension.swift in Sources */,
+				9816F6D62A49491E00A7A284 /* BaseTarget.swift in Sources */,
+				9816F6F22A494B3C00A7A284 /* NetworkLoggerPlugin.swift in Sources */,
 				B2E2AC802A4772D3003DAE88 /* WelcomeVC.swift in Sources */,
 				B2198B9A2A2A36EA0019032D /* SceneDelegate.swift in Sources */,
 				04BA13212A2ADA160004E2FB /* MainVC.swift in Sources */,
@@ -467,6 +565,10 @@
 				B29D78932A2B6FCF008B6945 /* SearchVM.swift in Sources */,
 				B20AFE682A2BAE73004A646B /* SearchBarV.swift in Sources */,
 				B2E186CE2A474B4C00ABE98F /* SignupVC.swift in Sources */,
+				9816F6EB2A494AF400A7A284 /* DTOResponseable.swift in Sources */,
+				9816F6E62A494A8F00A7A284 /* KeychainUtil.swift in Sources */,
+				9816F6EF2A494B1B00A7A284 /* NetworkError.swift in Sources */,
+				9816F6E22A494A5900A7A284 /* BaseAPIService.swift in Sources */,
 				04C835FD2A2B5FE100731E3E /* MainFooterRV.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -848,6 +950,22 @@
 				minimumVersion = 3.0.0;
 			};
 		};
+		9816F6D72A49495500A7A284 /* XCRemoteSwiftPackageReference "Moya" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/Moya/Moya.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 15.0.0;
+			};
+		};
+		9816F6DC2A494A1B00A7A284 /* XCRemoteSwiftPackageReference "amplify-swift" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/aws-amplify/amplify-swift";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 2.0.0;
+			};
+		};
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
@@ -880,6 +998,26 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 04D2FD032A2A529600253028 /* XCRemoteSwiftPackageReference "Then" */;
 			productName = Then;
+		};
+		9816F6D82A49495500A7A284 /* Moya */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 9816F6D72A49495500A7A284 /* XCRemoteSwiftPackageReference "Moya" */;
+			productName = Moya;
+		};
+		9816F6DA2A49495500A7A284 /* RxMoya */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 9816F6D72A49495500A7A284 /* XCRemoteSwiftPackageReference "Moya" */;
+			productName = RxMoya;
+		};
+		9816F6DD2A494A1B00A7A284 /* AWSCognitoAuthPlugin */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 9816F6DC2A494A1B00A7A284 /* XCRemoteSwiftPackageReference "amplify-swift" */;
+			productName = AWSCognitoAuthPlugin;
+		};
+		9816F6DF2A494A1B00A7A284 /* Amplify */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 9816F6DC2A494A1B00A7A284 /* XCRemoteSwiftPackageReference "amplify-swift" */;
+			productName = Amplify;
 		};
 /* End XCSwiftPackageProductDependency section */
 

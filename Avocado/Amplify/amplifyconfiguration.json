@@ -1,0 +1,32 @@
+{
+  "auth": {
+    "plugins": {
+      "awsCognitoAuthPlugin": {
+        "IdentityManager": {
+          "Default": {}
+        },
+        "CognitoUserPool": {
+          "Default": {
+            "PoolId": "ap-northeast-1_dQBEh0LPS",
+            "AppClientId": "39g5i8av0jlpgbusn3qdg7c6nv",
+            "Region": "ap-northeast-1"
+          }
+        },
+        "Auth": {
+          "Default": {
+            "authenticationFlowType": "USER_SRP_AUTH",
+            "OAuth": {
+              "WebDomain": "",
+              "AppClientId": "39g5i8av0jlpgbusn3qdg7c6nv",
+              "SignInRedirectURI": "[CUSTOM REDIRECT SCHEME AFTER SIGN IN, e.g. myapp://]",
+              "SignOutRedirectURI": "[CUSTOM REDIRECT SCHEME AFTER SIGN OUT, e.g. myapp://]",
+              "Scopes": [
+                "email"
+              ]
+            }
+          }
+        }
+      }
+    }
+  }
+}
