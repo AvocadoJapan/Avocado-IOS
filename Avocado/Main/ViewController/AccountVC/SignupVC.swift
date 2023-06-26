@@ -30,6 +30,8 @@ class SignupVC: BaseVC {
     
     private lazy var passwordInput : InputView = InputView(label: "비밀번호", placeholder: "********", colorSetting: .normal)
     
+    private lazy var passwordCheckInput : InputView = InputView(label: "비밀번호 확인", placeholder: "********", colorSetting: .normal)
+    
     private lazy var nicknameInput : InputView = InputView(label: "닉네임", placeholder: "username", colorSetting: .normal)
     
         
@@ -86,7 +88,7 @@ class SignupVC: BaseVC {
             view.addSubview($0)
         }
         
-        [emailInput, passwordInput, nicknameInput].forEach {
+        [emailInput, passwordInput, passwordCheckInput, nicknameInput].forEach {
             inputField.addArrangedSubview($0)
         }
         
