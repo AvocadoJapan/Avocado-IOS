@@ -21,7 +21,11 @@
               "SignInRedirectURI": "[CUSTOM REDIRECT SCHEME AFTER SIGN IN, e.g. myapp://]",
               "SignOutRedirectURI": "[CUSTOM REDIRECT SCHEME AFTER SIGN OUT, e.g. myapp://]",
               "Scopes": [
-                "email"
+                  "phone",
+                  "email",
+                  "openid",
+                  "profile",
+                  "aws.cognito.signin.user.admin"
               ]
             }
           }

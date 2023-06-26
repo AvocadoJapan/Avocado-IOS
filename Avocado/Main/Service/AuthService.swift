@@ -101,8 +101,34 @@ final class AuthService {
             Task {
                 do {
                     let loginResult = try await Amplify.Auth.signIn(username: email, password: password)
-                    observer.onNext(loginResult.isSignedIn)
-                    observer.onCompleted()
+                    
+                    if (loginResult.isSignedIn) {
+                        let session = try await Amplify.Auth.fetchAuthSession()
+                        if let cognitTokenResult = (session as? AuthCognitoTokensProvider)?.getCognitoTokens() {
+                            switch cognitTokenResult {
+                            case let .success(tokens):
+                                Logger.d("token = \(tokens)")
+                                // accessToken, refreshToken create
+                                let tokenCreate = KeychainUtil.loginTokenCreate(accessToken: tokens.accessToken, refreshToken: tokens.refreshToken)
+                                
+                                if (!tokenCreate) {
+                                    observer.onError(NetworkError.unknown(-1, "키체인 생성 실패"))
+                                }
+                                else {
+                                    observer.onNext(true)
+                                }
+                                
+                                observer.onCompleted()
+                                
+                            case let .failure(error):
+                                Logger.e("token retry failed with error \(error)")
+                                observer.onError(error)
+                            }
+                        }
+                    }
+                    
+                    
+                    
                 }
                 catch let error as AuthError {
                     Logger.e("sign in failed \(error)")
@@ -135,7 +161,15 @@ final class AuthService {
                 switch signOutResult {
                 case .complete:
                     Logger.d("signOut Success")
-                    observer.onNext(true)
+                    // accessToken, refreshToken delete
+                    let isDeleted = KeychainUtil.loginTokenDelete()
+                    if (!isDeleted) {
+                        observer.onError(NetworkError.unknown(-1, "키체인 삭제 실패"))
+                    }
+                    else {
+                        observer.onNext(true)
+                    }
+                    
                     observer.onCompleted()
                     
                 case let .partial(revokeTokenError, globalSignOutError, hostedUIError):
@@ -180,7 +214,15 @@ final class AuthService {
                 do {
                     try await Amplify.Auth.deleteUser()
                     Logger.d("Successed Deleted Account")
-                    observer.onNext(true)
+                    // accessToken, refreshToken delete
+                    let isDeleted = KeychainUtil.loginTokenDelete()
+                    if (!isDeleted) {
+                        observer.onError(NetworkError.unknown(-1, "키체인 삭제 실패"))
+                    }
+                    else {
+                        observer.onNext(true)
+                    }
+                    
                     observer.onCompleted()
                 }
                 catch let error as AuthError {
@@ -307,7 +349,9 @@ final class AuthService {
                 if let cognitTokenResult = (session as? AuthCognitoTokensProvider)?.getCognitoTokens() {
                     switch cognitTokenResult {
                     case let .success(tokens):
-                        KeychainUtil.loginTokenCreate(accessToken: tokens.accessToken, refreshToken: tokens.refreshToken)
+                        KeychainUtil.loginAccessTokenUpdate(token: tokens.accessToken)
+                        KeychainUtil.loginRefreshTokenUpdate(token: tokens.refreshToken)
+                        
                         observer.onNext(true)
                         observer.onCompleted()
                         
@@ -322,5 +366,29 @@ final class AuthService {
         }
     }
     
+    /**
+     * - Description 현재 사용자가 로그인했는지 안했는지 여부 판정
+     * - Returns 로그인 여부 Observable
+     */
+    func checkLoginSession() -> Observable<Bool> {
+        
+        return Observable.create { observer in
+            Task {
+                do {
+                    let session = try await Amplify.Auth.fetchAuthSession()
+                    Logger.d("Is user signed in - \(session.isSignedIn)")
+                    observer.onNext(session.isSignedIn)
+                }
+                catch let error as AuthError {
+                    Logger.e("Fetch session faild with error \(error)")
+                }
+                catch {
+                    Logger.e("Unexpected error: \(error)")
+                }
+            }
+            
+            return Disposables.create()
+        }
+    }
     
 }

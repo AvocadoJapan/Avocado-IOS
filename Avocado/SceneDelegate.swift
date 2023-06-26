@@ -6,17 +6,44 @@
 //
 
 import UIKit
+import RxSwift
 
 class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 
     var window: UIWindow?
-
+    let disposeBag = DisposeBag()
 
     func scene(_ scene: UIScene, willConnectTo session: UISceneSession, options connectionOptions: UIScene.ConnectionOptions) {
         // Use this method to optionally configure and attach the UIWindow `window` to the provided UIWindowScene `scene`.
         // If using a storyboard, the `window` property will automatically be initialized and attached to the scene.
         // This delegate does not imply the connecting scene or session are new (see `application:configurationForConnectingSceneSession` instead).
-        guard let _ = (scene as? UIWindowScene) else { return }
+        guard let windowScene = (scene as? UIWindowScene) else { return }
+        window = UIWindow(windowScene: windowScene)
+        
+        let authService = AuthService()
+        // 로그인 여부 판단하여 로그인 활상화 되어있는 유저일 경우 메인화면으로 보냄 {아닐 경우 로그인화면으로 전송}
+        authService.checkLoginSession()
+            .observe(on: MainScheduler.instance)
+            .subscribe { [weak self] isLogin in
+            if (isLogin) {
+                let mainVM = MainVM()
+                let mainVC = MainVC(vm: mainVM)
+                let navigationController = UINavigationController(rootViewController: mainVC)
+                navigationController.modalPresentationStyle = .fullScreen
+                
+                self?.window?.rootViewController = mainVC
+                self?.window?.makeKeyAndVisible()
+            }
+            else {
+                let signUpViewModel = LoginVM(service: authService)
+                let signUpVC = LoginVC(vm: signUpViewModel)
+                
+                self?.window?.rootViewController = signUpVC
+                self?.window?.makeKeyAndVisible()
+            }
+        }
+        .disposed(by: disposeBag)
+        
     }
 
     func sceneDidDisconnect(_ scene: UIScene) {

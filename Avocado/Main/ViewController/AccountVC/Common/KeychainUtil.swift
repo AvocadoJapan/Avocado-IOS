@@ -11,6 +11,8 @@ import Foundation
  */
 final class KeychainUtil {
     
+    static let service = Bundle.main.bundleIdentifier!
+    
     @discardableResult
     static func create(serviceName: String, account: String, token: String) -> Bool {
         let query: [String: Any] = [
@@ -112,22 +114,36 @@ extension KeychainUtil {
     
     @discardableResult
     static func loginTokenCreate(accessToken: String, refreshToken: String) -> Bool {
-        let isAccessTokenCreate = create(serviceName: "", account: "", token: accessToken)
-        let isRefreshTokenCreate = create(serviceName: "", account: "", token: refreshToken)
+        let isAccessTokenCreate = create(serviceName: service, account: "loginAccessToken", token: accessToken)
+        let isRefreshTokenCreate = create(serviceName: service, account: "loginRefreshToken", token: refreshToken)
         
         return isAccessTokenCreate && isRefreshTokenCreate
     }
     
-    static func loginTokenRead() -> String? {
-        return read(serviceName: "", account: "")
+    static func loginAccessTokenRead() -> String? {
+        return read(serviceName: service, account: "loginAccessToken")
     }
     
-    static func loginTokenUpdate(token: String) -> Bool {
-        return update(serviceName: "", account: "", token: token)
+    static func loginRefreshTokenRead() -> String? {
+        return read(serviceName: service, account: "loginRefreshToken")
     }
     
+    @discardableResult
+    static func loginAccessTokenUpdate(token: String) -> Bool {
+        return update(serviceName: service, account: "loginAccessToken", token: token)
+    }
+    
+    @discardableResult
+    static func loginRefreshTokenUpdate(token: String) -> Bool {
+        return update(serviceName: service, account: "loginRefreshToken", token: token)
+    }
+    
+    @discardableResult
     static func loginTokenDelete() -> Bool {
-        return delete(serviceName: "", account: "")
+        let isAccessTokenDelete = delete(serviceName: service, account: "loginAccessToken")
+        let isRefreshTokenDelete = delete(serviceName: service, account: "loginRefreshToken")
+        
+        return isAccessTokenDelete && isRefreshTokenDelete
     }
 }
 

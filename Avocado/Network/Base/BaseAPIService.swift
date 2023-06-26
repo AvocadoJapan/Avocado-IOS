@@ -26,7 +26,7 @@ class BaseAPIService<Target: BaseTarget> {
         if (!isStub) {
             // accessToken Setting
             let authPlugin = AccessTokenPlugin { _ in
-                guard let accessToken = KeychainUtil.loginTokenRead() else {
+                guard let accessToken = KeychainUtil.loginAccessTokenRead() else {
                     return ""
                 }
                 return accessToken
