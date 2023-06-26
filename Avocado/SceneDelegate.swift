@@ -21,6 +21,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         window = UIWindow(windowScene: windowScene)
         
         let authService = AuthService()
+        //FIXME: Welcome 화면 연결 관련 작업 후 활성화 된 경우: Main 아니면 Welcome으로 변경 필요
         // 로그인 여부 판단하여 로그인 활상화 되어있는 유저일 경우 메인화면으로 보냄 {아닐 경우 로그인화면으로 전송}
         authService.checkLoginSession()
             .observe(on: MainScheduler.instance)
