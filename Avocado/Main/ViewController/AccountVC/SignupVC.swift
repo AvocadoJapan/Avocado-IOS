@@ -78,6 +78,16 @@ class SignupVC: BaseVC {
     }
     
     var disposeBag = DisposeBag()
+    var viewModel: SignUpVM
+    
+    init(vm viewModel: SignUpVM) {
+        self.viewModel = viewModel
+        super.init(nibName: nil, bundle: nil)
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
     
     override func setProperty() {
         view.backgroundColor = .white
@@ -125,6 +135,70 @@ class SignupVC: BaseVC {
         }
     }
     
+    override func bindUI() {
+        
+        emailInput
+            .userInput
+            .subscribe(onNext: { [weak self] text in
+                self?.viewModel.emailObserver.accept(text)
+            })
+            .disposed(by: disposeBag)
+        
+        passwordInput
+            .userInput
+            .subscribe(onNext: { [weak self] text in
+                self?.viewModel.passwordObserver.accept(text)
+                
+            })
+            .disposed(by: disposeBag)
+        
+        viewModel
+            .isVaild
+            .bind(to: confirmButton.rx.isEnabled)
+            .disposed(by: disposeBag)
+        
+        viewModel
+            .isVaild
+            .map { $0 ? 1 : 0.3 }
+            .bind(to: confirmButton.rx.alpha)
+            .disposed(by: disposeBag)
+        
+        viewModel
+            .errEvent
+            .observe(on: MainScheduler.instance)
+            .subscribe(onNext: { [weak self] message in
+                let alert = UIAlertController(title: "", message: message, preferredStyle: .alert)
+                alert.addAction(UIAlertAction(title: "확인", style: .default))
+                
+                self?.present(alert, animated: true)
+            })
+            .disposed(by: disposeBag)
+        
+        viewModel
+            .successEvent
+            .asDriver()
+            .drive(onNext: { [weak self] _ in
+                // FIXME: 화면 이동으로 처리를 하던 팝업으로 받는 처리가 필요
+                let alert = UIAlertController(title: "", message: "인증번호를 전송하였습니다", preferredStyle: .alert)
+                alert.addAction(UIAlertAction(title: "확인", style: .default))
+                
+                self?.present(alert, animated: true)
+            })
+            .disposed(by: disposeBag)
+        
+        confirmButton
+            .rx
+            .tap
+            .do(onNext: { [weak self] in
+                self?.emailInput.resignFirstResponder()
+                self?.passwordInput.resignFirstResponder()
+
+            }).subscribe { [weak self] _ in
+                self?.viewModel.signUp()
+            }
+            .disposed(by: disposeBag)
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
     }
@@ -141,7 +215,7 @@ import SwiftUI
 import RxSwift
 struct SignupVCPreview: PreviewProvider {
     static var previews: some View {
-        return SignupVC().toPreview()
+        return SignupVC(vm: SignUpVM(service: AuthService())).toPreview()
     }
 }
 #endif

@@ -48,6 +48,17 @@ class LoginVC: BaseVC {
         
     
     var disposeBag = DisposeBag()
+    var viewModel: LoginVM
+    
+    init(vm viewModel: LoginVM) {
+        self.viewModel = viewModel
+        super.init(nibName: nil, bundle: nil)
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
     
     override func setProperty() {
         view.backgroundColor = .white
@@ -92,6 +103,66 @@ class LoginVC: BaseVC {
 
     }
     
+    override func bindUI() {
+        emailInput
+            .userInput
+            .subscribe(onNext: { [weak self] text in
+                self?.viewModel.emailObserver.accept(text)
+            })
+            .disposed(by: disposeBag)
+        
+        passwordInput
+            .userInput
+            .subscribe(onNext: { [weak self] text in
+                self?.viewModel.passwordObserver.accept(text)
+            })
+            .disposed(by: disposeBag)
+        
+        viewModel
+            .isVaild
+            .map { $0 ? 1 : 0.3}
+            .bind(to: confirmButton.rx.alpha)
+            .disposed(by: disposeBag)
+        
+        viewModel
+            .isVaild
+            .bind(to: confirmButton.rx.isEnabled)
+            .disposed(by: disposeBag)
+        
+        confirmButton
+            .rx
+            .tap
+            .subscribe { [weak self] _ in
+                self?.viewModel.login()
+            }
+            .disposed(by: disposeBag)
+        
+        viewModel
+            .errEvent
+            .asDriver()
+            .drive(onNext: { [weak self] message in
+                let alert = UIAlertController(title: "", message: message, preferredStyle: .alert)
+                alert.addAction(UIAlertAction(title: "확인", style: .default))
+                
+                self?.present(alert, animated: true)
+            })
+            .disposed(by: disposeBag)
+        
+        viewModel
+            .successEvent
+            .asDriver()
+            .drive(onNext: { [weak self] _ in
+                let mainVM = MainVM()
+                let mainVC = MainVC(vm: mainVM)
+                let navigationController = UINavigationController(rootViewController: mainVC)
+                self?.modalPresentationStyle = .fullScreen
+                self?.modalTransitionStyle = .coverVertical
+                self?.present(navigationController, animated: false)
+            })
+            .disposed(by: disposeBag)
+            
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
     
@@ -122,7 +193,7 @@ import SwiftUI
 import RxSwift
 struct LoginVCPreview: PreviewProvider {
     static var previews: some View {
-        return LoginVC().toPreview()
+        return LoginVC(vm: LoginVM(service: AuthService())).toPreview()
     }
 }
 #endif
