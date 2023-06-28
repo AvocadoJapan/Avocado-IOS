@@ -69,18 +69,18 @@ final class KeychainUtil {
     @discardableResult
     static func update(serviceName: String, account: String, token: String) -> Bool {
         let query: [String: Any] = [
-            kSecClass as String: kSecClassGenericPassword
+            kSecAttrService as String: serviceName,
+            kSecAttrAccount as String: account,
+            kSecClass as String: kSecClassGenericPassword,
         ]
         
         let attributes: [String: Any] = [
-            kSecAttrService as String: serviceName,
-            kSecAttrAccount as String: account,
-            kSecValueData as String: token.data(using: .utf8) as Any
+            kSecValueData as String: token.data(using: .utf8) as AnyObject
         ]
         
         let status = SecItemUpdate(query as CFDictionary, attributes as CFDictionary)
-        guard status != errSecItemNotFound else {
-            Logger.e("Keychain item Not Found \n [Message]: \(String(describing: SecCopyErrorMessageString(status, nil)))")
+        guard status != errSecDuplicateItem else {
+            Logger.e("Keychain errSecDuplicate Item \n [Message]: \(String(describing: SecCopyErrorMessageString(status, nil)))")
             return false
         }
         guard status == errSecSuccess else {

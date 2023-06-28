@@ -14,11 +14,7 @@ import RxSwift
 /**
  * - Description 인증관련 API
  */
-final class AuthService {
- 
-    init () {
-        
-    }
+final class AuthService: BaseAPIService<AuthAPI> {
     /**
      * - Description: 회원가입
      * - Parameter email: 로그인에 사용될 이메일
@@ -367,7 +363,7 @@ final class AuthService {
     }
     
     /**
-     * - Description 현재 사용자가 로그인했는지 안했는지 여부 판정
+     * - Description 현재 사용자가 로그인했는지 안했는지 여부 판정, 액세스 토큰이 만료가 된 경우 토큰 갱신
      * - Returns 로그인 여부 Observable
      */
     func checkLoginSession() -> Observable<Bool> {
@@ -377,18 +373,87 @@ final class AuthService {
                 do {
                     let session = try await Amplify.Auth.fetchAuthSession()
                     Logger.d("Is user signed in - \(session.isSignedIn)")
-                    observer.onNext(session.isSignedIn)
+                    
+                    // 사용자가 로그아웃을 하지 않은 경우
+                    if (session.isSignedIn) {
+                        if let cognitTokenResult = (session as? AuthCognitoTokensProvider)?.getCognitoTokens() {
+                            switch cognitTokenResult {
+                            case let .success(tokens):
+                                let readToken = KeychainUtil.loginAccessTokenRead()
+                                
+                                // accessToken 값이 다를 경우에만 토큰 업데이트
+                                if (tokens.accessToken != readToken) {
+                                    KeychainUtil.loginAccessTokenUpdate(token: tokens.accessToken)
+                                    Logger.i("Not Same Access Token")
+                                }
+                                else {
+                                    Logger.i("Same Access Token")
+                                }
+                                
+                                observer.onNext(true)
+                                
+                            case let .failure(error):
+                                Logger.e("token retry failed with error \(error)")
+                                observer.onError(error)
+                            }
+                        }
+                    }
+                    else {
+                        Logger.e("User Signed Failed !!")
+                        observer.onNext(false)
+                    }
+                    
+                    observer.onCompleted()
                 }
                 catch let error as AuthError {
                     Logger.e("Fetch session faild with error \(error)")
+                    observer.onError(error)
                 }
                 catch {
                     Logger.e("Unexpected error: \(error)")
+                    observer.onError(error)
                 }
             }
             
             return Disposables.create()
         }
+    }
+    
+    /**
+     * - Description 아보카도 프로필 등록 API{활동지역, 닉네임}
+     * - Parameter to : 닉네임
+     * - Parameter with: 활동지역ID
+     * - Returns 등록여부 Observable값 **수정될 수  있음**
+     */
+    func avocadoSignUp(to nickName: String, with regionId: Int) -> Observable<Bool> {
+        return singleRequest(.signUp(name: nickName, regionId: regionId)).asObservable()
+    }
+    
+    /**
+     * - Description 사용자 정보 가져오는 API
+     * - Returns 사용자 정보 모델 Observable값
+     */
+    func getProfile() -> Observable<User> {
+        return singleRequest(.profile).asObservable()
+    }
+    
+    /**
+     * - Description 활동지역을 가져오는 API
+     * - Parameter keyword: 검색 값?
+     * - Returns Region의 배열형태 값
+     */
+    func getRegions(keyword: String) -> Observable<Regions> {
+        return singleRequest(.region(searchkeyword: keyword)).asObservable()
+    }
+    
+    /**
+     * - Description 프로필 이미지변경 API
+     * - Parameter to 닉네임
+     * - Parameter with 활동지역 ID
+     * - Returns S3 버킷에 업로드할 pre-signed URL
+     */
+    func changeAvatar(to nickName: String, with regionId: Int) -> Observable<String> {
+        return singleRequest(.changeAvatar(name: nickName, regionId: regionId)).asObservable()
     }
     
 }

@@ -27,12 +27,10 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
             .observe(on: MainScheduler.instance)
             .subscribe { [weak self] isLogin in
             if (isLogin) {
-                let mainVM = MainVM()
-                let mainVC = MainVC(vm: mainVM)
-                let navigationController = UINavigationController(rootViewController: mainVC)
-                navigationController.modalPresentationStyle = .fullScreen
+                let signUpViewModel = LoginVM(service: authService)
+                let signUpVC = LoginVC(vm: signUpViewModel)
                 
-                self?.window?.rootViewController = mainVC
+                self?.window?.rootViewController = signUpVC
                 self?.window?.makeKeyAndVisible()
             }
             else {

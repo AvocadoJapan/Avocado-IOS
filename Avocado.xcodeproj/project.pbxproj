@@ -46,6 +46,9 @@
 		9816F6F42A494B5400A7A284 /* APIRequestInterceptor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9816F6F32A494B5400A7A284 /* APIRequestInterceptor.swift */; };
 		981A598A2A494F5C0031A917 /* SignUpVM.swift in Sources */ = {isa = PBXBuildFile; fileRef = 981A59892A494F5B0031A917 /* SignUpVM.swift */; };
 		981A598D2A494FAE0031A917 /* AuthService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 981A598C2A494FAE0031A917 /* AuthService.swift */; };
+		98AD10FF2A4BF2E7001C4734 /* AuthAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98AD10FE2A4BF2E7001C4734 /* AuthAPI.swift */; };
+		98AD11012A4BF713001C4734 /* UserM.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98AD11002A4BF713001C4734 /* UserM.swift */; };
+		98AD11032A4BF8B4001C4734 /* RegionsM.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98AD11022A4BF8B4001C4734 /* RegionsM.swift */; };
 		B1BFDD672A49CF8100DB4955 /* LoginVM.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1BFDD662A49CF8100DB4955 /* LoginVM.swift */; };
 		B20AFE682A2BAE73004A646B /* SearchBarV.swift in Sources */ = {isa = PBXBuildFile; fileRef = B20AFE672A2BAE73004A646B /* SearchBarV.swift */; };
 		B20AFE6A2A2BB259004A646B /* Constant.swift in Sources */ = {isa = PBXBuildFile; fileRef = B20AFE692A2BB259004A646B /* Constant.swift */; };
@@ -113,6 +116,9 @@
 		9816F6F32A494B5400A7A284 /* APIRequestInterceptor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIRequestInterceptor.swift; sourceTree = "<group>"; };
 		981A59892A494F5B0031A917 /* SignUpVM.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpVM.swift; sourceTree = "<group>"; };
 		981A598C2A494FAE0031A917 /* AuthService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthService.swift; sourceTree = "<group>"; };
+		98AD10FE2A4BF2E7001C4734 /* AuthAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthAPI.swift; sourceTree = "<group>"; };
+		98AD11002A4BF713001C4734 /* UserM.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserM.swift; sourceTree = "<group>"; };
+		98AD11022A4BF8B4001C4734 /* RegionsM.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegionsM.swift; sourceTree = "<group>"; };
 		B1BFDD662A49CF8100DB4955 /* LoginVM.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginVM.swift; sourceTree = "<group>"; };
 		B20AFE672A2BAE73004A646B /* SearchBarV.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchBarV.swift; sourceTree = "<group>"; };
 		B20AFE692A2BB259004A646B /* Constant.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constant.swift; sourceTree = "<group>"; };
@@ -202,6 +208,8 @@
 				04C835EE2A2B2CC500731E3E /* BannerM.swift */,
 				04C835F02A2B2CFA00731E3E /* MainDataM.swift */,
 				04C835F82A2B5E6500731E3E /* MainCategoryM.swift */,
+				98AD11002A4BF713001C4734 /* UserM.swift */,
+				98AD11022A4BF8B4001C4734 /* RegionsM.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -316,6 +324,7 @@
 			isa = PBXGroup;
 			children = (
 				981A598C2A494FAE0031A917 /* AuthService.swift */,
+				98AD10FE2A4BF2E7001C4734 /* AuthAPI.swift */,
 			);
 			path = Service;
 			sourceTree = "<group>";
@@ -567,6 +576,8 @@
 				04BA13262A2ADAEE0004E2FB /* MainVM.swift in Sources */,
 				B29D78932A2B6FCF008B6945 /* SearchVM.swift in Sources */,
 				B20AFE682A2BAE73004A646B /* SearchBarV.swift in Sources */,
+				98AD10FF2A4BF2E7001C4734 /* AuthAPI.swift in Sources */,
+				98AD11032A4BF8B4001C4734 /* RegionsM.swift in Sources */,
 				B2E186CE2A474B4C00ABE98F /* SignupVC.swift in Sources */,
 				B1BFDD672A49CF8100DB4955 /* LoginVM.swift in Sources */,
 				9816F6EB2A494AF400A7A284 /* DTOResponseable.swift in Sources */,
@@ -574,6 +585,7 @@
 				9816F6EF2A494B1B00A7A284 /* NetworkError.swift in Sources */,
 				9816F6E22A494A5900A7A284 /* BaseAPIService.swift in Sources */,
 				04C835FD2A2B5FE100731E3E /* MainFooterRV.swift in Sources */,
+				98AD11012A4BF713001C4734 /* UserM.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
