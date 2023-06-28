@@ -18,8 +18,8 @@
             "OAuth": {
               "WebDomain": "",
               "AppClientId": "39g5i8av0jlpgbusn3qdg7c6nv",
-              "SignInRedirectURI": "[CUSTOM REDIRECT SCHEME AFTER SIGN IN, e.g. myapp://]",
-              "SignOutRedirectURI": "[CUSTOM REDIRECT SCHEME AFTER SIGN OUT, e.g. myapp://]",
+              "SignInRedirectURI": "avocado://",
+              "SignOutRedirectURI": "avocado://",
               "Scopes": [
                   "phone",
                   "email",

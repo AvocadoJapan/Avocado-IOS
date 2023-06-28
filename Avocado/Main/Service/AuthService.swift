@@ -10,6 +10,7 @@ import Amplify
 import AWSPluginsCore
 import AWSCognitoAuthPlugin
 import RxSwift
+import UIKit
 
 /**
  * - Description 인증관련 API
@@ -418,7 +419,62 @@ final class AuthService: BaseAPIService<AuthAPI> {
             return Disposables.create()
         }
     }
+    /**
+     * - Description 이메일 인증번호 재요청
+     * - Parameter to 재인증받을 이메일 인증 번호
+     * - Returns 이메일 인증번호 재전송 여부 Observable
+     */
+    func resendSignUpCode(to email: String) -> Observable<Bool> {
+        return Observable.create { observer in
+            Task {
+                do {
+                    let detail = try await Amplify.Auth.resendSignUpCode(for: email)
+                    Logger.d("Successed Confirm Code in \(detail.destination), \(String(describing: detail.attributeKey))")
+                    observer.onNext(true)
+                    observer.onCompleted()
+                }
+                catch let error as AuthError {
+                    Logger.e("resend Email Confirm Code with error \(error)")
+                    observer.onError(error)
+                }
+                catch {
+                    Logger.e("Unexpected error \(error)")
+                    observer.onError(error)
+                }
+            }
+            
+            return Disposables.create()
+        }
+    }
     
+    /**
+     * - Description 소셜로그인
+     * - Parameter view 화면을 띄울 뷰 정보
+     * - Parameter socialType 소셜 로그인 정보 {구글, 애플..등}
+     * - Returns 로그인 여부 Bool 값
+     */
+    func socialSignInView(view: UIView, socialType: AuthProvider) -> Observable<Bool> {
+        return Observable.create { observable in
+            Task {
+                do {
+                    let signInResult = try await Amplify.Auth.signInWithWebUI(for: socialType, presentationAnchor: view.window!)
+                    Logger.d("SignIN \(signInResult.isSignedIn)")
+                    observable.onNext(signInResult.isSignedIn)
+                    observable.onCompleted()
+                }
+                catch let error as AuthError {
+                    Logger.e("Social Login Failed with error \(error)")
+                    observable.onError(error)
+                }
+                catch {
+                    Logger.e("Social Login Failed with error \(error)")
+                    observable.onError(error)
+                }
+            }
+            
+            return Disposables.create()
+        }
+    }
     /**
      * - Description 아보카도 프로필 등록 API{활동지역, 닉네임}
      * - Parameter to : 닉네임
@@ -452,7 +508,7 @@ final class AuthService: BaseAPIService<AuthAPI> {
      * - Parameter with 활동지역 ID
      * - Returns S3 버킷에 업로드할 pre-signed URL
      */
-    func changeAvatar(to nickName: String, with regionId: Int) -> Observable<String> {
+    func changeAvatar(to nickName: String, with regionId: Int) -> Observable<CommonModel.S3UploadedURL> {
         return singleRequest(.changeAvatar(name: nickName, regionId: regionId)).asObservable()
     }
     

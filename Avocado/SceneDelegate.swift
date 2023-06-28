@@ -27,15 +27,15 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
             .observe(on: MainScheduler.instance)
             .subscribe { [weak self] isLogin in
             if (isLogin) {
-                let signUpViewModel = LoginVM(service: authService)
-                let signUpVC = LoginVC(vm: signUpViewModel)
+                let mainViewModel = MainVM()
+                let mainVC = MainVC(vm: mainViewModel)
                 
-                self?.window?.rootViewController = signUpVC
+                self?.window?.rootViewController = mainVC
                 self?.window?.makeKeyAndVisible()
             }
             else {
-                let signUpViewModel = LoginVM(service: authService)
-                let signUpVC = LoginVC(vm: signUpViewModel)
+                let signUpViewModel = WelcomeVM(service: authService)
+                let signUpVC = WelcomeVC(vm: signUpViewModel)
                 
                 self?.window?.rootViewController = signUpVC
                 self?.window?.makeKeyAndVisible()

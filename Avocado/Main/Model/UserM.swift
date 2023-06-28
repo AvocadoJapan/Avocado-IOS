@@ -6,12 +6,14 @@
 //
 
 import Foundation
-
+/**
+ * - Description 사용자 정보 모델
+ */
 struct User: Codable {
-    let userId: String
-    let nickName: String
+    let userId: String // 유저 아이디
+    let nickName: String// 유저 닉네임
     
-    enum CodingsKey: String, CodingKey {
+    enum CodingKeys: String, CodingKey {
         case userId = "id"
         case nickName = "name"
     }

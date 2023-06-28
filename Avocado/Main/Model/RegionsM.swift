@@ -6,12 +6,14 @@
 //
 
 import Foundation
-
+/**
+ * - Description 활동지역 모델
+ */
 struct Region: Codable {
-    let regionId: Int
-    let name: String
+    let regionId: Int // 지역 아이디
+    let name: String // 지역 명
     
-    enum CodingsKey: String, CodingKey {
+    enum CodingKeys: String, CodingKey {
         case regionId = "id"
         case name = "name"
     }
