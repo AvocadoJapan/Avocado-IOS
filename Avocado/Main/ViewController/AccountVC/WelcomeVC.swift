@@ -14,6 +14,11 @@ import Then
 
 class WelcomeVC: BaseVC {
     
+    fileprivate lazy var logo = UIImageView().then {
+        $0.image = UIImage(named: "logo_avocado")
+        $0.contentMode = .scaleAspectFit
+    }
+    
     fileprivate lazy var titleLabel = UILabel().then {
         $0.text = "아보카도를 이용하기 위해서는 로그인이 필요합니다"
         $0.numberOfLines = 0
@@ -30,7 +35,7 @@ class WelcomeVC: BaseVC {
     }
     
     fileprivate lazy var agreementLabel = UILabel().then {
-        $0.text = "로그인을 함 으로써, 당사 약관및 개인정보정책에 동의한것으로 간주합니다"
+        $0.text = "로그인을 함으로써, 당사 약관 및 개인정보 정책에 동의한 것으로 간주합니다"
         $0.numberOfLines = 0
         $0.textAlignment = .right
         $0.textColor = .darkGray
@@ -97,7 +102,7 @@ class WelcomeVC: BaseVC {
     }
     
     override func setLayout() {
-        [titleLabel,signupLabel, agreementLabel, socialLoginButtonStackView].forEach {
+        [logo, titleLabel,signupLabel, agreementLabel, socialLoginButtonStackView].forEach {
             view.addSubview($0)
         }
         
@@ -108,9 +113,16 @@ class WelcomeVC: BaseVC {
     }
     
     override func setConstraint() {
+        
+        logo.snp.makeConstraints {
+            $0.top.equalTo(view.safeAreaLayoutGuide).offset(20)
+            $0.left.equalToSuperview().offset(30)
+            $0.size.equalTo(55)
+        }
+        
         titleLabel.snp.makeConstraints {
             $0.centerX.equalToSuperview()
-            $0.top.equalTo(view.safeAreaLayoutGuide).offset(20)
+            $0.top.equalTo(logo.snp.bottom).offset(10)
             $0.left.equalToSuperview().offset(30)
         }
         
