@@ -24,6 +24,24 @@ struct ColorVariant {
 //    static var failure = Self(textColor: .red, bgColor: .white)
 }
 
+struct buttonColorType {
+    var tintColor : UIColor
+    var bgColor : UIColor
+    
+    init(tintColor: UIColor = .white,
+         bgColor: UIColor = .black) {
+        self.tintColor = tintColor
+        self.bgColor = bgColor
+    }
+    
+    static var primary = Self(tintColor: .white, bgColor: .black)
+    static var secondary = Self(tintColor: .black, bgColor: .white)
+    static var success = Self(tintColor: .white, bgColor: .systemBlue)
+    static var danger = Self(tintColor: .white, bgColor: .systemRed)
+    static var warning = Self(tintColor: .white, bgColor: .systemYellow)
+    static var info = Self(tintColor: .white, bgColor: .systemCyan)
+}
+
 struct regVarient {
     var regularExpression : String
     

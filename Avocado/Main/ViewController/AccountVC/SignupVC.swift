@@ -32,8 +32,6 @@ class SignupVC: BaseVC {
     
     private lazy var passwordCheckInput : InputView = InputView(label: "비밀번호 확인", placeholder: "********", colorSetting: .normal)
     
-    private lazy var nicknameInput : InputView = InputView(label: "닉네임", placeholder: "username", colorSetting: .normal)
-    
         
     fileprivate lazy var toggleView = UIStackView().then {
         $0.spacing = 10
@@ -53,21 +51,6 @@ class SignupVC: BaseVC {
         $0.isOn = false
         $0.onTintColor = .black
     }
-    
-//    fileprivate lazy var bottomButtonStackView = UIStackView().then {
-//        $0.axis = .horizontal
-//        $0.alignment = .fill
-//        $0.distribution = .fillEqually
-//        $0.spacing = 10
-//    }
-//    
-//    fileprivate lazy var backButton = UIButton().then {
-//        $0.setTitle("ログインに戻る", for: .normal)
-//        $0.backgroundColor = .gray
-//        $0.setTitleColor(.white, for: .normal)
-//        $0.titleLabel?.font = UIFont.boldSystemFont(ofSize: 13)
-//        $0.layer.cornerRadius = 25
-//    }
     
     fileprivate lazy var confirmButton = UIButton().then {
         $0.setTitle("회원가입", for: .normal)
@@ -98,7 +81,7 @@ class SignupVC: BaseVC {
             view.addSubview($0)
         }
         
-        [emailInput, passwordInput, passwordCheckInput, nicknameInput].forEach {
+        [emailInput, passwordInput, passwordCheckInput].forEach {
             inputField.addArrangedSubview($0)
         }
         

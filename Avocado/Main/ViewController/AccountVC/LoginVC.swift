@@ -30,13 +30,7 @@ class LoginVC: BaseVC {
     
     private lazy var passwordInput : InputView = InputView(label: "비밀번호", placeholder: "**********", colorSetting: .normal)
     
-    fileprivate lazy var confirmButton = UIButton().then {
-        $0.setTitle("로그인", for: .normal)
-        $0.backgroundColor = .black
-        $0.setTitleColor(.white, for: .normal)
-        $0.titleLabel?.font = UIFont.boldSystemFont(ofSize: 13)
-        $0.layer.cornerRadius = 20
-    }
+    private lazy var confirmButton : BottomButton = BottomButton(text: "로그인")
     
     fileprivate lazy var optionLabel = UILabel().then {
         $0.text = "다른 로그인 옵션 선택  >"
@@ -96,9 +90,8 @@ class LoginVC: BaseVC {
 
         confirmButton.snp.makeConstraints {
             $0.centerX.equalToSuperview()
-            $0.bottom.equalToSuperview()
+            $0.bottom.equalTo(view.safeAreaLayoutGuide)
             $0.left.equalToSuperview().offset(20)
-            $0.height.equalTo(50)
         }
 
     }
