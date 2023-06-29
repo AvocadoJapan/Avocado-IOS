@@ -44,7 +44,7 @@ final class InputView : UIView {
     }
     
     convenience init(label : String,
-                     placeholder : String,
+                     placeholder : String = "",
                      bgColor : UIColor = .white,
                      colorSetting : ColorVariant = .normal,
                      regSetting: regVarient? = nil){
@@ -75,18 +75,6 @@ final class InputView : UIView {
         super.init(coder: coder)
     }
     
-//    @objc func handleUserInput(_ sender: UITextField){
-//        print(#fileID, #function, #line, "- sender: \(String(describing: sender.text))")
-//        self.userInput.onNext(sender.text ?? "")
-//    }
-//
-//    func setUserInputAction(target: Any?, action: Selector){
-//
-//        self.textField.removeTarget(self, action: #selector(handleUserInput), for: .editingChanged)
-//
-//        self.textField.addTarget(target, action: action, for: .editingChanged)
-//    }
-    
     func buildStackView() -> UIStackView {
         
 
@@ -113,4 +101,16 @@ final class InputView : UIView {
 
         return wapperView
     }
+    
+    //    @objc func handleUserInput(_ sender: UITextField){
+    //        print(#fileID, #function, #line, "- sender: \(String(describing: sender.text))")
+    //        self.userInput.onNext(sender.text ?? "")
+    //    }
+    //
+    //    func setUserInputAction(target: Any?, action: Selector){
+    //
+    //        self.textField.removeTarget(self, action: #selector(handleUserInput), for: .editingChanged)
+    //
+    //        self.textField.addTarget(target, action: action, for: .editingChanged)
+    //    }
 }
