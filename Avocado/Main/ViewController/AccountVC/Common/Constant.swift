@@ -20,3 +20,16 @@ enum IDENTIFIER {
 //    static let BADGE_TV_CELL = "badgeTVCell"
 //    static let STAR_LIST_TV_CELL = "starListTVCell"
 }
+
+/**
+ * - Description 공통적으로 사용되는 모델 enum ()
+ */
+enum CommonModel {
+    /**
+     * - Description S3에 업로드될 URL
+     * - `url`값은 pre-signedURL으로 해당 값으로 이미지를 업로드함
+     */
+    struct S3UploadedURL: Codable {
+        let url: String
+    }
+}

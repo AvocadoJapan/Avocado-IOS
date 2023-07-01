@@ -25,26 +25,23 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         // 로그인 여부 판단하여 로그인 활상화 되어있는 유저일 경우 메인화면으로 보냄 {아닐 경우 로그인화면으로 전송}
         authService.checkLoginSession()
             .observe(on: MainScheduler.instance)
-            .subscribe { [weak self] isLogin in
-            if (isLogin) {
-                let mainVM = MainVM()
-                let mainVC = MainVC(vm: mainVM)
-                let navigationController = UINavigationController(rootViewController: mainVC)
-                navigationController.modalPresentationStyle = .fullScreen
-                
-                self?.window?.rootViewController = mainVC
-                self?.window?.makeKeyAndVisible()
-            }
-            else {
-                let signUpViewModel = LoginVM(service: authService)
-                let signUpVC = LoginVC(vm: signUpViewModel)
-                
-                self?.window?.rootViewController = signUpVC
-                self?.window?.makeKeyAndVisible()
-            }
-        }
-        .disposed(by: disposeBag)
-        
+            .subscribe(onNext: { [weak self] isLogin in
+                if (isLogin) {
+                    let mainViewModel = MainVM()
+                    let mainVC = MainVC(vm: mainViewModel)
+                    
+                    self?.window?.rootViewController = mainVC
+                    self?.window?.makeKeyAndVisible()
+                }
+                else {
+                    let signUpViewModel = WelcomeVM(service: authService)
+                    let signUpVC = WelcomeVC(vm: signUpViewModel)
+                    
+                    self?.window?.rootViewController = signUpVC
+                    self?.window?.makeKeyAndVisible()
+                }
+            })
+            .disposed(by: disposeBag)
     }
 
     func sceneDidDisconnect(_ scene: UIScene) {
