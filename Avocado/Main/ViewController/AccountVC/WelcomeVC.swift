@@ -92,10 +92,17 @@ class WelcomeVC: BaseVC {
         $0.layer.cornerRadius = 20
     }
     
-    
-        
-    
     var disposeBag = DisposeBag()
+    let viewModel: WelcomeVM
+    
+    init(vm: WelcomeVM) {
+        self.viewModel = vm
+        super.init(nibName: nil, bundle: nil)
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
     
     override func setProperty() {
         view.backgroundColor = .white
@@ -147,6 +154,28 @@ class WelcomeVC: BaseVC {
 
     }
     
+    override func bindUI() {
+        googleLogin
+            .rx
+            .tap
+            .asDriver()
+            .drive(onNext: { [weak self] _ in
+                guard let self = self else { return }
+                self.viewModel.socialLoginWithGoogle(view: self.view)
+            })
+            .disposed(by: disposeBag)
+        
+        appleLogin
+            .rx
+            .tap
+            .asDriver()
+            .drive { [weak self] _ in
+                guard let self = self else { return }
+                self.viewModel.socialLoginWithApple(view: self.view)
+            }
+            .disposed(by: disposeBag)
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
     
@@ -172,7 +201,7 @@ import SwiftUI
 import RxSwift
 struct WelcomeVCPreview: PreviewProvider {
     static var previews: some View {
-        return WelcomeVC().toPreview()
+        return WelcomeVC(vm: WelcomeVM(service: AuthService())).toPreview()
     }
 }
 #endif

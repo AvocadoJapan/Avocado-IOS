@@ -471,6 +471,7 @@ final class AuthService: BaseAPIService<AuthAPI> {
                     observable.onError(error)
                 }
             }
+    
             
             return Disposables.create()
         }
