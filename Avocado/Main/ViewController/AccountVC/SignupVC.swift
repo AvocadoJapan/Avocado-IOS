@@ -112,7 +112,7 @@ class SignupVC: BaseVC {
         
         confirmButton.snp.makeConstraints {
             $0.centerX.equalToSuperview()
-            $0.bottom.equalToSuperview()
+            $0.bottom.equalTo(view.safeAreaLayoutGuide)
             $0.left.equalToSuperview().offset(20)
             $0.height.equalTo(50)
         }
