@@ -51,22 +51,9 @@ class EmailCheckVC: BaseVC {
         $0.font = UIFont.systemFont(ofSize: 14, weight: .semibold)
     }
     
-    fileprivate lazy var optionLabel = UILabel().then {
-        $0.text = "다른 이메일로 인증하기  >"
-        $0.numberOfLines = 0
-        $0.textAlignment = .right
-        $0.textColor = .black
-        $0.font = UIFont.systemFont(ofSize: 14, weight: .regular)
-    }
+    private lazy var otherEmailButton : SubButton = SubButton(text: "다른 이메일로 인증하기")
     
-    fileprivate lazy var accountLabel = UILabel().then {
-        $0.text = "계정 센터  >"
-        $0.numberOfLines = 0
-        $0.textAlignment = .right
-        $0.textColor = .black
-        $0.font = UIFont.systemFont(ofSize: 14, weight: .regular)
-    }
-    
+    private lazy var accountCenterButton : SubButton = SubButton(text: "계정 센터")
     
     var disposeBag = DisposeBag()
     
@@ -75,7 +62,7 @@ class EmailCheckVC: BaseVC {
     }
     
     override func setLayout() {
-        [titleLabel,emailLabel, descriptionLabel, confirmCodeInput, optionLabel, accountLabel, confirmButton].forEach {
+        [titleLabel,emailLabel, descriptionLabel, confirmCodeInput, otherEmailButton, accountCenterButton, confirmButton].forEach {
             view.addSubview($0)
         }
     }
@@ -105,15 +92,15 @@ class EmailCheckVC: BaseVC {
             $0.left.equalToSuperview().offset(20)
         }
         
-        optionLabel.snp.makeConstraints {
+        otherEmailButton.snp.makeConstraints {
             $0.centerX.equalToSuperview()
-            $0.top.equalTo(confirmCodeInput.snp.bottom).offset(30)
+            $0.top.equalTo(confirmCodeInput.snp.bottom).offset(20)
             $0.left.equalToSuperview().offset(30)
         }
         
-        accountLabel.snp.makeConstraints {
+        accountCenterButton.snp.makeConstraints {
             $0.centerX.equalToSuperview()
-            $0.top.equalTo(optionLabel.snp.bottom).offset(10)
+            $0.top.equalTo(otherEmailButton.snp.bottom)
             $0.left.equalToSuperview().offset(30)
         }
 

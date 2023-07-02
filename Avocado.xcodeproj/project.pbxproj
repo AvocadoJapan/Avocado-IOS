@@ -70,6 +70,7 @@
 		B2D1309E2A4B4C5800538EFB /* BottomButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2D1309D2A4B4C5800538EFB /* BottomButton.swift */; };
 		B2E186CE2A474B4C00ABE98F /* SignupVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2E186CD2A474B4C00ABE98F /* SignupVC.swift */; };
 		B2E2AC802A4772D3003DAE88 /* WelcomeVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2E2AC7F2A4772D3003DAE88 /* WelcomeVC.swift */; };
+		B2F3D3642A511F2700FB05E1 /* SubButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2F3D3632A511F2700FB05E1 /* SubButton.swift */; };
 		B2F3F47A2A4B6570007994DC /* EmailCheckVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2F3F4792A4B6570007994DC /* EmailCheckVC.swift */; };
 		B2F3F47C2A4BB729007994DC /* BaseModalVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2F3F47B2A4BB729007994DC /* BaseModalVC.swift */; };
 /* End PBXBuildFile section */
@@ -149,6 +150,7 @@
 		B2D1309D2A4B4C5800538EFB /* BottomButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BottomButton.swift; sourceTree = "<group>"; };
 		B2E186CD2A474B4C00ABE98F /* SignupVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignupVC.swift; sourceTree = "<group>"; };
 		B2E2AC7F2A4772D3003DAE88 /* WelcomeVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WelcomeVC.swift; sourceTree = "<group>"; };
+		B2F3D3632A511F2700FB05E1 /* SubButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SubButton.swift; sourceTree = "<group>"; };
 		B2F3F4792A4B6570007994DC /* EmailCheckVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmailCheckVC.swift; sourceTree = "<group>"; };
 		B2F3F47B2A4BB729007994DC /* BaseModalVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseModalVC.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -231,6 +233,7 @@
 			children = (
 				04BA13272A2AE07E0004E2FB /* View */,
 				04BA13202A2ADA160004E2FB /* MainVC.swift */,
+				B2F3D3612A511EF900FB05E1 /* Buttons */,
 				B29D78902A2B6FB1008B6945 /* SearchVC.swift */,
 				B2E2AC7E2A477296003DAE88 /* AccountVC */,
 			);
@@ -246,7 +249,6 @@
 				04C835FA2A2B5FCF00731E3E /* MainHeaderRV.swift */,
 				04C835FC2A2B5FE100731E3E /* MainFooterRV.swift */,
 				B212D58A2A45F1740008DAD1 /* InputView.swift */,
-				B2D1309D2A4B4C5800538EFB /* BottomButton.swift */,
 				04C835FE2A2B5FEF00731E3E /* BannerFooterRV.swift */,
 				B20AFE672A2BAE73004A646B /* SearchBarV.swift */,
 			);
@@ -403,6 +405,15 @@
 				04D2FD0F2A2A575000253028 /* Common */,
 			);
 			path = AccountVC;
+			sourceTree = "<group>";
+		};
+		B2F3D3612A511EF900FB05E1 /* Buttons */ = {
+			isa = PBXGroup;
+			children = (
+				B2D1309D2A4B4C5800538EFB /* BottomButton.swift */,
+				B2F3D3632A511F2700FB05E1 /* SubButton.swift */,
+			);
+			path = Buttons;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -579,6 +590,7 @@
 				B20AFE6A2A2BB259004A646B /* Constant.swift in Sources */,
 				04C835F72A2B46B600731E3E /* BannerCC.swift in Sources */,
 				04BA13292A2AE0990004E2FB /* ProductCC.swift in Sources */,
+				B2F3D3642A511F2700FB05E1 /* SubButton.swift in Sources */,
 				B212D58B2A45F1740008DAD1 /* InputView.swift in Sources */,
 				04C835FF2A2B5FEF00731E3E /* BannerFooterRV.swift in Sources */,
 				B2198B982A2A36EA0019032D /* AppDelegate.swift in Sources */,
