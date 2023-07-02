@@ -34,10 +34,14 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
                     self?.window?.makeKeyAndVisible()
                 }
                 else {
+                    // 새션이 종료된 경우 로그인 토큰 삭제
+                    KeychainUtil.loginTokenDelete()
+                    
                     let signUpViewModel = WelcomeVM(service: authService)
                     let signUpVC = WelcomeVC(vm: signUpViewModel)
+                    let baseNavigationController = signUpVC.getBaseNavigationController()
                     
-                    self?.window?.rootViewController = signUpVC
+                    self?.window?.rootViewController = baseNavigationController
                     self?.window?.makeKeyAndVisible()
                 }
             })

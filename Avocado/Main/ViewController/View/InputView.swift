@@ -47,11 +47,13 @@ final class InputView : UIView {
                      placeholder : String = "",
                      bgColor : UIColor = .white,
                      colorSetting : ColorVariant = .normal,
-                     regSetting: regVarient? = nil){
+                     regSetting: regVarient? = nil,
+                     passwordable: Bool = false) {
         self.init(frame: .zero)
 
         self.labelString = label
         self.placeholder = placeholder
+        self.textField.isSecureTextEntry = passwordable
         
         self.label.textColor = colorSetting.textColor
         self.textField.backgroundColor = colorSetting.bgColor

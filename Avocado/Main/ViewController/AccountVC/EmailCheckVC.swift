@@ -31,9 +31,9 @@ class EmailCheckVC: BaseVC {
         $0.font = UIFont.systemFont(ofSize: 14, weight: .regular)
     }
     
-    private lazy var confirmCodeInput : InputView = InputView(label: "인증번호", colorSetting: .normal)
+    private lazy var confirmCodeInput = InputView(label: "인증번호", colorSetting: .normal)
     
-    private lazy var confirmButton : BottomButton = BottomButton(text: "인증하기")
+    private lazy var confirmButton = BottomButton(text: "인증하기")
     
     fileprivate lazy var emailLabel = UILabel().then {
         $0.text = "sample@avocadojp.com"
@@ -56,6 +56,17 @@ class EmailCheckVC: BaseVC {
     private lazy var accountCenterButton : SubButton = SubButton(text: "계정 센터")
     
     var disposeBag = DisposeBag()
+    let viewModel: EmailCheckVM
+    
+    init(vm: EmailCheckVM) {
+        self.viewModel = vm
+        super.init(nibName: nil, bundle: nil)
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
     
     override func setProperty() {
         view.backgroundColor = .white
@@ -111,6 +122,45 @@ class EmailCheckVC: BaseVC {
         }
 
     }
+    
+    override func bindUI() {
+        viewModel.userEmail
+            .bind(to: emailLabel.rx.text)
+            .disposed(by: disposeBag)
+        
+        confirmCodeInput
+            .userInput
+            .subscribe(onNext: { [weak self] text in
+                self?.viewModel.confirmCode.accept(text)
+            })
+            .disposed(by: disposeBag)
+        
+        viewModel
+            .successEvent
+            .asSignal()
+            .emit(onNext: { [weak self] isSuccess in
+                if isSuccess {
+                    let mainVM = MainVM()
+                    let mainVC = MainVC(vm: mainVM)
+                    let navigationController = mainVC.getBaseNavigationController()
+                    
+                    navigationController.modalPresentationStyle = .fullScreen
+                    self?.present(navigationController, animated: false)
+                }
+            })
+            .disposed(by: disposeBag)
+        
+        confirmButton
+            .rx
+            .tap
+            .asDriver()
+            .drive(onNext: { [weak self] _ in
+                self?.viewModel.confirmSignUpCode()
+            })
+            .disposed(by: disposeBag)
+    
+            
+    }
 
 }
 
@@ -127,7 +177,7 @@ import SwiftUI
 import RxSwift
 struct EmailCheckVCPreview: PreviewProvider {
     static var previews: some View {
-        return EmailCheckVC().toPreview()
+        return EmailCheckVC(vm: EmailCheckVM(service: AuthService())).toPreview()
     }
 }
 #endif

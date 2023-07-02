@@ -16,8 +16,8 @@ struct LoginVM {
     
     public let emailObserver = BehaviorRelay<String>(value: "")
     public let passwordObserver = BehaviorRelay<String>(value: "")
-    public let successEvent = BehaviorRelay<Bool>(value: false)
-    public let errEvent = BehaviorRelay<String>(value: "")
+    public let successEvent = PublishRelay<Bool>()
+    public let errEvent = PublishRelay<String>()
     public var isVaild: Observable<Bool> {
         return Observable
             .combineLatest(emailObserver, passwordObserver)

@@ -26,13 +26,13 @@ class LoginVC: BaseVC {
         $0.spacing = 20
     }
     
-    private lazy var emailInput : InputView = InputView(label: "이메일", placeholder: "example@example.com", colorSetting: .normal)
+    private lazy var emailInput = InputView(label: "이메일", placeholder: "example@example.com", colorSetting: .normal)
     
-    private lazy var passwordInput : InputView = InputView(label: "비밀번호", placeholder: "**********", colorSetting: .normal)
+    private lazy var passwordInput = InputView(label: "비밀번호", placeholder: "**********", colorSetting: .normal, passwordable: true)
     
-    private lazy var confirmButton : BottomButton = BottomButton(text: "로그인")
+    private lazy var confirmButton = BottomButton(text: "로그인")
     
-    private lazy var otherLoginOptionButton : SubButton = SubButton(text: "다른 로그인 옵션 선택")
+    private lazy var otherLoginOptionButton = SubButton(text: "다른 로그인 옵션 선택")
         
     
     var disposeBag = DisposeBag()
@@ -126,8 +126,8 @@ class LoginVC: BaseVC {
         
         viewModel
             .errEvent
-            .asDriver()
-            .drive(onNext: { [weak self] message in
+            .asSignal()
+            .emit(onNext: { [weak self] message in
                 let alert = UIAlertController(title: "", message: message, preferredStyle: .alert)
                 alert.addAction(UIAlertAction(title: "확인", style: .default))
                 
@@ -137,13 +137,13 @@ class LoginVC: BaseVC {
         
         viewModel
             .successEvent
-            .asDriver()
-            .drive(onNext: { [weak self] _ in
+            .asSignal()
+            .emit(onNext: { [weak self] _ in
                 let mainVM = MainVM()
                 let mainVC = MainVC(vm: mainVM)
-                let navigationController = UINavigationController(rootViewController: mainVC)
-                self?.modalPresentationStyle = .fullScreen
-                self?.modalTransitionStyle = .coverVertical
+                let navigationController = mainVC.getBaseNavigationController()
+                
+                navigationController.modalPresentationStyle = .fullScreen
                 self?.present(navigationController, animated: false)
             })
             .disposed(by: disposeBag)

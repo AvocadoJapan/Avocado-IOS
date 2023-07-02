@@ -26,11 +26,11 @@ class SignupVC: BaseVC {
         $0.spacing = 20
     }
     
-    private lazy var emailInput : InputView = InputView(label: "이메일", placeholder: " example@example.com", colorSetting: .normal)
+    private lazy var emailInput = InputView(label: "이메일", placeholder: " example@example.com", colorSetting: .normal)
     
-    private lazy var passwordInput : InputView = InputView(label: "비밀번호", placeholder: "********", colorSetting: .normal)
+    private lazy var passwordInput = InputView(label: "비밀번호", placeholder: "********", colorSetting: .normal, passwordable: true)
     
-    private lazy var passwordCheckInput : InputView = InputView(label: "비밀번호 확인", placeholder: "********", colorSetting: .normal)
+    private lazy var passwordCheckInput = InputView(label: "비밀번호 확인", placeholder: "********", colorSetting: .normal, passwordable: true)
     
         
     fileprivate lazy var toggleView = UIStackView().then {
@@ -148,8 +148,8 @@ class SignupVC: BaseVC {
         
         viewModel
             .errEvent
-            .observe(on: MainScheduler.instance)
-            .subscribe(onNext: { [weak self] message in
+            .asSignal()
+            .emit(onNext: { [weak self] message in
                 let alert = UIAlertController(title: "", message: message, preferredStyle: .alert)
                 alert.addAction(UIAlertAction(title: "확인", style: .default))
                 
@@ -159,13 +159,16 @@ class SignupVC: BaseVC {
         
         viewModel
             .successEvent
-            .asDriver()
-            .drive(onNext: { [weak self] _ in
-                // FIXME: 화면 이동으로 처리를 하던 팝업으로 받는 처리가 필요
-                let alert = UIAlertController(title: "", message: "인증번호를 전송하였습니다", preferredStyle: .alert)
-                alert.addAction(UIAlertAction(title: "확인", style: .default))
+            .asSignal()
+            .emit(onNext: { [weak self] isSuccess in
+                guard let self = self else { return }
                 
-                self?.present(alert, animated: true)
+                if isSuccess {
+                    let authService = AuthService()
+                    let emailCheckVM = EmailCheckVM(service: authService)
+                    let emailCheckVC = EmailCheckVC(vm: emailCheckVM)
+                    self.navigationController?.pushViewController(emailCheckVC, animated: true)
+                }
             })
             .disposed(by: disposeBag)
         

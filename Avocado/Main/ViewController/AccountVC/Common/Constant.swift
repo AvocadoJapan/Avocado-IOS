@@ -32,4 +32,11 @@ enum CommonModel {
     struct S3UploadedURL: Codable {
         let url: String
     }
+    
+    struct UserDefault {
+        enum Auth {
+            static let signUpEmail = "cognitoSignUpEmail"
+            static let signUpSuccess = "isCogintoSignUp"
+        }
+    }
 }

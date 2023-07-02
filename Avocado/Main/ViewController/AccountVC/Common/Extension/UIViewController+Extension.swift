@@ -28,3 +28,9 @@ extension UIViewController {
 
 }
 #endif
+
+extension UIViewController {
+    func getBaseNavigationController() -> BaseNavigationVC {
+        return BaseNavigationVC(rootViewController: self)
+    }
+}

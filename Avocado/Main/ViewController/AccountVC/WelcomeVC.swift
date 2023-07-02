@@ -151,6 +151,7 @@ class WelcomeVC: BaseVC {
     }
     
     override func bindUI() {
+        // 구글 로그인
         googleLogin
             .rx
             .tap
@@ -161,6 +162,7 @@ class WelcomeVC: BaseVC {
             })
             .disposed(by: disposeBag)
         
+        // 애플 로그인
         appleLogin
             .rx
             .tap
@@ -169,6 +171,36 @@ class WelcomeVC: BaseVC {
                 guard let self = self else { return }
                 self.viewModel.socialLoginWithApple(view: self.view)
             }
+            .disposed(by: disposeBag)
+        
+        // 이메일 로그인
+        avocadoLogin
+            .rx
+            .tap
+            .asDriver()
+            .drive(onNext: { [weak self] _ in
+                guard let self = self else { return }
+                let authService = AuthService()
+                let emailLoginVM = LoginVM(service: authService)
+                let emailLoginVC = LoginVC(vm: emailLoginVM)
+                
+                self.navigationController?.pushViewController(emailLoginVC, animated: true)
+            })
+            .disposed(by: disposeBag)
+        
+        // 회원가입
+        signupButton
+            .rx
+            .tap
+            .asDriver()
+            .drive(onNext: { [weak self] _ in
+                guard let self = self else { return }
+                let authService = AuthService()
+                let signUpVM = SignUpVM(service: authService)
+                let signUpVC = SignupVC(vm: signUpVM)
+                
+                self.navigationController?.pushViewController(signUpVC, animated: true)
+            })
             .disposed(by: disposeBag)
     }
     

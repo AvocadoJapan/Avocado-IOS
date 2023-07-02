@@ -49,6 +49,8 @@
 		98AD10FF2A4BF2E7001C4734 /* AuthAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98AD10FE2A4BF2E7001C4734 /* AuthAPI.swift */; };
 		98AD11012A4BF713001C4734 /* UserM.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98AD11002A4BF713001C4734 /* UserM.swift */; };
 		98AD11032A4BF8B4001C4734 /* RegionsM.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98AD11022A4BF8B4001C4734 /* RegionsM.swift */; };
+		B18DFEDD2A51AC3F00CF27FE /* BaseNavigationVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = B18DFEDC2A51AC3F00CF27FE /* BaseNavigationVC.swift */; };
+		B18DFEDF2A51B53B00CF27FE /* EmailCheckVM.swift in Sources */ = {isa = PBXBuildFile; fileRef = B18DFEDE2A51B53B00CF27FE /* EmailCheckVM.swift */; };
 		B1BFDD672A49CF8100DB4955 /* LoginVM.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1BFDD662A49CF8100DB4955 /* LoginVM.swift */; };
 		B1D23D392A4C6245006A2848 /* WelcomeVM.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1D23D382A4C6245006A2848 /* WelcomeVM.swift */; };
 		B1D23D3F2A4C74F6006A2848 /* AvatarM.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1D23D3E2A4C74F6006A2848 /* AvatarM.swift */; };
@@ -125,6 +127,8 @@
 		98AD10FE2A4BF2E7001C4734 /* AuthAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthAPI.swift; sourceTree = "<group>"; };
 		98AD11002A4BF713001C4734 /* UserM.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserM.swift; sourceTree = "<group>"; };
 		98AD11022A4BF8B4001C4734 /* RegionsM.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegionsM.swift; sourceTree = "<group>"; };
+		B18DFEDC2A51AC3F00CF27FE /* BaseNavigationVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseNavigationVC.swift; sourceTree = "<group>"; };
+		B18DFEDE2A51B53B00CF27FE /* EmailCheckVM.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmailCheckVM.swift; sourceTree = "<group>"; };
 		B1BFDD662A49CF8100DB4955 /* LoginVM.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginVM.swift; sourceTree = "<group>"; };
 		B1D23D382A4C6245006A2848 /* WelcomeVM.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WelcomeVM.swift; sourceTree = "<group>"; };
 		B1D23D3E2A4C74F6006A2848 /* AvatarM.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AvatarM.swift; sourceTree = "<group>"; };
@@ -209,6 +213,7 @@
 				981A59892A494F5B0031A917 /* SignUpVM.swift */,
 				B1BFDD662A49CF8100DB4955 /* LoginVM.swift */,
 				B1D23D382A4C6245006A2848 /* WelcomeVM.swift */,
+				B18DFEDE2A51B53B00CF27FE /* EmailCheckVM.swift */,
 			);
 			path = ViewModel;
 			sourceTree = "<group>";
@@ -294,6 +299,7 @@
 				04D2FD062A2A52E800253028 /* Extension */,
 				9816F6E32A494A6F00A7A284 /* Logger.swift */,
 				9816F6E52A494A8F00A7A284 /* KeychainUtil.swift */,
+				B18DFEDC2A51AC3F00CF27FE /* BaseNavigationVC.swift */,
 			);
 			path = Common;
 			sourceTree = "<group>";
@@ -593,6 +599,8 @@
 				B2F3D3642A511F2700FB05E1 /* SubButton.swift in Sources */,
 				B212D58B2A45F1740008DAD1 /* InputView.swift in Sources */,
 				04C835FF2A2B5FEF00731E3E /* BannerFooterRV.swift in Sources */,
+				B18DFEDD2A51AC3F00CF27FE /* BaseNavigationVC.swift in Sources */,
+				B18DFEDF2A51B53B00CF27FE /* EmailCheckVM.swift in Sources */,
 				B2198B982A2A36EA0019032D /* AppDelegate.swift in Sources */,
 				B212D5892A45EAF90008DAD1 /* Variant.swift in Sources */,
 				04BD03F72A2B058500330D8A /* MainCategoryCC.swift in Sources */,

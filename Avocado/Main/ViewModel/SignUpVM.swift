@@ -17,8 +17,8 @@ struct SignUpVM {
     
     public let emailObserver = BehaviorRelay<String>(value: "")
     public let passwordObserver = BehaviorRelay<String>(value: "")
-    public let errEvent = BehaviorRelay<String>(value: "")
-    public let successEvent = BehaviorRelay<Bool>(value:false)
+    public let errEvent = PublishRelay<String>()
+    public let successEvent = PublishRelay<Bool>()
     public var isVaild: Observable<Bool> {
         return Observable
             .combineLatest(emailObserver, passwordObserver)
@@ -30,6 +30,11 @@ struct SignUpVM {
     public func signUp() {
         service.signUp(email: emailObserver.value, password: passwordObserver.value)
             .subscribe {
+                
+                UserDefaults.standard.setValue($0, forKey: CommonModel.UserDefault.Auth.signUpSuccess)
+                UserDefaults.standard.setValue(emailObserver.value, forKey: CommonModel.UserDefault.Auth.signUpEmail)
+                UserDefaults.standard.synchronize()
+                
                 successEvent.accept($0)
                 
             } onError: { err in
