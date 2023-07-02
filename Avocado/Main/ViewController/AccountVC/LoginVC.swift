@@ -32,13 +32,7 @@ class LoginVC: BaseVC {
     
     private lazy var confirmButton : BottomButton = BottomButton(text: "로그인")
     
-    fileprivate lazy var optionLabel = UILabel().then {
-        $0.text = "다른 로그인 옵션 선택  >"
-        $0.numberOfLines = 0
-        $0.textAlignment = .right
-        $0.textColor = .black
-        $0.font = UIFont.systemFont(ofSize: 14, weight: .regular)
-    }
+    private lazy var otherLoginOptionButton : SubButton = SubButton(text: "다른 로그인 옵션 선택")
         
     
     var disposeBag = DisposeBag()
@@ -59,7 +53,7 @@ class LoginVC: BaseVC {
     }
     
     override func setLayout() {
-        [titleLabel, inputField, optionLabel, confirmButton].forEach {
+        [titleLabel, inputField, otherLoginOptionButton, confirmButton].forEach {
             view.addSubview($0)
         }
         
@@ -82,9 +76,9 @@ class LoginVC: BaseVC {
             $0.left.equalToSuperview().offset(20)
         }
         
-        optionLabel.snp.makeConstraints {
+        otherLoginOptionButton.snp.makeConstraints {
             $0.centerX.equalToSuperview()
-            $0.top.equalTo(inputField.snp.bottom).offset(30)
+            $0.top.equalTo(inputField.snp.bottom).offset(20)
             $0.left.equalToSuperview().offset(30)
         }
 

@@ -26,13 +26,9 @@ class WelcomeVC: BaseVC {
         $0.font = UIFont.systemFont(ofSize: 25, weight: .heavy)
     }
     
-    fileprivate lazy var signupLabel = UILabel().then {
-        $0.text = "아직 계정이 없나요? 회원가입  >"
-        $0.numberOfLines = 0
-        $0.textAlignment = .right
-        $0.textColor = .black
-        $0.font = UIFont.systemFont(ofSize: 14, weight: .regular)
-    }
+    
+    
+    private lazy var signupButton : SubButton = SubButton(text: "아직 계정이 없나요? 회원가입")
     
     fileprivate lazy var agreementLabel = UILabel().then {
         $0.text = "로그인을 함으로써, 당사 약관 및 개인정보 정책에 동의한 것으로 간주합니다"
@@ -109,7 +105,7 @@ class WelcomeVC: BaseVC {
     }
     
     override func setLayout() {
-        [logo, titleLabel,signupLabel, agreementLabel, socialLoginButtonStackView].forEach {
+        [logo, titleLabel, signupButton, agreementLabel, socialLoginButtonStackView].forEach {
             view.addSubview($0)
         }
         
@@ -133,7 +129,7 @@ class WelcomeVC: BaseVC {
             $0.left.equalToSuperview().offset(30)
         }
         
-        signupLabel.snp.makeConstraints {
+        signupButton.snp.makeConstraints {
             $0.centerX.equalToSuperview()
             $0.bottom.equalTo(agreementLabel.snp.top).offset(-10)
             $0.left.equalToSuperview().offset(30)
