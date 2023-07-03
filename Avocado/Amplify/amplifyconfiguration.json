@@ -16,7 +16,7 @@
                     "Default": {
                         "authenticationFlowType": "USER_SRP_AUTH",
                         "OAuth": {
-                            "WebDomain": "https://development-avocado.auth.ap-northeast-2.amazoncognito.com",
+                            "WebDomain": "development-avocado.auth.ap-northeast-2.amazoncognito.com",
                             "AppClientId": "4ohcva7pd43b874k2j447iq5l7",
                             "SignInRedirectURI": "avocado://",
                             "SignOutRedirectURI": "",

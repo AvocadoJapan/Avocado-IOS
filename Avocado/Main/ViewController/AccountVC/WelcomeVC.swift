@@ -202,6 +202,31 @@ class WelcomeVC: BaseVC {
                 self.navigationController?.pushViewController(signUpVC, animated: true)
             })
             .disposed(by: disposeBag)
+        
+        // 소셜 로그인 성공 여부
+        viewModel.successEvent
+            .asSignal()
+            .emit(onNext: { [weak self] _ in
+                //FIXME: 프로필 설정 화면으로 변경 될 예정!
+                let mainVM = MainVM()
+                let mainVC = MainVC(vm: mainVM)
+                let navigationController = mainVC.getBaseNavigationController()
+                
+                navigationController.modalPresentationStyle = .fullScreen
+                self?.present(navigationController, animated: false)
+            })
+            .disposed(by: disposeBag)
+        
+        //소셜 로그인 에러 여부
+        viewModel.errEvent
+            .asSignal()
+            .emit(onNext:{ [weak self] message in
+                let alert = UIAlertController(title: "", message: message, preferredStyle: .alert)
+                alert.addAction(UIAlertAction(title: "확인", style: .default))
+                
+                self?.present(alert, animated: true)
+            })
+            .disposed(by: disposeBag)
     }
     
     override func viewDidLoad() {

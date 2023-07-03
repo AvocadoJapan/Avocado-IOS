@@ -9,11 +9,14 @@ import Foundation
 import UIKit
 import RxSwift
 import Amplify
+import RxRelay
 
 struct WelcomeVM {
     
     let service: AuthService
     let disposeBag = DisposeBag()
+    let successEvent = PublishRelay<Bool>()
+    let errEvent = PublishRelay<String>()
     
     init(service: AuthService) {
         self.service = service
@@ -23,9 +26,16 @@ struct WelcomeVM {
     func socialLoginWithApple(view: UIView) {
         service.socialSignInView(view: view, socialType: .apple)
             .subscribe { signIn in
-                // doing..
+                successEvent.accept(signIn)
             } onError: { err in
-                Logger.e(err)
+
+                guard let authError = err as? AuthError else {
+                    Logger.e(err)
+                    errEvent.accept(err.localizedDescription)
+                    return
+                }
+                
+                errEvent.accept(authError.errorDescription)
             }
             .disposed(by: disposeBag)
     }
@@ -33,9 +43,16 @@ struct WelcomeVM {
     func socialLoginWithGoogle(view: UIView) {
         service.socialSignInView(view: view, socialType: .google)
             .subscribe { signIn in
-                // doing..
+                successEvent.accept(signIn)
             } onError: { err in
-                Logger.e(err)
+
+                guard let authError = err as? AuthError else {
+                    Logger.e(err)
+                    errEvent.accept(err.localizedDescription)
+                    return
+                }
+                
+                errEvent.accept(authError.errorDescription)
             }
             .disposed(by: disposeBag)
     }

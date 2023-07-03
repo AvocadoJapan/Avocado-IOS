@@ -458,13 +458,27 @@ final class AuthService: BaseAPIService<AuthAPI> {
             Task {
                 do {
                     let signInResult = try await Amplify.Auth.signInWithWebUI(for: socialType, presentationAnchor: view.window!)
-                    Logger.d("SignIN \(signInResult.isSignedIn)")
                     observable.onNext(signInResult.isSignedIn)
                     observable.onCompleted()
                 }
                 catch let error as AuthError {
                     Logger.e("Social Login Failed with error \(error)")
-                    observable.onError(error)
+                    
+                    guard let cognitoAuthError = error.underlyingError as? AWSCognitoAuthError else {
+                        observable.onError(error)
+                        return
+                    }
+                    
+                    switch cognitoAuthError {
+                    case .userCancelled:
+                        break;
+                        
+                    case .invalidParameter:
+                        observable.onError(NetworkError.invaildParameter)
+                        
+                    default:
+                        observable.onError(error)
+                    }
                 }
                 catch {
                     Logger.e("Social Login Failed with error \(error)")
