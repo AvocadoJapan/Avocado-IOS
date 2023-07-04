@@ -30,6 +30,25 @@ final class ProfileSettingVC: BaseVC {
         $0.backgroundColor = .systemGray5
     }
     
+    public lazy var profileButton = UIButton(type: .custom).then {
+        $0.setImage(UIImage(named: "default_profile"), for: .normal)
+    }
+    
+    public lazy var profileView = UIView().then {
+        $0.backgroundColor = .blue
+        $0.layer.cornerRadius = 60
+        $0.layer.masksToBounds = true
+    }
+    
+    public lazy var profileLabel = UILabel().then {
+        $0.isUserInteractionEnabled = false
+        $0.text = "Edit"
+        $0.backgroundColor = .white
+        $0.textAlignment = .center
+        $0.alpha = 0.7
+        $0.font = .boldSystemFont(ofSize: 12)
+    }
+    
     private lazy var emailInput = InputView(label: "닉네임", placeholder: "Nickname", colorSetting: .normal)
     
     private lazy var confirmButton = BottomButton(text: "확인")
@@ -52,27 +71,40 @@ final class ProfileSettingVC: BaseVC {
     }
     
     override func setLayout() {
-        [titleLabel, profileImageView, emailInput, confirmButton].forEach {
+        [profileButton, profileLabel].forEach {
+            self.profileView.addSubview($0)
+        }
+        
+        [titleLabel, profileImageView, emailInput, confirmButton, profileView].forEach {
             view.addSubview($0)
         }
     }
     
     override func setConstraint() {
+        
+        profileView.snp.makeConstraints {
+            $0.centerX.equalToSuperview()
+            $0.top.equalTo(titleLabel.snp.bottom).offset(20)
+            $0.height.width.equalTo(120)
+        }
+        
+        profileButton.snp.makeConstraints {
+            $0.top.left.right.bottom.equalToSuperview()
+        }
+        
+        profileLabel.snp.makeConstraints {
+            $0.left.right.bottom.equalToSuperview()
+        }
+        
         titleLabel.snp.makeConstraints {
             $0.centerX.equalToSuperview()
             $0.top.equalTo(view.safeAreaLayoutGuide).offset(20)
             $0.horizontalEdges.equalToSuperview().offset(30)
         }
         
-        profileImageView.snp.makeConstraints {
-            $0.centerX.equalToSuperview()
-            $0.top.equalTo(titleLabel.snp.bottom).offset(20)
-            $0.size.equalTo(100)
-        }
-        
         emailInput.snp.makeConstraints {
             $0.centerX.equalToSuperview()
-            $0.top.equalTo(profileImageView.snp.bottom).offset(20)
+            $0.top.equalTo(profileView.snp.bottom).offset(20)
             $0.left.equalToSuperview().offset(20)
         }
         
