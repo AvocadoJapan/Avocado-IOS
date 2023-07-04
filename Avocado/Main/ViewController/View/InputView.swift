@@ -21,7 +21,7 @@ final class InputView : UIView {
     var userInput = PublishSubject<String>()
     
     private let disposeBag = DisposeBag()
-    
+    private var regSetting: RegVarient
     lazy var textField = UITextField().then {
         $0.placeholder = self.placeholder
         $0.font = .systemFont(ofSize: 13)
@@ -39,6 +39,7 @@ final class InputView : UIView {
     override init(frame: CGRect) {
         self.labelString = ""
         self.placeholder = ""
+        self.regSetting = RegVarient()
         super.init(frame: .zero)
         print(#fileID, #function, #line, "- ")
     }
@@ -47,7 +48,7 @@ final class InputView : UIView {
                      placeholder : String = "",
                      bgColor : UIColor = .white,
                      colorSetting : ColorVariant = .normal,
-                     regSetting: regVarient? = nil,
+                     regSetting: RegVarient? = nil,
                      passwordable: Bool = false) {
         self.init(frame: .zero)
 
@@ -74,6 +75,7 @@ final class InputView : UIView {
     required init?(coder: NSCoder) {
         self.labelString = ""
         self.placeholder = ""
+        self.regSetting = RegVarient()
         super.init(coder: coder)
     }
     
