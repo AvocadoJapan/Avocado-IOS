@@ -12,7 +12,7 @@ import RxRelay
 import RxSwift
 import Then
 import PhotosUI
-
+import RxKeyboard
 
 
 final class ProfileSettingVC: BaseVC {
@@ -86,6 +86,13 @@ final class ProfileSettingVC: BaseVC {
     override func bindUI() {
         viewModel.selectedImageSubject
             .bind(to: profileImageView.rx.image)
+            .disposed(by: disposeBag)
+        
+        RxKeyboard.instance.visibleHeight
+            .skip(1)
+            .drive(onNext: {
+                self.confirmButton.keyboardMovement(from:self.view, height: $0)
+            })
             .disposed(by: disposeBag)
     }
     
