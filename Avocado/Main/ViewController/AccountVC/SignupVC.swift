@@ -11,6 +11,7 @@ import RxCocoa
 import RxRelay
 import RxSwift
 import Then
+import RxKeyboard
 
 class SignupVC: BaseVC {
     
@@ -175,6 +176,13 @@ class SignupVC: BaseVC {
             }).subscribe { [weak self] _ in
                 self?.viewModel.signUp()
             }
+            .disposed(by: disposeBag)
+        
+        RxKeyboard.instance.visibleHeight
+            .skip(1)
+            .drive(onNext: {
+                self.confirmButton.keyboardMovement(from:self.view, height: $0)
+            })
             .disposed(by: disposeBag)
     }
     

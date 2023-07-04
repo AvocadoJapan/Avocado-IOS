@@ -25,6 +25,11 @@ class BaseVC: UIViewController {
         setConstraint()
     }
     
+    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+        super.touchesBegan(touches, with: event)
+        view.endEditing(true)
+    }
+    
     //MARK: - View Method
     /**
      - Description: RX에 대한 데이터 바인딩 메서드
