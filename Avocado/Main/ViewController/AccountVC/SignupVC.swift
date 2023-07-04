@@ -26,9 +26,9 @@ class SignupVC: BaseVC {
         $0.spacing = 20
     }
     
-    private lazy var emailInput = InputView(label: "이메일", placeholder: " example@example.com", colorSetting: .normal)
+    private lazy var emailInput = InputView(label: "이메일", placeholder: "example@example.com", colorSetting: .normal, regSetting: .email)
     
-    private lazy var passwordInput = InputView(label: "비밀번호", placeholder: "********", colorSetting: .normal, passwordable: true)
+    private lazy var passwordInput = InputView(label: "비밀번호", placeholder: "********", colorSetting: .normal,regSetting: .password, passwordable: true)
     
     private lazy var passwordCheckInput = InputView(label: "비밀번호 확인", placeholder: "********", colorSetting: .normal, passwordable: true)
     
@@ -52,13 +52,7 @@ class SignupVC: BaseVC {
         $0.onTintColor = .black
     }
     
-    fileprivate lazy var confirmButton = UIButton().then {
-        $0.setTitle("회원가입", for: .normal)
-        $0.backgroundColor = .black
-        $0.setTitleColor(.white, for: .normal)
-        $0.titleLabel?.font = UIFont.boldSystemFont(ofSize: 13)
-        $0.layer.cornerRadius = 20
-    }
+    fileprivate lazy var confirmButton = BottomButton(text: "회원가입")
     
     var disposeBag = DisposeBag()
     var viewModel: SignUpVM
@@ -96,7 +90,7 @@ class SignupVC: BaseVC {
         titleLabel.snp.makeConstraints {
             $0.centerX.equalToSuperview()
             $0.top.equalTo(view.safeAreaLayoutGuide).offset(20)
-            $0.horizontalEdges.equalToSuperview().offset(30)
+            $0.horizontalEdges.equalToSuperview().inset(30)
         }
 
         inputField.snp.makeConstraints {
@@ -112,9 +106,8 @@ class SignupVC: BaseVC {
         
         confirmButton.snp.makeConstraints {
             $0.centerX.equalToSuperview()
-            $0.bottom.equalTo(view.safeAreaLayoutGuide)
+            $0.bottom.equalTo(view.safeAreaLayoutGuide).inset(20)
             $0.left.equalToSuperview().offset(20)
-            $0.height.equalTo(50)
         }
     }
     
@@ -187,10 +180,6 @@ class SignupVC: BaseVC {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-    }
-    
-    @objc func handleUserInputFromMainVC(_ sender: UITextField){
-        print(#fileID, #function, #line, "- sender: \(sender.text ?? "")")
     }
 }
 

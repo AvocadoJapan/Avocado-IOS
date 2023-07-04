@@ -42,7 +42,7 @@ struct buttonColorType {
     static var info = Self(tintColor: .white, bgColor: .systemCyan)
 }
 
-struct regVarient {
+struct RegVarient {
     var regularExpression : String
     
     init(regularExpression : String = "asdfasdfasdf") {

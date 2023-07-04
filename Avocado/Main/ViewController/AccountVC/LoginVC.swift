@@ -11,6 +11,7 @@ import RxCocoa
 import RxRelay
 import RxSwift
 import Then
+import RxKeyboard
 
 class LoginVC: BaseVC {
     
@@ -67,7 +68,7 @@ class LoginVC: BaseVC {
         titleLabel.snp.makeConstraints {
             $0.centerX.equalToSuperview()
             $0.top.equalTo(view.safeAreaLayoutGuide).offset(20)
-            $0.horizontalEdges.equalToSuperview().offset(30)
+            $0.horizontalEdges.equalToSuperview().inset(30)
         }
 
         inputField.snp.makeConstraints {
@@ -84,8 +85,8 @@ class LoginVC: BaseVC {
 
         confirmButton.snp.makeConstraints {
             $0.centerX.equalToSuperview()
-            $0.bottom.equalTo(view.safeAreaLayoutGuide)
-            $0.left.equalToSuperview().offset(20)
+            $0.bottom.equalTo(view.safeAreaLayoutGuide).inset(20)
+            $0.left.equalToSuperview().inset(20)
         }
 
     }
@@ -147,31 +148,37 @@ class LoginVC: BaseVC {
                 self?.present(navigationController, animated: false)
             })
             .disposed(by: disposeBag)
+        
+        // 다른 로그인 옵션
+        otherLoginOptionButton
+            .rx
+            .tap
+            .asDriver()
+            .drive(onNext: { [weak self] _ in
+                self?.navigationController?.popViewController(animated: true)
+            })
+            .disposed(by: disposeBag)
+        
+        
+        //키보드 버튼 애니메이션
+        RxKeyboard.instance.visibleHeight
+            .skip(1)
+            .drive(onNext: {
+                self.confirmButton.keyboardMovement(from:self.view, height: $0)
+            })
+            .disposed(by: disposeBag)
             
     }
     
     override func viewDidLoad() {
         super.viewDidLoad()
-    
-//        emailInput.setUserInputAction(target: self, action: #selector(handleUserInputFromMainVC(_:)))
-        
-//        emailInput.userInput
-//                    .subscribe(onNext: { input in
-//                        print(#fileID, #function, #line, "- input : \(input)")
-//                    })
-//                    .disposed(by: disposeBag)
     }
     
-    @objc func handleUserInputFromMainVC(_ sender: UITextField){
-        print(#fileID, #function, #line, "- sender: \(sender.text ?? "")")
+    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+        super.touchesBegan(touches, with: event)
+        view.endEditing(true)
     }
 }
-
-//extension MainVC : UAInputViewDelegate {
-//    func onUserInputChange(input: String) {
-//        print(#fileID, #function, #line, "- UAInputViewDelegate input : \(input)")
-//    }
-//}
 
 
 // MARK: - Preview 관련

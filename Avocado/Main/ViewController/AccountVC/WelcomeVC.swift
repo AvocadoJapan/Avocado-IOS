@@ -80,13 +80,7 @@ class WelcomeVC: BaseVC {
     }
 
     
-    fileprivate lazy var avocadoLogin = UIButton().then {
-        $0.setTitle("이메일로 로그인", for: .normal)
-        $0.backgroundColor = .black
-        $0.setTitleColor(.white, for: .normal)
-        $0.titleLabel?.font = UIFont.boldSystemFont(ofSize: 13)
-        $0.layer.cornerRadius = 20
-    }
+    fileprivate lazy var avocadoLogin = BottomButton(text: "이메일로 로그인")
     
     var disposeBag = DisposeBag()
     let viewModel: WelcomeVM
@@ -143,7 +137,7 @@ class WelcomeVC: BaseVC {
 
         socialLoginButtonStackView.snp.makeConstraints {
             $0.centerX.equalToSuperview()
-            $0.bottom.equalTo(view.safeAreaLayoutGuide)
+            $0.bottom.equalTo(view.safeAreaLayoutGuide).inset(20)
             $0.left.equalToSuperview().offset(20)
             $0.height.equalTo(170)
         }
