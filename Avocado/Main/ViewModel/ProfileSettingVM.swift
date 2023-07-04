@@ -6,3 +6,16 @@
 //
 
 import Foundation
+import UIKit
+import RxSwift
+import Amplify
+import RxRelay
+import PhotosUI
+
+class ProfileSettingVM {
+    
+    var selectedImageSubject = BehaviorSubject<UIImage>(value: UIImage(named: "default_profile") ?? UIImage())
+    let disposeBag = DisposeBag()
+    
+}
+

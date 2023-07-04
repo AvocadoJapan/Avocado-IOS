@@ -45,7 +45,6 @@
 		98AD11032A4BF8B4001C4734 /* RegionsM.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98AD11022A4BF8B4001C4734 /* RegionsM.swift */; };
 		98C711082A53B48300C99393 /* RxKeyboard in Frameworks */ = {isa = PBXBuildFile; productRef = 98C711072A53B48300C99393 /* RxKeyboard */; };
 		B18DFEDF2A51B53B00CF27FE /* EmailCheckVM.swift in Sources */ = {isa = PBXBuildFile; fileRef = B18DFEDE2A51B53B00CF27FE /* EmailCheckVM.swift */; };
-		B1A301952A5437C4003834E6 /* ProfileSettingVM.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1A301942A5437C4003834E6 /* ProfileSettingVM.swift */; };
 		B1A301972A5437DB003834E6 /* ProfileSettingVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1A301962A5437DB003834E6 /* ProfileSettingVC.swift */; };
 		B1A301A62A5439E7003834E6 /* UIViewController+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1A301A52A5439E7003834E6 /* UIViewController+Extension.swift */; };
 		B1A301A72A5439E7003834E6 /* UIView+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1A301A42A5439E7003834E6 /* UIView+Extension.swift */; };
@@ -72,6 +71,7 @@
 		B2198BB22A2A36EC0019032D /* AvocadoTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2198BB12A2A36EC0019032D /* AvocadoTests.swift */; };
 		B2198BBC2A2A36EC0019032D /* AvocadoUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2198BBB2A2A36EC0019032D /* AvocadoUITests.swift */; };
 		B2198BBE2A2A36EC0019032D /* AvocadoUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2198BBD2A2A36EC0019032D /* AvocadoUITestsLaunchTests.swift */; };
+		B26F8A4D2A544AC300F4BEA3 /* ProfileSettingVM.swift in Sources */ = {isa = PBXBuildFile; fileRef = B26F8A4C2A544AC300F4BEA3 /* ProfileSettingVM.swift */; };
 		B29D78912A2B6FB1008B6945 /* SearchVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = B29D78902A2B6FB1008B6945 /* SearchVC.swift */; };
 		B29D78932A2B6FCF008B6945 /* SearchVM.swift in Sources */ = {isa = PBXBuildFile; fileRef = B29D78922A2B6FCF008B6945 /* SearchVM.swift */; };
 		B2D1309E2A4B4C5800538EFB /* BottomButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2D1309D2A4B4C5800538EFB /* BottomButton.swift */; };
@@ -126,7 +126,6 @@
 		98AD11002A4BF713001C4734 /* UserM.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserM.swift; sourceTree = "<group>"; };
 		98AD11022A4BF8B4001C4734 /* RegionsM.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegionsM.swift; sourceTree = "<group>"; };
 		B18DFEDE2A51B53B00CF27FE /* EmailCheckVM.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmailCheckVM.swift; sourceTree = "<group>"; };
-		B1A301942A5437C4003834E6 /* ProfileSettingVM.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProfileSettingVM.swift; sourceTree = "<group>"; };
 		B1A301962A5437DB003834E6 /* ProfileSettingVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProfileSettingVC.swift; sourceTree = "<group>"; };
 		B1A301A42A5439E7003834E6 /* UIView+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView+Extension.swift"; sourceTree = "<group>"; };
 		B1A301A52A5439E7003834E6 /* UIViewController+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIViewController+Extension.swift"; sourceTree = "<group>"; };
@@ -157,6 +156,7 @@
 		B2198BB72A2A36EC0019032D /* AvocadoUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = AvocadoUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		B2198BBB2A2A36EC0019032D /* AvocadoUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AvocadoUITests.swift; sourceTree = "<group>"; };
 		B2198BBD2A2A36EC0019032D /* AvocadoUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AvocadoUITestsLaunchTests.swift; sourceTree = "<group>"; };
+		B26F8A4C2A544AC300F4BEA3 /* ProfileSettingVM.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileSettingVM.swift; sourceTree = "<group>"; };
 		B29D78902A2B6FB1008B6945 /* SearchVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchVC.swift; sourceTree = "<group>"; };
 		B29D78922A2B6FCF008B6945 /* SearchVM.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchVM.swift; sourceTree = "<group>"; };
 		B2D1309D2A4B4C5800538EFB /* BottomButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BottomButton.swift; sourceTree = "<group>"; };
@@ -222,7 +222,7 @@
 				B1BFDD662A49CF8100DB4955 /* LoginVM.swift */,
 				B1D23D382A4C6245006A2848 /* WelcomeVM.swift */,
 				B18DFEDE2A51B53B00CF27FE /* EmailCheckVM.swift */,
-				B1A301942A5437C4003834E6 /* ProfileSettingVM.swift */,
+				B26F8A4C2A544AC300F4BEA3 /* ProfileSettingVM.swift */,
 			);
 			path = ViewModel;
 			sourceTree = "<group>";
@@ -597,10 +597,10 @@
 			files = (
 				04C835ED2A2B2BE700731E3E /* ProductM.swift in Sources */,
 				981A598A2A494F5C0031A917 /* SignUpVM.swift in Sources */,
+				B26F8A4D2A544AC300F4BEA3 /* ProfileSettingVM.swift in Sources */,
 				B1D23D3F2A4C74F6006A2848 /* AvatarM.swift in Sources */,
 				9816F6ED2A494B0900A7A284 /* BasePagenationResponse.swift in Sources */,
 				04C835F92A2B5E6500731E3E /* MainCategoryM.swift in Sources */,
-				B1A301952A5437C4003834E6 /* ProfileSettingVM.swift in Sources */,
 				04C835EB2A2B280A00731E3E /* MainSectionM.swift in Sources */,
 				B1A301BE2A543A2F003834E6 /* Constant.swift in Sources */,
 				981A598D2A494FAE0031A917 /* AuthService.swift in Sources */,
