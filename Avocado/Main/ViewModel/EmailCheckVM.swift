@@ -11,38 +11,35 @@ import RxSwift
 import Amplify
 import RxRelay
 
-struct EmailCheckVM {
-    
+final class EmailCheckVM {
     
     let service: AuthService
     let disposeBag = DisposeBag()
     
     let successEvent = PublishRelay<Bool>()
-    let errEvent = PublishRelay<String>()
+    let errEvent = PublishRelay<NetworkError>()
     let confirmCode = BehaviorRelay<String>(value: "")
-    let userEmail:BehaviorRelay<String> = {
-        let signUpEmail = UserDefaults.standard.string(forKey: CommonModel.UserDefault.Auth.signUpEmail) ?? ""
-        let userEmailRelay = BehaviorRelay<String>(value: signUpEmail)
-        return userEmailRelay
-    }()
+    let userEmail = BehaviorRelay<String>(value: "")
+    let userPassword = BehaviorRelay<String>(value: "")
     
-    
-    init(service: AuthService) {
+    init(service: AuthService, email: String, password: String) {
         self.service = service
+        self.userEmail.accept(email)
+        self.userPassword.accept(password)
     }
     
     /* 이메일 인증번호 재 전송*/
     func resendSignUpCode() {
         service.resendSignUpCode(to: userEmail.value)
             .subscribe {
-                successEvent.accept($0)
+                self.successEvent.accept($0)
             } onError: { err in
                 guard let authError = err as? AuthError else {
-                    errEvent.accept(err.localizedDescription)
+                    self.errEvent.accept(NetworkError.unknown(-1, err.localizedDescription))
                     return
                 }
                 
-                errEvent.accept(authError.errorDescription)
+                self.errEvent.accept(NetworkError.unknown(-1, authError.errorDescription))
             }
             .disposed(by: disposeBag)
     }
@@ -50,16 +47,34 @@ struct EmailCheckVM {
     /* 이메일 인증번호 확인 */
     func confirmSignUpCode() {
         service.confirmSignUp(for: userEmail.value, with: confirmCode.value)
-            .subscribe {
-                successEvent.accept($0)
-                
-            } onError: { err in
-                guard let authError = err as? AuthError else {
-                    errEvent.accept(err.localizedDescription)
+            .subscribe { isSuccess in
+                guard isSuccess else {
+                    self.errEvent.accept(NetworkError.unknown(-1, "인증번호 실패"))
                     return
                 }
                 
-                errEvent.accept(authError.errorDescription)
+                // 인증번호가 정상 인경우, 코그니토 로그인 로직 실행
+                self.service.login(email: self.userEmail.value, password: self.userPassword.value)
+                    .subscribe(onNext: { isSuccess in
+                        if isSuccess {
+                            self.successEvent.accept(true)
+                        }
+                        else {
+                            self.errEvent.accept(NetworkError.unknown(-1, "로그인에 실패하였습니다"))
+                        }
+                        
+                    }) { err in
+                        self.errEvent.accept(NetworkError.unknown(-1, err.localizedDescription))
+                    }
+                    .disposed(by: self.disposeBag)
+                
+            } onError: { err in
+                guard let authError = err as? AuthError else {
+                    self.errEvent.accept(NetworkError.unknown(-1, err.localizedDescription))
+                    return
+                }
+                
+                self.errEvent.accept(NetworkError.unknown(-1, authError.errorDescription))
             }
             .disposed(by: disposeBag)
     }

@@ -11,12 +11,12 @@ import RxSwift
 import Amplify
 import RxRelay
 
-struct WelcomeVM {
+final class WelcomeVM {
     
     let service: AuthService
     let disposeBag = DisposeBag()
-    let successEvent = PublishRelay<Bool>()
-    let errEvent = PublishRelay<String>()
+    let successEvent = PublishRelay<User>()
+    let errEvent = PublishRelay<NetworkError>()
     
     init(service: AuthService) {
         self.service = service
@@ -24,35 +24,37 @@ struct WelcomeVM {
     
     /* 애플 로그인 */
     func socialLoginWithApple(view: UIView) {
-        service.socialSignInView(view: view, socialType: .apple)
-            .subscribe { signIn in
-                successEvent.accept(signIn)
+        service.socialLogin(view: view, socialType: .apple)
+            .subscribe { user in
+                self.successEvent.accept(user)
+                
             } onError: { err in
 
                 guard let authError = err as? AuthError else {
                     Logger.e(err)
-                    errEvent.accept(err.localizedDescription)
+                    self.errEvent.accept(err as! NetworkError)
                     return
                 }
                 
-                errEvent.accept(authError.errorDescription)
+                self.errEvent.accept(NetworkError.unknown(-1, authError.errorDescription))
             }
             .disposed(by: disposeBag)
     }
     /* 구글 로그인 */
     func socialLoginWithGoogle(view: UIView) {
-        service.socialSignInView(view: view, socialType: .google)
-            .subscribe { signIn in
-                successEvent.accept(signIn)
+        service.socialLogin(view: view, socialType: .google)
+            .subscribe { user in
+                self.successEvent.accept(user)
             } onError: { err in
-
+                
                 guard let authError = err as? AuthError else {
                     Logger.e(err)
-                    errEvent.accept(err.localizedDescription)
+                    self.errEvent.accept(err as! NetworkError)
                     return
                 }
                 
-                errEvent.accept(authError.errorDescription)
+                self.errEvent.accept(NetworkError.unknown(-1, authError.errorDescription))
+                
             }
             .disposed(by: disposeBag)
     }

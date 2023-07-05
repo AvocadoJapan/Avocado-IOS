@@ -83,19 +83,19 @@ class EmailCheckVC: BaseVC {
         titleLabel.snp.makeConstraints {
             $0.centerX.equalToSuperview()
             $0.top.equalTo(view.safeAreaLayoutGuide).offset(20)
-            $0.horizontalEdges.equalToSuperview().offset(30)
+            $0.horizontalEdges.equalToSuperview().inset(30)
         }
         
         emailLabel.snp.makeConstraints {
             $0.centerX.equalToSuperview()
             $0.top.equalTo(titleLabel.snp.bottom).offset(20)
-            $0.horizontalEdges.equalToSuperview().offset(30)
+            $0.horizontalEdges.equalToSuperview().inset(30)
         }
         
         descriptionLabel.snp.makeConstraints {
             $0.centerX.equalToSuperview()
             $0.top.equalTo(emailLabel.snp.bottom).offset(5)
-            $0.horizontalEdges.equalToSuperview().offset(30)
+            $0.horizontalEdges.equalToSuperview().inset(30)
         }
 
         confirmCodeInput.snp.makeConstraints {
@@ -140,14 +140,11 @@ class EmailCheckVC: BaseVC {
             .successEvent
             .asSignal()
             .emit(onNext: { [weak self] isSuccess in
-                if isSuccess {
-                    let mainVM = MainVM()
-                    let mainVC = MainVC(vm: mainVM)
-                    let navigationController = mainVC.getBaseNavigationController()
-                    
-                    navigationController.modalPresentationStyle = .fullScreen
-                    self?.present(navigationController, animated: false)
-                }
+                let authService = AuthService()
+                let profileSettingVM = ProfileSettingVM(service: authService)
+                let profileSettingVC = ProfileSettingVC(vm: profileSettingVM)
+                let navigaitonVC = profileSettingVC.getBaseNavigationController()
+                self?.present(navigaitonVC, animated: true)
             })
             .disposed(by: disposeBag)
         
@@ -186,7 +183,7 @@ import SwiftUI
 import RxSwift
 struct EmailCheckVCPreview: PreviewProvider {
     static var previews: some View {
-        return EmailCheckVC(vm: EmailCheckVM(service: AuthService())).toPreview()
+        return EmailCheckVC(vm: EmailCheckVM(service: AuthService(), email: "", password: "")).toPreview()
     }
 }
 #endif

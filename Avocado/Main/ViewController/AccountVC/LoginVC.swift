@@ -143,8 +143,6 @@ class LoginVC: BaseVC {
                 let mainVM = MainVM()
                 let mainVC = MainVC(vm: mainVM)
                 let navigationController = mainVC.getBaseNavigationController()
-                
-                navigationController.modalPresentationStyle = .fullScreen
                 self?.present(navigationController, animated: false)
             })
             .disposed(by: disposeBag)

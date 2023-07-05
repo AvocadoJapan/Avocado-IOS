@@ -13,6 +13,7 @@ final class BaseNavigationVC: UINavigationController {
     override func viewDidLoad() {
         super.viewDidLoad()
         navigationBar.isHidden = true
+        modalPresentationStyle = .fullScreen
     }
 
     override init(rootViewController: UIViewController) {

@@ -201,7 +201,6 @@ class WelcomeVC: BaseVC {
         viewModel.successEvent
             .asSignal()
             .emit(onNext: { [weak self] _ in
-                //FIXME: 프로필 설정 화면으로 변경 될 예정!
                 let mainVM = MainVM()
                 let mainVC = MainVC(vm: mainVM)
                 let navigationController = mainVC.getBaseNavigationController()
@@ -214,11 +213,30 @@ class WelcomeVC: BaseVC {
         //소셜 로그인 에러 여부
         viewModel.errEvent
             .asSignal()
-            .emit(onNext:{ [weak self] message in
-                let alert = UIAlertController(title: "", message: message, preferredStyle: .alert)
-                alert.addAction(UIAlertAction(title: "확인", style: .default))
-                
-                self?.present(alert, animated: true)
+            .emit(onNext:{ [weak self] err in
+                switch err {
+                case .pageNotFound:
+                    
+                    let alert = UIAlertController(title: "", message: "사용자가 존재하지 않습니다\n 아보카도 회원가입 먼저 부탁드립니다", preferredStyle: .alert)
+                    
+                    alert.addAction(UIAlertAction(title: "확인", style: .default,handler: { _ in
+                        let authService = AuthService()
+                        let signUpVM = SignUpVM(service: authService)
+                        let signUPVC = SignupVC(vm: signUpVM)
+                        self?.navigationController?.pushViewController(signUPVC, animated: true)
+                    }))
+                    
+                    self?.present(alert, animated: true)
+                    
+                case .unknown(_, let message):
+                    let alert = UIAlertController(title: "", message: message, preferredStyle: .alert)
+                    alert.addAction(UIAlertAction(title: "확인", style: .default))
+                    
+                    self?.present(alert, animated: true)
+                    
+                default:
+                    break
+                }
             })
             .disposed(by: disposeBag)
     }

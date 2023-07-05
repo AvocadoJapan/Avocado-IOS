@@ -10,7 +10,7 @@ import RxSwift
 import RxRelay
 import Amplify
 
-struct SignUpVM {
+final class SignUpVM {
  
     private let service: AuthService
     private let disposeBag = DisposeBag()
@@ -32,18 +32,17 @@ struct SignUpVM {
             .subscribe {
                 
                 UserDefaults.standard.setValue($0, forKey: CommonModel.UserDefault.Auth.signUpSuccess)
-                UserDefaults.standard.setValue(emailObserver.value, forKey: CommonModel.UserDefault.Auth.signUpEmail)
                 UserDefaults.standard.synchronize()
                 
-                successEvent.accept($0)
+                self.successEvent.accept($0)
                 
             } onError: { err in
                 guard let err = err as? AuthError else {
-                    errEvent.accept(err.localizedDescription)
+                    self.errEvent.accept(err.localizedDescription)
                     return
                 }
                 
-                errEvent.accept(err.errorDescription)
+                self.errEvent.accept(err.errorDescription)
             }
             .disposed(by: disposeBag)
     }

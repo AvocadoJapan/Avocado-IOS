@@ -102,6 +102,25 @@ class BaseAPIService<Target: BaseTarget> {
             .timeout(.seconds(30), scheduler: MainScheduler.instance)
             .filterSuccessfulStatusCodes()
             .map(D.self)
+            .catch { error in
+                guard let error = error as? MoyaError else {
+                    throw NetworkError.unknown(-1, error.localizedDescription)
+                }
+                
+                guard let response = error.response,
+                      let errDescription = error.errorDescription else {
+                    throw NetworkError.unknown(error.response?.statusCode ?? -1 , error.errorDescription ?? "예외")
+                }
+                
+                switch response.statusCode {
+                case 404:
+                    throw NetworkError.pageNotFound
+                case 500:
+                    throw NetworkError.serverError
+                default:
+                    throw NetworkError.unknown(response.statusCode, errDescription)
+                }
+            }
     }
     
     /**
@@ -118,6 +137,23 @@ class BaseAPIService<Target: BaseTarget> {
             .filterSuccessfulStatusCodes()
             .map(D.self)
             .map { $0.toDTO() }
+            .catch { error in
+                guard let error = error as? MoyaError else {
+                    throw NetworkError.unknown(-1, error.localizedDescription)
+                }
+                
+                guard let response = error.response,
+                      let errDescription = error.errorDescription else {
+                    throw NetworkError.unknown(error.response?.statusCode ?? -1 , error.errorDescription ?? "예외")
+                }
+                
+                switch response.statusCode {
+                case 404:
+                    throw NetworkError.pageNotFound
+                default:
+                    throw NetworkError.unknown(response.statusCode, errDescription)
+                }
+            }
     }
     
     

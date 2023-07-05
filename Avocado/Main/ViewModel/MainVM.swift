@@ -11,7 +11,7 @@ import RxRelay
 /**
  *## 클래스 설명: 메인화면에 대한 ViewModel을 구성, `sectionData`란 Observable을 이용하여 Main화면에 대한 정보를 변경해줌
  */
-struct MainVM {
+final class MainVM {
     
     public lazy var sectionData = BehaviorRelay<[SectionOfMainData]>(value: [
         

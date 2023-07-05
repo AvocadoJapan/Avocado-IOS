@@ -10,7 +10,7 @@ import RxRelay
 import RxSwift
 import Amplify
 
-struct LoginVM {
+final class LoginVM {
     private let service: AuthService
     private let disposeBag = DisposeBag()
     
@@ -34,16 +34,16 @@ struct LoginVM {
     func login() {
         service.login(email: emailObserver.value, password: passwordObserver.value)
             .subscribe {
-                successEvent.accept($0)
+                self.successEvent.accept($0)
             } onError: { err in
                 guard let err = err as? AuthError else {
-                    errEvent.accept(err.localizedDescription)
+                    self.errEvent.accept(err.localizedDescription)
                     return
                 }
-                errEvent.accept(err.errorDescription)
+                self.errEvent.accept(err.errorDescription)
             }
             .disposed(by: disposeBag)
-
+        
     }
     
 }

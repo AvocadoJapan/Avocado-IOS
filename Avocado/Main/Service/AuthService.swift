@@ -16,6 +16,9 @@ import UIKit
  * - Description 인증관련 API
  */
 final class AuthService: BaseAPIService<AuthAPI> {
+    
+    // Observable처리 disposeBag
+    private let disposeBag = DisposeBag()
     /**
      * - Description: 회원가입
      * - Parameter email: 로그인에 사용될 이메일
@@ -100,32 +103,11 @@ final class AuthService: BaseAPIService<AuthAPI> {
                     let loginResult = try await Amplify.Auth.signIn(username: email, password: password)
                     
                     if (loginResult.isSignedIn) {
-                        let session = try await Amplify.Auth.fetchAuthSession()
-                        if let cognitTokenResult = (session as? AuthCognitoTokensProvider)?.getCognitoTokens() {
-                            switch cognitTokenResult {
-                            case let .success(tokens):
-                                Logger.d("token = \(tokens)")
-                                // accessToken, refreshToken create
-                                let tokenCreate = KeychainUtil.loginTokenCreate(accessToken: tokens.accessToken, refreshToken: tokens.refreshToken)
-                                
-                                if (!tokenCreate) {
-                                    observer.onError(NetworkError.unknown(-1, "키체인 생성 실패"))
-                                }
-                                else {
-                                    observer.onNext(true)
-                                }
-                                
-                                observer.onCompleted()
-                                
-                            case let .failure(error):
-                                Logger.e("token retry failed with error \(error)")
-                                observer.onError(error)
-                            }
-                        }
+                        // authToken 생성
+                        let isSuccess = await self.authTokenGenerate()
+                        observer.onNext(isSuccess)
+                        observer.onCompleted()
                     }
-                    
-                    
-                    
                 }
                 catch let error as AuthError {
                     Logger.e("sign in failed \(error)")
@@ -448,18 +430,41 @@ final class AuthService: BaseAPIService<AuthAPI> {
     }
     
     /**
-     * - Description 소셜로그인
+     * - Description 소셜로그인 함수, 소셜 로그인 이후 서버 프로필 조회 후 사용자가 있는 경우 사용자 정보 반환, 없으면 에러 반환
      * - Parameter view 화면을 띄울 뷰 정보
      * - Parameter socialType 소셜 로그인 정보 {구글, 애플..등}
-     * - Returns 로그인 여부 Bool 값
+     * - Returns 프로필 조회 후 사용자 정보
      */
-    func socialSignInView(view: UIView, socialType: AuthProvider) -> Observable<Bool> {
+    func socialLogin(view: UIView, socialType: AuthProvider) -> Observable<User> {
         return Observable.create { observable in
             Task {
                 do {
                     let signInResult = try await Amplify.Auth.signInWithWebUI(for: socialType, presentationAnchor: view.window!)
-                    observable.onNext(signInResult.isSignedIn)
-                    observable.onCompleted()
+                    
+                    guard signInResult.isSignedIn else {
+                        observable.onError(NetworkError.unknown(-1, "소셜 로그인에 실패하였습니다"))
+                        return
+                    }
+                    
+                    // 엑세스, 리프레시 토큰 생성
+                    let isSuccessToken = await self.authTokenGenerate()
+                    
+                    //토큰 생성에 실패한 경우
+                    guard isSuccessToken else {
+                        observable.onError(NetworkError.unknown(-1, "토큰 생성에 실패하였습니다"))
+                        return
+                    }
+                    
+                    // 토큰 생성 후 서버 프로필 조회
+                    self.getProfile()
+                        .subscribe { user in
+                            observable.onNext(user)
+                            observable.onCompleted()
+                        } onError: { err in
+                            observable.onError(err as! NetworkError)
+                        }
+                        .disposed(by: self.disposeBag)
+                    
                 }
                 catch let error as AuthError {
                     Logger.e("Social Login Failed with error \(error)")
@@ -502,10 +507,36 @@ final class AuthService: BaseAPIService<AuthAPI> {
     
     /**
      * - Description 사용자 정보 가져오는 API
+     * - Warning 404일 경우, 사용자가 없는 경우임
      * - Returns 사용자 정보 모델 Observable값
      */
     func getProfile() -> Observable<User> {
-        return singleRequest(.profile).asObservable()
+        return Observable.create { observer in
+            self.singleRequest<User>(.profile)
+                .subscribe { user in
+                    observer.onNext(user)
+                    observer.onCompleted()
+                } onFailure: { err in
+                    guard let err = err as? NetworkError else {
+                        observer.onError(err)
+                        return
+                    }
+                    
+                    switch err {
+                    case .pageNotFound:
+                        self.logout().subscribe { _ in
+                            observer.onError(err)
+                        }
+                        .disposed(by: self.disposeBag)
+                        
+                    default:
+                        observer.onError(err)
+                    }
+                }
+                .disposed(by: self.disposeBag)
+            
+            return Disposables.create()
+        }
     }
     
     /**
@@ -527,4 +558,33 @@ final class AuthService: BaseAPIService<AuthAPI> {
         return singleRequest(.changeAvatar(name: nickName, regionId: regionId)).asObservable()
     }
     
+    /**
+     * - Description authToken{accessToken, refreshToken} 생성 메서드
+     * - Returns 토큰 생성 여부
+     */
+    private func authTokenGenerate() async -> Bool {
+        do {
+            let session = try await Amplify.Auth.fetchAuthSession()
+            if let cognitTokenResult = (session as? AuthCognitoTokensProvider)?.getCognitoTokens() {
+                switch cognitTokenResult {
+                case let .success(tokens):
+                    Logger.d("token = \(tokens)")
+                    // accessToken, refreshToken create
+                    let tokenCreate = KeychainUtil.loginTokenCreate(accessToken: tokens.accessToken, refreshToken: tokens.refreshToken)
+                    
+                    return tokenCreate
+                    
+                case let .failure(error):
+                    Logger.e("token retry failed with error \(error)")
+                    return false
+                }
+            }
+            
+            return false
+        }
+        catch {
+            Logger.e("token generate error with \(error)")
+            return false
+        }
+    }
 }

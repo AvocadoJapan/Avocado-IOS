@@ -159,7 +159,9 @@ class SignupVC: BaseVC {
                 
                 if isSuccess {
                     let authService = AuthService()
-                    let emailCheckVM = EmailCheckVM(service: authService)
+                    let emailCheckVM = EmailCheckVM(service: authService,
+                                                    email: viewModel.emailObserver.value,
+                                                    password: viewModel.passwordObserver.value)
                     let emailCheckVC = EmailCheckVC(vm: emailCheckVM)
                     self.navigationController?.pushViewController(emailCheckVC, animated: true)
                 }

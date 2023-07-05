@@ -49,7 +49,7 @@ final class ProfileSettingVC: BaseVC {
         $0.font = .boldSystemFont(ofSize: 12)
     }
     
-    private lazy var emailInput = InputView(label: "닉네임", placeholder: "Nickname", colorSetting: .normal)
+    private lazy var ninckNameInput = InputView(label: "닉네임", placeholder: "Nickname", colorSetting: .normal)
     
     private lazy var confirmButton = BottomButton(text: "확인")
     
@@ -75,7 +75,7 @@ final class ProfileSettingVC: BaseVC {
             self.profileView.addSubview($0)
         }
         
-        [titleLabel, profileImageView, emailInput, confirmButton, profileView].forEach {
+        [titleLabel, profileImageView, ninckNameInput, confirmButton, profileView].forEach {
             view.addSubview($0)
         }
     }
@@ -99,13 +99,13 @@ final class ProfileSettingVC: BaseVC {
         titleLabel.snp.makeConstraints {
             $0.centerX.equalToSuperview()
             $0.top.equalTo(view.safeAreaLayoutGuide).offset(20)
-            $0.horizontalEdges.equalToSuperview().offset(30)
+            $0.horizontalEdges.equalToSuperview().inset(30)
         }
         
-        emailInput.snp.makeConstraints {
+        ninckNameInput.snp.makeConstraints {
             $0.centerX.equalToSuperview()
             $0.top.equalTo(profileView.snp.bottom).offset(20)
-            $0.left.equalToSuperview().offset(20)
+            $0.left.equalToSuperview().inset(20)
         }
         
         confirmButton.snp.makeConstraints {
@@ -118,6 +118,42 @@ final class ProfileSettingVC: BaseVC {
     override func bindUI() {
         viewModel.selectedImageSubject
             .bind(to: profileImageView.rx.image)
+            .disposed(by: disposeBag)
+        
+        ninckNameInput
+            .userInput
+            .subscribe { [weak self] text in
+                self?.viewModel.nickNameInput.accept(text)
+            }
+            .disposed(by: disposeBag)
+        
+        confirmButton
+            .rx
+            .tap
+            .asDriver()
+            .drive(onNext: { [weak self] _ in
+                self?.viewModel.profileSetUp()
+            })
+            .disposed(by: disposeBag)
+        
+        viewModel.successEvent
+            .asSignal()
+            .emit(onNext: { [weak self] _ in
+                let mainVM = MainVM()
+                let mainVC = MainVC(vm: mainVM)
+                let navigationController = mainVC.getBaseNavigationController()
+                self?.present(navigationController, animated: false)
+            })
+            .disposed(by: disposeBag)
+        
+        viewModel.errEvent
+            .asSignal()
+            .emit { [weak self] err in
+                let alert = UIAlertController(title: "", message: err.errorDescription ?? "오류", preferredStyle: .alert)
+                alert.addAction(UIAlertAction(title: "확인", style: .default))
+                
+                self?.present(alert, animated: true)
+            }
             .disposed(by: disposeBag)
         
         RxKeyboard.instance.visibleHeight
@@ -166,7 +202,7 @@ import SwiftUI
 import RxSwift
 struct ProfileSettingVCPreview: PreviewProvider {
     static var previews: some View {
-        return ProfileSettingVC(vm: ProfileSettingVM()).toPreview()
+        return ProfileSettingVC(vm: ProfileSettingVM(service: AuthService())).toPreview()
     }
 }
 #endif
