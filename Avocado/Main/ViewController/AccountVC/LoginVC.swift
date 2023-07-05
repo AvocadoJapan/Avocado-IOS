@@ -15,7 +15,7 @@ import RxKeyboard
 
 class LoginVC: BaseVC {
     
-    fileprivate lazy var titleLabel = UILabel().then {
+    private lazy var titleLabel = UILabel().then {
         $0.text = "로그인"
         $0.numberOfLines = 1
         $0.textAlignment = .left
@@ -68,7 +68,7 @@ class LoginVC: BaseVC {
     override func setConstraint() {
         titleLabel.snp.makeConstraints {
             $0.centerX.equalToSuperview()
-            $0.top.equalTo(view.safeAreaLayoutGuide).offset(20)
+            $0.top.equalTo(view.safeAreaLayoutGuide).offset(10)
             $0.horizontalEdges.equalToSuperview().inset(30)
         }
 

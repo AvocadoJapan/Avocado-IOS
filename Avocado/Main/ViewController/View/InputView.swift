@@ -26,7 +26,7 @@ final class InputView : UIView {
     
     private let disposeBag = DisposeBag()
     
-    lazy var textField = UITextField().then {
+    private lazy var textField = UITextField().then {
         $0.placeholder = self.placeholder
         $0.font = .systemFont(ofSize: 13)
         $0.layer.cornerRadius = 10
@@ -34,14 +34,14 @@ final class InputView : UIView {
         $0.tintColor = .black
     }
     
-    lazy var leftLabel = UILabel().then {
+    private lazy var leftLabel = UILabel().then {
         $0.text = self.labelString
         $0.numberOfLines = 1
         $0.textAlignment = .left
         $0.font = UIFont.systemFont(ofSize: 13, weight: .medium)
     }
     
-    lazy var rightLabel = UILabel().then {
+    private lazy var rightLabel = UILabel().then {
         //        $0.text = self.rightLabelString.value
         $0.text = "여기에 상호작용 메세지"
         $0.numberOfLines = 1

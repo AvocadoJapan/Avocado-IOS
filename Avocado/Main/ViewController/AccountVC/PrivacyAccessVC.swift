@@ -50,7 +50,7 @@ final class PrivacyAccessVC: BaseVC {
     
     private lazy var confirmButton = BottomButton(text: "다음")
     
-    var disposeBag = DisposeBag()
+    private var disposeBag = DisposeBag()
     
     override func setProperty() {
         view.backgroundColor = .white

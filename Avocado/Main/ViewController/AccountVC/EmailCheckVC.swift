@@ -17,26 +17,18 @@ import RxKeyboard
 
 class EmailCheckVC: BaseVC {
     
-    fileprivate lazy var titleLabel = UILabel().then {
+    private lazy var titleLabel = UILabel().then {
         $0.text = "앗, 잠시만요"
         $0.numberOfLines = 1
         $0.textAlignment = .left
         $0.font = UIFont.systemFont(ofSize: 25, weight: .heavy)
     }
     
-    fileprivate lazy var label = UILabel().then {
-        $0.text = ""
-        $0.numberOfLines = 0
-        $0.textAlignment = .right
-        $0.textColor = .black
-        $0.font = UIFont.systemFont(ofSize: 14, weight: .regular)
-    }
-    
     private lazy var confirmCodeInput = InputView(label: "인증번호", colorSetting: .normal)
     
     private lazy var confirmButton = BottomButton(text: "인증하기")
     
-    fileprivate lazy var emailLabel = UILabel().then {
+    private lazy var emailLabel = UILabel().then {
         $0.text = "sample@avocadojp.com"
         $0.numberOfLines = 1
         $0.textAlignment = .left
@@ -44,7 +36,7 @@ class EmailCheckVC: BaseVC {
         $0.font = UIFont.systemFont(ofSize: 14, weight: .semibold)
     }
     
-    fileprivate lazy var descriptionLabel = UILabel().then {
+    private lazy var descriptionLabel = UILabel().then {
         $0.text = "30분 이내 이메일을 인증해주세요"
         $0.numberOfLines = 0
         $0.textAlignment = .left
@@ -52,6 +44,10 @@ class EmailCheckVC: BaseVC {
         $0.font = UIFont.systemFont(ofSize: 14, weight: .semibold)
     }
     
+    // FIXME: 다시보내기 구현
+    private lazy var reqNewCodeButton : SubButton = SubButton(text: "인증번호 다시 보내기")
+    
+    // FIXME: 이 버튼을 누를 경우 인증번호를 보낸 계정이 미인증 계정일때 그 미인증계정을 삭제해야함
     private lazy var otherEmailButton : SubButton = SubButton(text: "다른 이메일로 인증하기")
     
     private lazy var accountCenterButton : SubButton = SubButton(text: "계정 센터")
@@ -75,7 +71,7 @@ class EmailCheckVC: BaseVC {
     }
     
     override func setLayout() {
-        [titleLabel,emailLabel, descriptionLabel, confirmCodeInput, otherEmailButton, accountCenterButton, confirmButton].forEach {
+        [titleLabel,emailLabel, descriptionLabel, reqNewCodeButton, confirmCodeInput, otherEmailButton, accountCenterButton, confirmButton].forEach {
             view.addSubview($0)
         }
     }
@@ -105,9 +101,15 @@ class EmailCheckVC: BaseVC {
             $0.left.equalToSuperview().offset(20)
         }
         
-        otherEmailButton.snp.makeConstraints {
+        reqNewCodeButton.snp.makeConstraints {
             $0.centerX.equalToSuperview()
             $0.top.equalTo(confirmCodeInput.snp.bottom).offset(20)
+            $0.left.equalToSuperview().offset(30)
+        }
+        
+        otherEmailButton.snp.makeConstraints {
+            $0.centerX.equalToSuperview()
+            $0.top.equalTo(reqNewCodeButton.snp.bottom)
             $0.left.equalToSuperview().offset(30)
         }
         

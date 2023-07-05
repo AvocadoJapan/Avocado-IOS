@@ -16,7 +16,7 @@ import RxKeyboard
 
 
 final class ProfileSettingVC: BaseVC {
-    fileprivate lazy var titleLabel = UILabel().then {
+    private lazy var titleLabel = UILabel().then {
         $0.text = "프로필 설정"
         $0.numberOfLines = 1
         $0.textAlignment = .left
@@ -30,20 +30,20 @@ final class ProfileSettingVC: BaseVC {
         $0.backgroundColor = .systemGray5
     }
     
-    public lazy var profileButton = UIButton(type: .custom).then {
+    private lazy var profileButton = UIButton(type: .custom).then {
         $0.setImage(UIImage(named: "default_profile"), for: .normal)
         $0.addTarget(self, action: #selector(didTapImageView), for: .touchUpInside)
         $0.imageView?.contentMode = .scaleAspectFill
 
     }
     
-    public lazy var profileView = UIView().then {
+    private lazy var profileView = UIView().then {
         $0.backgroundColor = .blue
         $0.layer.cornerRadius = 60
         $0.layer.masksToBounds = true
     }
     
-    public lazy var profileLabel = UILabel().then {
+    private lazy var profileLabel = UILabel().then {
         $0.isUserInteractionEnabled = false
         $0.text = "Edit"
         $0.backgroundColor = .white

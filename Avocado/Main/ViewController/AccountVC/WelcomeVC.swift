@@ -14,12 +14,12 @@ import Then
 
 class WelcomeVC: BaseVC {
     
-    fileprivate lazy var logo = UIImageView().then {
+    private lazy var logo = UIImageView().then {
         $0.image = UIImage(named: "logo_avocado")
         $0.contentMode = .scaleAspectFit
     }
     
-    fileprivate lazy var titleLabel = UILabel().then {
+    private lazy var titleLabel = UILabel().then {
         $0.text = "아보카도를 이용하기 위해서는 로그인이 필요합니다"
         $0.numberOfLines = 0
         $0.textAlignment = .left
@@ -30,7 +30,7 @@ class WelcomeVC: BaseVC {
     
     private lazy var signupButton : SubButton = SubButton(text: "아직 계정이 없나요? 회원가입")
     
-    fileprivate lazy var agreementLabel = UILabel().then {
+    private lazy var agreementLabel = UILabel().then {
         $0.text = "로그인을 함으로써, 당사 약관 및 개인정보 정책에 동의한 것으로 간주합니다"
         $0.numberOfLines = 0
         $0.textAlignment = .right
@@ -38,7 +38,7 @@ class WelcomeVC: BaseVC {
         $0.font = UIFont.systemFont(ofSize: 11, weight: .regular)
     }
     
-    fileprivate lazy var socialLoginButtonStackView = UIStackView().then {
+    private lazy var socialLoginButtonStackView = UIStackView().then {
         $0.axis = .vertical
         $0.alignment = .fill
         $0.distribution = .fillEqually
@@ -47,7 +47,7 @@ class WelcomeVC: BaseVC {
 
 
     
-    fileprivate lazy var appleLogin = UIButton().then {
+    private lazy var appleLogin = UIButton().then {
         $0.setTitle("Apple로 계속하기", for: .normal)
         $0.backgroundColor = .white
         $0.setTitleColor(.black, for: .normal)
@@ -63,7 +63,7 @@ class WelcomeVC: BaseVC {
         $0.titleEdgeInsets = UIEdgeInsets(top: 0, left: 20, bottom: 0, right: 0)
     }
     
-    fileprivate lazy var googleLogin = UIButton().then {
+    private lazy var googleLogin = UIButton().then {
         $0.setTitle("Google로 계속하기", for: .normal)
         $0.backgroundColor = .white
         $0.setTitleColor(.black, for: .normal)
@@ -80,10 +80,10 @@ class WelcomeVC: BaseVC {
     }
 
     
-    fileprivate lazy var avocadoLogin = BottomButton(text: "이메일로 로그인")
+    private lazy var avocadoLogin = BottomButton(text: "이메일로 로그인")
     
-    var disposeBag = DisposeBag()
-    let viewModel: WelcomeVM
+    private var disposeBag = DisposeBag()
+    private let viewModel: WelcomeVM
     
     init(vm: WelcomeVM) {
         self.viewModel = vm
