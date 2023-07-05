@@ -27,9 +27,9 @@ class LoginVC: BaseVC {
         $0.spacing = 20
     }
     
-    private lazy var emailInput = InputView(label: "이메일", placeholder: "example@example.com", colorSetting: .normal)
+    private lazy var emailInput = InputView(label: "이메일", placeholder: "example@example.com", colorSetting: .normal, regSetting: .email)
     
-    private lazy var passwordInput = InputView(label: "비밀번호", placeholder: "**********", colorSetting: .normal, passwordable: true)
+    private lazy var passwordInput = InputView(label: "비밀번호", placeholder: "**********", colorSetting: .normal, regSetting: .password, passwordable: true)
     
     private lazy var confirmButton = BottomButton(text: "로그인")
     
@@ -51,6 +51,7 @@ class LoginVC: BaseVC {
     
     override func setProperty() {
         view.backgroundColor = .white
+        self.navigationController?.isNavigationBarHidden = false
     }
     
     override func setLayout() {
@@ -177,6 +178,16 @@ class LoginVC: BaseVC {
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         super.touchesBegan(touches, with: event)
         view.endEditing(true)
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        self.navigationController?.isNavigationBarHidden = true
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        self.navigationController?.isNavigationBarHidden = false
     }
 }
 

@@ -96,6 +96,7 @@ class WelcomeVC: BaseVC {
     
     override func setProperty() {
         view.backgroundColor = .white
+        self.navigationController?.isNavigationBarHidden = true
     }
     
     override func setLayout() {
