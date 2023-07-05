@@ -44,12 +44,13 @@ final class ProfileSettingVC: BaseVC {
         $0.isUserInteractionEnabled = false
         $0.text = "Edit"
         $0.backgroundColor = .white
+        $0.textColor = .darkGray
         $0.textAlignment = .center
         $0.alpha = 0.7
         $0.font = .boldSystemFont(ofSize: 12)
     }
     
-    private lazy var emailInput = InputView(label: "닉네임", placeholder: "Nickname", colorSetting: .normal)
+    private lazy var nameInput = InputView(label: "닉네임", placeholder: "Nickname", colorSetting: .normal)
     
     private lazy var confirmButton = BottomButton(text: "확인")
     
@@ -75,7 +76,7 @@ final class ProfileSettingVC: BaseVC {
             self.profileView.addSubview($0)
         }
         
-        [titleLabel, profileImageView, emailInput, confirmButton, profileView].forEach {
+        [titleLabel, profileImageView, nameInput, confirmButton, profileView].forEach {
             view.addSubview($0)
         }
     }
@@ -102,9 +103,9 @@ final class ProfileSettingVC: BaseVC {
             $0.horizontalEdges.equalToSuperview().offset(30)
         }
         
-        emailInput.snp.makeConstraints {
+        nameInput.snp.makeConstraints {
             $0.centerX.equalToSuperview()
-            $0.top.equalTo(profileView.snp.bottom).offset(20)
+            $0.top.equalTo(profileView.snp.bottom).offset(30)
             $0.left.equalToSuperview().offset(20)
         }
         

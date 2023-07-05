@@ -33,7 +33,7 @@ class LoginVC: BaseVC {
     
     private lazy var confirmButton = BottomButton(text: "로그인")
     
-    private lazy var otherLoginOptionButton = SubButton(text: "다른 로그인 옵션 선택")
+    private lazy var accountCenterButton = SubButton(text: "계정 센터")
         
     
     var disposeBag = DisposeBag()
@@ -55,7 +55,7 @@ class LoginVC: BaseVC {
     }
     
     override func setLayout() {
-        [titleLabel, inputField, otherLoginOptionButton, confirmButton].forEach {
+        [titleLabel, inputField, accountCenterButton, confirmButton].forEach {
             view.addSubview($0)
         }
         
@@ -74,11 +74,11 @@ class LoginVC: BaseVC {
 
         inputField.snp.makeConstraints {
             $0.centerX.equalToSuperview()
-            $0.top.equalTo(titleLabel.snp.bottom).offset(30)
+            $0.top.equalTo(titleLabel.snp.bottom).offset(20)
             $0.left.equalToSuperview().offset(20)
         }
         
-        otherLoginOptionButton.snp.makeConstraints {
+        accountCenterButton.snp.makeConstraints {
             $0.centerX.equalToSuperview()
             $0.top.equalTo(inputField.snp.bottom).offset(20)
             $0.left.equalToSuperview().offset(30)
@@ -109,8 +109,8 @@ class LoginVC: BaseVC {
         
         viewModel
             .isVaild
-            .map { $0 ? 1 : 0.3}
-            .bind(to: confirmButton.rx.alpha)
+            .map { $0 ? .black : .lightGray}
+            .bind(to: confirmButton.rx.backgroundColor)
             .disposed(by: disposeBag)
         
         viewModel
@@ -150,8 +150,9 @@ class LoginVC: BaseVC {
             })
             .disposed(by: disposeBag)
         
-        // 다른 로그인 옵션
-        otherLoginOptionButton
+        // accountCenter 옵션
+        // FIXME: 계정 센터 VC를 만들면 나중에 거기로 연결해야함
+        accountCenterButton
             .rx
             .tap
             .asDriver()
@@ -168,6 +169,12 @@ class LoginVC: BaseVC {
                 self.confirmButton.keyboardMovement(from:self.view, height: $0)
             })
             .disposed(by: disposeBag)
+        
+//        RxKeyboard.instance.visibleHeight
+//            .drive(onNext: { [weak self] keyboardVisibleHeight in
+//                self?.view.frame.origin.y = -keyboardVisibleHeight/3
+//            })
+//            .disposed(by: disposeBag)
             
     }
     

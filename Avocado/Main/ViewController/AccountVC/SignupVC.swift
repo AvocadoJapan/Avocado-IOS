@@ -97,7 +97,7 @@ class SignupVC: BaseVC {
 
         inputField.snp.makeConstraints {
             $0.centerX.equalToSuperview()
-            $0.top.equalTo(titleLabel.snp.bottom).offset(30)
+            $0.top.equalTo(titleLabel.snp.bottom).offset(20)
             $0.left.equalToSuperview().offset(20)
         }
 
@@ -137,8 +137,8 @@ class SignupVC: BaseVC {
         
         viewModel
             .isVaild
-            .map { $0 ? 1 : 0.3 }
-            .bind(to: confirmButton.rx.alpha)
+            .map { $0 ? .black : .lightGray}
+            .bind(to: confirmButton.rx.backgroundColor)
             .disposed(by: disposeBag)
         
         viewModel
@@ -185,6 +185,12 @@ class SignupVC: BaseVC {
                 self.confirmButton.keyboardMovement(from:self.view, height: $0)
             })
             .disposed(by: disposeBag)
+        
+//        RxKeyboard.instance.visibleHeight
+//            .drive(onNext: { [weak self] keyboardVisibleHeight in
+//                self?.view.frame.origin.y = -keyboardVisibleHeight/3
+//            })
+//            .disposed(by: disposeBag)
     }
     
     override func viewWillDisappear(_ animated: Bool) {
