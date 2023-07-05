@@ -71,6 +71,8 @@
 		B2198BB22A2A36EC0019032D /* AvocadoTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2198BB12A2A36EC0019032D /* AvocadoTests.swift */; };
 		B2198BBC2A2A36EC0019032D /* AvocadoUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2198BBB2A2A36EC0019032D /* AvocadoUITests.swift */; };
 		B2198BBE2A2A36EC0019032D /* AvocadoUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2198BBD2A2A36EC0019032D /* AvocadoUITestsLaunchTests.swift */; };
+		B22222652A55F40100A2B7CB /* PrivacyAccessVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = B22222642A55F40100A2B7CB /* PrivacyAccessVC.swift */; };
+		B22222672A55F83300A2B7CB /* PrivacyElementView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B22222662A55F83300A2B7CB /* PrivacyElementView.swift */; };
 		B26F8A4D2A544AC300F4BEA3 /* ProfileSettingVM.swift in Sources */ = {isa = PBXBuildFile; fileRef = B26F8A4C2A544AC300F4BEA3 /* ProfileSettingVM.swift */; };
 		B29D78912A2B6FB1008B6945 /* SearchVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = B29D78902A2B6FB1008B6945 /* SearchVC.swift */; };
 		B29D78932A2B6FCF008B6945 /* SearchVM.swift in Sources */ = {isa = PBXBuildFile; fileRef = B29D78922A2B6FCF008B6945 /* SearchVM.swift */; };
@@ -156,6 +158,8 @@
 		B2198BB72A2A36EC0019032D /* AvocadoUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = AvocadoUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		B2198BBB2A2A36EC0019032D /* AvocadoUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AvocadoUITests.swift; sourceTree = "<group>"; };
 		B2198BBD2A2A36EC0019032D /* AvocadoUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AvocadoUITestsLaunchTests.swift; sourceTree = "<group>"; };
+		B22222642A55F40100A2B7CB /* PrivacyAccessVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PrivacyAccessVC.swift; sourceTree = "<group>"; };
+		B22222662A55F83300A2B7CB /* PrivacyElementView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PrivacyElementView.swift; sourceTree = "<group>"; };
 		B26F8A4C2A544AC300F4BEA3 /* ProfileSettingVM.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileSettingVM.swift; sourceTree = "<group>"; };
 		B29D78902A2B6FB1008B6945 /* SearchVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchVC.swift; sourceTree = "<group>"; };
 		B29D78922A2B6FCF008B6945 /* SearchVM.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchVM.swift; sourceTree = "<group>"; };
@@ -265,6 +269,7 @@
 				B212D58A2A45F1740008DAD1 /* InputView.swift */,
 				04C835FE2A2B5FEF00731E3E /* BannerFooterRV.swift */,
 				B20AFE672A2BAE73004A646B /* SearchBarV.swift */,
+				B22222662A55F83300A2B7CB /* PrivacyElementView.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -425,6 +430,7 @@
 			children = (
 				B1A301962A5437DB003834E6 /* ProfileSettingVC.swift */,
 				B212D5862A45E8F40008DAD1 /* LoginVC.swift */,
+				B22222642A55F40100A2B7CB /* PrivacyAccessVC.swift */,
 				B2E186CD2A474B4C00ABE98F /* SignupVC.swift */,
 				B2F3F4792A4B6570007994DC /* EmailCheckVC.swift */,
 				B2E2AC7F2A4772D3003DAE88 /* WelcomeVC.swift */,
@@ -596,12 +602,14 @@
 			buildActionMask = 2147483647;
 			files = (
 				04C835ED2A2B2BE700731E3E /* ProductM.swift in Sources */,
+				B22222652A55F40100A2B7CB /* PrivacyAccessVC.swift in Sources */,
 				981A598A2A494F5C0031A917 /* SignUpVM.swift in Sources */,
 				B26F8A4D2A544AC300F4BEA3 /* ProfileSettingVM.swift in Sources */,
 				B1D23D3F2A4C74F6006A2848 /* AvatarM.swift in Sources */,
 				9816F6ED2A494B0900A7A284 /* BasePagenationResponse.swift in Sources */,
 				04C835F92A2B5E6500731E3E /* MainCategoryM.swift in Sources */,
 				04C835EB2A2B280A00731E3E /* MainSectionM.swift in Sources */,
+				B22222672A55F83300A2B7CB /* PrivacyElementView.swift in Sources */,
 				B1A301BE2A543A2F003834E6 /* Constant.swift in Sources */,
 				981A598D2A494FAE0031A917 /* AuthService.swift in Sources */,
 				04C835FB2A2B5FCF00731E3E /* MainHeaderRV.swift in Sources */,

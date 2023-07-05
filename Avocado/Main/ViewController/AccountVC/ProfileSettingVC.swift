@@ -32,6 +32,9 @@ final class ProfileSettingVC: BaseVC {
     
     public lazy var profileButton = UIButton(type: .custom).then {
         $0.setImage(UIImage(named: "default_profile"), for: .normal)
+        $0.addTarget(self, action: #selector(didTapImageView), for: .touchUpInside)
+        $0.imageView?.contentMode = .scaleAspectFill
+
     }
     
     public lazy var profileView = UIView().then {
@@ -49,6 +52,7 @@ final class ProfileSettingVC: BaseVC {
         $0.alpha = 0.7
         $0.font = .boldSystemFont(ofSize: 12)
     }
+    
     
     private lazy var nameInput = InputView(label: "닉네임", placeholder: "Nickname", colorSetting: .normal)
     
@@ -69,6 +73,7 @@ final class ProfileSettingVC: BaseVC {
     
     override func setProperty() {
         view.backgroundColor = .white
+        self.navigationController?.isNavigationBarHidden = false
     }
     
     override func setLayout() {
@@ -111,15 +116,16 @@ final class ProfileSettingVC: BaseVC {
         
         confirmButton.snp.makeConstraints {
             $0.centerX.equalToSuperview()
-            $0.bottom.equalTo(view.safeAreaLayoutGuide)
-            $0.left.equalToSuperview().offset(20)
+            $0.bottom.equalTo(view.safeAreaLayoutGuide).inset(20)
+            $0.left.equalToSuperview().inset(20)
         }
     }
     
     override func bindUI() {
+
         viewModel.selectedImageSubject
-            .bind(to: profileImageView.rx.image)
-            .disposed(by: disposeBag)
+           .bind(to: profileButton.rx.image(for: .normal))
+           .disposed(by: disposeBag)
         
         RxKeyboard.instance.visibleHeight
             .skip(1)
