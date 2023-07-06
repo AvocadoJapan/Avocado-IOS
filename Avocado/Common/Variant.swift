@@ -24,7 +24,7 @@ struct ColorVariant {
     static var failure = Self(textColor: .red, bgColor: .white)
 }
 
-struct buttonColorType {
+struct BttonColorType {
     var tintColor : UIColor
     var bgColor : UIColor
     

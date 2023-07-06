@@ -33,6 +33,17 @@ class SignupVC: BaseVC {
     
     private lazy var passwordCheckInput = InputView(label: "비밀번호 확인", placeholder: "********", colorSetting: .normal, passwordable: true)
     
+    
+    
+    private lazy var test1 = InputView(label: "테스트", placeholder: "example@example.com", colorSetting: .normal, regSetting: .email)
+    
+    private lazy var test2 = InputView(label: "테스트", placeholder: "example@example.com", colorSetting: .normal, regSetting: .email)
+    
+    private lazy var test3 = InputView(label: "테스트", placeholder: "example@example.com", colorSetting: .normal, regSetting: .email)
+    
+    private lazy var test4 = InputView(label: "테스트", placeholder: "example@example.com", colorSetting: .normal, regSetting: .email)
+    
+    
         
     private lazy var toggleView = UIStackView().then {
         $0.spacing = 10
@@ -55,6 +66,10 @@ class SignupVC: BaseVC {
     
     private lazy var confirmButton = BottomButton(text: "회원가입")
     
+    private let scrollView = UIScrollView()
+    
+    private let containerView = UIView()
+    
     private var disposeBag = DisposeBag()
     
     private var viewModel: SignUpVM
@@ -74,11 +89,18 @@ class SignupVC: BaseVC {
     }
     
     override func setLayout() {
-        [titleLabel, inputField, toggleView, confirmButton].forEach {
+        
+        [scrollView, confirmButton].forEach {
             view.addSubview($0)
         }
         
-        [emailInput, passwordInput, passwordCheckInput].forEach {
+        scrollView.addSubview(containerView)
+        
+        [titleLabel, inputField, toggleView].forEach {
+            containerView.addSubview($0)
+        }
+        
+        [emailInput, passwordInput, test1, test2, test3, test4, passwordCheckInput].forEach {
             inputField.addArrangedSubview($0)
         }
         
@@ -90,9 +112,20 @@ class SignupVC: BaseVC {
     }
     
     override func setConstraint() {
+        
+        scrollView.snp.makeConstraints { make in
+            make.horizontalEdges.equalToSuperview()
+            make.top.equalToSuperview()
+            make.bottom.equalTo(confirmButton.snp.top)
+        }
+
+        containerView.snp.makeConstraints { make in
+            make.edges.width.equalToSuperview()
+        }
+        
         titleLabel.snp.makeConstraints {
             $0.centerX.equalToSuperview()
-            $0.top.equalTo(view.safeAreaLayoutGuide).offset(10)
+            $0.top.equalToSuperview().offset(10)
             $0.horizontalEdges.equalToSuperview().inset(30)
         }
 
@@ -186,12 +219,6 @@ class SignupVC: BaseVC {
                 self.confirmButton.keyboardMovement(from:self.view, height: $0)
             })
             .disposed(by: disposeBag)
-        
-//        RxKeyboard.instance.visibleHeight
-//            .drive(onNext: { [weak self] keyboardVisibleHeight in
-//                self?.view.frame.origin.y = -keyboardVisibleHeight/3
-//            })
-//            .disposed(by: disposeBag)
     }
     
     override func viewWillDisappear(_ animated: Bool) {
