@@ -138,6 +138,7 @@ class SignupVC: BaseVC {
         toggleView.snp.makeConstraints {
             $0.right.equalToSuperview().inset(20)
             $0.top.equalTo(inputField.snp.bottom).offset(30)
+            $0.bottom.equalToSuperview().inset(20)
         }
         
         confirmButton.snp.makeConstraints {
