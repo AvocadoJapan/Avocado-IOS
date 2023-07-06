@@ -32,18 +32,6 @@ class SignupVC: BaseVC {
     private lazy var passwordInput = InputView(label: "비밀번호", placeholder: "********", colorSetting: .normal,regSetting: .password, passwordable: true)
     
     private lazy var passwordCheckInput = InputView(label: "비밀번호 확인", placeholder: "********", colorSetting: .normal, passwordable: true)
-    
-    
-    
-    private lazy var test1 = InputView(label: "테스트", placeholder: "example@example.com", colorSetting: .normal, regSetting: .email)
-    
-    private lazy var test2 = InputView(label: "테스트", placeholder: "example@example.com", colorSetting: .normal, regSetting: .email)
-    
-    private lazy var test3 = InputView(label: "테스트", placeholder: "example@example.com", colorSetting: .normal, regSetting: .email)
-    
-    private lazy var test4 = InputView(label: "테스트", placeholder: "example@example.com", colorSetting: .normal, regSetting: .email)
-    
-    
         
     private lazy var toggleView = UIStackView().then {
         $0.spacing = 10
@@ -86,6 +74,9 @@ class SignupVC: BaseVC {
     override func setProperty() {
         view.backgroundColor = .white
         self.navigationController?.isNavigationBarHidden = false
+        
+        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(didTapScrollView))
+        scrollView.addGestureRecognizer(tapGesture)
     }
     
     override func setLayout() {
@@ -100,7 +91,7 @@ class SignupVC: BaseVC {
             containerView.addSubview($0)
         }
         
-        [emailInput, passwordInput, test1, test2, test3, test4, passwordCheckInput].forEach {
+        [emailInput, passwordInput, passwordCheckInput].forEach {
             inputField.addArrangedSubview($0)
         }
         
@@ -120,12 +111,13 @@ class SignupVC: BaseVC {
         }
 
         containerView.snp.makeConstraints { make in
-            make.edges.width.equalToSuperview()
+            make.edges.equalTo(scrollView.contentLayoutGuide.snp.edges)
+            make.width.equalTo(scrollView.frameLayoutGuide.snp.width)
         }
         
         titleLabel.snp.makeConstraints {
             $0.centerX.equalToSuperview()
-            $0.top.equalToSuperview().offset(10)
+            $0.top.equalToSuperview().offset(20)
             $0.horizontalEdges.equalToSuperview().inset(30)
         }
 
@@ -138,7 +130,7 @@ class SignupVC: BaseVC {
         toggleView.snp.makeConstraints {
             $0.right.equalToSuperview().inset(20)
             $0.top.equalTo(inputField.snp.bottom).offset(30)
-            $0.bottom.equalToSuperview().inset(20)
+            $0.bottom.equalToSuperview().inset(40)
         }
         
         confirmButton.snp.makeConstraints {
@@ -223,6 +215,18 @@ class SignupVC: BaseVC {
                 self.confirmButton.keyboardMovement(from:self.view, height: $0)
             })
             .disposed(by: disposeBag)
+        
+        RxKeyboard.instance.visibleHeight
+            .drive(onNext: { [weak self] height in
+                if height > 0 {
+                    // 키보드가 있을 경우 navigationController를 숨김니다
+                    self?.navigationController?.setNavigationBarHidden(true, animated: true)
+                } else {
+                    // 키보드가 없을 경우 navigationController를 보여줍니다
+                    self?.navigationController?.setNavigationBarHidden(false, animated: true)
+                }
+            })
+            .disposed(by: disposeBag)
     }
     
     override func viewWillDisappear(_ animated: Bool) {
@@ -233,6 +237,11 @@ class SignupVC: BaseVC {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         self.navigationController?.isNavigationBarHidden = false
+    }
+    
+    // 커스텀 메소드
+    @objc func didTapScrollView() {
+        self.view.endEditing(true)
     }
 }
 
