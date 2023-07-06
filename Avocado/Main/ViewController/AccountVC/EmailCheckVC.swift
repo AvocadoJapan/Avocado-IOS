@@ -102,29 +102,24 @@ class EmailCheckVC: BaseVC {
         }
         
         reqNewCodeButton.snp.makeConstraints {
-            $0.centerX.equalToSuperview()
+            $0.right.equalToSuperview().offset(-30)
             $0.top.equalTo(confirmCodeInput.snp.bottom).offset(20)
-            $0.left.equalToSuperview().offset(30)
         }
         
         otherEmailButton.snp.makeConstraints {
-            $0.centerX.equalToSuperview()
+            $0.right.equalToSuperview().offset(-30)
             $0.top.equalTo(reqNewCodeButton.snp.bottom)
-            $0.left.equalToSuperview().offset(30)
         }
         
         accountCenterButton.snp.makeConstraints {
-            $0.centerX.equalToSuperview()
+            $0.right.equalToSuperview().offset(-30)
             $0.top.equalTo(otherEmailButton.snp.bottom)
-            $0.left.equalToSuperview().offset(30)
         }
 
         confirmButton.snp.makeConstraints {
-            $0.centerX.equalToSuperview()
+            $0.right.equalToSuperview().offset(-30)
             $0.bottom.equalTo(view.safeAreaLayoutGuide)
-            $0.left.equalToSuperview().offset(20)
         }
-
     }
     
     override func bindUI() {

@@ -55,7 +55,6 @@ final class InputView : UIView {
         self.placeholder = ""
         self.regSetting = RegVarient()
         super.init(frame: .zero)
-        print(#fileID, #function, #line, "- ")
     }
     
     convenience init(label : String,

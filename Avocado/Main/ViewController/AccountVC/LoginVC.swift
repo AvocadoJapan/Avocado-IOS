@@ -34,7 +34,10 @@ class LoginVC: BaseVC {
     private lazy var confirmButton = BottomButton(text: "로그인")
     
     private lazy var accountCenterButton = SubButton(text: "계정 센터")
-        
+    
+    private let scrollView = UIScrollView()
+    
+    private let containerView = UIView()
     
     var disposeBag = DisposeBag()
     var viewModel: LoginVM
@@ -52,11 +55,21 @@ class LoginVC: BaseVC {
     override func setProperty() {
         view.backgroundColor = .white
         self.navigationController?.isNavigationBarHidden = false
+        
+        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(didTapScrollView))
+        scrollView.addGestureRecognizer(tapGesture)
     }
     
     override func setLayout() {
-        [titleLabel, inputField, accountCenterButton, confirmButton].forEach {
+        
+        [scrollView, confirmButton].forEach {
             view.addSubview($0)
+        }
+        
+        scrollView.addSubview(containerView)
+        
+        [titleLabel, inputField, accountCenterButton].forEach {
+            containerView.addSubview($0)
         }
         
         [emailInput, passwordInput].forEach {
@@ -66,6 +79,18 @@ class LoginVC: BaseVC {
     }
     
     override func setConstraint() {
+        
+        scrollView.snp.makeConstraints { make in
+            make.horizontalEdges.equalToSuperview()
+            make.top.equalToSuperview()
+            make.bottom.equalTo(confirmButton.snp.top)
+        }
+
+        containerView.snp.makeConstraints { make in
+            make.edges.equalTo(scrollView.contentLayoutGuide.snp.edges)
+            make.width.equalTo(scrollView.frameLayoutGuide.snp.width)
+        }
+        
         titleLabel.snp.makeConstraints {
             $0.centerX.equalToSuperview()
             $0.top.equalTo(view.safeAreaLayoutGuide).offset(10)
@@ -79,9 +104,9 @@ class LoginVC: BaseVC {
         }
         
         accountCenterButton.snp.makeConstraints {
-            $0.centerX.equalToSuperview()
             $0.top.equalTo(inputField.snp.bottom).offset(20)
-            $0.left.equalToSuperview().offset(30)
+            $0.right.equalToSuperview().offset(-30)
+            $0.bottom.equalToSuperview().inset(40)
         }
 
         confirmButton.snp.makeConstraints {
@@ -176,6 +201,17 @@ class LoginVC: BaseVC {
 //            })
 //            .disposed(by: disposeBag)
             
+        RxKeyboard.instance.visibleHeight
+            .drive(onNext: { [weak self] height in
+                if height > 0 {
+                    // 키보드가 있을 경우 navigationController를 숨김니다
+                    self?.navigationController?.setNavigationBarHidden(true, animated: true)
+                } else {
+                    // 키보드가 없을 경우 navigationController를 보여줍니다
+                    self?.navigationController?.setNavigationBarHidden(false, animated: true)
+                }
+            })
+            .disposed(by: disposeBag)
     }
     
     override func viewDidLoad() {
@@ -195,6 +231,11 @@ class LoginVC: BaseVC {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         self.navigationController?.isNavigationBarHidden = false
+    }
+    
+    // 커스텀 메소드
+    @objc func didTapScrollView() {
+        self.view.endEditing(true)
     }
 }
 

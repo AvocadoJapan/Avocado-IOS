@@ -125,9 +125,8 @@ class WelcomeVC: BaseVC {
         }
         
         signupButton.snp.makeConstraints {
-            $0.centerX.equalToSuperview()
+            $0.right.equalToSuperview().offset(-30)
             $0.bottom.equalTo(agreementLabel.snp.top).offset(-10)
-            $0.left.equalToSuperview().offset(30)
         }
         
         agreementLabel.snp.makeConstraints {
