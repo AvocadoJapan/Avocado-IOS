@@ -16,7 +16,7 @@ import RxKeyboard
 
 
 final class ProfileSettingVC: BaseVC {
-    fileprivate lazy var titleLabel = UILabel().then {
+    private lazy var titleLabel = UILabel().then {
         $0.text = "프로필 설정"
         $0.numberOfLines = 1
         $0.textAlignment = .left
@@ -30,26 +30,31 @@ final class ProfileSettingVC: BaseVC {
         $0.backgroundColor = .systemGray5
     }
     
-    public lazy var profileButton = UIButton(type: .custom).then {
+    private lazy var profileButton = UIButton(type: .custom).then {
         $0.setImage(UIImage(named: "default_profile"), for: .normal)
+        $0.addTarget(self, action: #selector(didTapImageView), for: .touchUpInside)
+        $0.imageView?.contentMode = .scaleAspectFill
+
     }
     
-    public lazy var profileView = UIView().then {
+    private lazy var profileView = UIView().then {
         $0.backgroundColor = .blue
         $0.layer.cornerRadius = 60
         $0.layer.masksToBounds = true
     }
     
-    public lazy var profileLabel = UILabel().then {
+    private lazy var profileLabel = UILabel().then {
         $0.isUserInteractionEnabled = false
         $0.text = "Edit"
         $0.backgroundColor = .white
+        $0.textColor = .darkGray
         $0.textAlignment = .center
         $0.alpha = 0.7
         $0.font = .boldSystemFont(ofSize: 12)
     }
     
-    private lazy var ninckNameInput = InputView(label: "닉네임", placeholder: "Nickname", colorSetting: .normal)
+    
+    private lazy var nameInput = InputView(label: "닉네임", placeholder: "Nickname", colorSetting: .normal)
     
     private lazy var confirmButton = BottomButton(text: "확인")
     
@@ -68,6 +73,7 @@ final class ProfileSettingVC: BaseVC {
     
     override func setProperty() {
         view.backgroundColor = .white
+        self.navigationController?.isNavigationBarHidden = false
     }
     
     override func setLayout() {
@@ -75,7 +81,7 @@ final class ProfileSettingVC: BaseVC {
             self.profileView.addSubview($0)
         }
         
-        [titleLabel, profileImageView, ninckNameInput, confirmButton, profileView].forEach {
+        [titleLabel, profileImageView, nameInput, confirmButton, profileView].forEach {
             view.addSubview($0)
         }
     }
@@ -102,23 +108,24 @@ final class ProfileSettingVC: BaseVC {
             $0.horizontalEdges.equalToSuperview().inset(30)
         }
         
-        ninckNameInput.snp.makeConstraints {
+        nameInput.snp.makeConstraints {
             $0.centerX.equalToSuperview()
-            $0.top.equalTo(profileView.snp.bottom).offset(20)
-            $0.left.equalToSuperview().inset(20)
+            $0.top.equalTo(profileView.snp.bottom).offset(30)
+            $0.left.equalToSuperview().offset(20)
         }
         
         confirmButton.snp.makeConstraints {
             $0.centerX.equalToSuperview()
-            $0.bottom.equalTo(view.safeAreaLayoutGuide)
-            $0.left.equalToSuperview().offset(20)
+            $0.bottom.equalTo(view.safeAreaLayoutGuide).inset(20)
+            $0.left.equalToSuperview().inset(20)
         }
     }
     
     override func bindUI() {
+
         viewModel.selectedImageSubject
-            .bind(to: profileImageView.rx.image)
-            .disposed(by: disposeBag)
+           .bind(to: profileButton.rx.image(for: .normal))
+           .disposed(by: disposeBag)
         
         ninckNameInput
             .userInput

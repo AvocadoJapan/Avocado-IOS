@@ -12,8 +12,15 @@ final class BaseNavigationVC: UINavigationController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        navigationBar.isHidden = true
-        modalPresentationStyle = .fullScreen
+        navigationBar.tintColor = .black
+        
+        let appearance = UINavigationBarAppearance()
+        appearance.configureWithOpaqueBackground()
+        appearance.backgroundColor = .white
+        appearance.shadowColor = .clear
+                
+        navigationBar.standardAppearance = appearance
+        navigationBar.scrollEdgeAppearance = appearance
     }
 
     override init(rootViewController: UIViewController) {
@@ -24,3 +31,8 @@ final class BaseNavigationVC: UINavigationController {
         fatalError("init(coder:) has not been implemented")
     }
 }
+
+//        navigationBar.isHidden = true
+//        navigationBar.backIndicatorImage = UIImage(named: "back_button")
+//        navigationBar.backIndicatorTransitionMaskImage = UIImage(named: "back_button")
+//        navigationItem.leftBarButtonItem = UIBarButtonItem(title: "", style: UIBarButtonItem.Style.plain, target: nil, action: nil)

@@ -19,7 +19,7 @@ final class BottomButton : UIButton {
     }
     
     convenience init(text : String,
-                     buttonType : buttonColorType = .primary){
+                     buttonType : BttonColorType = .primary){
         self.init(frame: .zero)
         
         self.setTitle(text, for: .normal)

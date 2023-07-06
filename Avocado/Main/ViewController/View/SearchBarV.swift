@@ -11,18 +11,18 @@ import Then
 
 final class SearchBarV: UIView {
     
-    fileprivate lazy var searchView = UIView().then {
+    private lazy var searchView = UIView().then {
         $0.backgroundColor = .systemGray6
         
         $0.layer.cornerRadius = 10
     }
     
-    fileprivate lazy var searchImageView = UIImageView().then {
+    private lazy var searchImageView = UIImageView().then {
         $0.image = UIImage(systemName: "magnifyingglass")
         $0.contentMode = .scaleAspectFit
         UIImageView.appearance().tintColor = .darkGray
     }
-    fileprivate lazy var searchBarTextFiled = UITextField().then {
+    private lazy var searchBarTextFiled = UITextField().then {
         $0.placeholder = "상품명, 브랜드명, 지역명등 ..."
         $0.font = .systemFont(ofSize: 13)
         UITextField.appearance().tintColor = .black

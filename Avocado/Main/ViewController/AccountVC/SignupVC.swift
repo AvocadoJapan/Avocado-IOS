@@ -15,7 +15,7 @@ import RxKeyboard
 
 class SignupVC: BaseVC {
     
-    fileprivate lazy var titleLabel = UILabel().then {
+    private lazy var titleLabel = UILabel().then {
         $0.text = "회원가입"
         $0.numberOfLines = 1
         $0.textAlignment = .left
@@ -33,14 +33,25 @@ class SignupVC: BaseVC {
     
     private lazy var passwordCheckInput = InputView(label: "비밀번호 확인", placeholder: "********", colorSetting: .normal, passwordable: true)
     
+    
+    
+    private lazy var test1 = InputView(label: "테스트", placeholder: "example@example.com", colorSetting: .normal, regSetting: .email)
+    
+    private lazy var test2 = InputView(label: "테스트", placeholder: "example@example.com", colorSetting: .normal, regSetting: .email)
+    
+    private lazy var test3 = InputView(label: "테스트", placeholder: "example@example.com", colorSetting: .normal, regSetting: .email)
+    
+    private lazy var test4 = InputView(label: "테스트", placeholder: "example@example.com", colorSetting: .normal, regSetting: .email)
+    
+    
         
-    fileprivate lazy var toggleView = UIStackView().then {
+    private lazy var toggleView = UIStackView().then {
         $0.spacing = 10
         $0.alignment = .center
         $0.distribution = .equalSpacing
     }
     
-    fileprivate lazy var toggleText = UILabel().then {
+    private lazy var toggleText = UILabel().then {
         $0.text = "서비스 이용약관에 동의"
         $0.numberOfLines = 1
         $0.textAlignment = .left
@@ -48,15 +59,20 @@ class SignupVC: BaseVC {
         $0.textColor = .darkGray
     }
     
-    fileprivate lazy var toggle = UISwitch().then {
+    private lazy var toggle = UISwitch().then {
         $0.isOn = false
         $0.onTintColor = .black
     }
     
-    fileprivate lazy var confirmButton = BottomButton(text: "회원가입")
+    private lazy var confirmButton = BottomButton(text: "회원가입")
     
-    var disposeBag = DisposeBag()
-    var viewModel: SignUpVM
+    private let scrollView = UIScrollView()
+    
+    private let containerView = UIView()
+    
+    private var disposeBag = DisposeBag()
+    
+    private var viewModel: SignUpVM
     
     init(vm viewModel: SignUpVM) {
         self.viewModel = viewModel
@@ -69,14 +85,22 @@ class SignupVC: BaseVC {
     
     override func setProperty() {
         view.backgroundColor = .white
+        self.navigationController?.isNavigationBarHidden = false
     }
     
     override func setLayout() {
-        [titleLabel, inputField, toggleView, confirmButton].forEach {
+        
+        [scrollView, confirmButton].forEach {
             view.addSubview($0)
         }
         
-        [emailInput, passwordInput, passwordCheckInput].forEach {
+        scrollView.addSubview(containerView)
+        
+        [titleLabel, inputField, toggleView].forEach {
+            containerView.addSubview($0)
+        }
+        
+        [emailInput, passwordInput, test1, test2, test3, test4, passwordCheckInput].forEach {
             inputField.addArrangedSubview($0)
         }
         
@@ -88,21 +112,33 @@ class SignupVC: BaseVC {
     }
     
     override func setConstraint() {
+        
+        scrollView.snp.makeConstraints { make in
+            make.horizontalEdges.equalToSuperview()
+            make.top.equalToSuperview()
+            make.bottom.equalTo(confirmButton.snp.top)
+        }
+
+        containerView.snp.makeConstraints { make in
+            make.edges.width.equalToSuperview()
+        }
+        
         titleLabel.snp.makeConstraints {
             $0.centerX.equalToSuperview()
-            $0.top.equalTo(view.safeAreaLayoutGuide).offset(20)
+            $0.top.equalToSuperview().offset(10)
             $0.horizontalEdges.equalToSuperview().inset(30)
         }
 
         inputField.snp.makeConstraints {
             $0.centerX.equalToSuperview()
-            $0.top.equalTo(titleLabel.snp.bottom).offset(30)
+            $0.top.equalTo(titleLabel.snp.bottom).offset(20)
             $0.left.equalToSuperview().offset(20)
         }
 
         toggleView.snp.makeConstraints {
             $0.right.equalToSuperview().inset(20)
             $0.top.equalTo(inputField.snp.bottom).offset(30)
+            $0.bottom.equalToSuperview().inset(20)
         }
         
         confirmButton.snp.makeConstraints {
@@ -136,8 +172,8 @@ class SignupVC: BaseVC {
         
         viewModel
             .isVaild
-            .map { $0 ? 1 : 0.3 }
-            .bind(to: confirmButton.rx.alpha)
+            .map { $0 ? .black : .lightGray}
+            .bind(to: confirmButton.rx.backgroundColor)
             .disposed(by: disposeBag)
         
         viewModel
@@ -189,8 +225,14 @@ class SignupVC: BaseVC {
             .disposed(by: disposeBag)
     }
     
-    override func viewDidLoad() {
-        super.viewDidLoad()
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        self.navigationController?.isNavigationBarHidden = true
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        self.navigationController?.isNavigationBarHidden = false
     }
 }
 
