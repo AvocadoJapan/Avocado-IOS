@@ -111,7 +111,15 @@ final class AuthService: BaseAPIService<AuthAPI> {
                 }
                 catch let error as AuthError {
                     Logger.e("sign in failed \(error)")
-                    observer.onError(error)
+                    
+                    guard let cognitoAuthError = error.underlyingError as? AWSCognitoAuthError else {
+                        observer.onError(error)
+                        return
+                    }
+                    
+                    let convertError = self.cognitoAuthErrorHandling(error: cognitoAuthError)
+                    
+                    observer.onError(convertError)
                 }
                 catch {
                     Logger.e("Unexpected error \(error)")
@@ -151,30 +159,34 @@ final class AuthService: BaseAPIService<AuthAPI> {
                     
                     observer.onCompleted()
                     
-                case let .partial(revokeTokenError, globalSignOutError, hostedUIError):
-                    if let hostedUIError = hostedUIError {
-                        Logger.e("HostedUI error \(hostedUIError)")
-                        observer.onNext(false)
-                        observer.onCompleted()
-                    }
+                case let .partial(revokeTokenError, globalSignOutError, _):
+                    // accessToken, refreshToken delete
+                    KeychainUtil.loginTokenDelete()
                     
+                    // 각종 에러 처리
                     if let revokeTokenError = revokeTokenError {
                         Logger.e("revokeToken Error \(revokeTokenError)")
                         observer.onNext(false)
                         observer.onCompleted()
+                        return Disposables.create()
                     }
                     
                     if let globalSignOutError = globalSignOutError {
                         Logger.e("globalSignOut Error \(globalSignOutError)")
                         observer.onNext(false)
                         observer.onCompleted()
+                        return Disposables.create()
                     }
+                    
+                    //에러가 없을 경우
+                    observer.onNext(true)
+                    observer.onCompleted()
+                    
                     
                 case let .failed(error):
                     Logger.e("Sign Out failed with \(error)")
                     observer.onError(error)
                 }
-                
                 
                 return Disposables.create()
             }
@@ -369,9 +381,6 @@ final class AuthService: BaseAPIService<AuthAPI> {
                                     KeychainUtil.loginAccessTokenUpdate(token: tokens.accessToken)
                                     Logger.i("Not Same Access Token")
                                 }
-                                else {
-                                    Logger.i("Same Access Token")
-                                }
                                 
                                 observer.onNext(true)
                                 
@@ -390,7 +399,15 @@ final class AuthService: BaseAPIService<AuthAPI> {
                 }
                 catch let error as AuthError {
                     Logger.e("Fetch session faild with error \(error)")
-                    observer.onError(error)
+                    
+                    guard let cognitoAuthError = error.underlyingError as? AWSCognitoAuthError else {
+                        observer.onError(error)
+                        return
+                    }
+                    
+                    let convertError = self.cognitoAuthErrorHandling(error: cognitoAuthError)
+                    
+                    observer.onError(convertError)
                 }
                 catch {
                     Logger.e("Unexpected error: \(error)")
@@ -474,15 +491,10 @@ final class AuthService: BaseAPIService<AuthAPI> {
                         return
                     }
                     
-                    switch cognitoAuthError {
-                    case .userCancelled:
-                        break;
-                        
-                    case .invalidParameter:
-                        observable.onError(NetworkError.invaildParameter)
-                        
-                    default:
-                        observable.onError(error)
+                    guard case .userCancelled = cognitoAuthError else {
+                        let convertError = self.cognitoAuthErrorHandling(error: cognitoAuthError)
+                        observable.onError(convertError)
+                        return
                     }
                 }
                 catch {
@@ -554,7 +566,7 @@ final class AuthService: BaseAPIService<AuthAPI> {
      * - Parameter with 활동지역 ID
      * - Returns S3 버킷에 업로드할 pre-signed URL
      */
-    func changeAvatar(to nickName: String, with regionId: Int) -> Observable<CommonModel.S3UploadedURL> {
+    func changeAvatar(to nickName: String, with regionId: Int) -> Observable<CommonModel.SingleURL> {
         return singleRequest(.changeAvatar(name: nickName, regionId: regionId)).asObservable()
     }
     
@@ -585,6 +597,23 @@ final class AuthService: BaseAPIService<AuthAPI> {
         catch {
             Logger.e("token generate error with \(error)")
             return false
+        }
+    }
+    
+    /**
+     * - Description 코그니토 오류 핸들링
+     * - Returns NetworkError
+     */
+    private func cognitoAuthErrorHandling(error: AWSCognitoAuthError) -> NetworkError {
+        switch error {
+        case .userNotConfirmed:
+            return NetworkError.unknown(-1, "이메일 인증이 되지 않은 사용자입니다")
+            
+        case .invalidParameter:
+            return NetworkError.invaildParameter
+            
+        default:
+            return NetworkError.unknown(-1, error.localizedDescription)
         }
     }
 }

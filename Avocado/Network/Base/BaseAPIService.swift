@@ -124,6 +124,31 @@ class BaseAPIService<Target: BaseTarget> {
     }
     
     /**
+     * - Description : response body가 필요없는 statusCode만으로 처리가능한 request 처리함수
+     * - Parameter type: API Target
+     * - Returns: statusCode가 200~299인경우 true 리턴
+     */
+    func singleRequest(_ type: Target) -> Single<Bool> {
+        return provider
+            .rx
+            .request(type)
+            .timeout(.seconds(30), scheduler: MainScheduler.instance)
+            .flatMap{ response -> Single<Bool> in
+                if (200...299) ~= response.statusCode {
+                    return .just(true)
+                }
+                
+                switch response.statusCode {
+                case 404:
+                    return .error(NetworkError.pageNotFound)
+                case 500:
+                    return .error(NetworkError.serverError)
+                default:
+                    return .error(NetworkError.unknown(response.statusCode, response.debugDescription))
+                }
+            }
+    }
+    /**
      * - Description: DTO 변환이 필요한 객체의 HTTP Request 메서드
      * - Parameter type: API Target
      * - Parameter responseType: HTTP Request시 디코딩할 객체 타입
@@ -155,6 +180,4 @@ class BaseAPIService<Target: BaseTarget> {
                 }
             }
     }
-    
-    
 }

@@ -150,6 +150,7 @@ class WelcomeVC: BaseVC {
             .rx
             .tap
             .asDriver()
+            .throttle(.seconds(3), latest: false)
             .drive(onNext: { [weak self] _ in
                 guard let self = self else { return }
                 self.viewModel.socialLoginWithGoogle(view: self.view)
@@ -161,6 +162,7 @@ class WelcomeVC: BaseVC {
             .rx
             .tap
             .asDriver()
+            .throttle(.seconds(3), latest: false)
             .drive { [weak self] _ in
                 guard let self = self else { return }
                 self.viewModel.socialLoginWithApple(view: self.view)
@@ -172,6 +174,7 @@ class WelcomeVC: BaseVC {
             .rx
             .tap
             .asDriver()
+            .throttle(.seconds(3), latest: false)
             .drive(onNext: { [weak self] _ in
                 guard let self = self else { return }
                 let authService = AuthService()
@@ -187,6 +190,7 @@ class WelcomeVC: BaseVC {
             .rx
             .tap
             .asDriver()
+            .throttle(.seconds(3), latest: false)
             .drive(onNext: { [weak self] _ in
                 guard let self = self else { return }
                 let authService = AuthService()

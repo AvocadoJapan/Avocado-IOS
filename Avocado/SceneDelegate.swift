@@ -28,7 +28,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
                 if (isLogin) {
                     let mainViewModel = MainVM()
                     let mainVC = MainVC(vm: mainViewModel)
-                    
+//                    let mainVC = SettingVC(vm: SettingVM(service: SettingService()))
                     self?.window?.rootViewController = mainVC
                     self?.window?.makeKeyAndVisible()
                 }

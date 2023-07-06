@@ -26,10 +26,9 @@ enum IDENTIFIER {
  */
 enum CommonModel {
     /**
-     * - Description S3에 업로드될 URL
-     * - `url`값은 pre-signedURL으로 해당 값으로 이미지를 업로드함
+     * - Description response가 url 하나만 있는 경우의 CommonModel
      */
-    struct S3UploadedURL: Codable {
+    struct SingleURL: Codable {
         let url: String
     }
     

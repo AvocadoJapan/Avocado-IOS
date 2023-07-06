@@ -171,6 +171,7 @@ class SignupVC: BaseVC {
         confirmButton
             .rx
             .tap
+            .throttle(.seconds(3), latest: false, scheduler: MainScheduler.instance)
             .do(onNext: { [weak self] in
                 self?.emailInput.resignFirstResponder()
                 self?.passwordInput.resignFirstResponder()

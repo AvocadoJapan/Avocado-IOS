@@ -44,6 +44,10 @@
 		98AD11012A4BF713001C4734 /* UserM.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98AD11002A4BF713001C4734 /* UserM.swift */; };
 		98AD11032A4BF8B4001C4734 /* RegionsM.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98AD11022A4BF8B4001C4734 /* RegionsM.swift */; };
 		98C711082A53B48300C99393 /* RxKeyboard in Frameworks */ = {isa = PBXBuildFile; productRef = 98C711072A53B48300C99393 /* RxKeyboard */; };
+		98FD1C232A56AD230031D7C1 /* SettingVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98FD1C222A56AD230031D7C1 /* SettingVC.swift */; };
+		98FD1C252A56AE860031D7C1 /* SettingVM.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98FD1C242A56AE860031D7C1 /* SettingVM.swift */; };
+		98FD1C282A56B3860031D7C1 /* SettingService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98FD1C272A56B3860031D7C1 /* SettingService.swift */; };
+		98FD1C2A2A56B3900031D7C1 /* SettingAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98FD1C292A56B3900031D7C1 /* SettingAPI.swift */; };
 		B18DFEDF2A51B53B00CF27FE /* EmailCheckVM.swift in Sources */ = {isa = PBXBuildFile; fileRef = B18DFEDE2A51B53B00CF27FE /* EmailCheckVM.swift */; };
 		B1A301972A5437DB003834E6 /* ProfileSettingVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1A301962A5437DB003834E6 /* ProfileSettingVC.swift */; };
 		B1A301A62A5439E7003834E6 /* UIViewController+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1A301A52A5439E7003834E6 /* UIViewController+Extension.swift */; };
@@ -125,6 +129,10 @@
 		98AD10FE2A4BF2E7001C4734 /* AuthAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthAPI.swift; sourceTree = "<group>"; };
 		98AD11002A4BF713001C4734 /* UserM.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserM.swift; sourceTree = "<group>"; };
 		98AD11022A4BF8B4001C4734 /* RegionsM.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegionsM.swift; sourceTree = "<group>"; };
+		98FD1C222A56AD230031D7C1 /* SettingVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingVC.swift; sourceTree = "<group>"; };
+		98FD1C242A56AE860031D7C1 /* SettingVM.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingVM.swift; sourceTree = "<group>"; };
+		98FD1C272A56B3860031D7C1 /* SettingService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingService.swift; sourceTree = "<group>"; };
+		98FD1C292A56B3900031D7C1 /* SettingAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingAPI.swift; sourceTree = "<group>"; };
 		B18DFEDE2A51B53B00CF27FE /* EmailCheckVM.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmailCheckVM.swift; sourceTree = "<group>"; };
 		B1A301962A5437DB003834E6 /* ProfileSettingVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProfileSettingVC.swift; sourceTree = "<group>"; };
 		B1A301A42A5439E7003834E6 /* UIView+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView+Extension.swift"; sourceTree = "<group>"; };
@@ -320,6 +328,25 @@
 			path = Service;
 			sourceTree = "<group>";
 		};
+		98FD1C212A56AD0F0031D7C1 /* Setting */ = {
+			isa = PBXGroup;
+			children = (
+				98FD1C262A56B3770031D7C1 /* Service */,
+				98FD1C222A56AD230031D7C1 /* SettingVC.swift */,
+				98FD1C242A56AE860031D7C1 /* SettingVM.swift */,
+			);
+			path = Setting;
+			sourceTree = "<group>";
+		};
+		98FD1C262A56B3770031D7C1 /* Service */ = {
+			isa = PBXGroup;
+			children = (
+				98FD1C272A56B3860031D7C1 /* SettingService.swift */,
+				98FD1C292A56B3900031D7C1 /* SettingAPI.swift */,
+			);
+			path = Service;
+			sourceTree = "<group>";
+		};
 		B1A301C02A543A3A003834E6 /* Extensions */ = {
 			isa = PBXGroup;
 			children = (
@@ -396,6 +423,7 @@
 				B2198B972A2A36EA0019032D /* AppDelegate.swift */,
 				B2198B992A2A36EA0019032D /* SceneDelegate.swift */,
 				04BA131F2A2AD9FB0004E2FB /* Main */,
+				98FD1C212A56AD0F0031D7C1 /* Setting */,
 				9816F6D32A4948BE00A7A284 /* Network */,
 				B1A301C32A543A7C003834E6 /* Common */,
 				04D2FCF52A2A515500253028 /* SupportingFiles */,
@@ -596,6 +624,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				04C835ED2A2B2BE700731E3E /* ProductM.swift in Sources */,
+				98FD1C232A56AD230031D7C1 /* SettingVC.swift in Sources */,
+				98FD1C252A56AE860031D7C1 /* SettingVM.swift in Sources */,
 				981A598A2A494F5C0031A917 /* SignUpVM.swift in Sources */,
 				B26F8A4D2A544AC300F4BEA3 /* ProfileSettingVM.swift in Sources */,
 				B1D23D3F2A4C74F6006A2848 /* AvatarM.swift in Sources */,
@@ -618,6 +648,7 @@
 				B1A301BD2A543A2F003834E6 /* BaseVC.swift in Sources */,
 				04BA13292A2AE0990004E2FB /* ProductCC.swift in Sources */,
 				B2F3D3642A511F2700FB05E1 /* SubButton.swift in Sources */,
+				98FD1C2A2A56B3900031D7C1 /* SettingAPI.swift in Sources */,
 				B212D58B2A45F1740008DAD1 /* InputView.swift in Sources */,
 				04C835FF2A2B5FEF00731E3E /* BannerFooterRV.swift in Sources */,
 				B1A301972A5437DB003834E6 /* ProfileSettingVC.swift in Sources */,
@@ -643,6 +674,7 @@
 				B2E186CE2A474B4C00ABE98F /* SignupVC.swift in Sources */,
 				B1BFDD672A49CF8100DB4955 /* LoginVM.swift in Sources */,
 				9816F6EB2A494AF400A7A284 /* DTOResponseable.swift in Sources */,
+				98FD1C282A56B3860031D7C1 /* SettingService.swift in Sources */,
 				9816F6EF2A494B1B00A7A284 /* NetworkError.swift in Sources */,
 				9816F6E22A494A5900A7A284 /* BaseAPIService.swift in Sources */,
 				04C835FD2A2B5FE100731E3E /* MainFooterRV.swift in Sources */,

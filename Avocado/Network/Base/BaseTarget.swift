@@ -29,4 +29,9 @@ extension BaseTarget {
     var authorizationType: AuthorizationType? {
         return .bearer
     }
+    
+    //HTTP 성공 타입 (기본 200~299)까지 성공 
+    var validationType: ValidationType {
+        return .successAndRedirectCodes
+    }
 }
