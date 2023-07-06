@@ -127,7 +127,7 @@ final class ProfileSettingVC: BaseVC {
            .bind(to: profileButton.rx.image(for: .normal))
            .disposed(by: disposeBag)
         
-        ninckNameInput
+        nameInput
             .userInput
             .subscribe { [weak self] text in
                 self?.viewModel.nickNameInput.accept(text)
