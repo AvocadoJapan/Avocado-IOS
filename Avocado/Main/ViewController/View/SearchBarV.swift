@@ -8,12 +8,14 @@
 import UIKit
 import SnapKit
 import Then
+import RxSwift
+import RxCocoa
+import RxRelay
 
 final class SearchBarV: UIView {
     
     private lazy var searchView = UIView().then {
         $0.backgroundColor = .systemGray6
-        
         $0.layer.cornerRadius = 10
     }
     
@@ -22,14 +24,16 @@ final class SearchBarV: UIView {
         $0.contentMode = .scaleAspectFit
         UIImageView.appearance().tintColor = .darkGray
     }
-    private lazy var searchBarTextFiled = UITextField().then {
-        $0.placeholder = "상품명, 브랜드명, 지역명등 ..."
+    
+    var searchBarTextFiled = UITextField().then {
         $0.font = .systemFont(ofSize: 13)
         UITextField.appearance().tintColor = .black
     }
     
+    private let disposeBag = DisposeBag()
+    
     override init(frame: CGRect) {
-        super.init(frame: frame)
+        super.init(frame: .zero)
         
         [searchImageView, searchBarTextFiled].forEach {
             searchView.addSubview($0)
@@ -56,6 +60,19 @@ final class SearchBarV: UIView {
     
     required init?(coder: NSCoder) {
         super.init(coder: coder)
+    }
+    
+    convenience init(placeholder : String) {
+        self.init(frame: .zero)
+        
+        self.searchBarTextFiled.placeholder = placeholder
+        
+        searchBarTextFiled.rx.controlEvent(.editingDidEndOnExit)
+            .subscribe(onNext: { [weak self] _ in
+                self?.searchBarTextFiled.resignFirstResponder()
+            })
+            .disposed(by: disposeBag)
+        
     }
     
     // override touchesBegan (키보드 내리기)

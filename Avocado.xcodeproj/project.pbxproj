@@ -75,9 +75,12 @@
 		B2198BB22A2A36EC0019032D /* AvocadoTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2198BB12A2A36EC0019032D /* AvocadoTests.swift */; };
 		B2198BBC2A2A36EC0019032D /* AvocadoUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2198BBB2A2A36EC0019032D /* AvocadoUITests.swift */; };
 		B2198BBE2A2A36EC0019032D /* AvocadoUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2198BBD2A2A36EC0019032D /* AvocadoUITestsLaunchTests.swift */; };
+		B21E58F42A574A46007CCAA0 /* RegionSettingVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = B21E58F32A574A46007CCAA0 /* RegionSettingVC.swift */; };
 		B22222652A55F40100A2B7CB /* PrivacyAccessVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = B22222642A55F40100A2B7CB /* PrivacyAccessVC.swift */; };
 		B22222672A55F83300A2B7CB /* PrivacyElementView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B22222662A55F83300A2B7CB /* PrivacyElementView.swift */; };
 		B26F8A4D2A544AC300F4BEA3 /* ProfileSettingVM.swift in Sources */ = {isa = PBXBuildFile; fileRef = B26F8A4C2A544AC300F4BEA3 /* ProfileSettingVM.swift */; };
+		B293420E2A58579C00F5CF30 /* RegionTVCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B293420D2A58579C00F5CF30 /* RegionTVCell.swift */; };
+		B29342132A58810E00F5CF30 /* RegionSettingVM.swift in Sources */ = {isa = PBXBuildFile; fileRef = B29342122A58810E00F5CF30 /* RegionSettingVM.swift */; };
 		B29D78912A2B6FB1008B6945 /* SearchVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = B29D78902A2B6FB1008B6945 /* SearchVC.swift */; };
 		B29D78932A2B6FCF008B6945 /* SearchVM.swift in Sources */ = {isa = PBXBuildFile; fileRef = B29D78922A2B6FCF008B6945 /* SearchVM.swift */; };
 		B2D1309E2A4B4C5800538EFB /* BottomButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2D1309D2A4B4C5800538EFB /* BottomButton.swift */; };
@@ -166,9 +169,12 @@
 		B2198BB72A2A36EC0019032D /* AvocadoUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = AvocadoUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		B2198BBB2A2A36EC0019032D /* AvocadoUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AvocadoUITests.swift; sourceTree = "<group>"; };
 		B2198BBD2A2A36EC0019032D /* AvocadoUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AvocadoUITestsLaunchTests.swift; sourceTree = "<group>"; };
+		B21E58F32A574A46007CCAA0 /* RegionSettingVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegionSettingVC.swift; sourceTree = "<group>"; };
 		B22222642A55F40100A2B7CB /* PrivacyAccessVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PrivacyAccessVC.swift; sourceTree = "<group>"; };
 		B22222662A55F83300A2B7CB /* PrivacyElementView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PrivacyElementView.swift; sourceTree = "<group>"; };
 		B26F8A4C2A544AC300F4BEA3 /* ProfileSettingVM.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileSettingVM.swift; sourceTree = "<group>"; };
+		B293420D2A58579C00F5CF30 /* RegionTVCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegionTVCell.swift; sourceTree = "<group>"; };
+		B29342122A58810E00F5CF30 /* RegionSettingVM.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegionSettingVM.swift; sourceTree = "<group>"; };
 		B29D78902A2B6FB1008B6945 /* SearchVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchVC.swift; sourceTree = "<group>"; };
 		B29D78922A2B6FCF008B6945 /* SearchVM.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchVM.swift; sourceTree = "<group>"; };
 		B2D1309D2A4B4C5800538EFB /* BottomButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BottomButton.swift; sourceTree = "<group>"; };
@@ -235,6 +241,7 @@
 				B1D23D382A4C6245006A2848 /* WelcomeVM.swift */,
 				B18DFEDE2A51B53B00CF27FE /* EmailCheckVM.swift */,
 				B26F8A4C2A544AC300F4BEA3 /* ProfileSettingVM.swift */,
+				B29342122A58810E00F5CF30 /* RegionSettingVM.swift */,
 			);
 			path = ViewModel;
 			sourceTree = "<group>";
@@ -277,6 +284,7 @@
 				B212D58A2A45F1740008DAD1 /* InputView.swift */,
 				04C835FE2A2B5FEF00731E3E /* BannerFooterRV.swift */,
 				B20AFE672A2BAE73004A646B /* SearchBarV.swift */,
+				B293420D2A58579C00F5CF30 /* RegionTVCell.swift */,
 				B22222662A55F83300A2B7CB /* PrivacyElementView.swift */,
 			);
 			path = View;
@@ -459,6 +467,7 @@
 				B1A301962A5437DB003834E6 /* ProfileSettingVC.swift */,
 				B212D5862A45E8F40008DAD1 /* LoginVC.swift */,
 				B22222642A55F40100A2B7CB /* PrivacyAccessVC.swift */,
+				B21E58F32A574A46007CCAA0 /* RegionSettingVC.swift */,
 				B2E186CD2A474B4C00ABE98F /* SignupVC.swift */,
 				B2F3F4792A4B6570007994DC /* EmailCheckVC.swift */,
 				B2E2AC7F2A4772D3003DAE88 /* WelcomeVC.swift */,
@@ -650,6 +659,7 @@
 				B212D5872A45E8F40008DAD1 /* LoginVC.swift in Sources */,
 				B1A301AF2A5439F0003834E6 /* CollectionView+Protocol.swift in Sources */,
 				B2198BA22A2A36EA0019032D /* Avocado.xcdatamodeld in Sources */,
+				B29342132A58810E00F5CF30 /* RegionSettingVM.swift in Sources */,
 				04C835EF2A2B2CC500731E3E /* BannerM.swift in Sources */,
 				B1D23D392A4C6245006A2848 /* WelcomeVM.swift in Sources */,
 				04C835F72A2B46B600731E3E /* BannerCC.swift in Sources */,
@@ -674,6 +684,7 @@
 				B2198B9A2A2A36EA0019032D /* SceneDelegate.swift in Sources */,
 				04BA13212A2ADA160004E2FB /* MainVC.swift in Sources */,
 				04BA13262A2ADAEE0004E2FB /* MainVM.swift in Sources */,
+				B21E58F42A574A46007CCAA0 /* RegionSettingVC.swift in Sources */,
 				B29D78932A2B6FCF008B6945 /* SearchVM.swift in Sources */,
 				B2F3F47A2A4B6570007994DC /* EmailCheckVC.swift in Sources */,
 				B20AFE682A2BAE73004A646B /* SearchBarV.swift in Sources */,
@@ -686,6 +697,7 @@
 				9816F6EF2A494B1B00A7A284 /* NetworkError.swift in Sources */,
 				9816F6E22A494A5900A7A284 /* BaseAPIService.swift in Sources */,
 				04C835FD2A2B5FE100731E3E /* MainFooterRV.swift in Sources */,
+				B293420E2A58579C00F5CF30 /* RegionTVCell.swift in Sources */,
 				B1A301A62A5439E7003834E6 /* UIViewController+Extension.swift in Sources */,
 				98AD11012A4BF713001C4734 /* UserM.swift in Sources */,
 				B1A301A72A5439E7003834E6 /* UIView+Extension.swift in Sources */,
@@ -859,7 +871,7 @@
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = "";
+				DEVELOPMENT_TEAM = 55M8D74RGH;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = Avocado/SupportingFiles/Info.plist;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;

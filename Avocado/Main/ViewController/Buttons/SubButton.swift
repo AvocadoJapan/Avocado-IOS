@@ -24,8 +24,8 @@ final class SubButton : UIButton {
         self.setTitle(text + " >", for: .normal)
         self.titleLabel?.numberOfLines = 0
         self.contentHorizontalAlignment = .right
-        self.setTitleColor(.black, for: .normal)
-        self.titleLabel?.font = UIFont.systemFont(ofSize: 14, weight: .regular)
+        self.setTitleColor(.darkGray, for: .normal)
+        self.titleLabel?.font = UIFont.systemFont(ofSize: 14, weight: .medium)
         
         //MARK: - UI 설정
         self.snp.makeConstraints {

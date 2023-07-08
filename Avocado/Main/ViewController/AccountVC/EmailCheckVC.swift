@@ -67,7 +67,7 @@ class EmailCheckVC: BaseVC {
     
     override func setProperty() {
         view.backgroundColor = .white
-        self.navigationController?.isNavigationBarHidden = false
+        self.navigationController?.isNavigationBarHidden = true
     }
     
     override func setLayout() {

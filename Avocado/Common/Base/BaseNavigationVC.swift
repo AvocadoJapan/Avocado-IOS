@@ -21,6 +21,11 @@ final class BaseNavigationVC: UINavigationController {
                 
         navigationBar.standardAppearance = appearance
         navigationBar.scrollEdgeAppearance = appearance
+        
+//        navigationBar.isHidden = true
+//        navigationBar.backI-ndicatorImage = UIImage(named: "back_button")
+//        navigationBar.backIndicatorTransitionMaskImage = UIImage(named: "back_button")
+//        navigationItem.leftBarButtonItem = UIBarButtonItem(title: "", style: UIBarButtonItem.Style.plain, target: nil, action: nil)
     }
 
     override init(rootViewController: UIViewController) {
