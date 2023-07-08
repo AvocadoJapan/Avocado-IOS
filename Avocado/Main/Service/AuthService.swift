@@ -584,6 +584,8 @@ final class AuthService: BaseAPIService<AuthAPI> {
                     // accessToken, refreshToken create
                     let tokenCreate = KeychainUtil.loginTokenCreate(accessToken: tokens.accessToken, refreshToken: tokens.refreshToken)
                     
+                    Logger.d("tokens.accessToken = \(tokens.accessToken)")
+                    
                     return tokenCreate
                     
                 case let .failure(error):

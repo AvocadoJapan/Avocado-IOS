@@ -31,7 +31,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
                     
                     let regionSettingVC = RegionSettingVC(vm: RegionSettingVM())
                     
-                    self?.window?.rootViewController = regionSettingVC
+                    self?.window?.rootViewController = mainVC
                     self?.window?.makeKeyAndVisible()
                 }
                 else {

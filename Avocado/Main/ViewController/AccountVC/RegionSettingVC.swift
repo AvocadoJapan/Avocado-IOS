@@ -29,6 +29,7 @@ final class RegionSettingVC: BaseVC {
     }
 
     var disposeBag = DisposeBag()
+    
     var viewModel: RegionSettingVM
     
     init(vm viewModel: RegionSettingVM) {
