@@ -138,6 +138,9 @@ final class ProfileSettingVC: BaseVC {
             .rx
             .tap
             .asDriver()
+            .do(onNext: { [weak self] _ in
+                self?.confirmButton.isEnabled = false
+            })
             .drive(onNext: { [weak self] _ in
                 self?.viewModel.profileSetUp()
             })
@@ -145,6 +148,9 @@ final class ProfileSettingVC: BaseVC {
         
         viewModel.successEvent
             .asSignal()
+            .do(onNext: { [weak self] _ in
+                self?.confirmButton.isEnabled = true
+            })
             .emit(onNext: { [weak self] _ in
                 let mainVM = MainVM()
                 let mainVC = MainVC(vm: mainVM)
@@ -155,6 +161,9 @@ final class ProfileSettingVC: BaseVC {
         
         viewModel.errEvent
             .asSignal()
+            .do(onNext: { [weak self] _ in
+                self?.confirmButton.isEnabled = true
+            })
             .emit { [weak self] err in
                 let alert = UIAlertController(title: "", message: err.errorDescription ?? "오류", preferredStyle: .alert)
                 alert.addAction(UIAlertAction(title: "확인", style: .default))
@@ -165,8 +174,9 @@ final class ProfileSettingVC: BaseVC {
         
         RxKeyboard.instance.visibleHeight
             .skip(1)
-            .drive(onNext: {
-                self.confirmButton.keyboardMovement(from:self.view, height: $0)
+            .drive(onNext: { [weak self] height in
+                guard let self = self else { return }
+                self.confirmButton.keyboardMovement(from:self.view, height: height)
             })
             .disposed(by: disposeBag)
     }
@@ -195,9 +205,7 @@ extension ProfileSettingVC: PHPickerViewControllerDelegate {
             }
 
             if let image = object as? UIImage {
-
                 self!.viewModel.selectedImageSubject.onNext(image)
-
             }
         }
     }

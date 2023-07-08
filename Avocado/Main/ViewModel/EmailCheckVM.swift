@@ -16,7 +16,9 @@ final class EmailCheckVM {
     let service: AuthService
     let disposeBag = DisposeBag()
     
-    let successEvent = PublishRelay<Bool>()
+    let successEmailCheckEvent = PublishRelay<Bool>()
+    let successEmailResendEvent = PublishRelay<Bool>()
+    let successEmailOtherEmailEvent = PublishRelay<Bool>()
     let errEvent = PublishRelay<NetworkError>()
     let confirmCode = BehaviorRelay<String>(value: "")
     let userEmail = BehaviorRelay<String>(value: "")
@@ -32,7 +34,7 @@ final class EmailCheckVM {
     func resendSignUpCode() {
         service.resendSignUpCode(to: userEmail.value)
             .subscribe {
-                self.successEvent.accept($0)
+                self.successEmailResendEvent.accept($0)
             } onError: { err in
                 guard let authError = err as? AuthError else {
                     self.errEvent.accept(NetworkError.unknown(-1, err.localizedDescription))
@@ -57,7 +59,7 @@ final class EmailCheckVM {
                 self.service.login(email: self.userEmail.value, password: self.userPassword.value)
                     .subscribe(onNext: { isSuccess in
                         if isSuccess {
-                            self.successEvent.accept(true)
+                            self.successEmailCheckEvent.accept(true)
                         }
                         else {
                             self.errEvent.accept(NetworkError.unknown(-1, "로그인에 실패하였습니다"))
@@ -77,5 +79,22 @@ final class EmailCheckVM {
                 self.errEvent.accept(NetworkError.unknown(-1, authError.errorDescription))
             }
             .disposed(by: disposeBag)
+    }
+    
+    /* 다른 이메일로 인증 */
+    func otherEmailSignUp() {
+        service.deleteAccount()
+            .subscribe {
+                self.successEmailOtherEmailEvent.accept($0)
+            } onError: { err in
+                guard let authError = err as? AuthError else {
+                    self.errEvent.accept(NetworkError.unknown(-1, err.localizedDescription))
+                    return
+                }
+                
+                self.errEvent.accept(NetworkError.unknown(-1, authError.errorDescription))
+            }
+            .disposed(by: disposeBag)
+
     }
 }

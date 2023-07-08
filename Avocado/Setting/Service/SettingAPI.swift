@@ -9,7 +9,7 @@ import Foundation
 import Moya
 
 enum SettingAPI {
-    case auth(provider: String, callback: String)
+    case auth(provider: SocialType, callback: String)
 }
 
 extension SettingAPI: BaseTarget {
@@ -31,7 +31,7 @@ extension SettingAPI: BaseTarget {
         switch self {
         case .auth(let provider, let callback):
             return .requestParameters(parameters: [
-                "provider": provider,
+                "provider": provider.name,
                 "redirectUri": callback
             ], encoding: JSONEncoding())
         }

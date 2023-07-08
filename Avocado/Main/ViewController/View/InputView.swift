@@ -18,7 +18,7 @@ final class InputView : UIView {
     
     private var placeholder: String
     
-    private var rightLabelString = BehaviorRelay<String>(value: "")
+    var rightLabelString = BehaviorRelay<String>(value: "")
     
     var userInput = PublishSubject<String>()
     
@@ -73,6 +73,10 @@ final class InputView : UIView {
 //        self.rightLabel.textColor = colorSetting.textColor
         
         self.textField.backgroundColor = colorSetting.bgColor
+        
+        rightLabelString
+            .bind(to: rightLabel.rx.text)
+            .disposed(by: disposeBag)
         
         textField.rx.text
             .orEmpty

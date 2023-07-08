@@ -187,27 +187,13 @@ class LoginVC: BaseVC {
         
         //키보드 버튼 애니메이션
         RxKeyboard.instance.visibleHeight
-            .skip(1)
-            .drive(onNext: {
-                self.confirmButton.keyboardMovement(from:self.view, height: $0)
+            .do(onNext: { [weak self] height in
+                self?.navigationController?.setNavigationBarHidden(height > 0, animated: true)
             })
-            .disposed(by: disposeBag)
-        
-//        RxKeyboard.instance.visibleHeight
-//            .drive(onNext: { [weak self] keyboardVisibleHeight in
-//                self?.view.frame.origin.y = -keyboardVisibleHeight/3
-//            })
-//            .disposed(by: disposeBag)
-            
-        RxKeyboard.instance.visibleHeight
+            .skip(1)
             .drive(onNext: { [weak self] height in
-                if height > 0 {
-                    // 키보드가 있을 경우 navigationController를 숨김니다
-                    self?.navigationController?.setNavigationBarHidden(true, animated: true)
-                } else {
-                    // 키보드가 없을 경우 navigationController를 보여줍니다
-                    self?.navigationController?.setNavigationBarHidden(false, animated: true)
-                }
+                guard let self = self else { return }
+                self.confirmButton.keyboardMovement(from:self.view, height: height)
             })
             .disposed(by: disposeBag)
     }

@@ -513,8 +513,8 @@ final class AuthService: BaseAPIService<AuthAPI> {
      * - Parameter with: 활동지역ID
      * - Returns 등록여부 Observable값 **수정될 수  있음**
      */
-    func avocadoSignUp(to nickName: String, with regionId: Int) -> Observable<Bool> {
-        return singleRequest(.signUp(name: nickName, regionId: regionId)).asObservable()
+    func avocadoSignUp(to nickName: String, with regionId: Int) -> Observable<UserDTO> {
+        return singleRequest(.signUp(name: nickName, regionId: regionId), responseType: User.self).asObservable()
     }
     
     /**

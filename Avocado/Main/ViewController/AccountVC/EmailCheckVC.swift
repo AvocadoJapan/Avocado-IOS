@@ -135,11 +135,12 @@ class EmailCheckVC: BaseVC {
             })
             .disposed(by: disposeBag)
         
+        // 이메일 인증
         viewModel
-            .successEvent
+            .successEmailCheckEvent
             .asSignal()
             .emit(onNext: { [weak self] isSuccess in
-                let authService = AuthService()
+                let authService = AuthService(isStub: true)
                 let profileSettingVM = ProfileSettingVM(service: authService)
                 let profileSettingVC = ProfileSettingVC(vm: profileSettingVM)
                 let navigaitonVC = profileSettingVC.getBaseNavigationController()
@@ -147,34 +148,70 @@ class EmailCheckVC: BaseVC {
             })
             .disposed(by: disposeBag)
         
+        // 이메일 재 전송
+        viewModel
+            .successEmailResendEvent
+            .asSignal()
+            .emit(onNext: { [weak self] _ in
+                let alertController = UIAlertController(title: "", message: "인증번호를 다시 보냈습니다!", preferredStyle: .alert)
+                alertController.addAction(UIAlertAction(title: "확인", style: .default))
+                
+                self?.present(alertController, animated: true)
+            })
+            .disposed(by: disposeBag)
+        
+        viewModel
+            .errEvent
+            .asSignal()
+            .emit(onNext: { [weak self] err in
+                let alertController = UIAlertController(title: "", message: err.errorDescription, preferredStyle: .alert)
+                alertController.addAction(UIAlertAction(title: "확인", style: .default))
+                
+                self?.present(alertController, animated: true)
+            })
+            .disposed(by: disposeBag)
+        
         confirmButton
             .rx
             .tap
             .asDriver()
+            .throttle(.seconds(3), latest: false)
             .drive(onNext: { [weak self] _ in
                 self?.viewModel.confirmSignUpCode()
+            })
+            .disposed(by: disposeBag)
+        
+        reqNewCodeButton
+            .rx
+            .tap
+            .asDriver()
+            .throttle(.seconds(3), latest: false)
+            .drive(onNext: { [weak self] _ in
+                self?.viewModel.resendSignUpCode()
+            })
+            .disposed(by: disposeBag)
+        
+        otherEmailButton
+            .rx
+            .tap
+            .asDriver()
+            .throttle(.seconds(3), latest: false)
+            .drive(onNext: { [weak self] _ in
+//                self?.viewModel.otherEmailSignUp()
             })
             .disposed(by: disposeBag)
         
         //키보드 버튼 애니메이션
         RxKeyboard.instance.visibleHeight
             .skip(1)
-            .drive(onNext: {
-                self.confirmButton.keyboardMovement(from:self.view, height: $0)
+            .drive(onNext: { [weak self] height in
+                guard let self = self else { return }
+                self.confirmButton.keyboardMovement(from:self.view, height: height)
             })
-            .disposed(by: disposeBag)
-    
-            
+            .disposed(by: disposeBag)       
     }
 
 }
-
-//extension MainVC : UAInputViewDelegate {
-//    func onUserInputChange(input: String) {
-//        print(#fileID, #function, #line, "- UAInputViewDelegate input : \(input)")
-//    }
-//}
-
 
 // MARK: - Preview 관련
 #if DEBUG && canImport(SwiftUI)

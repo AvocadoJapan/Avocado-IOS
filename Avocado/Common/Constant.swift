@@ -21,6 +21,20 @@ enum IDENTIFIER {
 //    static let STAR_LIST_TV_CELL = "starListTVCell"
 }
 
+enum SocialType {
+    case google
+    case apple
+    
+    var name: String {
+        switch self {
+        case .google:
+            return "google"
+        case .apple:
+            return "apple"
+        }
+    }
+}
+
 /**
  * - Description 공통적으로 사용되는 모델 enum ()
  */

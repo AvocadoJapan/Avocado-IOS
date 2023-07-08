@@ -61,6 +61,8 @@
 		B1A301BE2A543A2F003834E6 /* Constant.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1A301BA2A543A2F003834E6 /* Constant.swift */; };
 		B1A301BF2A543A2F003834E6 /* BaseNavigationVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1A301BB2A543A2F003834E6 /* BaseNavigationVC.swift */; };
 		B1A301C62A543B15003834E6 /* UIButton+Animation.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1A301C52A543B15003834E6 /* UIButton+Animation.swift */; };
+		B1B1EA132A5973C7007B1894 /* SettingTC.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1B1EA122A5973C7007B1894 /* SettingTC.swift */; };
+		B1B1EA162A599904007B1894 /* SettingSectionModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1B1EA152A599904007B1894 /* SettingSectionModel.swift */; };
 		B1BFDD672A49CF8100DB4955 /* LoginVM.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1BFDD662A49CF8100DB4955 /* LoginVM.swift */; };
 		B1D23D392A4C6245006A2848 /* WelcomeVM.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1D23D382A4C6245006A2848 /* WelcomeVM.swift */; };
 		B1D23D3F2A4C74F6006A2848 /* AvatarM.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1D23D3E2A4C74F6006A2848 /* AvatarM.swift */; };
@@ -148,6 +150,8 @@
 		B1A301BA2A543A2F003834E6 /* Constant.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Constant.swift; sourceTree = "<group>"; };
 		B1A301BB2A543A2F003834E6 /* BaseNavigationVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BaseNavigationVC.swift; sourceTree = "<group>"; };
 		B1A301C52A543B15003834E6 /* UIButton+Animation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIButton+Animation.swift"; sourceTree = "<group>"; };
+		B1B1EA122A5973C7007B1894 /* SettingTC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingTC.swift; sourceTree = "<group>"; };
+		B1B1EA152A599904007B1894 /* SettingSectionModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingSectionModel.swift; sourceTree = "<group>"; };
 		B1BFDD662A49CF8100DB4955 /* LoginVM.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginVM.swift; sourceTree = "<group>"; };
 		B1D23D382A4C6245006A2848 /* WelcomeVM.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WelcomeVM.swift; sourceTree = "<group>"; };
 		B1D23D3E2A4C74F6006A2848 /* AvatarM.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AvatarM.swift; sourceTree = "<group>"; };
@@ -336,6 +340,8 @@
 		98FD1C212A56AD0F0031D7C1 /* Setting */ = {
 			isa = PBXGroup;
 			children = (
+				B1B1EA142A5998F5007B1894 /* Model */,
+				B1B1EA0F2A597348007B1894 /* View */,
 				98FD1C262A56B3770031D7C1 /* Service */,
 				98FD1C222A56AD230031D7C1 /* SettingVC.swift */,
 				98FD1C242A56AE860031D7C1 /* SettingVM.swift */,
@@ -400,6 +406,22 @@
 				B1A301C52A543B15003834E6 /* UIButton+Animation.swift */,
 			);
 			path = Animation;
+			sourceTree = "<group>";
+		};
+		B1B1EA0F2A597348007B1894 /* View */ = {
+			isa = PBXGroup;
+			children = (
+				B1B1EA122A5973C7007B1894 /* SettingTC.swift */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		B1B1EA142A5998F5007B1894 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				B1B1EA152A599904007B1894 /* SettingSectionModel.swift */,
+			);
+			path = Model;
 			sourceTree = "<group>";
 		};
 		B2198B8B2A2A36EA0019032D = {
@@ -658,6 +680,7 @@
 				B2F3D3642A511F2700FB05E1 /* SubButton.swift in Sources */,
 				98FD1C2A2A56B3900031D7C1 /* SettingAPI.swift in Sources */,
 				B212D58B2A45F1740008DAD1 /* InputView.swift in Sources */,
+				B1B1EA132A5973C7007B1894 /* SettingTC.swift in Sources */,
 				04C835FF2A2B5FEF00731E3E /* BannerFooterRV.swift in Sources */,
 				B1A301972A5437DB003834E6 /* ProfileSettingVC.swift in Sources */,
 				B18DFEDF2A51B53B00CF27FE /* EmailCheckVM.swift in Sources */,
@@ -681,6 +704,7 @@
 				98AD11032A4BF8B4001C4734 /* RegionsM.swift in Sources */,
 				B2E186CE2A474B4C00ABE98F /* SignupVC.swift in Sources */,
 				B1BFDD672A49CF8100DB4955 /* LoginVM.swift in Sources */,
+				B1B1EA162A599904007B1894 /* SettingSectionModel.swift in Sources */,
 				9816F6EB2A494AF400A7A284 /* DTOResponseable.swift in Sources */,
 				98FD1C282A56B3860031D7C1 /* SettingService.swift in Sources */,
 				9816F6EF2A494B1B00A7A284 /* NetworkError.swift in Sources */,
