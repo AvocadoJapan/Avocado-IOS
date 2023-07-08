@@ -17,6 +17,10 @@ final class RegionTVCell: UITableViewCell {
         
         self.backgroundColor = .systemGray6
         
+        self.selectedBackgroundView = UIView().then {
+            $0.backgroundColor = .systemGray5
+        }
+        
         setupViews()
         setupConstraints()
     }
@@ -38,4 +42,12 @@ final class RegionTVCell: UITableViewCell {
     func configure(with region: Region) {
         nameLabel.text = region.name
     }
+    
+//    override func prepareForReuse() {
+//        super.prepareForReuse()
+//        
+//        // 셀 재사용 시점에 체크표시를 제거하고 배경색을 원래대로 설정합니다.
+//        self.accessoryType = .none
+//        self.selectedBackgroundView?.backgroundColor = nil
+//    }
 }

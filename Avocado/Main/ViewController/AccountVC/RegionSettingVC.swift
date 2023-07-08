@@ -25,6 +25,7 @@ final class RegionSettingVC: BaseVC {
         $0.backgroundColor = .systemGray6
         $0.rowHeight = 40
         $0.showsVerticalScrollIndicator = false
+        $0.isMultipleTouchEnabled = false
     }
 
     var disposeBag = DisposeBag()
@@ -71,6 +72,8 @@ final class RegionSettingVC: BaseVC {
     override func setProperty() {
         view.backgroundColor = .white
         self.navigationController?.isNavigationBarHidden = true
+        
+        self.tableView.isMultipleTouchEnabled = false
     }
 
     override func setLayout() {
@@ -142,6 +145,22 @@ final class RegionSettingVC: BaseVC {
             .bind(to: tableView.rx.items(cellIdentifier: RegionTVCell.identifier, cellType: RegionTVCell.self)) { _, region, cell in
                 cell.configure(with: region)
             }
+            .disposed(by: disposeBag)
+        
+        tableView.rx.itemSelected
+            .subscribe(onNext: { [unowned self] indexPath in
+                if let cell = tableView.cellForRow(at: indexPath) {
+                    cell.accessoryType = .checkmark
+                }
+            })
+            .disposed(by: disposeBag)
+            
+        tableView.rx.itemDeselected
+            .subscribe(onNext: { [unowned self] indexPath in
+                if let cell = tableView.cellForRow(at: indexPath) {
+                    cell.accessoryType = .none
+                }
+            })
             .disposed(by: disposeBag)
     }
 
