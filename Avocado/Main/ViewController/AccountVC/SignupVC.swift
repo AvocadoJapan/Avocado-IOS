@@ -32,25 +32,6 @@ class SignupVC: BaseVC {
     private lazy var passwordInput = InputView(label: "비밀번호", placeholder: "********", colorSetting: .normal,regSetting: .password, passwordable: true)
     
     private lazy var passwordCheckInput = InputView(label: "비밀번호 확인", placeholder: "********", colorSetting: .normal, passwordable: true)
-        
-    private lazy var toggleView = UIStackView().then {
-        $0.spacing = 10
-        $0.alignment = .center
-        $0.distribution = .equalSpacing
-    }
-    
-    private lazy var toggleText = UILabel().then {
-        $0.text = "서비스 이용약관에 동의"
-        $0.numberOfLines = 1
-        $0.textAlignment = .left
-        $0.font = UIFont.systemFont(ofSize: 13, weight: .semibold)
-        $0.textColor = .darkGray
-    }
-    
-    private lazy var toggle = UISwitch().then {
-        $0.isOn = false
-        $0.onTintColor = .black
-    }
     
     private lazy var confirmButton = BottomButton(text: "회원가입")
     
@@ -87,16 +68,12 @@ class SignupVC: BaseVC {
         
         scrollView.addSubview(containerView)
         
-        [titleLabel, inputField, toggleView].forEach {
+        [titleLabel, inputField].forEach {
             containerView.addSubview($0)
         }
         
         [emailInput, passwordInput, passwordCheckInput].forEach {
             inputField.addArrangedSubview($0)
-        }
-        
-        [toggleText, toggle].forEach {
-            toggleView.addArrangedSubview($0)
         }
         
         
@@ -125,12 +102,7 @@ class SignupVC: BaseVC {
             $0.centerX.equalToSuperview()
             $0.top.equalTo(titleLabel.snp.bottom).offset(20)
             $0.left.equalToSuperview().offset(20)
-        }
-
-        toggleView.snp.makeConstraints {
-            $0.right.equalToSuperview().inset(20)
-            $0.top.equalTo(inputField.snp.bottom).offset(30)
-            $0.bottom.equalToSuperview().inset(40)
+            $0.bottom.equalToSuperview().inset(20)
         }
         
         confirmButton.snp.makeConstraints {
