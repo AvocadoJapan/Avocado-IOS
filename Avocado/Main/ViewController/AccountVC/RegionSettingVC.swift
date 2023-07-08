@@ -146,22 +146,6 @@ final class RegionSettingVC: BaseVC {
                 cell.configure(with: region)
             }
             .disposed(by: disposeBag)
-        
-        tableView.rx.itemSelected
-            .subscribe(onNext: { [unowned self] indexPath in
-                if let cell = tableView.cellForRow(at: indexPath) {
-                    cell.accessoryType = .checkmark
-                }
-            })
-            .disposed(by: disposeBag)
-            
-        tableView.rx.itemDeselected
-            .subscribe(onNext: { [unowned self] indexPath in
-                if let cell = tableView.cellForRow(at: indexPath) {
-                    cell.accessoryType = .none
-                }
-            })
-            .disposed(by: disposeBag)
     }
 
     // 커스텀 메소드

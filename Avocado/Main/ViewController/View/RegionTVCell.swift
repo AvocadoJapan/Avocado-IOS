@@ -43,11 +43,9 @@ final class RegionTVCell: UITableViewCell {
         nameLabel.text = region.name
     }
     
-//    override func prepareForReuse() {
-//        super.prepareForReuse()
-//        
-//        // 셀 재사용 시점에 체크표시를 제거하고 배경색을 원래대로 설정합니다.
-//        self.accessoryType = .none
-//        self.selectedBackgroundView?.backgroundColor = nil
-//    }
+    override func setSelected(_ selected: Bool, animated: Bool) {
+        super.setSelected(selected, animated: animated)
+        accessoryType = selected ? .checkmark : .none
+        selectedBackgroundView?.backgroundColor = selected ? .systemGray5 : nil
+    }
 }
