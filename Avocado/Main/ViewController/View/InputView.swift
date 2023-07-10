@@ -20,7 +20,7 @@ final class InputView : UIView {
     
     var rightLabelString = BehaviorRelay<String>(value: "")
     
-    var userInput = PublishSubject<String>()
+    var userInput = BehaviorRelay<String>(value: "")
     
     private var regSetting: RegVarient?
     
@@ -53,7 +53,7 @@ final class InputView : UIView {
     override init(frame: CGRect) {
         self.labelString = ""
         self.placeholder = ""
-        self.regSetting = RegVarient()
+        self.regSetting = nil
         super.init(frame: .zero)
     }
     
@@ -76,25 +76,27 @@ final class InputView : UIView {
             .bind(to: rightLabel.rx.text)
             .disposed(by: disposeBag)
         
+
         textField
             .rx
-            .text
-            .orEmpty
-            .filter({ [weak self] text in
-                
-                guard let pattern = self?.regSetting?.regularExpression else {
-                    return false
+            .controlEvent(.editingDidEnd)
+            .withLatestFrom(textField.rx.text.orEmpty)
+            .map { [weak self] text -> String in
+                guard let rules = self?.regSetting?.rules else {
+                    return ""
                 }
-                
-                let regex = try! NSRegularExpression(pattern: pattern)
-                let range = NSRange(location: 0, length: text.count)
-                let isVaild = regex.numberOfMatches(in: text, range: range) == 1
-                self?.rightLabelString.accept(isVaild ? "" : "형식이 맞지 않습니다")
-                
-                return true
-            })
-            .bind(to: userInput)
+
+                for rule in rules {
+                    if !rule.check(text) {
+                        return rule.errorMessage
+                    }
+                }
+
+                return ""
+            }
+            .bind(to: rightLabelString)
             .disposed(by: disposeBag)
+
         
         //MARK: - UI 설정
         let stackView = buildStackView()
@@ -107,7 +109,7 @@ final class InputView : UIView {
     required init?(coder: NSCoder) {
         self.labelString = ""
         self.placeholder = ""
-        self.regSetting = RegVarient()
+        self.regSetting = nil
         super.init(coder: coder)
     }
     

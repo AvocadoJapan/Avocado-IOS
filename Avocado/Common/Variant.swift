@@ -8,79 +8,151 @@
 import Foundation
 import UIKit
 
-struct ColorVariant {
-    var textColor : UIColor
-    var bgColor : UIColor
-    
-    init(textColor: UIColor = .black,
-         bgColor: UIColor = .white) {
-        self.textColor = textColor
-        self.bgColor = bgColor
+enum ColorVariant {
+    case normal
+    case success
+    case warning
+    case failure
+
+    var textColor: UIColor {
+        switch self {
+        case .normal: return .darkGray
+        case .success: return .green
+        case .warning: return .yellow
+        case .failure: return .red
+        }
     }
-    
-    static var normal = Self(textColor: .darkGray, bgColor: .systemGray6)
-    static var success = Self(textColor: .green, bgColor: .systemBlue)
-    static var warning = Self(textColor: .yellow, bgColor: .cyan)
-    static var failure = Self(textColor: .red, bgColor: .white)
+
+    var bgColor: UIColor {
+        switch self {
+        case .normal: return .systemGray6
+        case .success: return .systemBlue
+        case .warning: return .cyan
+        case .failure: return .white
+        }
+    }
 }
 
-struct ButtonColorType {
-    var tintColor : UIColor
-    var bgColor : UIColor
-    
-    init(tintColor: UIColor = .white,
-         bgColor: UIColor = .black) {
-        self.tintColor = tintColor
-        self.bgColor = bgColor
+enum ButtonColorType {
+    case primary
+    case secondary
+    case success
+    case danger
+    case warning
+    case info
+
+    var tintColor: UIColor {
+        switch self {
+        case .primary: return .white
+        case .secondary, .warning, .info: return .black
+        case .success, .danger: return .white
+        }
     }
-    
-    static var primary = Self(tintColor: .white, bgColor: .black)
-    static var secondary = Self(tintColor: .black, bgColor: .white)
-    static var success = Self(tintColor: .white, bgColor: .systemBlue)
-    static var danger = Self(tintColor: .white, bgColor: .systemRed)
-    static var warning = Self(tintColor: .white, bgColor: .systemYellow)
-    static var info = Self(tintColor: .white, bgColor: .systemCyan)
+
+    var bgColor: UIColor {
+        switch self {
+        case .primary, .danger, .warning: return .black
+        case .secondary: return .white
+        case .success: return .systemBlue
+        case .info: return .systemCyan
+        }
+    }
 }
 
-struct RegVarient {
-    var regularExpression : String
-    
-    init(regularExpression : String = "") {
-        self.regularExpression = regularExpression
+class Rule {
+    let check: (String) -> Bool
+    let errorMessage: String
+
+    init(_ check: @escaping (String) -> Bool, _ errorMessage: String) {
+        self.check = check
+        self.errorMessage = errorMessage
     }
-    
-    static var email = Self(regularExpression: "[a-z0-9._%+-]+@[a-z0-9.-]+\\.[a-z]{2,}") // 영어 대문자금지의 이메일 정규식
-    static var password = Self(regularExpression:  "^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z]).{8,50}$") // 8자리 ~ 50자리 1자리 이상의 영어 대문자, 영어+숫자
-    static var nickname = Self(regularExpression: "[a-zA-Zぁ-んァ-ヶ一-龠々ー0-9]{3,10}") // 3~10자리의 특수문자 금지, 영문 일본어 숫자 가능
 }
 
-struct PrivacyType {
-    var title : String
-    var discription: String
-    
-    init(title : String = "",
-         discription : String = "") {
-        self.title = title
-        self.discription = discription
+enum RegVarient {
+    case email
+    case password
+    case nickname
+
+    var rules: [Rule] {
+        switch self {
+        case .email:
+            return [
+                Rule({ NSPredicate(format: "SELF MATCHES %@", "[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,}").evaluate(with: $0) }, "이메일 형식이 올바르지 않습니다."),
+                Rule({ !$0.contains(where: { $0.isUppercase }) }, "이메일은 대문자를 사용할 수 없습니다."),
+            ]
+        case .password:
+            return [
+                Rule({ $0.count >= 8 && $0.count <= 50 }, "비밀번호는 8자 이상 50자 이하이어야 합니다."),
+                Rule({ $0.rangeOfCharacter(from: .uppercaseLetters) != nil }, "비밀번호는 대문자를 하나 이상 포함해야 합니다."),
+                Rule({ $0.rangeOfCharacter(from: .decimalDigits) != nil }, "비밀번호는 숫자를 하나 이상 포함해야 합니다."),
+                Rule({ $0.rangeOfCharacter(from: .lowercaseLetters) != nil }, "비밀번호는 소문자를 하나 이상 포함해야 합니다."),
+            ]
+        case .nickname:
+            return [
+                Rule({ $0.count >= 3 && $0.count <= 10 }, "닉네임은 3~10자리 사이이어야 합니다."),
+                Rule({ $0.rangeOfCharacter(from: CharacterSet.alphanumerics.union(CharacterSet(charactersIn: "ぁ-んァ-ヶ一-龠々ー")).inverted) == nil }, "닉네임에는 특수 문자를 사용할 수 없습니다."),
+                Rule({ $0.rangeOfCharacter(from: CharacterSet.alphanumerics.union(CharacterSet(charactersIn: "ぁ-んァ-ヶ一-龠々ー"))) != nil }, "닉네임은 영문, 일본어, 숫자만 가능합니다."),
+            ]
+        }
     }
-    
-    static var notification = Self(title: "알림 (선택)", discription: "메세지 알림, 광고 알림 등")
-    static var location = Self(title: "위치 서비스 (선택)", discription: "부정가입 방지, 위치 기반 추천 서비스 등")
-    static var contacts = Self(title: "연락처 (선택)", discription: "unknown")
-    static var calendars = Self(title: "캘린더 (선택)", discription: "약속 추가 등")
-    static var reminders = Self(title: "미리 알림 (선택)", discription: "")
-    static var photos = Self(title: "사진 (선택)", discription: "상품 사진 등록, 프로필 사진 등")
-    static var bluetooth = Self(title: "Bluetooth (선택)", discription: "unknown")
-    static var localNetwork = Self(title: "로컬 네트워크 (선택)", discription: "unknown")
-    static var nearbyInteractions = Self(title: "unknown (선택)", discription: "unknown")
-    static var microphone = Self(title: "마이크 (선택)", discription: "아보카도 통화 등")
-    static var speechRecognition = Self(title: "음성 인식(선택) ", discription: "unknown")
-    static var camera = Self(title: "카메라 (선택)", discription: "상품 사진 촬영, 프로필 사진 등")
-    static var health = Self(title: "건강 (선택)", discription: "unknown")
-    static var researchSensor = Self(title: "리서치 센서 및 사용 데이터 (선택)", discription: "unknown")
-    static var homeKit = Self(title: "HomeKit (선택)", discription: "unknown")
-    static var media = Self(title: "미디어 및 Apple Music (선택)", discription: "unknown")
-    static var files = Self(title: "파일 및 폴더 (선택)", discription: "unknown")
-    static var motion = Self(title: "동작 및 피트니스 (선택)", discription: "unknown")
-    static var focus = Self(title: "집중 모드 (선택)", discription: "unknown")
+}
+
+
+enum PrivacyType {
+    case notification
+    case location
+    case contacts
+    case calendars
+    case reminders
+    case photos
+    case bluetooth
+    case localNetwork
+    case nearbyInteractions
+    case microphone
+    case speechRecognition
+    case camera
+    case health
+    case researchSensor
+    case homeKit
+    case media
+    case files
+    case motion
+    case focus
+
+    var title: String {
+        switch self {
+        case .notification: return "알림 (선택)"
+        case .location: return "위치 서비스 (선택)"
+        case .contacts: return "연락처 (선택)"
+        case .calendars: return "캘린더 (선택)"
+        case .reminders: return "미리 알림 (선택)"
+        case .photos: return "사진 (선택)"
+        case .bluetooth: return "Bluetooth (선택)"
+        case .localNetwork: return "로컬 네트워크 (선택)"
+        case .nearbyInteractions: return "unknown (선택)"
+        case .microphone: return "마이크 (선택)"
+        case .speechRecognition: return "음성 인식(선택) "
+        case .camera: return "카메라 (선택)"
+        case .health: return "건강 (선택)"
+        case .researchSensor: return "리서치 센서 및 사용 데이터 (선택)"
+        case .homeKit: return "HomeKit (선택)"
+        case .media: return "미디어 및 Apple Music (선택)"
+        case .files: return "파일 및 폴더 (선택)"
+        case .motion: return "동작 및 피트니스 (선택)"
+        case .focus: return "집중 모드 (선택)"
+        }
+    }
+
+    var discription: String {
+        switch self {
+        case .notification: return "메세지 알림, 광고 알림 등"
+        case .location: return "부정가입 방지, 위치 기반 추천 서비스 등"
+        case .contacts, .bluetooth, .localNetwork, .nearbyInteractions, .speechRecognition, .health, .researchSensor, .homeKit, .media, .files, .motion, .focus, .reminders: return "unknown"
+        case .calendars: return "약속 추가 등"
+        case .photos: return "상품 사진 등록, 프로필 사진 등"
+        case .microphone: return "아보카도 통화 등"
+        case .camera: return "상품 사진 촬영, 프로필 사진 등"
+        }
+    }
 }

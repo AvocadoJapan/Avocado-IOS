@@ -86,7 +86,7 @@ class SignupVC: BaseVC {
             make.top.equalToSuperview()
             make.bottom.equalTo(confirmButton.snp.top)
         }
-
+        
         containerView.snp.makeConstraints { make in
             make.edges.equalTo(scrollView.contentLayoutGuide.snp.edges)
             make.width.equalTo(scrollView.frameLayoutGuide.snp.width)
@@ -97,7 +97,7 @@ class SignupVC: BaseVC {
             $0.top.equalToSuperview().offset(20)
             $0.horizontalEdges.equalToSuperview().inset(30)
         }
-
+        
         inputField.snp.makeConstraints {
             $0.centerX.equalToSuperview()
             $0.top.equalTo(titleLabel.snp.bottom).offset(20)
@@ -175,7 +175,7 @@ class SignupVC: BaseVC {
             .do(onNext: { [weak self] in
                 self?.emailInput.resignFirstResponder()
                 self?.passwordInput.resignFirstResponder()
-
+                
             }).subscribe { [weak self] _ in
                 self?.viewModel.signUp()
                 /*
@@ -189,8 +189,8 @@ class SignupVC: BaseVC {
                  let emailCheckVC = EmailCheckVC(vm: emailCheckVM)
                  self.navigationController?.pushViewController(emailCheckVC, animated: true)
                  */
-                 
-                 
+                
+                
             }
             .disposed(by: disposeBag)
         
@@ -204,6 +204,7 @@ class SignupVC: BaseVC {
                 self.confirmButton.keyboardMovement(from:self.view, height: height)
             })
             .disposed(by: disposeBag)
+        
     }
     
     override func viewWillDisappear(_ animated: Bool) {
@@ -219,6 +220,17 @@ class SignupVC: BaseVC {
     // 커스텀 메소드
     @objc func didTapScrollView() {
         self.view.endEditing(true)
+    }
+    
+    private func validatePasswordMatch() {
+        let password = passwordInput.userInput.value
+        let passwordCheck = passwordCheckInput.userInput.value
+        
+        if password != passwordCheck {
+            passwordCheckInput.rightLabelString.accept("비밀번호가 일치하지 않습니다.")
+        } else {
+            passwordCheckInput.rightLabelString.accept("")
+        }
     }
 }
 
