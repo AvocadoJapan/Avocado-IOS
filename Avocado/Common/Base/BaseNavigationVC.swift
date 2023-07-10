@@ -13,6 +13,7 @@ final class BaseNavigationVC: UINavigationController {
     override func viewDidLoad() {
         super.viewDidLoad()
         navigationBar.tintColor = .black
+        modalPresentationStyle = .fullScreen
         
         let appearance = UINavigationBarAppearance()
         appearance.configureWithOpaqueBackground()

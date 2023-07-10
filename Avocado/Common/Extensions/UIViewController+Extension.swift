@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import UIKit
 
 #if DEBUG && canImport(SwiftUI)
 import SwiftUI

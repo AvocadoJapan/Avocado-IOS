@@ -27,9 +27,16 @@ class LoginVC: BaseVC {
         $0.spacing = 20
     }
     
-    private lazy var emailInput = InputView(label: "이메일", placeholder: "example@example.com", colorSetting: .normal, regSetting: .email)
+    private lazy var emailInput = InputView(label: "이메일",
+                                            placeholder: "example@example.com",
+                                            colorSetting: .normal,
+                                            regSetting: .email)
     
-    private lazy var passwordInput = InputView(label: "비밀번호", placeholder: "**********", colorSetting: .normal, regSetting: .password, passwordable: true)
+    private lazy var passwordInput = InputView(label: "비밀번호",
+                                               placeholder: "**********",
+                                               colorSetting: .normal,
+                                               regSetting: .password,
+                                               passwordable: true)
     
     private lazy var confirmButton = BottomButton(text: "로그인")
     

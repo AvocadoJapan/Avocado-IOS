@@ -4,6 +4,7 @@ import RxSwift
 import RxCocoa
 import Then
 import RxKeyboard
+import CoreLocation
 
 final class RegionSettingVC: BaseVC {
 
@@ -17,6 +18,12 @@ final class RegionSettingVC: BaseVC {
     private lazy var searchBar = SearchBarV(placeholder: "서울, 서초구, 강남 등")
 
     private lazy var confirmButton = BottomButton(text: "확인")
+    
+    private var locationManager = CLLocationManager().then {
+        $0.desiredAccuracy = kCLLocationAccuracyBest
+        $0.requestWhenInUseAuthorization()
+        $0.startUpdatingLocation()
+    }
 
     private let tableView = UITableView().then {
         $0.register(RegionTVCell.self, forCellReuseIdentifier: RegionTVCell.identifier)
@@ -40,49 +47,22 @@ final class RegionSettingVC: BaseVC {
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-
-    // Dummy data for table view
-    private let regions: [Region] = [
-        Region(regionId: 1, name: "서울특별시 종로구 청운동"),
-        Region(regionId: 2, name: "서울특별시 종로구 신교동"),
-        Region(regionId: 3, name: "서울특별시 종로구 궁정동"),
-        Region(regionId: 4, name: "서울특별시 종로구 효자동"),
-        Region(regionId: 5, name: "서울특별시 용산구 이촌동"),
-        Region(regionId: 6, name: "서울특별시 종로구 청운동"),
-        Region(regionId: 7, name: "서울특별시 종로구 신교동"),
-        Region(regionId: 8, name: "서울특별시 종로구 궁정동"),
-        Region(regionId: 9, name: "서울특별시 종로구 효자동"),
-        Region(regionId: 10, name: "서울특별시 용산구 이촌동"),
-        Region(regionId: 11, name: "서울특별시 종로구 청운동"),
-        Region(regionId: 12, name: "서울특별시 종로구 신교동"),
-        Region(regionId: 13, name: "서울특별시 종로구 궁정동"),
-        Region(regionId: 14, name: "서울특별시 종로구 효자동"),
-        Region(regionId: 15, name: "서울특별시 용산구 이촌동"),
-        Region(regionId: 16, name: "서울특별시 종로구 청운동"),
-        Region(regionId: 17, name: "서울특별시 종로구 신교동"),
-        Region(regionId: 18, name: "서울특별시 종로구 궁정동"),
-        Region(regionId: 19, name: "서울특별시 종로구 효자동"),
-        Region(regionId: 20, name: "서울특별시 용산구 이촌동"),
-        Region(regionId: 21, name: "서울특별시 종로구 청운동"),
-        Region(regionId: 22, name: "서울특별시 종로구 신교동"),
-        Region(regionId: 23, name: "서울특별시 종로구 궁정동"),
-        Region(regionId: 24, name: "서울특별시 종로구 효자동"),
-        Region(regionId: 25, name: "서울특별시 용산구 이촌동"),
-    ]
-
+    
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        // 지역 정보 조회 API call
+        viewModel.fetchRegion()
+    }
+    
     override func setProperty() {
         view.backgroundColor = .white
         self.navigationController?.isNavigationBarHidden = true
-        
-        self.tableView.isMultipleTouchEnabled = false
     }
 
     override func setLayout() {
         [tableView, titleLabel, searchBar, tableView, confirmButton].forEach {
             view.addSubview($0)
         }
-
-//        scrollView.addSubview(containerView)
     }
 
     override func setConstraint() {
@@ -124,33 +104,100 @@ final class RegionSettingVC: BaseVC {
             .bind(to: viewModel.textOb)
             .disposed(by: disposeBag)
         
-        RxKeyboard.instance.visibleHeight
-            .skip(1)
-            .drive(onNext: {
-                self.confirmButton.keyboardMovement(from: self.view, height: $0)
-            })
-            .disposed(by: disposeBag)
-
-        RxKeyboard.instance.visibleHeight
-            .drive(onNext: { [weak self] height in
-                if height > 0 {
-                    self?.navigationController?.setNavigationBarHidden(true, animated: true)
-                } else {
-                    self?.navigationController?.setNavigationBarHidden(false, animated: true)
-                }
-            })
-            .disposed(by: disposeBag)
-
-        // Table view data source binding
-        Observable.just(regions)
+        viewModel.regions
             .bind(to: tableView.rx.items(cellIdentifier: RegionTVCell.identifier, cellType: RegionTVCell.self)) { _, region, cell in
                 cell.configure(with: region)
             }
+            .disposed(by: disposeBag)
+        
+        tableView
+            .rx
+            .modelSelected(Region.self)
+            .subscribe(onNext: { [weak self] data in
+                self?.viewModel.regionIdOb.accept(data.id)
+            })
+            .disposed(by: disposeBag)
+        
+        viewModel
+            .regionIdOb
+            .map { $0.isEmpty ? .lightGray : .black }
+            .bind(to: confirmButton.rx.backgroundColor)
+            .disposed(by: disposeBag)
+        
+        viewModel
+            .regionIdOb
+            .map({ !$0.isEmpty })
+            .bind(to: confirmButton.rx.isEnabled)
+            .disposed(by: disposeBag)
+        
+        confirmButton
+            .rx
+            .tap
+            .asDriver()
+            .drive(onNext: { [weak self] _ in
+                let authService = AuthService()
+                let profileVM = ProfileSettingVM(service: authService, regionid: self?.viewModel.regionIdOb.value ?? "")
+                let profileVC = ProfileSettingVC(vm: profileVM)
+                self?.navigationController?.pushViewController(profileVC, animated: true)
+            })
+            .disposed(by: disposeBag)
+        
+        RxKeyboard.instance.visibleHeight
+            .skip(1)
+            .drive(onNext: { [weak self] height in
+                guard let self = self else { return }
+                self.confirmButton.keyboardMovement(from: self.view, height: height)
+            })
             .disposed(by: disposeBag)
     }
 
     // 커스텀 메소드
     @objc func didTapScrollView() {
         self.view.endEditing(true)
+    }
+    
+    /**
+     * - Description 현재 위치 주소를 가져오는 Observable
+     * - Returns 현재 주소
+     */
+    private func getCurrentAddress() -> Observable<String> {
+        return Observable.create { [weak self] observer in
+            let geocoder = CLGeocoder()
+            
+            guard let location = self?.locationManager.location else {
+                return Disposables.create()
+            }
+            
+            geocoder.reverseGeocodeLocation(location) { placeMarks, err in
+                if let err = err {
+                    Logger.e(err)
+                    return
+                }
+                
+                guard let placemark = placeMarks?.first else {
+                    return
+                }
+                
+                var address = ""
+                
+                if let adminstrativeArea = placemark.administrativeArea {
+                    address = "\(adminstrativeArea)"
+                }
+                
+                if let locality = placemark.locality {
+                    address.append(locality)
+                }
+                
+                if let thoroughfare = placemark.thoroughfare {
+                    address.append(thoroughfare)
+                }
+            
+                Logger.d(address)
+                observer.onNext(address)
+                observer.onCompleted()
+            }
+            
+            return Disposables.create()
+        }
     }
 }

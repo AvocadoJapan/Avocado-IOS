@@ -79,7 +79,11 @@ final class SettingTC: UITableViewCell {
         setImageVisible(visible: !data.imageName.isEmpty)
         
         titleLabel.text = data.title
-        settingImageView.image = UIImage(named: data.imageName)
+        
+        // 이미지가 없으면 설정 하지 않음
+        if (!data.imageName.isEmpty) {
+            settingImageView.image = UIImage(named: data.imageName)
+        }
         
     }
 }

@@ -8,6 +8,7 @@
 import UIKit
 import RxDataSources
 import RxRelay
+import RxSwift
 /**
  *##화면 명: Avocado 메인화면 (배너, 카테고리 별 상품 정보를 확인가능)
  */

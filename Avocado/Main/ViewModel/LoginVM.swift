@@ -16,7 +16,7 @@ final class LoginVM {
     
     public let emailObserver = BehaviorRelay<String>(value: "")
     public let passwordObserver = BehaviorRelay<String>(value: "")
-    public let successEvent = PublishRelay<Bool>()
+    public let successEvent = PublishRelay<User>()
     public let errEvent = PublishRelay<String>()
     public var isVaild: Observable<Bool> {
         return Observable
@@ -33,8 +33,13 @@ final class LoginVM {
     
     func login() {
         service.login(email: emailObserver.value, password: passwordObserver.value)
-            .subscribe {
-                self.successEvent.accept($0)
+            .subscribe { _ in
+                // 서버 프로필 조회
+                self.service.getProfile()
+                    .subscribe(onNext: { user in
+                        self.successEvent.accept(user)
+                    })
+                    .disposed(by: self.disposeBag)
             } onError: { err in
                 guard let err = err as? AuthError else {
                     self.errEvent.accept(err.localizedDescription)

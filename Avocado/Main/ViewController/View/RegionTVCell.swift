@@ -40,7 +40,7 @@ final class RegionTVCell: UITableViewCell {
     }
     
     func configure(with region: Region) {
-        nameLabel.text = region.name
+        nameLabel.text = region.fullName
     }
     
     override func setSelected(_ selected: Bool, animated: Bool) {

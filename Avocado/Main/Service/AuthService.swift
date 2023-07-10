@@ -103,9 +103,16 @@ final class AuthService: BaseAPIService<AuthAPI> {
                     let loginResult = try await Amplify.Auth.signIn(username: email, password: password)
                     
                     if (loginResult.isSignedIn) {
-                        // authToken 생성
-                        let isSuccess = await self.authTokenGenerate()
-                        observer.onNext(isSuccess)
+                        // 엑세스, 리프레시 토큰 생성
+                        let isSuccessToken = await self.authTokenGenerate()
+                        
+                        //토큰 생성에 실패한 경우
+                        guard isSuccessToken else {
+                            observer.onError(NetworkError.unknown(-1, "액세스 토큰 생성 또는 갱신에 실패하였습니다"))
+                            return
+                        }
+                        
+                        observer.onNext(true)
                         observer.onCompleted()
                     }
                 }
@@ -383,19 +390,20 @@ final class AuthService: BaseAPIService<AuthAPI> {
                                 }
                                 
                                 observer.onNext(true)
+                                observer.onCompleted()
                                 
                             case let .failure(error):
+                                // 코그니토 로그인은 하였으나 오류로 인해 로그인을 하지 못한 경우
                                 Logger.e("token retry failed with error \(error)")
                                 observer.onError(error)
                             }
                         }
                     }
                     else {
+                        // 코그니토 로그인이 되지않은 경우
                         Logger.e("User Signed Failed !!")
                         observer.onNext(false)
                     }
-                    
-                    observer.onCompleted()
                 }
                 catch let error as AuthError {
                     Logger.e("Fetch session faild with error \(error)")
@@ -468,7 +476,7 @@ final class AuthService: BaseAPIService<AuthAPI> {
                     
                     //토큰 생성에 실패한 경우
                     guard isSuccessToken else {
-                        observable.onError(NetworkError.unknown(-1, "토큰 생성에 실패하였습니다"))
+                        observable.onError(NetworkError.unknown(-1, "액세스 토큰 생성 또는 갱신에 실패하였습니다"))
                         return
                     }
                     
@@ -513,7 +521,7 @@ final class AuthService: BaseAPIService<AuthAPI> {
      * - Parameter with: 활동지역ID
      * - Returns 등록여부 Observable값 **수정될 수  있음**
      */
-    func avocadoSignUp(to nickName: String, with regionId: Int) -> Observable<UserDTO> {
+    func avocadoSignUp(to nickName: String, with regionId: String) -> Observable<UserDTO> {
         return singleRequest(.signUp(name: nickName, regionId: regionId), responseType: User.self).asObservable()
     }
     
@@ -556,8 +564,8 @@ final class AuthService: BaseAPIService<AuthAPI> {
      * - Parameter keyword: 검색 값?
      * - Returns Region의 배열형태 값
      */
-    func getRegions(keyword: String) -> Observable<Regions> {
-        return singleRequest(.region(searchkeyword: keyword)).asObservable()
+    func getRegions(keyword: String, depth: Int) -> Observable<Regions> {
+        return singleRequest(.region(searchkeyword: keyword, depth: depth)).asObservable()
     }
     
     /**
@@ -566,7 +574,7 @@ final class AuthService: BaseAPIService<AuthAPI> {
      * - Parameter with 활동지역 ID
      * - Returns S3 버킷에 업로드할 pre-signed URL
      */
-    func changeAvatar(to nickName: String, with regionId: Int) -> Observable<CommonModel.SingleURL> {
+    func changeAvatar(to nickName: String, with regionId: String) -> Observable<CommonModel.SingleURL> {
         return singleRequest(.changeAvatar(name: nickName, regionId: regionId)).asObservable()
     }
     
@@ -581,12 +589,22 @@ final class AuthService: BaseAPIService<AuthAPI> {
                 switch cognitTokenResult {
                 case let .success(tokens):
                     Logger.d("token = \(tokens)")
-                    // accessToken, refreshToken create
-                    let tokenCreate = KeychainUtil.loginTokenCreate(accessToken: tokens.accessToken, refreshToken: tokens.refreshToken)
-                    
                     Logger.d("tokens.accessToken = \(tokens.accessToken)")
                     
-                    return tokenCreate
+                    // 토큰이 없는 경우 생성
+                    guard let readToken = KeychainUtil.loginAccessTokenRead() else {
+                        // 엑세스, 리프레시 토큰 생성
+                        let tokenCreate = KeychainUtil.loginTokenCreate(accessToken: tokens.accessToken, refreshToken: tokens.refreshToken)
+                        return tokenCreate
+                    }
+                    
+                    // 이미 토큰이 있다면 갱신
+                    if (readToken != tokens.accessToken) {
+                        let tokenUpdate = KeychainUtil.loginAccessTokenUpdate(token: tokens.accessToken)
+                        return tokenUpdate
+                    }
+                    
+                    return true
                     
                 case let .failure(error):
                     Logger.e("token retry failed with error \(error)")

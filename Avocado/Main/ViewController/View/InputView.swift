@@ -68,18 +68,31 @@ final class InputView : UIView {
         self.labelString = label
         self.placeholder = placeholder
         self.textField.isSecureTextEntry = passwordable
-        
+        self.regSetting = regSetting
         self.leftLabel.textColor = colorSetting.textColor
-//        self.rightLabel.textColor = colorSetting.textColor
-        
         self.textField.backgroundColor = colorSetting.bgColor
         
         rightLabelString
             .bind(to: rightLabel.rx.text)
             .disposed(by: disposeBag)
         
-        textField.rx.text
+        textField
+            .rx
+            .text
             .orEmpty
+            .filter({ [weak self] text in
+                
+                guard let pattern = self?.regSetting?.regularExpression else {
+                    return false
+                }
+                
+                let regex = try! NSRegularExpression(pattern: pattern)
+                let range = NSRange(location: 0, length: text.count)
+                let isVaild = regex.numberOfMatches(in: text, range: range) == 1
+                self?.rightLabelString.accept(isVaild ? "" : "형식이 맞지 않습니다")
+                
+                return true
+            })
             .bind(to: userInput)
             .disposed(by: disposeBag)
         

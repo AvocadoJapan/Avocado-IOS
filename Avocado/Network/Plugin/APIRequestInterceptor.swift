@@ -32,6 +32,7 @@ final class APIRequestInterceptor: RequestInterceptor {
         let authService = AuthService()
         authService.retryAuthToken()
             .subscribe { _ in
+                Logger.d("Token 갱신 진행")
                 completion(.retry)
             } onError: {
                 completion(.doNotRetryWithError($0))

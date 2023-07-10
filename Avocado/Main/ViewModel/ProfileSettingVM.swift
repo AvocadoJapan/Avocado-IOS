@@ -20,13 +20,15 @@ final class ProfileSettingVM {
     let errEvent = PublishRelay<NetworkError>()
     let service: AuthService
     let disposeBag = DisposeBag()
+    let regionId: String
     
-    init(service:AuthService) {
+    init(service:AuthService, regionid: String) {
         self.service = service
+        self.regionId = regionid
     }
     
     func profileSetUp() {
-        service.avocadoSignUp(to: nickNameInput.value, with: 1)
+        service.avocadoSignUp(to: nickNameInput.value, with: regionId)
             .subscribe(onNext: {
                 Logger.d("profile \($0)")
                 self.successEvent.accept(true)
@@ -34,6 +36,10 @@ final class ProfileSettingVM {
                 self.errEvent.accept(err as! NetworkError)
             }
             .disposed(by: disposeBag)
+    }
+    
+    func changeAvatar() {
+        
     }
 }
 

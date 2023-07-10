@@ -29,15 +29,13 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
                     let mainViewModel = MainVM()
                     let mainVC = MainVC(vm: mainViewModel)
                     
-                    let regionSettingVC = RegionSettingVC(vm: RegionSettingVM())
+//                    let regionSettingVC = RegionSettingVC(vm: RegionSettingVM(service: authService))
+//                    let settingVC = SettingVC(vm: SettingVM(service: SettingService()))
                     
                     self?.window?.rootViewController = mainVC
                     self?.window?.makeKeyAndVisible()
                 }
                 else {
-                    // 새션이 종료된 경우 로그인 토큰 삭제
-                    KeychainUtil.loginTokenDelete()
-                    
                     let signUpViewModel = WelcomeVM(service: authService)
                     let signUpVC = WelcomeVC(vm: signUpViewModel)
                     let baseNavigationController = signUpVC.getBaseNavigationController()
@@ -78,6 +76,27 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 
         // Save changes in the application's managed object context when the application transitions to the background.
         (UIApplication.shared.delegate as? AppDelegate)?.saveContext()
+    }
+    
+    func scene(_ scene: UIScene, openURLContexts URLContexts: Set<UIOpenURLContext>) {
+        
+        if let url = URLContexts.first?.url {
+            // 소셜 계정 연동 스킴
+            if let host = url.host,
+               host == "socialSync" {
+               
+                guard let rootViewController = self.window?.rootViewController else {
+                    Logger.d("rootVC Not found")
+                    return
+                }
+                
+                rootViewController.dismiss(animated: true) {
+                    let alertController = UIAlertController(title: "", message: "소셜 계정이 연동 되었습니다", preferredStyle: .alert)
+                    alertController.addAction(UIAlertAction(title: "확인", style: .default))
+                    rootViewController.present(alertController, animated: true)
+                }
+            }
+        }
     }
 
 

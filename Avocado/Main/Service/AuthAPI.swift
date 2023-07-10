@@ -10,16 +10,16 @@ import Moya
 
 enum AuthAPI {
     case profile
-    case signUp(name:String, regionId: Int)
-    case changeAvatar(name:String, regionId: Int)
-    case region(searchkeyword: String)
+    case signUp(name:String, regionId: String)
+    case changeAvatar(name:String, regionId: String)
+    case region(searchkeyword: String, depth: Int)
 }
 
 extension AuthAPI: BaseTarget {
     var path: String {
         switch self {
         case .profile:
-            return "/v1/profile)"
+            return "/v1/profile"
             
         case .signUp:
             return "/v1/sign-up"
@@ -50,21 +50,20 @@ extension AuthAPI: BaseTarget {
         case .signUp(let name, let regionId):
             return .requestJSONEncodable([
                 "name" : name,
-                "regionId": "\(regionId)"
+                "regionId": regionId
             ])
             
         case .changeAvatar(let name, let regionId):
             return .requestJSONEncodable([
                 "name": name,
-                "regionId" : "\(regionId)"
+                "regionId" : regionId
             ])
             
-        case .region(let searchKeyword):
+        case .region(let searchKeyword, let depth):
             return .requestParameters(parameters: [
-                "search-keyword": searchKeyword
-            ], encoding: JSONEncoding())
+                "search-keyword": searchKeyword,
+                "depth": depth
+            ], encoding: URLEncoding.queryString)
         }
     }
-    
-    
 }

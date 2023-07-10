@@ -345,14 +345,29 @@
 			path = Service;
 			sourceTree = "<group>";
 		};
+		98B980F82A5BD7EC00982D3A /* ViewModel */ = {
+			isa = PBXGroup;
+			children = (
+				98FD1C242A56AE860031D7C1 /* SettingVM.swift */,
+			);
+			path = ViewModel;
+			sourceTree = "<group>";
+		};
+		98B980F92A5BD7F700982D3A /* View */ = {
+			isa = PBXGroup;
+			children = (
+				B1B1EA122A5973C7007B1894 /* SettingTC.swift */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
 		98FD1C212A56AD0F0031D7C1 /* Setting */ = {
 			isa = PBXGroup;
 			children = (
 				B1B1EA142A5998F5007B1894 /* Model */,
-				B1B1EA0F2A597348007B1894 /* View */,
+				98B980F82A5BD7EC00982D3A /* ViewModel */,
+				B1B1EA0F2A597348007B1894 /* ViewController */,
 				98FD1C262A56B3770031D7C1 /* Service */,
-				98FD1C222A56AD230031D7C1 /* SettingVC.swift */,
-				98FD1C242A56AE860031D7C1 /* SettingVM.swift */,
 			);
 			path = Setting;
 			sourceTree = "<group>";
@@ -416,12 +431,13 @@
 			path = Animation;
 			sourceTree = "<group>";
 		};
-		B1B1EA0F2A597348007B1894 /* View */ = {
+		B1B1EA0F2A597348007B1894 /* ViewController */ = {
 			isa = PBXGroup;
 			children = (
-				B1B1EA122A5973C7007B1894 /* SettingTC.swift */,
+				98B980F92A5BD7F700982D3A /* View */,
+				98FD1C222A56AD230031D7C1 /* SettingVC.swift */,
 			);
-			path = View;
+			path = ViewController;
 			sourceTree = "<group>";
 		};
 		B1B1EA142A5998F5007B1894 /* Model */ = {
@@ -895,14 +911,18 @@
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = 55M8D74RGH;
+				DEVELOPMENT_TEAM = S4U87C7HAS;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = Avocado/SupportingFiles/Info.plist;
+				INFOPLIST_KEY_NSLocationAlwaysAndWhenInUseUsageDescription = "직거래 희망장소 설정응 위해 위치권한이 필요합니다";
+				INFOPLIST_KEY_NSLocationAlwaysUsageDescription = "직거래 희망장소 설정응 위해 위치권한이 필요합니다";
+				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "직거래 희망장소 설정응 위해 위치권한이 필요합니다";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UIMainStoryboardFile = "";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
+				INFOPLIST_KEY_UIUserInterfaceStyle = Light;
 				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -930,14 +950,18 @@
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = 55M8D74RGH;
+				DEVELOPMENT_TEAM = S4U87C7HAS;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = Avocado/SupportingFiles/Info.plist;
+				INFOPLIST_KEY_NSLocationAlwaysAndWhenInUseUsageDescription = "직거래 희망장소 설정응 위해 위치권한이 필요합니다";
+				INFOPLIST_KEY_NSLocationAlwaysUsageDescription = "직거래 희망장소 설정응 위해 위치권한이 필요합니다";
+				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "직거래 희망장소 설정응 위해 위치권한이 필요합니다";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UIMainStoryboardFile = "";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
+				INFOPLIST_KEY_UIUserInterfaceStyle = Light;
 				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",

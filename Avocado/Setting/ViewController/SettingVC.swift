@@ -8,6 +8,7 @@
 import UIKit
 import SafariServices
 import RxDataSources
+import RxSwift
 
 final class SettingVC: BaseVC {
     
@@ -65,6 +66,36 @@ final class SettingVC: BaseVC {
             })
             .disposed(by: disposeBag)
         
+        // 로그아웃
+        viewModel
+            .successLogOutEvent
+            .asSignal()
+            .emit(onNext: { [weak self] _ in
+                self?.navigationController?.popViewController(animated: true)
+                let service = AuthService()
+                let welcomeVM = WelcomeVM(service: service)
+                let welcomeVC = WelcomeVC(vm: welcomeVM)
+                let baseNavigationController = welcomeVC.getBaseNavigationController()
+                baseNavigationController.modalPresentationStyle = .fullScreen
+                self?.present(baseNavigationController, animated: true)
+            })
+            .disposed(by: disposeBag)
+        
+        // 로그아웃
+        viewModel
+            .successDeleteAccountEvent
+            .asSignal()
+            .emit(onNext: { [weak self] _ in
+                self?.navigationController?.popViewController(animated: true)
+                let service = AuthService()
+                let welcomeVM = WelcomeVM(service: service)
+                let welcomeVC = WelcomeVC(vm: welcomeVM)
+                let baseNavigationController = welcomeVC.getBaseNavigationController()
+                baseNavigationController.modalPresentationStyle = .fullScreen
+                self?.present(baseNavigationController, animated: true)
+            })
+            .disposed(by: disposeBag)
+        
         //tableview bind
         let dataSource = RxTableViewSectionedReloadDataSource<SettingDataSection> { dataSource, tableView, indexPath, item in
             guard let cell = tableView.dequeueReusableCell(withIdentifier: SettingTC.identifier, for: indexPath) as? SettingTC else {
@@ -81,6 +112,30 @@ final class SettingVC: BaseVC {
             return dataSource.sectionModels[index].title
         }
             
+        tableView
+            .rx
+            .modelSelected(SettingData.self)
+            .subscribe(onNext: { [weak self] data in
+                switch data.type {
+                case .syncSocial(type: let type): // 소셜 연동하기
+                    self?.viewModel.socialSync(type: type)
+                    
+                case .userLogOut: // 유저 로그아웃
+                    self?.viewModel.userLogOut()
+                    
+                case .deleteAccount: // 유저 계정 탈퇴
+                    let alertController = UIAlertController(title: "", message: "'Avocado'를 탈퇴하시겠습니까?", preferredStyle: .alert)
+                    alertController.addAction(UIAlertAction(title: "확인", style: .default, handler: { _ in
+                        self?.viewModel.userDeleteAccount()
+                    }))
+                    
+                    alertController.addAction(UIAlertAction(title: "취소", style: .cancel))
+                    
+                    self?.present(alertController, animated: true)
+                    
+                }
+            })
+            .disposed(by: disposeBag)
         
         viewModel
             .staticSettingData

@@ -140,10 +140,11 @@ class EmailCheckVC: BaseVC {
             .successEmailCheckEvent
             .asSignal()
             .emit(onNext: { [weak self] isSuccess in
-                let authService = AuthService(isStub: true)
-                let profileSettingVM = ProfileSettingVM(service: authService)
-                let profileSettingVC = ProfileSettingVC(vm: profileSettingVM)
-                let navigaitonVC = profileSettingVC.getBaseNavigationController()
+                let authService = AuthService()
+                let regionVM = RegionSettingVM(service: authService)
+                let regionVC = RegionSettingVC(vm: regionVM)
+                let navigaitonVC = regionVC.getBaseNavigationController()
+                
                 self?.present(navigaitonVC, animated: true)
             })
             .disposed(by: disposeBag)
@@ -178,6 +179,14 @@ class EmailCheckVC: BaseVC {
             .throttle(.seconds(3), latest: false)
             .drive(onNext: { [weak self] _ in
                 self?.viewModel.confirmSignUpCode()
+                /* Mockingx
+                 let authService = AuthService()
+                 let regionVM = RegionSettingVM(service: authService)
+                 let regionVC = RegionSettingVC(vm: regionVM)
+                 let navigaitonVC = regionVC.getBaseNavigationController()
+                 self?.present(navigaitonVC, animated: true)
+                 */
+                
             })
             .disposed(by: disposeBag)
         

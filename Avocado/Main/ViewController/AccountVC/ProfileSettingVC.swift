@@ -173,6 +173,9 @@ final class ProfileSettingVC: BaseVC {
             .disposed(by: disposeBag)
         
         RxKeyboard.instance.visibleHeight
+            .do(onNext: { [weak self] height in
+                self?.navigationController?.setNavigationBarHidden(height > 0, animated: true)
+            })
             .skip(1)
             .drive(onNext: { [weak self] height in
                 guard let self = self else { return }
@@ -217,7 +220,7 @@ import SwiftUI
 import RxSwift
 struct ProfileSettingVCPreview: PreviewProvider {
     static var previews: some View {
-        return ProfileSettingVC(vm: ProfileSettingVM(service: AuthService())).toPreview()
+        return ProfileSettingVC(vm: ProfileSettingVM(service: AuthService(), regionid: "")).toPreview()
     }
 }
 #endif

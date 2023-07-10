@@ -178,6 +178,19 @@ class SignupVC: BaseVC {
 
             }).subscribe { [weak self] _ in
                 self?.viewModel.signUp()
+                /*
+                 Mocking
+                 
+                 guard let self = self else { return }
+                 let authService = AuthService()
+                 let emailCheckVM = EmailCheckVM(service: authService,
+                 email: viewModel.emailObserver.value,
+                 password: viewModel.passwordObserver.value)
+                 let emailCheckVC = EmailCheckVC(vm: emailCheckVM)
+                 self.navigationController?.pushViewController(emailCheckVC, animated: true)
+                 */
+                 
+                 
             }
             .disposed(by: disposeBag)
         
