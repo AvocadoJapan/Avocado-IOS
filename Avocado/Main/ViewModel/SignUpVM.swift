@@ -17,13 +17,18 @@ final class SignUpVM {
     
     public let emailObserver = BehaviorRelay<String>(value: "")
     public let passwordObserver = BehaviorRelay<String>(value: "")
+    public let passwordCheckObserver = BehaviorRelay<String>(value: "")
     public let errEvent = PublishRelay<String>()
     public let successEvent = PublishRelay<Bool>()
     public var isVaild: Observable<Bool> {
+    
         return Observable
-            .combineLatest(emailObserver, passwordObserver)
-            .map { (email, password) in
-                return !email.isEmpty && password.count >= 8
+            .combineLatest(emailObserver, passwordObserver, passwordCheckObserver)
+            .map { (email, password, passwordCheck) in
+                return !email.isEmpty &&
+                !password.isEmpty &&
+                !passwordCheck.isEmpty &&
+                (password == passwordCheck)
             }
     }
     
@@ -45,6 +50,14 @@ final class SignUpVM {
                 self.errEvent.accept(err.errorDescription)
             }
             .disposed(by: disposeBag)
+    }
+    
+    public func validatePasswordMatch() -> String {
+        
+        let password = self.passwordObserver.value
+        let passwordCheck = self.passwordCheckObserver.value
+        
+        return password != passwordCheck ? "비밀번호가 일치하지 않습니다." : ""
     }
     
     init(service: AuthService) {

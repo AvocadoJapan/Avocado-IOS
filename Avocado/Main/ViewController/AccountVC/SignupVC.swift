@@ -129,6 +129,18 @@ class SignupVC: BaseVC {
             })
             .disposed(by: disposeBag)
         
+        passwordCheckInput
+            .userInput
+            .subscribe(onNext: { [weak self] text in
+                guard let self = self else { return }
+                self.viewModel.passwordCheckObserver.accept(text)
+                
+                self.passwordCheckInput
+                    .rightLabelString
+                    .accept(self.viewModel.validatePasswordMatch())
+            })
+            .disposed(by: disposeBag)
+        
         viewModel
             .isVaild
             .bind(to: confirmButton.rx.isEnabled)
@@ -221,17 +233,6 @@ class SignupVC: BaseVC {
     // 커스텀 메소드
     @objc func didTapScrollView() {
         self.view.endEditing(true)
-    }
-    
-    private func validatePasswordMatch() {
-        let password = passwordInput.userInput.value
-        let passwordCheck = passwordCheckInput.userInput.value
-        
-        if password != passwordCheck {
-            passwordCheckInput.rightLabelString.accept("비밀번호가 일치하지 않습니다.")
-        } else {
-            passwordCheckInput.rightLabelString.accept("")
-        }
     }
 }
 

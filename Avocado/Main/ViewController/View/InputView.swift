@@ -14,6 +14,7 @@ import RxCocoa
 
 final class InputView : UIView {
     
+    // MARK: - Properties
     private var labelString : String
     
     private var placeholder: String
@@ -26,28 +27,46 @@ final class InputView : UIView {
     
     private let disposeBag = DisposeBag()
     
-    private lazy var textField = UITextField().then {
+    private lazy var textField: UITextField = UITextField().then {
         $0.placeholder = self.placeholder
         $0.font = .systemFont(ofSize: 13)
         $0.layer.cornerRadius = 10
         $0.contentVerticalAlignment = .center
-        $0.tintColor = .black
+        $0.borderStyle = .none
+        $0.autocorrectionType = .no
     }
     
-    private lazy var leftLabel = UILabel().then {
+    private lazy var leftLabel: UILabel = UILabel().then {
         $0.text = self.labelString
         $0.numberOfLines = 1
         $0.textAlignment = .left
         $0.font = UIFont.systemFont(ofSize: 13, weight: .medium)
     }
     
-    private lazy var rightLabel = UILabel().then {
-        //        $0.text = self.rightLabelString.value
+    private lazy var rightLabel: UILabel = UILabel().then {
         $0.text = "여기에 상호작용 메세지"
         $0.numberOfLines = 1
         $0.textAlignment = .right
         $0.font = UIFont.systemFont(ofSize: 13, weight: .medium)
         $0.textColor = .systemRed
+    }
+    
+    private let textFieldBackground: UIView = UIView().then {
+        $0.backgroundColor = .systemGray6
+        $0.layer.cornerRadius = 10
+    }
+    
+    private let labelStackView: UIStackView = UIStackView().then {
+        $0.alignment = .fill
+        $0.distribution = .fill
+        $0.axis = .horizontal
+        $0.layoutMargins = UIEdgeInsets(top: 0, left: 5, bottom: 0, right: 5)
+        $0.isLayoutMarginsRelativeArrangement = true
+    }
+    
+    private let wrapperView: UIStackView = UIStackView().then {
+        $0.axis = .vertical
+        $0.spacing = 10
     }
     
     override init(frame: CGRect) {
@@ -69,41 +88,72 @@ final class InputView : UIView {
         self.placeholder = placeholder
         self.textField.isSecureTextEntry = passwordable
         self.regSetting = regSetting
-        self.leftLabel.textColor = colorSetting.textColor
-        self.textField.backgroundColor = colorSetting.bgColor
         
         rightLabelString
             .bind(to: rightLabel.rx.text)
             .disposed(by: disposeBag)
         
-
+        
         textField
             .rx
             .controlEvent(.editingDidEnd)
             .withLatestFrom(textField.rx.text.orEmpty)
-            .map { [weak self] text -> String in
+            .filter({ [weak self] text in
                 guard let rules = self?.regSetting?.rules else {
-                    return ""
+                    return false
                 }
-
+                
+                var isValid = true
+                
                 for rule in rules {
                     if !rule.check(text) {
-                        return rule.errorMessage
+                        self?.rightLabelString.accept(rule.errorMessage)
+                        isValid = false
+                        break
                     }
                 }
-
-                return ""
-            }
-            .bind(to: rightLabelString)
+                
+                if isValid {
+                    self?.rightLabelString.accept("") // 에러 메시지를 초기화
+                }
+                
+                return isValid
+            })
+            .bind(to: userInput)
             .disposed(by: disposeBag)
-
         
-        //MARK: - UI 설정
-        let stackView = buildStackView()
-        self.addSubview(stackView)
-        stackView.snp.makeConstraints { make in
-            make.edges.equalToSuperview()
-        }
+        textField
+            .rx
+            .text
+            .orEmpty
+            .bind(to: userInput)
+            .disposed(by: disposeBag)
+        
+        rightLabelString
+            .observe(on: MainScheduler.instance)
+            .subscribe(onNext: { [weak self] text in
+                if !text.isEmpty {
+                    self?.textFieldBackground.layer.borderColor = UIColor.systemRed.cgColor
+                    self?.textFieldBackground.layer.borderWidth = 1
+
+                    self?.textField.tintColor = .systemRed
+                    self?.textField.textColor = .systemRed
+                    
+                    self?.leftLabel.textColor = .systemRed
+                } else {
+                    self?.textFieldBackground.backgroundColor = colorSetting.bgColor
+                    self?.textFieldBackground.layer.borderWidth = 0
+                    
+                    self?.leftLabel.textColor = colorSetting.textColor
+                    
+                    self?.textField.tintColor = .black
+                    self?.textField.textColor = .black
+                }
+            })
+            .disposed(by: disposeBag)
+        
+        setupView()
+        setupConstraints()
     }
     
     required init?(coder: NSCoder) {
@@ -113,42 +163,43 @@ final class InputView : UIView {
         super.init(coder: coder)
     }
     
-    func buildStackView() -> UIStackView {
+    private func setupView() {
+        self.addSubview(wrapperView)
         
+        labelStackView.addArrangedSubview(leftLabel)
+        labelStackView.addArrangedSubview(rightLabel)
         
-        let textFieldBackground = UIView().then {
-            $0.addSubview(self.textField)
-            $0.backgroundColor = .systemGray6
-            $0.layer.cornerRadius = 10
+        textFieldBackground.addSubview(textField)
+        
+        wrapperView.addArrangedSubview(labelStackView)
+        wrapperView.addArrangedSubview(textFieldBackground)
+    }
+    
+    private func setupConstraints() {
+        wrapperView.snp.makeConstraints { make in
+            make.edges.equalToSuperview()
         }
-        
-        lazy var labelStackView = UIStackView().then {
-            $0.alignment = .fill
-            $0.distribution = .fill
-            $0.axis = .horizontal
-            $0.layoutMargins = UIEdgeInsets(top: 0, left: 5, bottom: 0, right: 5)
-            $0.isLayoutMarginsRelativeArrangement = true
 
-            $0.addArrangedSubview(leftLabel)
-            $0.addArrangedSubview(rightLabel)
+        labelStackView.snp.makeConstraints { make in
+            make.top.equalToSuperview()
+            make.left.equalToSuperview()
+            make.right.equalToSuperview()
         }
         
-        let wapperView = UIStackView().then {
-            $0.axis = .vertical
-            $0.spacing = 10
-            $0.addArrangedSubview(labelStackView)
-            $0.addArrangedSubview(textFieldBackground)
+        textFieldBackground.snp.makeConstraints { make in
+            make.top.equalTo(labelStackView.snp.bottom).offset(10)
+            make.left.equalToSuperview()
+            make.right.equalToSuperview()
+            make.bottom.equalToSuperview()
         }
         
-        textField.snp.makeConstraints {
-            $0.edges.equalToSuperview().inset(UIEdgeInsets(top: 0, left: 10, bottom: 0, right: 10))
+        textField.snp.makeConstraints { make in
+            make.edges.equalToSuperview().inset(UIEdgeInsets(top: 0, left: 10, bottom: 0, right: 10))
         }
-        
+
         textFieldBackground.snp.makeConstraints {
             $0.height.equalTo(50)
         }
-        
-        return wapperView
     }
     /**
      * - Description 키보드 hidden 메서드
