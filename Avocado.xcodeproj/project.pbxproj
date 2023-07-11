@@ -40,6 +40,9 @@
 		9816F6F42A494B5400A7A284 /* APIRequestInterceptor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9816F6F32A494B5400A7A284 /* APIRequestInterceptor.swift */; };
 		981A598A2A494F5C0031A917 /* SignUpVM.swift in Sources */ = {isa = PBXBuildFile; fileRef = 981A59892A494F5B0031A917 /* SignUpVM.swift */; };
 		981A598D2A494FAE0031A917 /* AuthService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 981A598C2A494FAE0031A917 /* AuthService.swift */; };
+		9848A8B12A5D848D008D43F5 /* SplashVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9848A8B02A5D848D008D43F5 /* SplashVC.swift */; };
+		9848A8B32A5D853B008D43F5 /* UIColor+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9848A8B22A5D853B008D43F5 /* UIColor+Extension.swift */; };
+		9848A8B82A5D870A008D43F5 /* SplashVM.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9848A8B72A5D870A008D43F5 /* SplashVM.swift */; };
 		98AD10FF2A4BF2E7001C4734 /* AuthAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98AD10FE2A4BF2E7001C4734 /* AuthAPI.swift */; };
 		98AD11012A4BF713001C4734 /* UserM.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98AD11002A4BF713001C4734 /* UserM.swift */; };
 		98AD11032A4BF8B4001C4734 /* RegionsM.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98AD11022A4BF8B4001C4734 /* RegionsM.swift */; };
@@ -133,6 +136,9 @@
 		9816F6F32A494B5400A7A284 /* APIRequestInterceptor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIRequestInterceptor.swift; sourceTree = "<group>"; };
 		981A59892A494F5B0031A917 /* SignUpVM.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpVM.swift; sourceTree = "<group>"; };
 		981A598C2A494FAE0031A917 /* AuthService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthService.swift; sourceTree = "<group>"; };
+		9848A8B02A5D848D008D43F5 /* SplashVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SplashVC.swift; sourceTree = "<group>"; };
+		9848A8B22A5D853B008D43F5 /* UIColor+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIColor+Extension.swift"; sourceTree = "<group>"; };
+		9848A8B72A5D870A008D43F5 /* SplashVM.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SplashVM.swift; sourceTree = "<group>"; };
 		98AD10FE2A4BF2E7001C4734 /* AuthAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthAPI.swift; sourceTree = "<group>"; };
 		98AD11002A4BF713001C4734 /* UserM.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserM.swift; sourceTree = "<group>"; };
 		98AD11022A4BF8B4001C4734 /* RegionsM.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegionsM.swift; sourceTree = "<group>"; };
@@ -345,6 +351,31 @@
 			path = Service;
 			sourceTree = "<group>";
 		};
+		9848A8B42A5D86E0008D43F5 /* Splash */ = {
+			isa = PBXGroup;
+			children = (
+				9848A8B62A5D86F4008D43F5 /* ViewModel */,
+				9848A8B52A5D86ED008D43F5 /* ViewController */,
+			);
+			path = Splash;
+			sourceTree = "<group>";
+		};
+		9848A8B52A5D86ED008D43F5 /* ViewController */ = {
+			isa = PBXGroup;
+			children = (
+				9848A8B02A5D848D008D43F5 /* SplashVC.swift */,
+			);
+			path = ViewController;
+			sourceTree = "<group>";
+		};
+		9848A8B62A5D86F4008D43F5 /* ViewModel */ = {
+			isa = PBXGroup;
+			children = (
+				9848A8B72A5D870A008D43F5 /* SplashVM.swift */,
+			);
+			path = ViewModel;
+			sourceTree = "<group>";
+		};
 		98B980F82A5BD7EC00982D3A /* ViewModel */ = {
 			isa = PBXGroup;
 			children = (
@@ -386,6 +417,7 @@
 			children = (
 				B1A301A42A5439E7003834E6 /* UIView+Extension.swift */,
 				B1A301A52A5439E7003834E6 /* UIViewController+Extension.swift */,
+				9848A8B22A5D853B008D43F5 /* UIColor+Extension.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -475,6 +507,7 @@
 				B2198B992A2A36EA0019032D /* SceneDelegate.swift */,
 				04BA131F2A2AD9FB0004E2FB /* Main */,
 				98FD1C212A56AD0F0031D7C1 /* Setting */,
+				9848A8B42A5D86E0008D43F5 /* Splash */,
 				9816F6D32A4948BE00A7A284 /* Network */,
 				B1A301C32A543A7C003834E6 /* Common */,
 				04D2FCF52A2A515500253028 /* SupportingFiles */,
@@ -693,6 +726,7 @@
 				B29D78912A2B6FB1008B6945 /* SearchVC.swift in Sources */,
 				B2D1309E2A4B4C5800538EFB /* BottomButton.swift in Sources */,
 				B1A301BF2A543A2F003834E6 /* BaseNavigationVC.swift in Sources */,
+				9848A8B82A5D870A008D43F5 /* SplashVM.swift in Sources */,
 				04C835F12A2B2CFA00731E3E /* MainDataM.swift in Sources */,
 				B212D5872A45E8F40008DAD1 /* LoginVC.swift in Sources */,
 				B1A301AF2A5439F0003834E6 /* CollectionView+Protocol.swift in Sources */,
@@ -712,6 +746,7 @@
 				B18DFEDF2A51B53B00CF27FE /* EmailCheckVM.swift in Sources */,
 				B2198B982A2A36EA0019032D /* AppDelegate.swift in Sources */,
 				B1A301AA2A5439EC003834E6 /* Logger.swift in Sources */,
+				9848A8B12A5D848D008D43F5 /* SplashVC.swift in Sources */,
 				B1A301C62A543B15003834E6 /* UIButton+Animation.swift in Sources */,
 				04BD03F72A2B058500330D8A /* MainCategoryCC.swift in Sources */,
 				9816F6F42A494B5400A7A284 /* APIRequestInterceptor.swift in Sources */,
@@ -730,6 +765,7 @@
 				98AD10FF2A4BF2E7001C4734 /* AuthAPI.swift in Sources */,
 				98AD11032A4BF8B4001C4734 /* RegionsM.swift in Sources */,
 				B2E186CE2A474B4C00ABE98F /* SignupVC.swift in Sources */,
+				9848A8B32A5D853B008D43F5 /* UIColor+Extension.swift in Sources */,
 				B1BFDD672A49CF8100DB4955 /* LoginVM.swift in Sources */,
 				B1B1EA162A599904007B1894 /* SettingSectionModel.swift in Sources */,
 				9816F6EB2A494AF400A7A284 /* DTOResponseable.swift in Sources */,

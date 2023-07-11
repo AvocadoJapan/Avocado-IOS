@@ -22,29 +22,10 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         
         let authService = AuthService()
         // 로그인 여부 판단하여 로그인 활상화 되어있는 유저일 경우 메인화면으로 보냄 {아닐 경우 로그인화면으로 전송}
-        authService.checkLoginSession()
-            .observe(on: MainScheduler.instance)
-            .subscribe(onNext: { [weak self] isLogin in
-                if (isLogin) {
-                    let mainViewModel = MainVM()
-                    let mainVC = MainVC(vm: mainViewModel)
-                    
-//                    let regionSettingVC = RegionSettingVC(vm: RegionSettingVM(service: authService))
-//                    let settingVC = SettingVC(vm: SettingVM(service: SettingService()))
-                    
-                    self?.window?.rootViewController = mainVC
-                    self?.window?.makeKeyAndVisible()
-                }
-                else {
-                    let signUpViewModel = WelcomeVM(service: authService)
-                    let signUpVC = WelcomeVC(vm: signUpViewModel)
-                    let baseNavigationController = signUpVC.getBaseNavigationController()
-                    
-                    self?.window?.rootViewController = baseNavigationController
-                    self?.window?.makeKeyAndVisible()
-                }
-            })
-            .disposed(by: disposeBag)
+        let splashVM = SplashVM(service: authService)
+        let splashVC = SplashVC(vm: splashVM)
+        self.window?.rootViewController = splashVC
+        self.window?.makeKeyAndVisible()
     }
 
     func sceneDidDisconnect(_ scene: UIScene) {
