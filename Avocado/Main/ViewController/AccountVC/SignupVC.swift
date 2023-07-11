@@ -163,7 +163,8 @@ class SignupVC: BaseVC {
                                                     email: viewModel.emailObserver.value,
                                                     password: viewModel.passwordObserver.value)
                     let emailCheckVC = EmailCheckVC(vm: emailCheckVM)
-                    self.navigationController?.pushViewController(emailCheckVC, animated: true)
+                    let emailCheckNavigationVC = emailCheckVC.getBaseNavigationController()
+                    self.present(emailCheckNavigationVC, animated: true)
                 }
             })
             .disposed(by: disposeBag)
@@ -171,12 +172,14 @@ class SignupVC: BaseVC {
         confirmButton
             .rx
             .tap
-            .throttle(.seconds(3), latest: false, scheduler: MainScheduler.instance)
+            .asDriver()
+            .throttle(.seconds(3), latest: false)
             .do(onNext: { [weak self] in
-                self?.emailInput.resignFirstResponder()
-                self?.passwordInput.resignFirstResponder()
-                
-            }).subscribe { [weak self] _ in
+                self?.emailInput.keyboardHidden()
+                self?.passwordInput.keyboardHidden()
+                self?.passwordCheckInput.keyboardHidden()
+            })
+            .drive(onNext: { [weak self] _ in
                 self?.viewModel.signUp()
                 /*
                  Mocking
@@ -184,16 +187,14 @@ class SignupVC: BaseVC {
                  guard let self = self else { return }
                  let authService = AuthService()
                  let emailCheckVM = EmailCheckVM(service: authService,
-                 email: viewModel.emailObserver.value,
-                 password: viewModel.passwordObserver.value)
-                 let emailCheckVC = EmailCheckVC(vm: emailCheckVM)
-                 self.navigationController?.pushViewController(emailCheckVC, animated: true)
+                                                 email: viewModel.emailObserver.value,
+                                                 password: viewModel.passwordObserver.value)
+                 let emailCheckVC = EmailCheckVC(vm: emailCheckVM).getBaseNavigationController()
+                 self.navigationController?.showDetailViewController(emailCheckVC, sender: nil)
                  */
-                
-                
-            }
+            })
             .disposed(by: disposeBag)
-        
+                
         RxKeyboard.instance.visibleHeight
             .do(onNext: { [weak self] height in
                 self?.navigationController?.setNavigationBarHidden(height > 0, animated: true)

@@ -150,4 +150,10 @@ final class InputView : UIView {
         
         return wapperView
     }
+    /**
+     * - Description 키보드 hidden 메서드
+     */
+    public func keyboardHidden() {
+        textField.resignFirstResponder()
+    }
 }
