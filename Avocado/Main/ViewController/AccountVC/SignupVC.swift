@@ -39,8 +39,6 @@ class SignupVC: BaseVC {
     
     private let containerView = UIView()
     
-    private var disposeBag = DisposeBag()
-    
     private var viewModel: SignUpVM
     
     init(vm viewModel: SignUpVM) {
@@ -175,7 +173,7 @@ class SignupVC: BaseVC {
                                                     email: viewModel.emailObserver.value,
                                                     password: viewModel.passwordObserver.value)
                     let emailCheckVC = EmailCheckVC(vm: emailCheckVM)
-                    let emailCheckNavigationVC = emailCheckVC.getBaseNavigationController()
+                    let emailCheckNavigationVC = emailCheckVC.makeBaseNavigationController()
                     self.present(emailCheckNavigationVC, animated: true)
                 }
             })
@@ -201,7 +199,7 @@ class SignupVC: BaseVC {
                  let emailCheckVM = EmailCheckVM(service: authService,
                                                  email: viewModel.emailObserver.value,
                                                  password: viewModel.passwordObserver.value)
-                 let emailCheckVC = EmailCheckVC(vm: emailCheckVM).getBaseNavigationController()
+                 let emailCheckVC = EmailCheckVC(vm: emailCheckVM).makeBaseNavigationController()
                  self.navigationController?.showDetailViewController(emailCheckVC, sender: nil)
                  */
             })

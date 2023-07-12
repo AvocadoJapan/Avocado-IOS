@@ -31,7 +31,7 @@ extension UIViewController {
 #endif
 
 extension UIViewController {
-    func getBaseNavigationController() -> BaseNavigationVC {
+    func makeBaseNavigationController() -> BaseNavigationVC {
         return BaseNavigationVC(rootViewController: self)
     }
 }

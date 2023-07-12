@@ -50,8 +50,6 @@ final class PrivacyAccessVC: BaseVC {
     
     private lazy var confirmButton = BottomButton(text: "다음")
     
-    private var disposeBag = DisposeBag()
-    
     override func setProperty() {
         view.backgroundColor = .white
         self.navigationController?.isNavigationBarHidden = false

@@ -82,7 +82,6 @@ class WelcomeVC: BaseVC {
     
     private lazy var avocadoLogin = BottomButton(text: "이메일로 로그인")
     
-    private var disposeBag = DisposeBag()
     private let viewModel: WelcomeVM
     
     init(vm: WelcomeVM) {
@@ -204,13 +203,9 @@ class WelcomeVC: BaseVC {
         // 소셜 로그인 성공 여부
         viewModel.successEvent
             .asSignal()
-            .emit(onNext: { [weak self] _ in
-                let mainVM = MainVM()
-                let mainVC = MainVC(vm: mainVM)
-                let navigationController = mainVC.getBaseNavigationController()
-                
-                navigationController.modalPresentationStyle = .fullScreen
-                self?.present(navigationController, animated: false)
+            .emit(onNext: { _ in
+                let tabbarviewController = Util.makeTabBarViewController()
+                Util.changeRootViewController(to: tabbarviewController)
             })
             .disposed(by: disposeBag)
         

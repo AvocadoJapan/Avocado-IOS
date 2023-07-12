@@ -52,6 +52,7 @@
 		98FD1C282A56B3860031D7C1 /* SettingService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98FD1C272A56B3860031D7C1 /* SettingService.swift */; };
 		98FD1C2A2A56B3900031D7C1 /* SettingAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98FD1C292A56B3900031D7C1 /* SettingAPI.swift */; };
 		B18DFEDF2A51B53B00CF27FE /* EmailCheckVM.swift in Sources */ = {isa = PBXBuildFile; fileRef = B18DFEDE2A51B53B00CF27FE /* EmailCheckVM.swift */; };
+		B18F1A002A5ED730003440B6 /* Util.swift in Sources */ = {isa = PBXBuildFile; fileRef = B18F19FF2A5ED730003440B6 /* Util.swift */; };
 		B1A301972A5437DB003834E6 /* ProfileSettingVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1A301962A5437DB003834E6 /* ProfileSettingVC.swift */; };
 		B1A301A62A5439E7003834E6 /* UIViewController+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1A301A52A5439E7003834E6 /* UIViewController+Extension.swift */; };
 		B1A301A72A5439E7003834E6 /* UIView+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1A301A42A5439E7003834E6 /* UIView+Extension.swift */; };
@@ -147,6 +148,7 @@
 		98FD1C272A56B3860031D7C1 /* SettingService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingService.swift; sourceTree = "<group>"; };
 		98FD1C292A56B3900031D7C1 /* SettingAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingAPI.swift; sourceTree = "<group>"; };
 		B18DFEDE2A51B53B00CF27FE /* EmailCheckVM.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmailCheckVM.swift; sourceTree = "<group>"; };
+		B18F19FF2A5ED730003440B6 /* Util.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Util.swift; sourceTree = "<group>"; };
 		B1A301962A5437DB003834E6 /* ProfileSettingVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProfileSettingVC.swift; sourceTree = "<group>"; };
 		B1A301A42A5439E7003834E6 /* UIView+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView+Extension.swift"; sourceTree = "<group>"; };
 		B1A301A52A5439E7003834E6 /* UIViewController+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIViewController+Extension.swift"; sourceTree = "<group>"; };
@@ -451,6 +453,7 @@
 				B1A301A82A5439EC003834E6 /* KeychainUtil.swift */,
 				B1A301A92A5439EC003834E6 /* Logger.swift */,
 				B1A301AC2A5439F0003834E6 /* Variant.swift */,
+				B18F19FF2A5ED730003440B6 /* Util.swift */,
 			);
 			path = Common;
 			sourceTree = "<group>";
@@ -776,6 +779,7 @@
 				B293420E2A58579C00F5CF30 /* RegionTVCell.swift in Sources */,
 				B1A301A62A5439E7003834E6 /* UIViewController+Extension.swift in Sources */,
 				98AD11012A4BF713001C4734 /* UserM.swift in Sources */,
+				B18F1A002A5ED730003440B6 /* Util.swift in Sources */,
 				B1A301A72A5439E7003834E6 /* UIView+Extension.swift in Sources */,
 				B1A301AB2A5439EC003834E6 /* KeychainUtil.swift in Sources */,
 			);

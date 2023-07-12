@@ -15,7 +15,6 @@ import RxSwift
  final class MainVC: BaseVC {
     
     private var viewModel: MainVM
-    private let disposeBag = DisposeBag()
     
     private lazy var collectionView = UICollectionView(frame: .zero, collectionViewLayout: getCompositionalLayout()).then {
         $0.register(BannerCC.self, forCellWithReuseIdentifier: BannerCC.identifier)

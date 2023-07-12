@@ -5,7 +5,6 @@
 //  Created by NUNU:D on 2023/07/11.
 //
 
-import Foundation
 import RxSwift
 import RxRelay
 
@@ -22,7 +21,6 @@ final class SplashVM {
     
     func splashAvocado() {
         service.checkLoginSession()
-            .observe(on: MainScheduler.instance)
             .subscribe(onNext: { [weak self] isLogin in
                 guard let self = self else { return }
                 

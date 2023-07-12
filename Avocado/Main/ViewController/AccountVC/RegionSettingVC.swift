@@ -34,8 +34,6 @@ final class RegionSettingVC: BaseVC {
         $0.showsVerticalScrollIndicator = false
         $0.isMultipleTouchEnabled = false
     }
-
-    var disposeBag = DisposeBag()
     
     var viewModel: RegionSettingVM
     

@@ -58,7 +58,6 @@ final class ProfileSettingVC: BaseVC {
     
     private lazy var confirmButton = BottomButton(text: "확인")
     
-    var disposeBag = DisposeBag()
     var viewModel: ProfileSettingVM
     
     init(vm viewModel: ProfileSettingVM) {
@@ -151,11 +150,9 @@ final class ProfileSettingVC: BaseVC {
             .do(onNext: { [weak self] _ in
                 self?.confirmButton.isEnabled = true
             })
-            .emit(onNext: { [weak self] _ in
-                let mainVM = MainVM()
-                let mainVC = MainVC(vm: mainVM)
-                let navigationController = mainVC.getBaseNavigationController()
-                self?.present(navigationController, animated: false)
+            .emit(onNext: { _ in
+                let tabbarviewController = Util.makeTabBarViewController()
+                Util.changeRootViewController(to: tabbarviewController)
             })
             .disposed(by: disposeBag)
         

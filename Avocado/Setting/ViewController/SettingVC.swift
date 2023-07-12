@@ -18,7 +18,6 @@ final class SettingVC: BaseVC {
     }
     
     private let viewModel: SettingVM
-    private let disposeBag = DisposeBag()
     
     init(vm: SettingVM) {
         self.viewModel = vm
@@ -71,11 +70,10 @@ final class SettingVC: BaseVC {
             .successLogOutEvent
             .asSignal()
             .emit(onNext: { [weak self] _ in
-                self?.navigationController?.popViewController(animated: true)
                 let service = AuthService()
                 let welcomeVM = WelcomeVM(service: service)
                 let welcomeVC = WelcomeVC(vm: welcomeVM)
-                let baseNavigationController = welcomeVC.getBaseNavigationController()
+                let baseNavigationController = welcomeVC.makeBaseNavigationController()
                 baseNavigationController.modalPresentationStyle = .fullScreen
                 self?.present(baseNavigationController, animated: true)
             })
@@ -86,11 +84,10 @@ final class SettingVC: BaseVC {
             .successDeleteAccountEvent
             .asSignal()
             .emit(onNext: { [weak self] _ in
-                self?.navigationController?.popViewController(animated: true)
                 let service = AuthService()
                 let welcomeVM = WelcomeVM(service: service)
                 let welcomeVC = WelcomeVC(vm: welcomeVM)
-                let baseNavigationController = welcomeVC.getBaseNavigationController()
+                let baseNavigationController = welcomeVC.makeBaseNavigationController()
                 baseNavigationController.modalPresentationStyle = .fullScreen
                 self?.present(baseNavigationController, animated: true)
             })

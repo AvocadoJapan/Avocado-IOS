@@ -15,6 +15,9 @@ import Then
  - Description: 베이스 VC로, 뷰컨트롤러에 사용되는 기본적인 메서드를 담고 있음 (ex. bind, configure...)
  */
 class BaseVC: UIViewController {
+    
+    //MARK: - RX
+    let disposeBag = DisposeBag()
 
     //MARK: - ViewLifeCycle
     override func viewDidLoad() {
@@ -69,4 +72,8 @@ class BaseVC: UIViewController {
      ```
      */
     public func setConstraint() {}
+    
+    deinit {
+        Logger.trace(String(describing: self))
+    }
 }

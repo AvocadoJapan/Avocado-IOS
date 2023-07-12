@@ -52,7 +52,6 @@ class EmailCheckVC: BaseVC {
     
     private lazy var accountCenterButton : SubButton = SubButton(text: "계정 센터")
     
-    var disposeBag = DisposeBag()
     let viewModel: EmailCheckVM
     
     init(vm: EmailCheckVM) {
@@ -143,7 +142,7 @@ class EmailCheckVC: BaseVC {
                 let authService = AuthService()
                 let regionVM = RegionSettingVM(service: authService)
                 let regionVC = RegionSettingVC(vm: regionVM)
-                let navigaitonVC = regionVC.getBaseNavigationController()
+                let navigaitonVC = regionVC.makeBaseNavigationController()
                 
                 self?.present(navigaitonVC, animated: true)
             })
@@ -183,7 +182,7 @@ class EmailCheckVC: BaseVC {
                  let authService = AuthService()
                  let regionVM = RegionSettingVM(service: authService)
                  let regionVC = RegionSettingVC(vm: regionVM)
-                 let navigaitonVC = regionVC.getBaseNavigationController()
+                 let navigaitonVC = regionVC.makeBaseNavigationController()
                  self?.present(navigaitonVC, animated: true)
                  */
                 

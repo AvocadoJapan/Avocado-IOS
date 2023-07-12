@@ -46,7 +46,6 @@ class LoginVC: BaseVC {
     
     private let containerView = UIView()
     
-    var disposeBag = DisposeBag()
     var viewModel: LoginVM
     
     init(vm viewModel: LoginVM) {
@@ -172,11 +171,9 @@ class LoginVC: BaseVC {
         viewModel
             .successEvent
             .asSignal()
-            .emit(onNext: { [weak self] _ in
-                let mainVM = MainVM()
-                let mainVC = MainVC(vm: mainVM)
-                let navigationController = mainVC.getBaseNavigationController()
-                self?.present(navigationController, animated: false)
+            .emit(onNext: { _ in
+                let tabbarviewController = Util.makeTabBarViewController()
+                Util.changeRootViewController(to: tabbarviewController)
             })
             .disposed(by: disposeBag)
         

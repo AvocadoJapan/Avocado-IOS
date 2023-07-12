@@ -45,8 +45,8 @@ final class SettingVM {
     
     func userLogOut() {
         service.logout()
-            .subscribe(onNext: {
-                if $0 {
+            .subscribe(onNext: { isSuccess in
+                if isSuccess {
                     self.successLogOutEvent.accept(true)
                 }
             }, onError: { err in
@@ -57,8 +57,8 @@ final class SettingVM {
     
     func userDeleteAccount() {
         service.deleteAccount()
-            .subscribe(onNext: {
-                if $0 {
+            .subscribe(onNext: { isSuccess in
+                if isSuccess {
                     self.successDeleteAccountEvent.accept(true)
                 }
             }, onError: { err in

@@ -15,7 +15,6 @@ final class SplashVC: BaseVC {
     }
     
     let viewModel: SplashVM
-    let disposeBag = DisposeBag()
     
     init(vm: SplashVM) {
         viewModel = vm
@@ -26,8 +25,10 @@ final class SplashVC: BaseVC {
         fatalError("init(coder:) has not been implemented")
     }
     
-    override func viewDidLoad() {
-        super.viewDidLoad()
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        
+        // View가 화면에 보여 진 후 API 실행
         viewModel.splashAvocado()
     }
     
@@ -48,27 +49,26 @@ final class SplashVC: BaseVC {
     
     override func bindUI() {
         viewModel.successEvent
-            .subscribe(onNext: { [weak self] user in
-                let mainViewModel = MainVM()
-                let mainVC = MainVC(vm: mainViewModel)
-                let mainNavigationVC = mainVC.getBaseNavigationController()
-                
+            .observe(on: MainScheduler.instance)
+            .subscribe(onNext: { user in
+//                let mainViewModel = MainVM()
+//                let mainVC = MainVC(vm: mainViewModel)
 //                let regionSettingVC = RegionSettingVC(vm: RegionSettingVM(service: authService))
 //                let settingVC = SettingVC(vm: SettingVM(service: SettingService()))
-                mainNavigationVC.modalTransitionStyle = .crossDissolve
-                self?.present(mainNavigationVC, animated: false)
+                let tabbarviewController = Util.makeTabBarViewController()
+                Util.changeRootViewController(to: tabbarviewController)
             })
             .disposed(by: disposeBag)
         
         //FIXME: 에러 관련하여 좀더 자세하게 수정할 필요가 있음
         viewModel.errEvent
-            .subscribe(onNext: { [weak self] err in
+            .observe(on: MainScheduler.instance)
+            .subscribe(onNext: { _ in
                 let service = AuthService()
                 let signUpViewModel = WelcomeVM(service: service)
                 let signUpVC = WelcomeVC(vm: signUpViewModel)
-                let baseNavigationController = signUpVC.getBaseNavigationController()
-                baseNavigationController.modalTransitionStyle = .crossDissolve
-                self?.present(baseNavigationController, animated: true)
+                let baseNavigationController = signUpVC.makeBaseNavigationController()
+                Util.changeRootViewController(to: baseNavigationController)
             })
             .disposed(by: disposeBag)
     }
