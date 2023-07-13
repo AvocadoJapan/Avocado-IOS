@@ -84,6 +84,11 @@
 		B21E58F42A574A46007CCAA0 /* RegionSettingVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = B21E58F32A574A46007CCAA0 /* RegionSettingVC.swift */; };
 		B22222652A55F40100A2B7CB /* PrivacyAccessVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = B22222642A55F40100A2B7CB /* PrivacyAccessVC.swift */; };
 		B22222672A55F83300A2B7CB /* PrivacyElementView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B22222662A55F83300A2B7CB /* PrivacyElementView.swift */; };
+		B26A3B612A60A79800AD61A5 /* AuthFlow.swift in Sources */ = {isa = PBXBuildFile; fileRef = B26A3B602A60A79800AD61A5 /* AuthFlow.swift */; };
+		B26A3B642A60A7D600AD61A5 /* RxFlow in Frameworks */ = {isa = PBXBuildFile; productRef = B26A3B632A60A7D600AD61A5 /* RxFlow */; };
+		B26A3B662A60AB8400AD61A5 /* AuthStep.swift in Sources */ = {isa = PBXBuildFile; fileRef = B26A3B652A60AB8400AD61A5 /* AuthStep.swift */; };
+		B26A3B692A60BB5100AD61A5 /* SplashFlow.swift in Sources */ = {isa = PBXBuildFile; fileRef = B26A3B682A60BB5100AD61A5 /* SplashFlow.swift */; };
+		B26A3B6B2A60BB6100AD61A5 /* SplashStep.swift in Sources */ = {isa = PBXBuildFile; fileRef = B26A3B6A2A60BB6100AD61A5 /* SplashStep.swift */; };
 		B26F8A4D2A544AC300F4BEA3 /* ProfileSettingVM.swift in Sources */ = {isa = PBXBuildFile; fileRef = B26F8A4C2A544AC300F4BEA3 /* ProfileSettingVM.swift */; };
 		B293420E2A58579C00F5CF30 /* RegionTVCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B293420D2A58579C00F5CF30 /* RegionTVCell.swift */; };
 		B29342132A58810E00F5CF30 /* RegionSettingVM.swift in Sources */ = {isa = PBXBuildFile; fileRef = B29342122A58810E00F5CF30 /* RegionSettingVM.swift */; };
@@ -184,6 +189,10 @@
 		B21E58F32A574A46007CCAA0 /* RegionSettingVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegionSettingVC.swift; sourceTree = "<group>"; };
 		B22222642A55F40100A2B7CB /* PrivacyAccessVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PrivacyAccessVC.swift; sourceTree = "<group>"; };
 		B22222662A55F83300A2B7CB /* PrivacyElementView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PrivacyElementView.swift; sourceTree = "<group>"; };
+		B26A3B602A60A79800AD61A5 /* AuthFlow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthFlow.swift; sourceTree = "<group>"; };
+		B26A3B652A60AB8400AD61A5 /* AuthStep.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthStep.swift; sourceTree = "<group>"; };
+		B26A3B682A60BB5100AD61A5 /* SplashFlow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SplashFlow.swift; sourceTree = "<group>"; };
+		B26A3B6A2A60BB6100AD61A5 /* SplashStep.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SplashStep.swift; sourceTree = "<group>"; };
 		B26F8A4C2A544AC300F4BEA3 /* ProfileSettingVM.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileSettingVM.swift; sourceTree = "<group>"; };
 		B293420D2A58579C00F5CF30 /* RegionTVCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegionTVCell.swift; sourceTree = "<group>"; };
 		B29342122A58810E00F5CF30 /* RegionSettingVM.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegionSettingVM.swift; sourceTree = "<group>"; };
@@ -201,6 +210,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				B26A3B642A60A7D600AD61A5 /* RxFlow in Frameworks */,
 				04D2FD052A2A529600253028 /* Then in Frameworks */,
 				98C711082A53B48300C99393 /* RxKeyboard in Frameworks */,
 				9816F6E02A494A1B00A7A284 /* Amplify in Frameworks */,
@@ -329,6 +339,7 @@
 		9848A8B42A5D86E0008D43F5 /* Splash */ = {
 			isa = PBXGroup;
 			children = (
+				B26A3B672A60BB1900AD61A5 /* Flow */,
 				9848A8B62A5D86F4008D43F5 /* ViewModel */,
 				9848A8B52A5D86ED008D43F5 /* ViewController */,
 			);
@@ -402,6 +413,7 @@
 		B19E83252A6025A2004C5DE2 /* Auth */ = {
 			isa = PBXGroup;
 			children = (
+				B26A3B5F2A60A73C00AD61A5 /* Flow */,
 				B19E832A2A6025BA004C5DE2 /* Model */,
 				B19E83292A6025B6004C5DE2 /* ViewModel */,
 				B19E83282A6025B1004C5DE2 /* ViewController */,
@@ -630,6 +642,24 @@
 			path = AvocadoUITests;
 			sourceTree = "<group>";
 		};
+		B26A3B5F2A60A73C00AD61A5 /* Flow */ = {
+			isa = PBXGroup;
+			children = (
+				B26A3B652A60AB8400AD61A5 /* AuthStep.swift */,
+				B26A3B602A60A79800AD61A5 /* AuthFlow.swift */,
+			);
+			path = Flow;
+			sourceTree = "<group>";
+		};
+		B26A3B672A60BB1900AD61A5 /* Flow */ = {
+			isa = PBXGroup;
+			children = (
+				B26A3B6A2A60BB6100AD61A5 /* SplashStep.swift */,
+				B26A3B682A60BB5100AD61A5 /* SplashFlow.swift */,
+			);
+			path = Flow;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -658,6 +688,7 @@
 				9816F6DD2A494A1B00A7A284 /* AWSCognitoAuthPlugin */,
 				9816F6DF2A494A1B00A7A284 /* Amplify */,
 				98C711072A53B48300C99393 /* RxKeyboard */,
+				B26A3B632A60A7D600AD61A5 /* RxFlow */,
 			);
 			productName = Avocado;
 			productReference = B2198B942A2A36EA0019032D /* Avocado.app */;
@@ -740,6 +771,7 @@
 				9816F6D72A49495500A7A284 /* XCRemoteSwiftPackageReference "Moya" */,
 				9816F6DC2A494A1B00A7A284 /* XCRemoteSwiftPackageReference "amplify-swift" */,
 				98C711062A53B48300C99393 /* XCRemoteSwiftPackageReference "RxKeyboard" */,
+				B26A3B622A60A7D600AD61A5 /* XCRemoteSwiftPackageReference "RxFlow" */,
 			);
 			productRefGroup = B2198B952A2A36EA0019032D /* Products */;
 			projectDirPath = "";
@@ -788,6 +820,7 @@
 				B22222652A55F40100A2B7CB /* PrivacyAccessVC.swift in Sources */,
 				98FD1C232A56AD230031D7C1 /* SettingVC.swift in Sources */,
 				98FD1C252A56AE860031D7C1 /* SettingVM.swift in Sources */,
+				B26A3B6B2A60BB6100AD61A5 /* SplashStep.swift in Sources */,
 				981A598A2A494F5C0031A917 /* SignUpVM.swift in Sources */,
 				B26F8A4D2A544AC300F4BEA3 /* ProfileSettingVM.swift in Sources */,
 				B1D23D3F2A4C74F6006A2848 /* AvatarModel.swift in Sources */,
@@ -827,6 +860,7 @@
 				9816F6F42A494B5400A7A284 /* APIRequestInterceptor.swift in Sources */,
 				9816F6D62A49491E00A7A284 /* BaseTarget.swift in Sources */,
 				B1A301BC2A543A2F003834E6 /* BaseModalVC.swift in Sources */,
+				B26A3B612A60A79800AD61A5 /* AuthFlow.swift in Sources */,
 				B1A301AE2A5439F0003834E6 /* Variant.swift in Sources */,
 				9816F6F22A494B3C00A7A284 /* NetworkLoggerPlugin.swift in Sources */,
 				B2E2AC802A4772D3003DAE88 /* WelcomeVC.swift in Sources */,
@@ -835,9 +869,11 @@
 				04BA13262A2ADAEE0004E2FB /* MainVM.swift in Sources */,
 				B21E58F42A574A46007CCAA0 /* RegionSettingVC.swift in Sources */,
 				B29D78932A2B6FCF008B6945 /* SearchVM.swift in Sources */,
+				B26A3B692A60BB5100AD61A5 /* SplashFlow.swift in Sources */,
 				B2F3F47A2A4B6570007994DC /* EmailCheckVC.swift in Sources */,
 				B20AFE682A2BAE73004A646B /* SearchBarView.swift in Sources */,
 				98AD10FF2A4BF2E7001C4734 /* AuthAPI.swift in Sources */,
+				B26A3B662A60AB8400AD61A5 /* AuthStep.swift in Sources */,
 				98AD11032A4BF8B4001C4734 /* RegionsModel.swift in Sources */,
 				B2E186CE2A474B4C00ABE98F /* SignupVC.swift in Sources */,
 				9848A8B32A5D853B008D43F5 /* UIColor+Extension.swift in Sources */,
@@ -1266,6 +1302,14 @@
 				minimumVersion = 2.0.0;
 			};
 		};
+		B26A3B622A60A7D600AD61A5 /* XCRemoteSwiftPackageReference "RxFlow" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/RxSwiftCommunity/RxFlow.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 2.13.0;
+			};
+		};
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
@@ -1323,6 +1367,11 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 98C711062A53B48300C99393 /* XCRemoteSwiftPackageReference "RxKeyboard" */;
 			productName = RxKeyboard;
+		};
+		B26A3B632A60A7D600AD61A5 /* RxFlow */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = B26A3B622A60A7D600AD61A5 /* XCRemoteSwiftPackageReference "RxFlow" */;
+			productName = RxFlow;
 		};
 /* End XCSwiftPackageProductDependency section */
 
