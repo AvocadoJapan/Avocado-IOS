@@ -41,11 +41,13 @@ final class SplashVM {
                         .disposed(by: self.disposeBag)
                 }
                 else {
+                    // 로그인이 되어있지 않을때 이부분이 탐
                     self.errEvent.accept(NetworkError.unknown(-10, "사용자 로그인이 되지않음"))
+//                    self.errEvent.accept(NetworkError.unknown(-20, "성공적인 에러 테스트입니다."))
                 }
             }, onError: { err in
                 Logger.e(err.localizedDescription)
-                self.errEvent.accept(NetworkError.unknown(-10, err.localizedDescription))
+                self.errEvent.accept(NetworkError.unknown(-20, err.localizedDescription))
             })
             .disposed(by: disposeBag)
     }

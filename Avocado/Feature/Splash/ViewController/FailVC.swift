@@ -15,16 +15,27 @@ import RxRelay
 
 final class FailVC : BaseVC {
     
-    var errorText: String = "알수없는 오류 발생"
+    var errorText: String
     
     lazy var errorLabel = UILabel().then {
         $0.text = errorText
         $0.textAlignment = .center
         $0.textColor = .white
+        $0.numberOfLines = 0
+    }
+    
+    init(err: NetworkError = NetworkError.unknown(-500, "unknown error")) {
+        self.errorText = err.errorDescription ?? "unknown error"
+        super.init(nibName: nil, bundle: nil)
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
     }
     
     override func setProperty() {
         view.backgroundColor = UIColor(hexCode: "085E05")
+        self.navigationController?.isNavigationBarHidden = true
     }
     
     override func setLayout() {

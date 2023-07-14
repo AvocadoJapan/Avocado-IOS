@@ -112,6 +112,7 @@ final class SignupVC: BaseVC {
     
     override func bindUI() {
         
+        //MARK: - INPUT BINDING
         emailInput
             .userInput
             .subscribe(onNext: { [weak self] text in
@@ -139,6 +140,7 @@ final class SignupVC: BaseVC {
             })
             .disposed(by: disposeBag)
         
+        //MARK: - OUTPUT BINDING
         viewModel
             .isVaild
             .bind(to: confirmButton.rx.isEnabled)

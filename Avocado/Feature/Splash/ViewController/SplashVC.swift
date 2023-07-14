@@ -61,14 +61,41 @@ final class SplashVC: BaseVC {
             .disposed(by: disposeBag)
         
         //FIXME: 에러 관련하여 좀더 자세하게 수정할 필요가 있음
+//        viewModel.errEvent
+//            .observe(on: MainScheduler.instance)
+//            .subscribe(onNext: { _ in
+//                let service = AuthService()
+//                let signUpViewModel = WelcomeVM(service: service)
+//                let signUpVC = WelcomeVC(vm: signUpViewModel)
+//                let baseNavigationController = signUpVC.makeBaseNavigationController()
+//                Util.changeRootViewController(to: baseNavigationController)
+//            })
+//            .disposed(by: disposeBag)
+        
         viewModel.errEvent
             .observe(on: MainScheduler.instance)
-            .subscribe(onNext: { _ in
-                let service = AuthService()
-                let signUpViewModel = WelcomeVM(service: service)
-                let signUpVC = WelcomeVC(vm: signUpViewModel)
-                let baseNavigationController = signUpVC.makeBaseNavigationController()
-                Util.changeRootViewController(to: baseNavigationController)
+            .subscribe(onNext: { error in
+                switch error {
+                case .unknown(let code, _):
+                    if code == -20 {
+                        let failVC = FailVC(err: error.self)
+                        let baseNavigationController = failVC.makeBaseNavigationController()
+                        
+                        Util.changeRootViewController(to: baseNavigationController)
+                    } else {
+                        let service = AuthService()
+                        let signUpViewModel = WelcomeVM(service: service)
+                        let signUpVC = WelcomeVC(vm: signUpViewModel)
+                        let baseNavigationController = signUpVC.makeBaseNavigationController()
+                        Util.changeRootViewController(to: baseNavigationController)
+                    }
+                default:
+                    let service = AuthService()
+                    let signUpViewModel = WelcomeVM(service: service)
+                    let signUpVC = WelcomeVC(vm: signUpViewModel)
+                    let baseNavigationController = signUpVC.makeBaseNavigationController()
+                    Util.changeRootViewController(to: baseNavigationController)
+                }
             })
             .disposed(by: disposeBag)
     }

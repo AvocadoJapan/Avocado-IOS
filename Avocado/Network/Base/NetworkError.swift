@@ -43,7 +43,7 @@ extension NetworkError: LocalizedError {
             return "서버 오류 입니다"
             
         case .unknown(let code, let message):
-            return "오류 코드 : \(code)\n 오류 메시지 \(message)"
+            return "오류 코드 : \(code)\n 오류 메시지 : \(message)"
         }
     }
 }
