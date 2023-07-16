@@ -54,44 +54,7 @@ final class SettingVC: BaseVC {
     }
     
     override func bindUI() {
-        viewModel
-            .successEvent
-            .asSignal()
-            .emit(onNext: { [weak self] url in
-                guard let url = URL(string: url) else { return }
-                Logger.d(url)
-                let safariViewController = SFSafariViewController(url: url)
-                self?.present(safariViewController, animated: true)
-            })
-            .disposed(by: disposeBag)
-        
-        // 로그아웃
-        viewModel
-            .successLogOutEvent
-            .asSignal()
-            .emit(onNext: { [weak self] _ in
-                let service = AuthService()
-                let welcomeVM = WelcomeVM(service: service)
-                let welcomeVC = WelcomeVC(vm: welcomeVM)
-                let baseNavigationController = welcomeVC.makeBaseNavigationController()
-                baseNavigationController.modalPresentationStyle = .fullScreen
-                self?.present(baseNavigationController, animated: true)
-            })
-            .disposed(by: disposeBag)
-        
-        // 로그아웃
-        viewModel
-            .successDeleteAccountEvent
-            .asSignal()
-            .emit(onNext: { [weak self] _ in
-                let service = AuthService()
-                let welcomeVM = WelcomeVM(service: service)
-                let welcomeVC = WelcomeVC(vm: welcomeVM)
-                let baseNavigationController = welcomeVC.makeBaseNavigationController()
-                baseNavigationController.modalPresentationStyle = .fullScreen
-                self?.present(baseNavigationController, animated: true)
-            })
-            .disposed(by: disposeBag)
+        let output = viewModel.transform(input: viewModel.input)
         
         //tableview bind
         let dataSource = RxTableViewSectionedReloadDataSource<SettingDataSection> { dataSource, tableView, indexPath, item in
@@ -115,15 +78,15 @@ final class SettingVC: BaseVC {
             .subscribe(onNext: { [weak self] data in
                 switch data.type {
                 case .syncSocial(type: let type): // 소셜 연동하기
-                    self?.viewModel.socialSync(type: type)
-                    
+                    self?.viewModel.input.actionSocialSync.accept(type)
+
                 case .userLogOut: // 유저 로그아웃
-                    self?.viewModel.userLogOut()
-                    
+                    self?.viewModel.input.actionUserLogout.accept(())
+
                 case .deleteAccount: // 유저 계정 탈퇴
                     let alertController = UIAlertController(title: "", message: "'Avocado'를 탈퇴하시겠습니까?", preferredStyle: .alert)
                     alertController.addAction(UIAlertAction(title: "확인", style: .default, handler: { _ in
-                        self?.viewModel.userDeleteAccount()
+                        self?.viewModel.input.actionUserDeleteAccount.accept(())
                     }))
                     
                     alertController.addAction(UIAlertAction(title: "취소", style: .cancel))
@@ -134,14 +97,51 @@ final class SettingVC: BaseVC {
             })
             .disposed(by: disposeBag)
         
-        viewModel
-            .staticSettingData
+        // Output
+        output.staticSettingData
             .bind(to: tableView.rx.items(dataSource: dataSource))
+            .disposed(by: disposeBag)
+        
+        // 소셜 연동
+        output.successSocialSyncEvent
+            .asSignal()
+            .emit(onNext: { [weak self] url in
+                guard let url = URL(string: url) else { return }
+                Logger.d(url)
+                let safariViewController = SFSafariViewController(url: url)
+                self?.present(safariViewController, animated: true)
+            })
+            .disposed(by: disposeBag)
+        
+        // 로그아웃
+        output.successLogOutEvent
+            .asSignal()
+            .emit(onNext: { [weak self] _ in
+                let service = AuthService()
+                let welcomeVM = WelcomeVM(service: service)
+                let welcomeVC = WelcomeVC(vm: welcomeVM)
+                let baseNavigationController = welcomeVC.makeBaseNavigationController()
+                baseNavigationController.modalPresentationStyle = .fullScreen
+                self?.present(baseNavigationController, animated: true)
+            })
+            .disposed(by: disposeBag)
+        
+        // 계정 삭제
+        output.successDeleteAccountEvent
+            .asSignal()
+            .emit(onNext: { [weak self] _ in
+                let service = AuthService()
+                let welcomeVM = WelcomeVM(service: service)
+                let welcomeVC = WelcomeVC(vm: welcomeVM)
+                let baseNavigationController = welcomeVC.makeBaseNavigationController()
+                baseNavigationController.modalPresentationStyle = .fullScreen
+                self?.present(baseNavigationController, animated: true)
+            })
             .disposed(by: disposeBag)
     }
     
     private func setSearchController() {
-        let searchController = UISearchController(searchResultsController: self)
+        let searchController = UISearchController(searchResultsController: nil)
         searchController.searchBar.placeholder = "검색할 내용을 입력하세요"
         searchController.hidesNavigationBarDuringPresentation = false
         navigationItem.searchController = searchController

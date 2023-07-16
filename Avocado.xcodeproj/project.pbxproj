@@ -65,6 +65,7 @@
 		B1A301BE2A543A2F003834E6 /* Constant.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1A301BA2A543A2F003834E6 /* Constant.swift */; };
 		B1A301BF2A543A2F003834E6 /* BaseNavigationVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1A301BB2A543A2F003834E6 /* BaseNavigationVC.swift */; };
 		B1A301C62A543B15003834E6 /* UIButton+Animation.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1A301C52A543B15003834E6 /* UIButton+Animation.swift */; };
+		B1A705142A63C426005CD130 /* ViewModelType.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1A705132A63C426005CD130 /* ViewModelType.swift */; };
 		B1B1EA132A5973C7007B1894 /* SettingTVCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1B1EA122A5973C7007B1894 /* SettingTVCell.swift */; };
 		B1B1EA162A599904007B1894 /* SettingSectionModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1B1EA152A599904007B1894 /* SettingSectionModel.swift */; };
 		B1BFDD672A49CF8100DB4955 /* LoginVM.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1BFDD662A49CF8100DB4955 /* LoginVM.swift */; };
@@ -167,6 +168,7 @@
 		B1A301BA2A543A2F003834E6 /* Constant.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Constant.swift; sourceTree = "<group>"; };
 		B1A301BB2A543A2F003834E6 /* BaseNavigationVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BaseNavigationVC.swift; sourceTree = "<group>"; };
 		B1A301C52A543B15003834E6 /* UIButton+Animation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIButton+Animation.swift"; sourceTree = "<group>"; };
+		B1A705132A63C426005CD130 /* ViewModelType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewModelType.swift; sourceTree = "<group>"; };
 		B1B1EA122A5973C7007B1894 /* SettingTVCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingTVCell.swift; sourceTree = "<group>"; };
 		B1B1EA152A599904007B1894 /* SettingSectionModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingSectionModel.swift; sourceTree = "<group>"; };
 		B1BFDD662A49CF8100DB4955 /* LoginVM.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginVM.swift; sourceTree = "<group>"; };
@@ -549,6 +551,7 @@
 			isa = PBXGroup;
 			children = (
 				B1A301AD2A5439F0003834E6 /* CollectionView+Protocol.swift */,
+				B1A705132A63C426005CD130 /* ViewModelType.swift */,
 			);
 			path = Protocol;
 			sourceTree = "<group>";
@@ -835,6 +838,7 @@
 				981A598D2A494FAE0031A917 /* AuthService.swift in Sources */,
 				04C835FB2A2B5FCF00731E3E /* MainHeaderReusableView.swift in Sources */,
 				B29D78912A2B6FB1008B6945 /* SearchVC.swift in Sources */,
+				B1A705142A63C426005CD130 /* ViewModelType.swift in Sources */,
 				B2D1309E2A4B4C5800538EFB /* BottomButton.swift in Sources */,
 				B1A301BF2A543A2F003834E6 /* BaseNavigationVC.swift in Sources */,
 				9848A8B82A5D870A008D43F5 /* SplashVM.swift in Sources */,

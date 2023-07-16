@@ -628,9 +628,6 @@ final class AuthService: BaseAPIService<AuthAPI> {
         case .userNotConfirmed:
             return NetworkError.unknown(-1, "이메일 인증이 되지 않은 사용자입니다")
             
-        case .invalidParameter:
-            return NetworkError.invaildParameter
-            
         default:
             return NetworkError.unknown(-1, error.localizedDescription)
         }

@@ -36,9 +36,13 @@ final class SettingTVCell: UITableViewCell {
     }
     
     func setUpUI() {
+        setProperty()
         setLayout()
         setConstraint()
-        bindUI()
+    }
+    
+    func setProperty() {
+        selectionStyle = .none
     }
     
     func setLayout() {
@@ -63,10 +67,6 @@ final class SettingTVCell: UITableViewCell {
             make.top.bottom.equalToSuperview().inset(20)
             make.right.equalToSuperview().inset(10)
         }
-    }
-    
-    func bindUI() {
-        
     }
     
     private func setImageVisible(visible: Bool) {

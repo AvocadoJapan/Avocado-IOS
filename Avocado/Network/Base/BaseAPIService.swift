@@ -74,6 +74,7 @@ class BaseAPIService<Target: BaseTarget> {
                 let dtoList = $0.items.map { $0.toDTO() }
                 return BasePagenationResponse(nextToken: $0.nextToken, items: dtoList)
             }
+            .catch { throw self.networkErrorHandling(error: $0) }
     }
     
     /**
@@ -88,6 +89,7 @@ class BaseAPIService<Target: BaseTarget> {
             .timeout(.seconds(30), scheduler: MainScheduler.instance)
             .filterSuccessfulStatusCodes()
             .map(BasePagenationResponse<[D]>.self)
+            .catch { throw self.networkErrorHandling(error: $0) }
     }
     
     /**
@@ -102,25 +104,7 @@ class BaseAPIService<Target: BaseTarget> {
             .timeout(.seconds(30), scheduler: MainScheduler.instance)
             .filterSuccessfulStatusCodes()
             .map(D.self)
-            .catch { error in
-                guard let error = error as? MoyaError else {
-                    throw NetworkError.unknown(-1, error.localizedDescription)
-                }
-                
-                guard let response = error.response,
-                      let errDescription = error.errorDescription else {
-                    throw NetworkError.unknown(error.response?.statusCode ?? -1 , error.errorDescription ?? "예외")
-                }
-                
-                switch response.statusCode {
-                case 404:
-                    throw NetworkError.pageNotFound
-                case 500:
-                    throw NetworkError.serverError
-                default:
-                    throw NetworkError.unknown(response.statusCode, errDescription)
-                }
-            }
+            .catch { throw self.networkErrorHandling(error: $0) }
     }
     
     /**
@@ -138,14 +122,8 @@ class BaseAPIService<Target: BaseTarget> {
                     return .just(true)
                 }
                 
-                switch response.statusCode {
-                case 404:
-                    return .error(NetworkError.pageNotFound)
-                case 500:
-                    return .error(NetworkError.serverError)
-                default:
-                    return .error(NetworkError.unknown(response.statusCode, response.debugDescription))
-                }
+                return .error(self.restAPIErrorHandling(code: response.statusCode,
+                                                        message: response.description))
             }
     }
     /**
@@ -162,22 +140,42 @@ class BaseAPIService<Target: BaseTarget> {
             .filterSuccessfulStatusCodes()
             .map(D.self)
             .map { $0.toDTO() }
-            .catch { error in
-                guard let error = error as? MoyaError else {
-                    throw NetworkError.unknown(-1, error.localizedDescription)
-                }
-                
-                guard let response = error.response,
-                      let errDescription = error.errorDescription else {
-                    throw NetworkError.unknown(error.response?.statusCode ?? -1 , error.errorDescription ?? "예외")
-                }
-                
-                switch response.statusCode {
-                case 404:
-                    throw NetworkError.pageNotFound
-                default:
-                    throw NetworkError.unknown(response.statusCode, errDescription)
-                }
-            }
+            .catch { throw self.networkErrorHandling(error: $0) }
+    }
+    
+    /**
+     * - Description 에러 관련 하여 `NetworkError` Enum 컨버팅 함수
+     * - Returns NetworkError
+     */
+    private func networkErrorHandling(error: Error) -> NetworkError {
+        guard let moyaError = error as? MoyaError else {
+            return NetworkError.unknown(-1, error.localizedDescription)
+        }
+        
+        guard let response = moyaError.response,
+              let errDescription = moyaError.errorDescription else {
+            return NetworkError.invaildURL
+        }
+        
+        return restAPIErrorHandling(code: response.statusCode, message: errDescription)
+    }
+    
+    /**
+     * - Description REST API에서 발생된 statusCode를 가지고 `Network`Enum 컨버팅 함수
+     * - Returns NetworkError
+     */
+    private func restAPIErrorHandling(code: Int, message: String) -> NetworkError {
+        switch code {
+        case 401:
+            return NetworkError.tokenExpired
+        case 404:
+            return NetworkError.pageNotFound
+        case 409:
+            return NetworkError.serverConflict
+        case 500:
+            return NetworkError.serverError
+        default:
+            return NetworkError.unknown(code, message)
+        }
     }
 }

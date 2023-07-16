@@ -10,18 +10,10 @@ import RxSwift
 import RxRelay
 import Amplify
 
-protocol ViewModelType {
-    
-    associatedtype Input
-    associatedtype Output
-    
-    func transform(input: Input) -> Output
-}
-
 /// input : 입력
 /// output : 결과 화면에 보여주는 완성된 데이터
 /// 회원가입 뷰모델 = 연산 + 완성된 결과 보여줌
-final class SignUpVM : ViewModelType {
+final class SignUpVM {
  
     private let service: AuthService
     private let disposeBag = DisposeBag()
