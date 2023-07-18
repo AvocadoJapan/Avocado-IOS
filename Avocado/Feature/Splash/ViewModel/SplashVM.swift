@@ -27,8 +27,8 @@ final class SplashVM {
                 if isLogin {
                     return self.authService.getProfile()
                 } else {
-//                    return .error(NetworkError.unknown(-10, "사용자 로그인이 되지 않음"))
-                    return .error(NetworkError.unknown(-20, "성공적인 에러 테스트입니다."))
+                    return .error(NetworkError.unknown(-10, "사용자 로그인이 되지 않음"))
+//                    return .error(NetworkError.unknown(-20, "성공적인 에러 테스트입니다."))
                 }
             }
             .subscribe(onNext: { [weak self] user in
