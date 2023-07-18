@@ -30,7 +30,8 @@ final class LoginVC: BaseVC {
     private lazy var emailInput = InputView(label: "이메일",
                                             placeholder: "example@example.com",
                                             colorSetting: .normal,
-                                            regSetting: .email)
+                                            regSetting: .email,
+                                            keyboardType: .emailAddress)
     
     private lazy var passwordInput = InputView(label: "비밀번호",
                                                placeholder: "**********",

@@ -81,13 +81,15 @@ final class InputView: UIView {
                      bgColor : UIColor = .white,
                      colorSetting : ColorVariant = .normal,
                      regSetting: RegVarient? = nil,
-                     passwordable: Bool = false) {
+                     passwordable: Bool = false,
+                     keyboardType: UIKeyboardType = .default) {
         self.init(frame: .zero)
         
         self.labelString = label
         self.placeholder = placeholder
         self.textField.isSecureTextEntry = passwordable
         self.regSetting = regSetting
+        self.textField.keyboardType = keyboardType
         
         rightLabelString
             .bind(to: rightLabel.rx.text)

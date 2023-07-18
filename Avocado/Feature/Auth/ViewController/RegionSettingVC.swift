@@ -90,7 +90,7 @@ final class RegionSettingVC: BaseVC {
         confirmButton.snp.makeConstraints {
             $0.centerX.equalToSuperview()
             $0.bottom.equalTo(view.safeAreaLayoutGuide).inset(20)
-            $0.left.equalToSuperview().inset(20)
+            $0.leading.equalToSuperview().inset(20)
         }
     }
 

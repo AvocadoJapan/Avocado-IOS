@@ -22,7 +22,9 @@ final class EmailCheckVC: BaseVC {
         $0.font = UIFont.systemFont(ofSize: 25, weight: .heavy)
     }
     
-    private lazy var confirmCodeInput = InputView(label: "인증번호", colorSetting: .normal)
+    private lazy var confirmCodeInput = InputView(label: "인증번호",
+                                                  colorSetting: .normal,
+                                                  keyboardType: .numberPad)
     
     private lazy var confirmButton = BottomButton(text: "인증하기")
     
