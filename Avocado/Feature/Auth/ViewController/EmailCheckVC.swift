@@ -5,8 +5,6 @@
 //  Created by Jayden Jang on 2023/06/28.
 //
 
-import Foundation
-
 import UIKit
 import SnapKit
 import RxCocoa
@@ -45,17 +43,17 @@ final class EmailCheckVC: BaseVC {
     }
     
     // FIXME: 다시보내기 구현
-    private lazy var reqNewCodeButton : SubButton = SubButton(text: "인증번호 다시 보내기")
+    private lazy var reqNewCodeButton: SubButton = SubButton(text: "인증번호 다시 보내기")
     
     // FIXME: 이 버튼을 누를 경우 인증번호를 보낸 계정이 미인증 계정일때 그 미인증계정을 삭제해야함
-    private lazy var otherEmailButton : SubButton = SubButton(text: "다른 이메일로 인증하기")
+    private lazy var otherEmailButton: SubButton = SubButton(text: "다른 이메일로 인증하기")
     
-    private lazy var accountCenterButton : SubButton = SubButton(text: "계정 센터")
+    private lazy var accountCenterButton: SubButton = SubButton(text: "계정 센터")
     
     let viewModel: EmailCheckVM
     
-    init(vm: EmailCheckVM) {
-        self.viewModel = vm
+    init(viewModel: EmailCheckVM) {
+        self.viewModel = viewModel
         super.init(nibName: nil, bundle: nil)
     }
     
@@ -70,7 +68,7 @@ final class EmailCheckVC: BaseVC {
     }
     
     override func setLayout() {
-        [titleLabel,emailLabel, descriptionLabel, reqNewCodeButton, confirmCodeInput, otherEmailButton, accountCenterButton, confirmButton].forEach {
+        [titleLabel, emailLabel, descriptionLabel, reqNewCodeButton, confirmCodeInput, otherEmailButton, accountCenterButton, confirmButton].forEach {
             view.addSubview($0)
         }
     }
@@ -79,69 +77,69 @@ final class EmailCheckVC: BaseVC {
         titleLabel.snp.makeConstraints {
             $0.centerX.equalToSuperview()
             $0.top.equalTo(view.safeAreaLayoutGuide).offset(20)
-            $0.horizontalEdges.equalToSuperview().inset(30)
+            $0.leading.trailing.equalToSuperview().inset(30)
         }
         
         emailLabel.snp.makeConstraints {
             $0.centerX.equalToSuperview()
             $0.top.equalTo(titleLabel.snp.bottom).offset(20)
-            $0.horizontalEdges.equalToSuperview().inset(30)
+            $0.leading.trailing.equalToSuperview().inset(30)
         }
         
         descriptionLabel.snp.makeConstraints {
             $0.centerX.equalToSuperview()
             $0.top.equalTo(emailLabel.snp.bottom).offset(5)
-            $0.horizontalEdges.equalToSuperview().inset(30)
+            $0.leading.trailing.equalToSuperview().inset(30)
         }
 
         confirmCodeInput.snp.makeConstraints {
             $0.centerX.equalToSuperview()
             $0.top.equalTo(descriptionLabel.snp.bottom).offset(30)
-            $0.left.equalToSuperview().offset(20)
+            $0.leading.equalToSuperview().offset(20)
         }
         
         reqNewCodeButton.snp.makeConstraints {
-            $0.right.equalToSuperview().offset(-30)
+            $0.trailing.equalToSuperview().offset(-30)
             $0.top.equalTo(confirmCodeInput.snp.bottom).offset(20)
         }
         
         otherEmailButton.snp.makeConstraints {
-            $0.right.equalToSuperview().offset(-30)
+            $0.trailing.equalToSuperview().offset(-30)
             $0.top.equalTo(reqNewCodeButton.snp.bottom)
         }
         
         accountCenterButton.snp.makeConstraints {
-            $0.right.equalToSuperview().offset(-30)
+            $0.trailing.equalToSuperview().offset(-30)
             $0.top.equalTo(otherEmailButton.snp.bottom)
         }
 
         confirmButton.snp.makeConstraints {
             $0.centerX.equalToSuperview()
             $0.bottom.equalTo(view.safeAreaLayoutGuide).inset(20)
-            $0.left.equalToSuperview().inset(20)
+            $0.leading.equalToSuperview().inset(20)
         }
     }
     
     override func bindUI() {
-        viewModel.userEmail
+        viewModel.userEmailRelay
             .bind(to: emailLabel.rx.text)
             .disposed(by: disposeBag)
         
         confirmCodeInput
             .userInput
             .subscribe(onNext: { [weak self] text in
-                self?.viewModel.confirmCode.accept(text)
+                self?.viewModel.confirmCodeRelay.accept(text)
             })
             .disposed(by: disposeBag)
         
         // 이메일 인증
         viewModel
-            .successEmailCheckEvent
+            .successEmailCheckPublish
             .asSignal()
             .emit(onNext: { [weak self] isSuccess in
                 let authService = AuthService()
                 let regionVM = RegionSettingVM(service: authService)
-                let regionVC = RegionSettingVC(vm: regionVM)
+                let regionVC = RegionSettingVC(viewModel: regionVM)
                 let navigaitonVC = regionVC.makeBaseNavigationController()
                 
                 self?.present(navigaitonVC, animated: true)
@@ -150,7 +148,7 @@ final class EmailCheckVC: BaseVC {
         
         // 이메일 재 전송
         viewModel
-            .successEmailResendEvent
+            .successEmailResendPublish
             .asSignal()
             .emit(onNext: { [weak self] _ in
                 let alertController = UIAlertController(title: "", message: "인증번호를 다시 보냈습니다!", preferredStyle: .alert)
@@ -161,7 +159,7 @@ final class EmailCheckVC: BaseVC {
             .disposed(by: disposeBag)
         
         viewModel
-            .errEvent
+            .errEventPublish
             .asSignal()
             .emit(onNext: { [weak self] err in
                 let alertController = UIAlertController(title: "", message: err.errorDescription, preferredStyle: .alert)
@@ -227,7 +225,7 @@ import SwiftUI
 import RxSwift
 struct EmailCheckVCPreview: PreviewProvider {
     static var previews: some View {
-        return EmailCheckVC(vm: EmailCheckVM(service: AuthService(), email: "", password: "")).toPreview()
+        return EmailCheckVC(viewModel: EmailCheckVM(service: AuthService(), email: "", password: "")).toPreview()
     }
 }
 #endif

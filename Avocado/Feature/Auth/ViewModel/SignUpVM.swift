@@ -15,77 +15,41 @@ import Amplify
 /// 회원가입 뷰모델 = 연산 + 완성된 결과 보여줌
 final class SignUpVM {
  
-    private let service: AuthService
+    // 서비스를 제공하는 인스턴스
+    private let authService: AuthService
     private let disposeBag = DisposeBag()
     
+    // 사용자 입력에 따른 액션을 받는 인스턴스
     var inputActionPublishRelay = PublishRelay<InputAction>()
     
+    // 사용자 입력 액션을 나타내는 enum
     enum InputAction {
         case signUp(email: String, password: String)
         case signOut
     }
     
-    struct Input {
-//        public let emailObserver = BehaviorRelay<String>(value: "")
-//        public let passwordObserver = BehaviorRelay<String>(value: "")
-//        public let passwordCheckObserver = BehaviorRelay<String>(value: "")
-//        // action
-//        let signupActionPublisherRelay = PublishRelay<Void>()
-    }
+    struct Input { }
     
-    struct Output {
-//        public let errEvent = PublishRelay<String>()
-//        public let successEvent = PublishRelay<Bool>()
-//        public var isVaild: Observable<Bool> {
-//
-//            return Observable
-//                .combineLatest(emailObserver, passwordObserver, passwordCheckObserver)
-//                .map { (email, password, passwordCheck) in
-//                    return !email.isEmpty &&
-//                    !password.isEmpty &&
-//                    !passwordCheck.isEmpty &&
-//                    (password == passwordCheck)
-//                }
-//        }
-    }
-    
-    func transform(input: Input) -> Output {
-        
-        // 비즈니스 로직 행하기
-//        input.signupActionPublisherRelay
-//            .subscribe(onNext: {
-//                service.signUp(email: input.emailObserver.value, password: input.passwordObserver.value)
-//                    .subscribe {
-//                        UserDefaults.standard.setValue($0, forKey: CommonModel.UserDefault.Auth.signUpSuccess)
-//                        UserDefaults.standard.synchronize()
-//                        output.successEvent.accept($0)
-//                    } onError: { err in
-//                        guard let err = err as? AuthError else {
-//                            self.errEvent.accept(err.localizedDescription)
-//                            return
-//                        }
-//                        self.errEvent.accept(err.errorDescription)
-//                    }
-//                    .disposed(by: disposeBag)
-//            }).disposed(by: disposeBag)
-        return Output()
-    }
+    struct Output { }
     
     //MARK: - INPUT
-    public let emailObserver = BehaviorRelay<String>(value: "")
-
-    public let passwordObserver = BehaviorRelay<String>(value: "")
-
-    public let passwordCheckObserver = BehaviorRelay<String>(value: "")
-    /// ====
+    // 이메일을 입력받는 인스턴스
+    public let emailBehavior = BehaviorRelay<String>(value: "")
+    // 비밀번호를 입력받는 인스턴스
+    public let passwordBehavior = BehaviorRelay<String>(value: "")
+    // 비밀번호 확인을 입력받는 인스턴스
+    public let passwordCheckBehavior = BehaviorRelay<String>(value: "")
 
     //MARK: - OUTPUT
-    public let errEvent = PublishRelay<String>()
-    public let successEvent = PublishRelay<Bool>()
-    public var isVaild: Observable<Bool> {
+    // 에러 이벤트를 전달하는 인스턴스
+    public let errEventPublish = PublishRelay<String>()
+    // 회원가입 성공 이벤트를 전달하는 인스턴스
+    public let successEventPublish = PublishRelay<Bool>()
+    // 입력된 이메일, 비밀번호, 비밀번호 확인 값의 유효성을 확인하는 인스턴스
+    public var isValidObservable: Observable<Bool> {
 
         return Observable
-            .combineLatest(emailObserver, passwordObserver, passwordCheckObserver)
+            .combineLatest(emailBehavior, passwordBehavior, passwordCheckBehavior)
             .map { (email, password, passwordCheck) in
                 return !email.isEmpty &&
                 !password.isEmpty &&
@@ -94,35 +58,32 @@ final class SignUpVM {
             }
     }
     
+    // 회원가입 요청하는 함수
     public func signUp() {
-        service.signUp(email: emailObserver.value, password: passwordObserver.value)
+        authService.signUp(email: emailBehavior.value, password: passwordBehavior.value)
             .subscribe {
-                
                 UserDefaults.standard.setValue($0, forKey: CommonModel.UserDefault.Auth.signUpSuccess)
                 UserDefaults.standard.synchronize()
-                
-                self.successEvent.accept($0)
-                
+                self.successEventPublish.accept($0)
             } onError: { err in
                 guard let err = err as? AuthError else {
-                    self.errEvent.accept(err.localizedDescription)
+                    self.errEventPublish.accept(err.localizedDescription)
                     return
                 }
-                
-                self.errEvent.accept(err.errorDescription)
+                self.errEventPublish.accept(err.errorDescription)
             }
             .disposed(by: disposeBag)
     }
     
+    // 비밀번호와 비밀번호 확인 값이 일치하는지 검사하는 함수
     public func validatePasswordMatch() -> String {
-        
-        let password = self.passwordObserver.value
-        let passwordCheck = self.passwordCheckObserver.value
-        
+        let password = self.passwordBehavior.value
+        let passwordCheck = self.passwordCheckBehavior.value
         return password != passwordCheck ? "비밀번호가 일치하지 않습니다." : ""
     }
     
+    // 생성자
     init(service: AuthService) {
-        self.service = service
+        self.authService = service
     }
 }

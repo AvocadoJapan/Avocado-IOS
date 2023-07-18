@@ -13,86 +13,86 @@ import RxRelay
 
 final class EmailCheckVM {
     
-    let service: AuthService
+    let authService: AuthService
     let disposeBag = DisposeBag()
     
-    let successEmailCheckEvent = PublishRelay<Bool>()
-    let successEmailResendEvent = PublishRelay<Bool>()
-    let successEmailOtherEmailEvent = PublishRelay<Bool>()
-    let errEvent = PublishRelay<NetworkError>()
-    let confirmCode = BehaviorRelay<String>(value: "")
-    let userEmail = BehaviorRelay<String>(value: "")
-    let userPassword = BehaviorRelay<String>(value: "")
+    let successEmailCheckPublish = PublishRelay<Bool>()
+    let successEmailResendPublish = PublishRelay<Bool>()
+    let successEmailOtherEmailPublish = PublishRelay<Bool>()
+    let errEventPublish = PublishRelay<NetworkError>()
+    let confirmCodeRelay = BehaviorRelay<String>(value: "")
+    let userEmailRelay = BehaviorRelay<String>(value: "")
+    let userPasswordRelay = BehaviorRelay<String>(value: "")
     
     init(service: AuthService, email: String, password: String) {
-        self.service = service
-        self.userEmail.accept(email)
-        self.userPassword.accept(password)
+        self.authService = service
+        self.userEmailRelay.accept(email)
+        self.userPasswordRelay.accept(password)
     }
     
     /* 이메일 인증번호 재 전송*/
     func resendSignUpCode() {
-        service.resendSignUpCode(to: userEmail.value)
+        authService.resendSignUpCode(to: userEmailRelay.value)
             .subscribe {
-                self.successEmailResendEvent.accept($0)
+                self.successEmailResendPublish.accept($0)
             } onError: { err in
                 guard let authError = err as? AuthError else {
-                    self.errEvent.accept(NetworkError.unknown(-1, err.localizedDescription))
+                    self.errEventPublish.accept(NetworkError.unknown(-1, err.localizedDescription))
                     return
                 }
                 
-                self.errEvent.accept(NetworkError.unknown(-1, authError.errorDescription))
+                self.errEventPublish.accept(NetworkError.unknown(-1, authError.errorDescription))
             }
             .disposed(by: disposeBag)
     }
     
     /* 이메일 인증번호 확인 */
     func confirmSignUpCode() {
-        service.confirmSignUp(for: userEmail.value, with: confirmCode.value)
+        authService.confirmSignUp(for: userEmailRelay.value, with: confirmCodeRelay.value)
             .subscribe { isSuccess in
                 guard isSuccess else {
-                    self.errEvent.accept(NetworkError.unknown(-1, "인증번호 실패"))
+                    self.errEventPublish.accept(NetworkError.unknown(-1, "인증번호 실패"))
                     return
                 }
                 
                 // 인증번호가 정상 인경우, 코그니토 로그인 로직 실행
-                self.service.login(email: self.userEmail.value, password: self.userPassword.value)
+                self.authService.login(email: self.userEmailRelay.value, password: self.userPasswordRelay.value)
                     .subscribe(onNext: { isSuccess in
                         if isSuccess {
-                            self.successEmailCheckEvent.accept(true)
+                            self.successEmailCheckPublish.accept(true)
                         }
                         else {
-                            self.errEvent.accept(NetworkError.unknown(-1, "로그인에 실패하였습니다"))
+                            self.errEventPublish.accept(NetworkError.unknown(-1, "로그인에 실패하였습니다"))
                         }
                         
                     }) { err in
-                        self.errEvent.accept(NetworkError.unknown(-1, err.localizedDescription))
+                        self.errEventPublish.accept(NetworkError.unknown(-1, err.localizedDescription))
                     }
                     .disposed(by: self.disposeBag)
                 
             } onError: { err in
                 guard let authError = err as? AuthError else {
-                    self.errEvent.accept(NetworkError.unknown(-1, err.localizedDescription))
+                    self.errEventPublish.accept(NetworkError.unknown(-1, err.localizedDescription))
                     return
                 }
                 
-                self.errEvent.accept(NetworkError.unknown(-1, authError.errorDescription))
+                self.errEventPublish.accept(NetworkError.unknown(-1, authError.errorDescription))
             }
             .disposed(by: disposeBag)
     }
     
     /* 다른 이메일로 인증 */
     func otherEmailSignUp() {
-        service.deleteAccount()
+        authService.deleteAccount()
             .subscribe {
-                self.successEmailOtherEmailEvent.accept($0)
+                self.successEmailOtherEmailPublish.accept($0)
             } onError: { err in
                 guard let authError = err as? AuthError else {
-                    self.errEvent.accept(NetworkError.unknown(-1, err.localizedDescription))
+                    self.errEventPublish.accept(NetworkError.unknown(-1, err.localizedDescription))
                     return
                 }
                 
-                self.errEvent.accept(NetworkError.unknown(-1, authError.errorDescription))
+                self.errEventPublish.accept(NetworkError.unknown(-1, authError.errorDescription))
             }
             .disposed(by: disposeBag)
 

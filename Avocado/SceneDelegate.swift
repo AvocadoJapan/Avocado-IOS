@@ -22,7 +22,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         let authService = AuthService()
         // 로그인 여부 판단하여 로그인 활상화 되어있는 유저일 경우 메인화면으로 보냄 {아닐 경우 로그인화면으로 전송}
         let splashVM = SplashVM(service: authService)
-        let splashVC = SplashVC(vm: splashVM)
+        let splashVC = SplashVC(viewModel: splashVM)
         self.window?.rootViewController = splashVC
         self.window?.makeKeyAndVisible()
     }

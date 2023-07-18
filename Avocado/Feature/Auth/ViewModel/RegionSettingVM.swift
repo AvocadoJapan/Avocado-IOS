@@ -12,18 +12,18 @@ import RxRelay
 
 final class RegionSettingVM {
     
-    let service: AuthService
+    let authService: AuthService
     let disposeBag = DisposeBag()
-    var textOb = BehaviorRelay<String>(value: "")
-    let regionIdOb = BehaviorRelay<String>(value: "")
-    let regions = BehaviorRelay<[Region]>(value: [])
-    var isVaild: Observable<Bool> {
+    var searchTextRelay = BehaviorRelay<String>(value: "")
+    let regionIdRelay = BehaviorRelay<String>(value: "")
+    let regionsRelay = BehaviorRelay<[Region]>(value: [])
+    var isValid: Observable<Bool> {
         return Observable.create { [weak self] observer in
             guard let self = self else {
                 return Disposables.create()
             }
             
-            observer.onNext(self.regionIdOb.value.isEmpty)
+            observer.onNext(self.regionIdRelay.value.isEmpty)
             observer.onCompleted()
             
             return Disposables.create()
@@ -31,13 +31,13 @@ final class RegionSettingVM {
     }
     
     init(service: AuthService) {
-        self.service = service
+        self.authService = service
     }
     
     func fetchRegion() {
-        service.getRegions(keyword: textOb.value, depth: 3)
+        authService.getRegions(keyword: searchTextRelay.value, depth: 3)
             .subscribe { regions in
-                self.regions.accept(regions)
+                self.regionsRelay.accept(regions)
             } onError: { err in
                 
             }

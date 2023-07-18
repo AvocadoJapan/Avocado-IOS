@@ -41,7 +41,7 @@ final class SignupVC: BaseVC {
     
     private var viewModel: SignUpVM
     
-    init(vm viewModel: SignUpVM) {
+    init(viewModel: SignUpVM) {
         self.viewModel = viewModel
         super.init(nibName: nil, bundle: nil)
     }
@@ -80,33 +80,31 @@ final class SignupVC: BaseVC {
     override func setConstraint() {
         
         scrollView.snp.makeConstraints { make in
-            make.horizontalEdges.equalToSuperview()
-            make.top.equalToSuperview()
-            make.bottom.equalTo(confirmButton.snp.top)
+            make.edges.equalToSuperview()
         }
         
         containerView.snp.makeConstraints { make in
-            make.edges.equalTo(scrollView.contentLayoutGuide.snp.edges)
-            make.width.equalTo(scrollView.frameLayoutGuide.snp.width)
+            make.edges.equalToSuperview()
+            make.width.equalTo(scrollView.snp.width)
         }
         
         titleLabel.snp.makeConstraints {
             $0.centerX.equalToSuperview()
             $0.top.equalToSuperview().offset(20)
-            $0.horizontalEdges.equalToSuperview().inset(30)
+            $0.leading.trailing.equalToSuperview().inset(30)
         }
         
         inputField.snp.makeConstraints {
             $0.centerX.equalToSuperview()
             $0.top.equalTo(titleLabel.snp.bottom).offset(20)
-            $0.left.equalToSuperview().offset(20)
+            $0.leading.equalToSuperview().offset(20)
             $0.bottom.equalToSuperview().inset(20)
         }
         
         confirmButton.snp.makeConstraints {
             $0.centerX.equalToSuperview()
             $0.bottom.equalTo(view.safeAreaLayoutGuide).inset(20)
-            $0.left.equalToSuperview().offset(20)
+            $0.leading.equalToSuperview().offset(20)
         }
     }
     
@@ -116,14 +114,14 @@ final class SignupVC: BaseVC {
         emailInput
             .userInput
             .subscribe(onNext: { [weak self] text in
-                self?.viewModel.emailObserver.accept(text)
+                self?.viewModel.emailBehavior.accept(text)
             })
             .disposed(by: disposeBag)
         
         passwordInput
             .userInput
             .subscribe(onNext: { [weak self] text in
-                self?.viewModel.passwordObserver.accept(text)
+                self?.viewModel.passwordBehavior.accept(text)
                 
             })
             .disposed(by: disposeBag)
@@ -132,7 +130,7 @@ final class SignupVC: BaseVC {
             .userInput
             .subscribe(onNext: { [weak self] text in
                 guard let self = self else { return }
-                self.viewModel.passwordCheckObserver.accept(text)
+                self.viewModel.passwordCheckBehavior.accept(text)
                 
                 self.passwordCheckInput
                     .rightLabelString
@@ -142,18 +140,18 @@ final class SignupVC: BaseVC {
         
         //MARK: - OUTPUT BINDING
         viewModel
-            .isVaild
+            .isValidObservable
             .bind(to: confirmButton.rx.isEnabled)
             .disposed(by: disposeBag)
         
         viewModel
-            .isVaild
+            .isValidObservable
             .map { $0 ? .black : .lightGray}
             .bind(to: confirmButton.rx.backgroundColor)
             .disposed(by: disposeBag)
         
         viewModel
-            .errEvent
+            .errEventPublish
             .asSignal()
             .emit(onNext: { [weak self] message in
                 let alert = UIAlertController(title: "", message: message, preferredStyle: .alert)
@@ -164,7 +162,7 @@ final class SignupVC: BaseVC {
             .disposed(by: disposeBag)
         
         viewModel
-            .successEvent
+            .successEventPublish
             .asSignal()
             .emit(onNext: { [weak self] isSuccess in
                 guard let self = self else { return }
@@ -172,9 +170,9 @@ final class SignupVC: BaseVC {
                 if isSuccess {
                     let authService = AuthService()
                     let emailCheckVM = EmailCheckVM(service: authService,
-                                                    email: viewModel.emailObserver.value,
-                                                    password: viewModel.passwordObserver.value)
-                    let emailCheckVC = EmailCheckVC(vm: emailCheckVM)
+                                                    email: viewModel.emailBehavior.value,
+                                                    password: viewModel.passwordBehavior.value)
+                    let emailCheckVC = EmailCheckVC(viewModel: emailCheckVM)
                     let emailCheckNavigationVC = emailCheckVC.makeBaseNavigationController()
                     self.present(emailCheckNavigationVC, animated: true)
                 }
@@ -243,7 +241,7 @@ import SwiftUI
 import RxSwift
 struct SignupVCPreview: PreviewProvider {
     static var previews: some View {
-        return SignupVC(vm: SignUpVM(service: AuthService())).toPreview()
+        return SignupVC(viewModel: SignUpVM(service: AuthService())).toPreview()
     }
 }
 #endif

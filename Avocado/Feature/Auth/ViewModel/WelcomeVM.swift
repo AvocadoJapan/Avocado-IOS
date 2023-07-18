@@ -12,49 +12,47 @@ import Amplify
 import RxRelay
 
 final class WelcomeVM {
-    
-    let service: AuthService
+    // 서비스를 제공하는 인스턴스
+    let authService: AuthService
     let disposeBag = DisposeBag()
-    let successEvent = PublishRelay<User>()
-    let errEvent = PublishRelay<NetworkError>()
+    // 로그인 성공 이벤트를 전달하는 인스턴스
+    let successEventPublish = PublishRelay<User>()
+    // 에러 이벤트를 전달하는 인스턴스
+    let errEventPublish = PublishRelay<NetworkError>()
     
+    // 생성자
     init(service: AuthService) {
-        self.service = service
+        self.authService = service
     }
     
-    /* 애플 로그인 */
+    // 애플 로그인 함수
     func socialLoginWithApple(view: UIView) {
-        service.socialLogin(view: view, socialType: .apple)
+        authService.socialLogin(view: view, socialType: .apple)
             .subscribe { user in
-                self.successEvent.accept(user)
-                
+                self.successEventPublish.accept(user)
             } onError: { err in
-
                 guard let authError = err as? AuthError else {
                     Logger.e(err)
-                    self.errEvent.accept(err as! NetworkError)
+                    self.errEventPublish.accept(err as! NetworkError)
                     return
                 }
-                
-                self.errEvent.accept(NetworkError.unknown(-1, authError.errorDescription))
+                self.errEventPublish.accept(NetworkError.unknown(-1, authError.errorDescription))
             }
             .disposed(by: disposeBag)
     }
-    /* 구글 로그인 */
+    
+    // 구글 로그인 함수
     func socialLoginWithGoogle(view: UIView) {
-        service.socialLogin(view: view, socialType: .google)
+        authService.socialLogin(view: view, socialType: .google)
             .subscribe { user in
-                self.successEvent.accept(user)
+                self.successEventPublish.accept(user)
             } onError: { err in
-                
                 guard let authError = err as? AuthError else {
                     Logger.e(err)
-                    self.errEvent.accept(err as! NetworkError)
+                    self.errEventPublish.accept(err as! NetworkError)
                     return
                 }
-                
-                self.errEvent.accept(NetworkError.unknown(-1, authError.errorDescription))
-                
+                self.errEventPublish.accept(NetworkError.unknown(-1, authError.errorDescription))
             }
             .disposed(by: disposeBag)
     }

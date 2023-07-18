@@ -119,7 +119,7 @@ final class SettingVC: BaseVC {
             .emit(onNext: { [weak self] _ in
                 let service = AuthService()
                 let welcomeVM = WelcomeVM(service: service)
-                let welcomeVC = WelcomeVC(vm: welcomeVM)
+                let welcomeVC = WelcomeVC(viewModel: welcomeVM)
                 let baseNavigationController = welcomeVC.makeBaseNavigationController()
                 baseNavigationController.modalPresentationStyle = .fullScreen
                 self?.present(baseNavigationController, animated: true)
@@ -132,7 +132,7 @@ final class SettingVC: BaseVC {
             .emit(onNext: { [weak self] _ in
                 let service = AuthService()
                 let welcomeVM = WelcomeVM(service: service)
-                let welcomeVC = WelcomeVC(vm: welcomeVM)
+                let welcomeVC = WelcomeVC(viewModel: welcomeVM)
                 let baseNavigationController = welcomeVC.makeBaseNavigationController()
                 baseNavigationController.modalPresentationStyle = .fullScreen
                 self?.present(baseNavigationController, animated: true)

@@ -129,7 +129,7 @@ final class ProfileSettingVC: BaseVC {
         nameInput
             .userInput
             .subscribe { [weak self] text in
-                self?.viewModel.nickNameInput.accept(text)
+                self?.viewModel.nickNameInputRelay.accept(text)
             }
             .disposed(by: disposeBag)
         
@@ -145,7 +145,7 @@ final class ProfileSettingVC: BaseVC {
             })
             .disposed(by: disposeBag)
         
-        viewModel.successEvent
+        viewModel.successEventPublish
             .asSignal()
             .do(onNext: { [weak self] _ in
                 self?.confirmButton.isEnabled = true
@@ -156,13 +156,13 @@ final class ProfileSettingVC: BaseVC {
             })
             .disposed(by: disposeBag)
         
-        viewModel.errEvent
+        viewModel.errEventPublish
             .asSignal()
             .do(onNext: { [weak self] _ in
                 self?.confirmButton.isEnabled = true
             })
             .emit { [weak self] err in
-                let alert = UIAlertController(title: "", message: err.errorDescription ?? "오류", preferredStyle: .alert)
+                let alert = UIAlertController(title: "", message: err.errorDescription , preferredStyle: .alert)
                 alert.addAction(UIAlertAction(title: "확인", style: .default))
                 
                 self?.present(alert, animated: true)

@@ -22,7 +22,7 @@ final class LoginVC: BaseVC {
         $0.font = UIFont.systemFont(ofSize: 25, weight: .heavy)
     }
     
-    private lazy var inputField = UIStackView().then {
+    private lazy var inputFieldStackView = UIStackView().then {
         $0.axis = .vertical
         $0.spacing = 20
     }
@@ -48,7 +48,7 @@ final class LoginVC: BaseVC {
     
     var viewModel: LoginVM
     
-    init(vm viewModel: LoginVM) {
+    init(viewModel: LoginVM) {
         self.viewModel = viewModel
         super.init(nibName: nil, bundle: nil)
     }
@@ -74,12 +74,12 @@ final class LoginVC: BaseVC {
         
         scrollView.addSubview(containerView)
         
-        [titleLabel, inputField, accountCenterButton].forEach {
+        [titleLabel, inputFieldStackView, accountCenterButton].forEach {
             containerView.addSubview($0)
         }
         
         [emailInput, passwordInput].forEach {
-            inputField.addArrangedSubview($0)
+            inputFieldStackView.addArrangedSubview($0)
         }
         
     }
@@ -87,38 +87,36 @@ final class LoginVC: BaseVC {
     override func setConstraint() {
         
         scrollView.snp.makeConstraints { make in
-            make.horizontalEdges.equalToSuperview()
-            make.top.equalToSuperview()
-            make.bottom.equalTo(confirmButton.snp.top)
+            make.edges.equalToSuperview()
         }
 
         containerView.snp.makeConstraints { make in
-            make.edges.equalTo(scrollView.contentLayoutGuide.snp.edges)
-            make.width.equalTo(scrollView.frameLayoutGuide.snp.width)
+            make.edges.equalTo(scrollView)
+            make.width.equalTo(scrollView)
         }
         
         titleLabel.snp.makeConstraints {
             $0.centerX.equalToSuperview()
             $0.top.equalTo(view.safeAreaLayoutGuide).offset(10)
-            $0.horizontalEdges.equalToSuperview().inset(30)
+            $0.leading.trailing.equalToSuperview().inset(30)
         }
 
-        inputField.snp.makeConstraints {
+        inputFieldStackView.snp.makeConstraints {
             $0.centerX.equalToSuperview()
             $0.top.equalTo(titleLabel.snp.bottom).offset(20)
-            $0.left.equalToSuperview().offset(20)
+            $0.leading.equalToSuperview().offset(20)
         }
         
         accountCenterButton.snp.makeConstraints {
-            $0.top.equalTo(inputField.snp.bottom).offset(20)
-            $0.right.equalToSuperview().offset(-30)
+            $0.top.equalTo(inputFieldStackView.snp.bottom).offset(20)
+            $0.trailing.equalToSuperview().offset(-30)
             $0.bottom.equalToSuperview().inset(40)
         }
 
         confirmButton.snp.makeConstraints {
             $0.centerX.equalToSuperview()
             $0.bottom.equalTo(view.safeAreaLayoutGuide).inset(20)
-            $0.left.equalToSuperview().inset(20)
+            $0.leading.equalToSuperview().inset(20)
         }
 
     }
@@ -127,25 +125,25 @@ final class LoginVC: BaseVC {
         emailInput
             .userInput
             .subscribe(onNext: { [weak self] text in
-                self?.viewModel.emailObserver.accept(text)
+                self?.viewModel.emailBehavior.accept(text)
             })
             .disposed(by: disposeBag)
         
         passwordInput
             .userInput
             .subscribe(onNext: { [weak self] text in
-                self?.viewModel.passwordObserver.accept(text)
+                self?.viewModel.passwordBehavior.accept(text)
             })
             .disposed(by: disposeBag)
         
         viewModel
-            .isVaild
+            .isValidObservable
             .map { $0 ? .black : .lightGray}
             .bind(to: confirmButton.rx.backgroundColor)
             .disposed(by: disposeBag)
         
         viewModel
-            .isVaild
+            .isValidObservable
             .bind(to: confirmButton.rx.isEnabled)
             .disposed(by: disposeBag)
         
@@ -158,7 +156,7 @@ final class LoginVC: BaseVC {
             .disposed(by: disposeBag)
         
         viewModel
-            .errEvent
+            .errEventPublish
             .asSignal()
             .emit(onNext: { [weak self] message in
                 let alert = UIAlertController(title: "", message: message, preferredStyle: .alert)
@@ -169,11 +167,11 @@ final class LoginVC: BaseVC {
             .disposed(by: disposeBag)
         
         viewModel
-            .successEvent
+            .successEventPublish
             .asSignal()
             .emit(onNext: { _ in
-                let tabbarviewController = Util.makeTabBarViewController()
-                Util.changeRootViewController(to: tabbarviewController)
+                let tabbarViewController = Util.makeTabBarViewController()
+                Util.changeRootViewController(to: tabbarViewController)
             })
             .disposed(by: disposeBag)
         
@@ -197,7 +195,7 @@ final class LoginVC: BaseVC {
             .skip(1)
             .drive(onNext: { [weak self] height in
                 guard let self = self else { return }
-                self.confirmButton.keyboardMovement(from:self.view, height: height)
+                self.confirmButton.keyboardMovement(from: self.view, height: height)
             })
             .disposed(by: disposeBag)
     }
@@ -227,15 +225,13 @@ final class LoginVC: BaseVC {
     }
 }
 
-
 // MARK: - Preview 관련
 #if DEBUG && canImport(SwiftUI)
 import SwiftUI
 import RxSwift
 struct LoginVCPreview: PreviewProvider {
     static var previews: some View {
-        return LoginVC(vm: LoginVM(service: AuthService())).toPreview()
+        return LoginVC(viewModel: LoginVM(service: AuthService())).toPreview()
     }
 }
 #endif
-

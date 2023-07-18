@@ -1,3 +1,10 @@
+//
+//  RegionSettingVC.swift
+//  Avocado
+//
+//  Created by Jayden Jang on 2023/07/06.
+//
+
 import UIKit
 import SnapKit
 import RxSwift
@@ -37,7 +44,7 @@ final class RegionSettingVC: BaseVC {
     
     var viewModel: RegionSettingVM
     
-    init(vm viewModel: RegionSettingVM) {
+    init(viewModel: RegionSettingVM) {
         self.viewModel = viewModel
         super.init(nibName: nil, bundle: nil)
     }
@@ -65,15 +72,13 @@ final class RegionSettingVC: BaseVC {
 
     override func setConstraint() {
         tableView.snp.makeConstraints { make in
-            make.horizontalEdges.equalToSuperview().inset(20)
-            make.top.equalTo(searchBar.snp.bottom).offset(10)
-            make.bottom.equalTo(confirmButton.snp.top).offset(-10)
+            make.edges.equalToSuperview().inset(20)
         }
 
         titleLabel.snp.makeConstraints {
             $0.centerX.equalToSuperview()
             $0.top.equalTo(view.safeAreaLayoutGuide).offset(20)
-            $0.horizontalEdges.equalToSuperview().inset(30)
+            $0.leading.trailing.equalToSuperview().inset(30)
         }
 
         searchBar.snp.makeConstraints {
@@ -85,7 +90,7 @@ final class RegionSettingVC: BaseVC {
         confirmButton.snp.makeConstraints {
             $0.centerX.equalToSuperview()
             $0.bottom.equalTo(view.safeAreaLayoutGuide).inset(20)
-            $0.left.equalToSuperview().offset(20)
+            $0.left.equalToSuperview().inset(20)
         }
     }
 
@@ -99,10 +104,10 @@ final class RegionSettingVC: BaseVC {
             .do(onNext: { text in
                     print("Text changed to: \(text)")
                 })
-            .bind(to: viewModel.textOb)
+                .bind(to: viewModel.searchTextRelay)
             .disposed(by: disposeBag)
         
-        viewModel.regions
+        viewModel.regionsRelay
             .bind(to: tableView.rx.items(cellIdentifier: RegionTVCell.identifier, cellType: RegionTVCell.self)) { _, region, cell in
                 cell.configure(with: region)
             }
@@ -112,18 +117,18 @@ final class RegionSettingVC: BaseVC {
             .rx
             .modelSelected(Region.self)
             .subscribe(onNext: { [weak self] data in
-                self?.viewModel.regionIdOb.accept(data.id)
+                self?.viewModel.regionIdRelay.accept(data.id)
             })
             .disposed(by: disposeBag)
         
         viewModel
-            .regionIdOb
+            .regionIdRelay
             .map { $0.isEmpty ? .lightGray : .black }
             .bind(to: confirmButton.rx.backgroundColor)
             .disposed(by: disposeBag)
         
         viewModel
-            .regionIdOb
+            .regionIdRelay
             .map({ !$0.isEmpty })
             .bind(to: confirmButton.rx.isEnabled)
             .disposed(by: disposeBag)
@@ -134,7 +139,7 @@ final class RegionSettingVC: BaseVC {
             .asDriver()
             .drive(onNext: { [weak self] _ in
                 let authService = AuthService()
-                let profileVM = ProfileSettingVM(service: authService, regionid: self?.viewModel.regionIdOb.value ?? "")
+                let profileVM = ProfileSettingVM(service: authService, regionid: self?.viewModel.regionIdRelay.value ?? "")
                 let profileVC = ProfileSettingVC(vm: profileVM)
                 self?.navigationController?.pushViewController(profileVC, animated: true)
             })
@@ -178,8 +183,8 @@ final class RegionSettingVC: BaseVC {
                 
                 var address = ""
                 
-                if let adminstrativeArea = placemark.administrativeArea {
-                    address = "\(adminstrativeArea)"
+                if let administrativeArea = placemark.administrativeArea {
+                    address = "\(administrativeArea)"
                 }
                 
                 if let locality = placemark.locality {

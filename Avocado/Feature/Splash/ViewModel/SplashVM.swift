@@ -10,44 +10,35 @@ import RxRelay
 
 final class SplashVM {
     
-    let service: AuthService
+    let authService: AuthService
     let disposeBag = DisposeBag()
-    let successEvent = PublishRelay<User>()
-    let errEvent = PublishRelay<NetworkError>()
+    let successEventPublish = PublishRelay<User>()
+    let errEventPublish = PublishRelay<NetworkError>()
     
     init(service: AuthService) {
-        self.service = service
+        self.authService = service
     }
     
     func splashAvocado() {
-        service.checkLoginSession()
-            .subscribe(onNext: { [weak self] isLogin in
-                guard let self = self else { return }
+        authService.checkLoginSession()
+            .flatMap { [weak self] isLogin -> Observable<User> in
+                guard let self = self else { return .empty() }
                 
-                if (isLogin) {
-                    
-                    self.service.getProfile()
-                        .subscribe(onNext: { user in
-                            self.successEvent.accept(user)
-                        }, onError: { err in
-                            
-                            guard let err = err as? NetworkError else {
-                                self.errEvent.accept(NetworkError.unknown(-1, err.localizedDescription))
-                                return
-                            }
-                            
-                            self.errEvent.accept(err)
-                        })
-                        .disposed(by: self.disposeBag)
+                if isLogin {
+                    return self.authService.getProfile()
+                } else {
+//                    return .error(NetworkError.unknown(-10, "사용자 로그인이 되지 않음"))
+                    return .error(NetworkError.unknown(-20, "성공적인 에러 테스트입니다."))
                 }
-                else {
-                    // 로그인이 되어있지 않을때 이부분이 탐
-                    self.errEvent.accept(NetworkError.unknown(-10, "사용자 로그인이 되지않음"))
-//                    self.errEvent.accept(NetworkError.unknown(-20, "성공적인 에러 테스트입니다."))
+            }
+            .subscribe(onNext: { [weak self] user in
+                self?.successEventPublish.accept(user)
+            }, onError: { error in
+                if let networkError = error as? NetworkError {
+                    self.errEventPublish.accept(networkError)
+                } else {
+                    self.errEventPublish.accept(NetworkError.unknown(-1, error.localizedDescription))
                 }
-            }, onError: { err in
-                Logger.e(err.localizedDescription)
-                self.errEvent.accept(NetworkError.unknown(-20, err.localizedDescription))
             })
             .disposed(by: disposeBag)
     }

@@ -36,17 +36,17 @@ final class PrivacyAccessVC: BaseVC {
         $0.spacing = 20
     }
     
-    private let notification = PrivacyElementView(type: .notification, require: false)
+    private let notificationElement = PrivacyElementView(type: .notification, require: false)
     
-    private let location = PrivacyElementView(type: .location, require: false)
+    private let locationElement = PrivacyElementView(type: .location, require: false)
     
-    private let calendars = PrivacyElementView(type: .calendars, require: false)
+    private let calendarsElement = PrivacyElementView(type: .calendars, require: false)
     
-    private let microphone = PrivacyElementView(type: .microphone, require: false)
+    private let microphoneElement = PrivacyElementView(type: .microphone, require: false)
     
-    private let camera = PrivacyElementView(type: .camera, require: false)
+    private let cameraElement = PrivacyElementView(type: .camera, require: false)
     
-    private let photo = PrivacyElementView(type: .photos, require: false)
+    private let photoElement = PrivacyElementView(type: .photos, require: false)
     
     private lazy var confirmButton = BottomButton(text: "다음")
     
@@ -56,7 +56,7 @@ final class PrivacyAccessVC: BaseVC {
     }
     
     override func setLayout() {
-        [notification, location, calendars, microphone, camera, photo, location].forEach {
+        [notificationElement, locationElement, calendarsElement, microphoneElement, cameraElement, photoElement, locationElement].forEach {
             self.stackView.addArrangedSubview($0)
         }
         
@@ -70,25 +70,24 @@ final class PrivacyAccessVC: BaseVC {
         titleLabel.snp.makeConstraints {
             $0.centerX.equalToSuperview()
             $0.top.equalTo(view.safeAreaLayoutGuide).offset(20)
-            $0.horizontalEdges.equalToSuperview().offset(30)
+            $0.leading.trailing.equalToSuperview().inset(30)
         }
         
         confirmButton.snp.makeConstraints {
             $0.centerX.equalToSuperview()
             $0.bottom.equalTo(view.safeAreaLayoutGuide).inset(20)
-            $0.left.equalToSuperview().inset(20)
+            $0.leading.equalToSuperview().inset(20)
         }
         
         descriptionLabel.snp.makeConstraints {
             $0.centerX.equalToSuperview()
             $0.top.equalTo(titleLabel.snp.bottom).offset(20)
-            $0.horizontalEdges.equalToSuperview().offset(30)
+            $0.leading.trailing.equalToSuperview().inset(30)
         }
         
         stackView.snp.makeConstraints {
             $0.top.equalTo(descriptionLabel.snp.bottom).offset(20)
-            $0.left.equalToSuperview().offset(30)
-            $0.right.equalToSuperview().offset(-30)
+            $0.leading.trailing.equalToSuperview().inset(30)
         }
     }
     
@@ -107,4 +106,3 @@ struct PrivacyAccessVCPreview: PreviewProvider {
     }
 }
 #endif
-

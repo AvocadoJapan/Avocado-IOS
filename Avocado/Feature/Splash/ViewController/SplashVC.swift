@@ -16,8 +16,8 @@ final class SplashVC: BaseVC {
     
     let viewModel: SplashVM
     
-    init(vm: SplashVM) {
-        viewModel = vm
+    init(viewModel: SplashVM) {
+        self.viewModel = viewModel
         super.init(nibName: nil, bundle: nil)
     }
     
@@ -48,51 +48,34 @@ final class SplashVC: BaseVC {
     }
     
     override func bindUI() {
-        viewModel.successEvent
+        viewModel.successEventPublish
             .observe(on: MainScheduler.instance)
             .subscribe(onNext: { user in
-//                let mainViewModel = MainVM()
-//                let mainVC = MainVC(vm: mainViewModel)
-//                let regionSettingVC = RegionSettingVC(vm: RegionSettingVM(service: authService))
-//                let settingVC = SettingVC(vm: SettingVM(service: SettingService()))
-                let tabbarviewController = Util.makeTabBarViewController()
-                Util.changeRootViewController(to: tabbarviewController)
+                let tabbarViewController = Util.makeTabBarViewController()
+                Util.changeRootViewController(to: tabbarViewController)
             })
             .disposed(by: disposeBag)
         
-        //FIXME: 에러 관련하여 좀더 자세하게 수정할 필요가 있음
-//        viewModel.errEvent
-//            .observe(on: MainScheduler.instance)
-//            .subscribe(onNext: { _ in
-//                let service = AuthService()
-//                let signUpViewModel = WelcomeVM(service: service)
-//                let signUpVC = WelcomeVC(vm: signUpViewModel)
-//                let baseNavigationController = signUpVC.makeBaseNavigationController()
-//                Util.changeRootViewController(to: baseNavigationController)
-//            })
-//            .disposed(by: disposeBag)
-        
-        viewModel.errEvent
+        viewModel.errEventPublish
             .observe(on: MainScheduler.instance)
             .subscribe(onNext: { error in
                 switch error {
                 case .unknown(let code, _):
                     if code == -20 {
-                        let failVC = FailVC(err: error.self)
+                        let failVC = FailVC(error: error)
                         let baseNavigationController = failVC.makeBaseNavigationController()
-                        
                         Util.changeRootViewController(to: baseNavigationController)
                     } else {
                         let service = AuthService()
                         let signUpViewModel = WelcomeVM(service: service)
-                        let signUpVC = WelcomeVC(vm: signUpViewModel)
+                        let signUpVC = WelcomeVC(viewModel: signUpViewModel)
                         let baseNavigationController = signUpVC.makeBaseNavigationController()
                         Util.changeRootViewController(to: baseNavigationController)
                     }
                 default:
                     let service = AuthService()
                     let signUpViewModel = WelcomeVM(service: service)
-                    let signUpVC = WelcomeVC(vm: signUpViewModel)
+                    let signUpVC = WelcomeVC(viewModel: signUpViewModel)
                     let baseNavigationController = signUpVC.makeBaseNavigationController()
                     Util.changeRootViewController(to: baseNavigationController)
                 }
@@ -106,7 +89,7 @@ import SwiftUI
 import RxSwift
 struct SplashVCPreview: PreviewProvider {
     static var previews: some View {
-        return SplashVC(vm: SplashVM(service: AuthService())).toPreview().ignoresSafeArea()
+        return SplashVC(viewModel: SplashVM(service: AuthService())).toPreview().ignoresSafeArea()
     }
 }
 #endif

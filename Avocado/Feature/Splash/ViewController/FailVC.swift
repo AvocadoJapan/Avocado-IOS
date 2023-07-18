@@ -1,10 +1,3 @@
-//
-//  FailVC.swift
-//  Avocado
-//
-//  Created by Jayden Jang on 2023/07/14.
-//
-
 import Foundation
 import UIKit
 import Then
@@ -13,7 +6,7 @@ import RxFlow
 import RxCocoa
 import RxRelay
 
-final class FailVC : BaseVC {
+final class FailVC: BaseVC {
     
     var errorText: String
     
@@ -24,8 +17,8 @@ final class FailVC : BaseVC {
         $0.numberOfLines = 0
     }
     
-    init(err: NetworkError = NetworkError.unknown(-500, "unknown error")) {
-        self.errorText = err.errorDescription ?? "unknown error"
+    init(error: NetworkError = NetworkError.unknown(-500, "unknown error")) {
+        self.errorText = error.errorDescription 
         super.init(nibName: nil, bundle: nil)
     }
     

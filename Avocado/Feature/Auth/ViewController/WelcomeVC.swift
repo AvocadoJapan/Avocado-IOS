@@ -26,9 +26,7 @@ final class WelcomeVC: BaseVC {
         $0.font = UIFont.systemFont(ofSize: 25, weight: .heavy)
     }
     
-    
-    
-    private lazy var signupButton : SubButton = SubButton(text: "아직 계정이 없나요? 회원가입")
+    private lazy var signupButton: SubButton = SubButton(text: "아직 계정이 없나요? 회원가입")
     
     private lazy var agreementLabel = UILabel().then {
         $0.text = "로그인을 함으로써, 당사 약관 및 개인정보 정책에 동의한 것으로 간주합니다"
@@ -44,8 +42,6 @@ final class WelcomeVC: BaseVC {
         $0.distribution = .fillEqually
         $0.spacing = 10
     }
-
-
     
     private lazy var appleLogin = UIButton().then {
         $0.setTitle("Apple로 계속하기", for: .normal)
@@ -55,8 +51,8 @@ final class WelcomeVC: BaseVC {
         $0.layer.cornerRadius = 20
         $0.layer.borderWidth = 1
         
-        let googleLogo = UIImage(named: "btn_apple")
-        $0.setImage(googleLogo, for: .normal)
+        let appleLogo = UIImage(named: "btn_apple")
+        $0.setImage(appleLogo, for: .normal)
         $0.imageView?.contentMode = .scaleAspectFit
         
         $0.imageEdgeInsets = UIEdgeInsets(top: 12, left: -20, bottom: 12, right: 0)
@@ -78,14 +74,13 @@ final class WelcomeVC: BaseVC {
         $0.imageEdgeInsets = UIEdgeInsets(top: 12, left: -15, bottom: 12, right: 0)
         $0.titleEdgeInsets = UIEdgeInsets(top: 0, left: 15, bottom: 0, right: 0)
     }
-
     
     private lazy var avocadoLogin = BottomButton(text: "이메일로 로그인")
     
     private let viewModel: WelcomeVM
     
-    init(vm: WelcomeVM) {
-        self.viewModel = vm
+    init(viewModel: WelcomeVM) {
+        self.viewModel = viewModel
         super.init(nibName: nil, bundle: nil)
     }
     
@@ -106,7 +101,6 @@ final class WelcomeVC: BaseVC {
         [appleLogin, googleLogin, avocadoLogin].forEach {
             socialLoginButtonStackView.addArrangedSubview($0)
         }
-        
     }
     
     override func setConstraint() {
@@ -124,7 +118,7 @@ final class WelcomeVC: BaseVC {
         }
         
         signupButton.snp.makeConstraints {
-            $0.right.equalToSuperview().offset(-30)
+            $0.trailing.equalToSuperview().offset(-30)
             $0.bottom.equalTo(agreementLabel.snp.top).offset(-10)
         }
         
@@ -133,14 +127,13 @@ final class WelcomeVC: BaseVC {
             $0.bottom.equalTo(socialLoginButtonStackView.snp.top).offset(-20)
             $0.left.equalToSuperview().offset(30)
         }
-
+        
         socialLoginButtonStackView.snp.makeConstraints {
             $0.centerX.equalToSuperview()
             $0.bottom.equalTo(view.safeAreaLayoutGuide).inset(20)
             $0.left.equalToSuperview().offset(20)
             $0.height.equalTo(170)
         }
-
     }
     
     override func bindUI() {
@@ -178,7 +171,7 @@ final class WelcomeVC: BaseVC {
                 guard let self = self else { return }
                 let authService = AuthService()
                 let emailLoginVM = LoginVM(service: authService)
-                let emailLoginVC = LoginVC(vm: emailLoginVM)
+                let emailLoginVC = LoginVC(viewModel: emailLoginVM)
                 
                 self.navigationController?.pushViewController(emailLoginVC, animated: true)
             })
@@ -194,14 +187,14 @@ final class WelcomeVC: BaseVC {
                 guard let self = self else { return }
                 let authService = AuthService()
                 let signUpVM = SignUpVM(service: authService)
-                let signUpVC = SignupVC(vm: signUpVM)
+                let signUpVC = SignupVC(viewModel: signUpVM)
                 
                 self.navigationController?.pushViewController(signUpVC, animated: true)
             })
             .disposed(by: disposeBag)
         
         // 소셜 로그인 성공 여부
-        viewModel.successEvent
+        viewModel.successEventPublish
             .asSignal()
             .emit(onNext: { _ in
                 let tabbarviewController = Util.makeTabBarViewController()
@@ -210,7 +203,7 @@ final class WelcomeVC: BaseVC {
             .disposed(by: disposeBag)
         
         //소셜 로그인 에러 여부
-        viewModel.errEvent
+        viewModel.errEventPublish
             .asSignal()
             .emit(onNext:{ [weak self] err in
                 switch err {
@@ -221,7 +214,7 @@ final class WelcomeVC: BaseVC {
                     alert.addAction(UIAlertAction(title: "확인", style: .default,handler: { _ in
                         let authService = AuthService()
                         let signUpVM = SignUpVM(service: authService)
-                        let signUPVC = SignupVC(vm: signUpVM)
+                        let signUPVC = SignupVC(viewModel: signUpVM)
                         self?.navigationController?.pushViewController(signUPVC, animated: true)
                     }))
                     
@@ -265,7 +258,7 @@ import SwiftUI
 import RxSwift
 struct WelcomeVCPreview: PreviewProvider {
     static var previews: some View {
-        return WelcomeVC(vm: WelcomeVM(service: AuthService())).toPreview()
+        return WelcomeVC(viewModel: WelcomeVM(service: AuthService())).toPreview()
     }
 }
 #endif

@@ -11,41 +11,48 @@ import RxSwift
 import Amplify
 
 final class LoginVM {
-    private let service: AuthService
+    // 서비스를 제공하는 인스턴스
+    private let authService: AuthService
     private let disposeBag = DisposeBag()
     
-    public let emailObserver = BehaviorRelay<String>(value: "")
-    public let passwordObserver = BehaviorRelay<String>(value: "")
-    public let successEvent = PublishRelay<User>()
-    public let errEvent = PublishRelay<String>()
-    public var isVaild: Observable<Bool> {
+    // 이메일을 입력받는 인스턴스
+    public let emailBehavior = BehaviorRelay<String>(value: "")
+    // 비밀번호를 입력받는 인스턴스
+    public let passwordBehavior = BehaviorRelay<String>(value: "")
+    // 로그인 성공 이벤트를 전달하는 인스턴스
+    public let successEventPublish = PublishRelay<User>()
+    // 에러 이벤트를 전달하는 인스턴스
+    public let errEventPublish = PublishRelay<String>()
+    // 이메일과 비밀번호의 유효성을 확인하는 인스턴스
+    public var isValidObservable: Observable<Bool> {
         return Observable
-            .combineLatest(emailObserver, passwordObserver)
+            .combineLatest(emailBehavior, passwordBehavior)
             .map { (email, password) in
                 return !email.isEmpty && password.count >= 8
             }
     }
     
-    
+    // 생성자
     init(service: AuthService) {
-        self.service = service
+        self.authService = service
     }
     
+    // 로그인 요청하는 함수
     func login() {
-        service.login(email: emailObserver.value, password: passwordObserver.value)
+        authService.login(email: emailBehavior.value, password: passwordBehavior.value)
             .subscribe { _ in
                 // 서버 프로필 조회
-                self.service.getProfile()
+                self.authService.getProfile()
                     .subscribe(onNext: { user in
-                        self.successEvent.accept(user)
+                        self.successEventPublish.accept(user)
                     })
                     .disposed(by: self.disposeBag)
             } onError: { err in
                 guard let err = err as? AuthError else {
-                    self.errEvent.accept(err.localizedDescription)
+                    self.errEventPublish.accept(err.localizedDescription)
                     return
                 }
-                self.errEvent.accept(err.errorDescription)
+                self.errEventPublish.accept(err.errorDescription)
             }
             .disposed(by: disposeBag)
         

@@ -15,25 +15,25 @@ import PhotosUI
 final class ProfileSettingVM {
     
     var selectedImageSubject = BehaviorSubject<UIImage>(value: UIImage(named: "default_profile") ?? UIImage())
-    let nickNameInput = BehaviorRelay<String>(value: "")
-    let successEvent = PublishRelay<Bool>()
-    let errEvent = PublishRelay<NetworkError>()
-    let service: AuthService
+    let nickNameInputRelay = BehaviorRelay<String>(value: "")
+    let successEventPublish = PublishRelay<Bool>()
+    let errEventPublish = PublishRelay<NetworkError>()
+    let authService: AuthService
     let disposeBag = DisposeBag()
     let regionId: String
     
     init(service:AuthService, regionid: String) {
-        self.service = service
+        self.authService = service
         self.regionId = regionid
     }
     
     func profileSetUp() {
-        service.avocadoSignUp(to: nickNameInput.value, with: regionId)
+        authService.avocadoSignUp(to: nickNameInputRelay.value, with: regionId)
             .subscribe(onNext: {
                 Logger.d("profile \($0)")
-                self.successEvent.accept(true)
+                self.successEventPublish.accept(true)
             }) { err in
-                self.errEvent.accept(err as! NetworkError)
+                self.errEventPublish.accept(err as! NetworkError)
             }
             .disposed(by: disposeBag)
     }
@@ -42,4 +42,3 @@ final class ProfileSettingVM {
         
     }
 }
-
