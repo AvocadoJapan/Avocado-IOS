@@ -12,20 +12,51 @@ import RxFlow
 class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 
     var window: UIWindow?
+    var coordinator = FlowCoordinator()
+    let disposeBag = DisposeBag()
+
     
     func scene(_ scene: UIScene, willConnectTo session: UISceneSession, options connectionOptions: UIScene.ConnectionOptions) {
         // Use this method to optionally configure and attach the UIWindow `window` to the provided UIWindowScene `scene`.
         // If using a storyboard, the `window` property will automatically be initialized and attached to the scene.
         // This delegate does not imply the connecting scene or session are new (see `application:configurationForConnectingSceneSession` instead).
-        guard let windowScene = (scene as? UIWindowScene) else { return }
-        window = UIWindow(windowScene: windowScene)
+//        guard let windowScene = (scene as? UIWindowScene) else { return }
+//        window = UIWindow(windowScene: windowScene)
         
-        let authService = AuthService()
-        // 로그인 여부 판단하여 로그인 활상화 되어있는 유저일 경우 메인화면으로 보냄 {아닐 경우 로그인화면으로 전송}
-        let splashVM = SplashVM(service: authService)
-        let splashVC = SplashVC(viewModel: splashVM)
-        self.window?.rootViewController = splashVC
-        self.window?.makeKeyAndVisible()
+//        let splashFlow = SplashFlow()
+//        let letsplashStepper = OneStepper(withSingleStep: SplashStep.tokenIsRequired)
+//        
+//        let authService = AuthService()
+//        // 로그인 여부 판단하여 로그인 활상화 되어있는 유저일 경우 메인화면으로 보냄 {아닐 경우 로그인화면으로 전송}
+//        let splashVM = SplashVM(service: authService)
+//        let splashVC = SplashVC(viewModel: splashVM)
+//        self.window?.rootViewController = splashVC
+//        self.window?.makeKeyAndVisible()
+        
+        guard let windowSecene = (scene as? UIWindowScene) else { return }
+        
+        let appFlow = SplashFlow() // 흐름
+        let appStepper = SplashStepper() // 흐름 트리거
+        
+        // 흐름 & 흐름 트리거 연결되었음
+        self.coordinator.coordinate(flow: appFlow, with: appStepper)
+        
+        Flows.use(appFlow, when: .created, block: { rootVC in
+            let window = UIWindow(windowScene: windowSecene)
+            window.rootViewController = rootVC
+            self.window = window
+            window.makeKeyAndVisible()
+        })
+        
+        
+        self.coordinator.rx.willNavigate.subscribe(onNext: { (flow, step) in
+            print("will navigate to flow=\(flow) and step=\(step)")
+        }).disposed(by: self.disposeBag)
+
+        self.coordinator.rx.didNavigate.subscribe(onNext: { (flow, step) in
+            print("did navigate to flow=\(flow) and step=\(step)")
+        }).disposed(by: self.disposeBag)
+        
     }
 
     func sceneDidDisconnect(_ scene: UIScene) {

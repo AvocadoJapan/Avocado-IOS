@@ -7,6 +7,10 @@
 
 import Foundation
 import UIKit
+import RxFlow
+import RxSwift
+import RxRelay
+import RxCocoa
 
 final class SplashVC: BaseVC {
     
@@ -63,15 +67,18 @@ final class SplashVC: BaseVC {
                 switch error {
                 case .unknown(let code, _):
                     if code == -20 {
-                        let failVC = FailVC(error: error)
-                        let baseNavigationController = failVC.makeBaseNavigationController()
-                        Util.changeRootViewController(to: baseNavigationController)
+//                        let failVC = FailVC(error: error)
+//                        let baseNavigationController = failVC.makeBaseNavigationController()
+//                        Util.changeRootViewController(to: baseNavigationController)
+                        
+                        self.steps.accept(SplashStep.errorOccurred(error: error))
                     } else {
-                        let service = AuthService()
-                        let signUpViewModel = WelcomeVM(service: service)
-                        let signUpVC = WelcomeVC(viewModel: signUpViewModel)
-                        let baseNavigationController = signUpVC.makeBaseNavigationController()
-                        Util.changeRootViewController(to: baseNavigationController)
+//                        let service = AuthService()
+//                        let signUpViewModel = WelcomeVM(service: service)
+//                        let signUpVC = WelcomeVC(viewModel: signUpViewModel)
+//                        let baseNavigationController = signUpVC.makeBaseNavigationController()
+//                        Util.changeRootViewController(to: baseNavigationController)
+                        self.steps.accept(SplashStep.errorOccurred(error: error))
                     }
                 default:
                     let service = AuthService()

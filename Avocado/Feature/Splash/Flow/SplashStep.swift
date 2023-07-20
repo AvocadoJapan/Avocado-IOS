@@ -14,6 +14,8 @@
 
 import RxFlow
 import Foundation
+import RxRelay
+import RxSwift
 
 
 @frozen enum SplashStep: Step {
@@ -22,4 +24,20 @@ import Foundation
     case tokenIsRequired
     case tokenGetComplete
     case errorOccurred(error: NetworkError)
+}
+
+
+// 리모콘
+class SplashStepper: Stepper {
+    let steps: PublishRelay<Step> = PublishRelay()
+    private let disposeBag = DisposeBag()
+    
+    var initialStep: Step {
+        return SplashStep.tokenIsRequired
+    }
+    
+    func readyToEmitSteps() {
+        print(#fileID, #function, #line, "- ")
+        
+    }
 }

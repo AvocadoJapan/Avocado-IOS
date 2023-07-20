@@ -6,15 +6,20 @@
 //
 
 import UIKit
-import RxSwift
-import RxCocoa
 import SnapKit
 import Then
+import RxFlow
+import RxSwift
+import RxRelay
+import RxCocoa
 
 /**
  - Description: 베이스 VC로, 뷰컨트롤러에 사용되는 기본적인 메서드를 담고 있음 (ex. bind, configure...)
  */
-class BaseVC: UIViewController {
+class BaseVC: UIViewController, Stepper {
+    
+    //MARK: - RXFlow
+    var steps: PublishRelay<Step> = PublishRelay()
     
     //MARK: - RX
     let disposeBag = DisposeBag()
