@@ -24,6 +24,7 @@ protocol AvocadoError: Error {
 enum NetworkError: AvocadoError {
     case invaildResponse
     case tokenExpired
+    case tokenIsRequired
     case invaildURL
     case pageNotFound
     case serverError
@@ -37,6 +38,9 @@ enum NetworkError: AvocadoError {
             
         case .tokenExpired:
             return "토큰이 만료되었습니다"
+            
+        case .tokenIsRequired:
+            return "토큰이 필요합니다"
             
         case .invaildURL:
             return "서버 요청에 실패하였습니다"

@@ -34,7 +34,9 @@ final class SplashFlow: Flow {
         guard let step = step as? SplashStep else { return .none }
         
         switch step {
-            
+        
+        case .splashIsRequired:
+            return navigateToSplashScreen()
         case .tokenIsRequired:
             return navigateToWelcomeScreen()
         case .tokenGetComplete:
@@ -42,6 +44,13 @@ final class SplashFlow: Flow {
         case .errorOccurred(let error):
             return navigateToFailScreen(with: error)
         }
+    }
+    
+    private func navigateToSplashScreen() -> FlowContributors {
+        let viewModel = SplashVM(service: AuthService())
+        let splashVC = SplashVC(viewModel: viewModel)
+        rootViewController.setViewControllers([splashVC], animated: false)
+        return .one(flowContributor: .contribute(withNext: splashVC))
     }
     
     private func navigateToWelcomeScreen() -> FlowContributors {
@@ -59,8 +68,7 @@ final class SplashFlow: Flow {
     }
 
     private func navigateToFailScreen (with error: NetworkError) -> FlowContributors {
-//        let viewModel = Fail(service: AuthService())
-        let failVC = FailVC()
+        let failVC = FailVC(error: error)
         rootViewController.setViewControllers([failVC], animated: false)
         return .one(flowContributor: .contribute(withNext: failVC))
     }

@@ -21,6 +21,7 @@ import RxSwift
 @frozen enum SplashStep: Step {
     
     // Loding
+    case splashIsRequired
     case tokenIsRequired
     case tokenGetComplete
     case errorOccurred(error: NetworkError)
@@ -33,7 +34,7 @@ class SplashStepper: Stepper {
     private let disposeBag = DisposeBag()
     
     var initialStep: Step {
-        return SplashStep.tokenIsRequired
+        return SplashStep.splashIsRequired
     }
     
     func readyToEmitSteps() {

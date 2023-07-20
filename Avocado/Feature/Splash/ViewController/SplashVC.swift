@@ -65,27 +65,15 @@ final class SplashVC: BaseVC {
             .observe(on: MainScheduler.instance)
             .subscribe(onNext: { error in
                 switch error {
-                case .unknown(let code, _):
-                    if code == -20 {
-//                        let failVC = FailVC(error: error)
-//                        let baseNavigationController = failVC.makeBaseNavigationController()
-//                        Util.changeRootViewController(to: baseNavigationController)
-                        
-                        self.steps.accept(SplashStep.errorOccurred(error: error))
-                    } else {
-//                        let service = AuthService()
-//                        let signUpViewModel = WelcomeVM(service: service)
-//                        let signUpVC = WelcomeVC(viewModel: signUpViewModel)
-//                        let baseNavigationController = signUpVC.makeBaseNavigationController()
-//                        Util.changeRootViewController(to: baseNavigationController)
-                        self.steps.accept(SplashStep.errorOccurred(error: error))
-                    }
-                default:
-                    let service = AuthService()
-                    let signUpViewModel = WelcomeVM(service: service)
-                    let signUpVC = WelcomeVC(viewModel: signUpViewModel)
-                    let baseNavigationController = signUpVC.makeBaseNavigationController()
-                    Util.changeRootViewController(to: baseNavigationController)
+                case .invaildResponse, .invaildURL, .pageNotFound, .serverConflict, .serverError:
+                    self.steps.accept(SplashStep.errorOccurred(error: error))
+                case .tokenExpired:
+                    self.steps.accept(SplashStep.tokenIsRequired)
+                case .tokenIsRequired:
+//                    self.steps.accept(SplashStep.tokenIsRequired)
+                    self.steps.accept(SplashStep.errorOccurred(error: error))
+                case .unknown:
+                    self.steps.accept(SplashStep.errorOccurred(error: error))
                 }
             })
             .disposed(by: disposeBag)
