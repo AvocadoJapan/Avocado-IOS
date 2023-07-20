@@ -57,6 +57,7 @@ final class SplashVC: BaseVC {
             .disposed(by: disposeBag)
         
         viewModel.errEventPublish
+            .debounce(.milliseconds(800), scheduler: MainScheduler.instance)
             .observe(on: MainScheduler.instance)
             .subscribe(onNext: { error in
                 switch error {

@@ -16,10 +16,10 @@ import RxFlow
 import Foundation
 
 
-enum SplashStep: Step {
+@frozen enum SplashStep: Step {
     
     // Loding
-    case lodingIsRequired
-    case lodingIsFail
-    case lodingIsComplete
+    case tokenIsRequired
+    case tokenGetComplete
+    case errorOccurred(error: NetworkError)
 }
