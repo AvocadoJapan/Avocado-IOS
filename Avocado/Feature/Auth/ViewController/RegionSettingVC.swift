@@ -65,14 +65,16 @@ final class RegionSettingVC: BaseVC {
     }
 
     override func setLayout() {
-        [tableView, titleLabel, searchBar, tableView, confirmButton].forEach {
-            view.addSubview($0)
-        }
+        [titleLabel, searchBar, tableView, confirmButton].forEach {
+               view.addSubview($0)
+       }
     }
 
     override func setConstraint() {
-        tableView.snp.makeConstraints { make in
-            make.edges.equalToSuperview().inset(20)
+        tableView.snp.makeConstraints {
+            $0.horizontalEdges.equalToSuperview().inset(20)
+            $0.top.equalTo(searchBar.snp.bottom).inset(-10)
+            $0.bottom.equalTo(confirmButton.snp.top).inset(-10)
         }
 
         titleLabel.snp.makeConstraints {
@@ -102,7 +104,7 @@ final class RegionSettingVC: BaseVC {
             .orEmpty
             .distinctUntilChanged()
             .do(onNext: { text in
-                    print("Text changed to: \(text)")
+                    Logger.d("Text changed to: \(text)")
                 })
                 .bind(to: viewModel.searchTextRelay)
             .disposed(by: disposeBag)
@@ -204,3 +206,14 @@ final class RegionSettingVC: BaseVC {
         }
     }
 }
+
+//// MARK: - Preview 관련
+//#if DEBUG && canImport(SwiftUI)
+//import SwiftUI
+//import RxSwift
+//struct RegionSettingVCPreview: PreviewProvider {
+//    static var previews: some View {
+//        return RegionSettingVC(viewModel: RegionSettingVM(service: AuthService())).toPreview()
+//    }
+//}
+//#endif

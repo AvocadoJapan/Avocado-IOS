@@ -32,6 +32,14 @@ final class RegionSettingVM {
     
     init(service: AuthService) {
         self.authService = service
+        
+        searchTextRelay
+            .debounce(RxTimeInterval.milliseconds(300), scheduler: MainScheduler.instance)
+            .distinctUntilChanged()
+            .subscribe(onNext: { [weak self] _ in
+                self?.fetchRegion()
+            })
+            .disposed(by: disposeBag)
     }
     
     func fetchRegion() {
@@ -39,7 +47,7 @@ final class RegionSettingVM {
             .subscribe { regions in
                 self.regionsRelay.accept(regions)
             } onError: { err in
-                
+                // 여기에 에러 구현
             }
             .disposed(by: disposeBag)
     }

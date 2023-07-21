@@ -46,7 +46,7 @@ enum NetworkError: AvocadoError {
             return "서버 요청에 실패하였습니다"
             
         case .pageNotFound:
-            return "페이지가 잘못 되었습니다"
+            return "경로가 잘못 되었습니다 \n 앱을 다시 실행해주세요"
             
         case .serverError:
             return "서버 오류 입니다"
