@@ -33,7 +33,7 @@ final class SplashVC: BaseVC {
         super.viewDidAppear(animated)
         
         // View가 화면에 보여 진 후 API 실행
-        viewModel.splashAvocado()
+        viewModel.checkLoginSession()
     }
     
     override func setProperty() {
@@ -57,6 +57,10 @@ final class SplashVC: BaseVC {
             .subscribe(onNext: { user in
                 let tabbarViewController = Util.makeTabBarViewController()
                 Util.changeRootViewController(to: tabbarViewController)
+                
+                DispatchQueue.main.async {
+                    self.steps.accept(SplashStep.tokenGetComplete)
+                }
             })
             .disposed(by: disposeBag)
         
@@ -70,8 +74,7 @@ final class SplashVC: BaseVC {
                 case .tokenExpired:
                     self.steps.accept(SplashStep.tokenIsRequired)
                 case .tokenIsRequired:
-//                    self.steps.accept(SplashStep.tokenIsRequired)
-                    self.steps.accept(SplashStep.errorOccurred(error: error))
+                    self.steps.accept(SplashStep.tokenIsRequired)
                 case .unknown:
                     self.steps.accept(SplashStep.errorOccurred(error: error))
                 }

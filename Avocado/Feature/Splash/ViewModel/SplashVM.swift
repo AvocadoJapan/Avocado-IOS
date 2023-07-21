@@ -18,21 +18,37 @@ final class SplashVM {
     let successEventPublish = PublishRelay<User>()
     let errEventPublish = PublishRelay<NetworkError>()
     
+    private var isCheckingSession = false
+    
     init(service: AuthService) {
         self.authService = service
     }
     
-    func splashAvocado() {
+    func checkLoginSession() {
         authService.checkLoginSession()
-            .flatMap { [weak self] isLogin -> Observable<User> in
-                guard let self = self else { return .empty() }
+            .observe(on: MainScheduler.instance)
+            .subscribe(onNext: { [weak self] isLogin in
+                guard let self = self else { return }
                 
                 if isLogin {
-                    return self.authService.getProfile()
+                    self.getProfile()
                 } else {
-                    return .error(NetworkError.tokenIsRequired)
+                    self.errEventPublish.accept(NetworkError.tokenIsRequired)
                 }
-            }
+            }, onError: { error in
+                if let networkError = error as? NetworkError {
+                    self.errEventPublish.accept(networkError)
+                } else {
+                    self.errEventPublish.accept(NetworkError.unknown(-1, error.localizedDescription))
+                }
+            })
+            .disposed(by: disposeBag)
+    }
+
+
+    private func getProfile() {
+        authService.getProfile()
+            .observe(on: MainScheduler.instance)
             .subscribe(onNext: { [weak self] user in
                 self?.successEventPublish.accept(user)
             }, onError: { error in

@@ -12,6 +12,7 @@ import RxSwift
 import RxRelay
 import RxCocoa
 
+// 플로우는 화면 흐름 이벤트가 들어오면 로직처리 및 의존성 주입
 final class SplashFlow: Flow {
     var root: Presentable {
         return self.rootViewController
@@ -47,24 +48,24 @@ final class SplashFlow: Flow {
     }
     
     private func navigateToSplashScreen() -> FlowContributors {
-        let viewModel = SplashVM(service: AuthService())
-        let splashVC = SplashVC(viewModel: viewModel)
+        let splashVM = SplashVM(service: AuthService())
+        let splashVC = SplashVC(viewModel: splashVM)
         rootViewController.setViewControllers([splashVC], animated: false)
         return .one(flowContributor: .contribute(withNext: splashVC))
     }
     
     private func navigateToWelcomeScreen() -> FlowContributors {
-        let viewModel = WelcomeVM(service: AuthService())
-        let welcomeVC = WelcomeVC(viewModel: viewModel)
+        let welcomeVM = WelcomeVM(service: AuthService())
+        let welcomeVC = WelcomeVC(viewModel: welcomeVM)
         rootViewController.setViewControllers([welcomeVC], animated: false)
         return .one(flowContributor: .contribute(withNext: welcomeVC))
     }
     
     private func navigateToMainScreen() -> FlowContributors {
-        let viewModel = WelcomeVM(service: AuthService())
-        let welcomeVC = WelcomeVC(viewModel: viewModel)
-        rootViewController.setViewControllers([welcomeVC], animated: false)
-        return .one(flowContributor: .contribute(withNextPresentable: welcomeVC, withNextStepper: viewModel as! Stepper))
+        let mainVM = MainVM()
+        let mainVC = MainVC(vm: mainVM)
+        rootViewController.setViewControllers([mainVC], animated: false)
+        return .one(flowContributor: .contribute(withNext: mainVC))
     }
 
     private func navigateToFailScreen (with error: NetworkError) -> FlowContributors {

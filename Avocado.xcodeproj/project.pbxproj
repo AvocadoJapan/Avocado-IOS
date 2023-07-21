@@ -92,6 +92,7 @@
 		B26A3B6B2A60BB6100AD61A5 /* SplashStep.swift in Sources */ = {isa = PBXBuildFile; fileRef = B26A3B6A2A60BB6100AD61A5 /* SplashStep.swift */; };
 		B26A3B6E2A60D5FA00AD61A5 /* FailVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = B26A3B6D2A60D5FA00AD61A5 /* FailVC.swift */; };
 		B26F8A4D2A544AC300F4BEA3 /* ProfileSettingVM.swift in Sources */ = {isa = PBXBuildFile; fileRef = B26F8A4C2A544AC300F4BEA3 /* ProfileSettingVM.swift */; };
+		B28D45732A6A8F5B00C6C45A /* SplashStepper.swift in Sources */ = {isa = PBXBuildFile; fileRef = B28D45722A6A8F5B00C6C45A /* SplashStepper.swift */; };
 		B293420E2A58579C00F5CF30 /* RegionTVCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B293420D2A58579C00F5CF30 /* RegionTVCell.swift */; };
 		B29342132A58810E00F5CF30 /* RegionSettingVM.swift in Sources */ = {isa = PBXBuildFile; fileRef = B29342122A58810E00F5CF30 /* RegionSettingVM.swift */; };
 		B29D78912A2B6FB1008B6945 /* SearchVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = B29D78902A2B6FB1008B6945 /* SearchVC.swift */; };
@@ -198,6 +199,7 @@
 		B26A3B6A2A60BB6100AD61A5 /* SplashStep.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SplashStep.swift; sourceTree = "<group>"; };
 		B26A3B6D2A60D5FA00AD61A5 /* FailVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FailVC.swift; sourceTree = "<group>"; };
 		B26F8A4C2A544AC300F4BEA3 /* ProfileSettingVM.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileSettingVM.swift; sourceTree = "<group>"; };
+		B28D45722A6A8F5B00C6C45A /* SplashStepper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SplashStepper.swift; sourceTree = "<group>"; };
 		B293420D2A58579C00F5CF30 /* RegionTVCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegionTVCell.swift; sourceTree = "<group>"; };
 		B29342122A58810E00F5CF30 /* RegionSettingVM.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegionSettingVM.swift; sourceTree = "<group>"; };
 		B29D78902A2B6FB1008B6945 /* SearchVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchVC.swift; sourceTree = "<group>"; };
@@ -661,6 +663,7 @@
 			isa = PBXGroup;
 			children = (
 				B26A3B6A2A60BB6100AD61A5 /* SplashStep.swift */,
+				B28D45722A6A8F5B00C6C45A /* SplashStepper.swift */,
 				B26A3B682A60BB5100AD61A5 /* SplashFlow.swift */,
 			);
 			path = Flow;
@@ -857,6 +860,7 @@
 				B212D58B2A45F1740008DAD1 /* InputView.swift in Sources */,
 				B1B1EA132A5973C7007B1894 /* SettingTVCell.swift in Sources */,
 				04C835FF2A2B5FEF00731E3E /* BannerFooterReusableView.swift in Sources */,
+				B28D45732A6A8F5B00C6C45A /* SplashStepper.swift in Sources */,
 				B1A301972A5437DB003834E6 /* ProfileSettingVC.swift in Sources */,
 				B18DFEDF2A51B53B00CF27FE /* EmailCheckVM.swift in Sources */,
 				B2198B982A2A36EA0019032D /* AppDelegate.swift in Sources */,

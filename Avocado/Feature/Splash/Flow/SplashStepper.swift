@@ -2,17 +2,22 @@
 //  SplashStepper.swift
 //  Avocado
 //
-//  Created by Jayden Jang on 2023/07/20.
+//  Created by Jayden Jang on 2023/07/21.
 //
 
 import Foundation
+import RxFlow
+import RxRelay
+import RxSwift
 
-class AppStepper: Stepper {
+// 리모콘
+final class SplashStepper: Stepper {
     let steps: PublishRelay<Step> = PublishRelay()
     private let disposeBag = DisposeBag()
     
+    // init될때 처음으로 타는 스탭 Stepper 참고
     var initialStep: Step {
-        return AppStep.splashIsRequired
+        return SplashStep.splashIsRequired
     }
     
     func readyToEmitSteps() {

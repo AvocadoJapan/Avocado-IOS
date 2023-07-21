@@ -26,19 +26,3 @@ import RxSwift
     case tokenGetComplete
     case errorOccurred(error: NetworkError)
 }
-
-
-// 리모콘
-class SplashStepper: Stepper {
-    let steps: PublishRelay<Step> = PublishRelay()
-    private let disposeBag = DisposeBag()
-    
-    var initialStep: Step {
-        return SplashStep.splashIsRequired
-    }
-    
-    func readyToEmitSteps() {
-        print(#fileID, #function, #line, "- ")
-        
-    }
-}

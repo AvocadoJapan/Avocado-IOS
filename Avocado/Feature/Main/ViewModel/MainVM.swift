@@ -13,6 +13,7 @@ import RxRelay
  */
 final class MainVM {
     
+    
     public lazy var sectionData = BehaviorRelay<[SectionOfMainData]>(value: [
         
         SectionOfMainData(items: [
