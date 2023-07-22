@@ -55,12 +55,7 @@ final class SplashVC: BaseVC {
         viewModel.successEventPublish
             .observe(on: MainScheduler.instance)
             .subscribe(onNext: { user in
-                let tabbarViewController = Util.makeTabBarViewController()
-                Util.changeRootViewController(to: tabbarViewController)
-                
-                DispatchQueue.main.async {
-                    self.steps.accept(SplashStep.tokenGetComplete)
-                }
+                self.steps.accept(SplashStep.tokenGetComplete)
             })
             .disposed(by: disposeBag)
         

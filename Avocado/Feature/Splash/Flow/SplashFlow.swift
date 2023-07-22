@@ -11,6 +11,7 @@ import RxFlow
 import RxSwift
 import RxRelay
 import RxCocoa
+import Then
 
 // 플로우는 화면 흐름 이벤트가 들어오면 로직처리 및 의존성 주입
 final class SplashFlow: Flow {
@@ -19,7 +20,11 @@ final class SplashFlow: Flow {
     }
     
     private let rootViewController = UINavigationController()
-    //    private let services: SomeService
+    
+    // UINavigationController는 플로우에서 관리를해줌. 아래와 같이 설정하는것도 일반적임
+//    lazy var rootViewController: UINavigationController = UINavigationController().then {
+//        $0.setNavigationBarHidden(true, animated: true)
+//    }
     
     init() {
         //        self.services = services

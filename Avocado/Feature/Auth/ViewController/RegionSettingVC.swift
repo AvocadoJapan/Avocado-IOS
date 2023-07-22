@@ -207,13 +207,13 @@ final class RegionSettingVC: BaseVC {
     }
 }
 
-//// MARK: - Preview 관련
-//#if DEBUG && canImport(SwiftUI)
-//import SwiftUI
-//import RxSwift
-//struct RegionSettingVCPreview: PreviewProvider {
-//    static var previews: some View {
-//        return RegionSettingVC(viewModel: RegionSettingVM(service: AuthService())).toPreview()
-//    }
-//}
-//#endif
+// MARK: - Preview 관련
+#if DEBUG && canImport(SwiftUI)
+import SwiftUI
+import RxSwift
+struct RegionSettingVCPreview: PreviewProvider {
+    static var previews: some View {
+        return RegionSettingVC(viewModel: RegionSettingVM(service: AuthService())).toPreview()
+    }
+}
+#endif
