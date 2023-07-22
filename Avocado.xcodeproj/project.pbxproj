@@ -104,6 +104,7 @@
 		B2E2AC802A4772D3003DAE88 /* WelcomeVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2E2AC7F2A4772D3003DAE88 /* WelcomeVC.swift */; };
 		B2F3D3642A511F2700FB05E1 /* SubButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2F3D3632A511F2700FB05E1 /* SubButton.swift */; };
 		B2F3F47A2A4B6570007994DC /* EmailCheckVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2F3F4792A4B6570007994DC /* EmailCheckVC.swift */; };
+		B2FB5C382A6C5EEE00C4F103 /* AuthStepper.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2FB5C372A6C5EEE00C4F103 /* AuthStepper.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -213,6 +214,7 @@
 		B2E2AC7F2A4772D3003DAE88 /* WelcomeVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WelcomeVC.swift; sourceTree = "<group>"; };
 		B2F3D3632A511F2700FB05E1 /* SubButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SubButton.swift; sourceTree = "<group>"; };
 		B2F3F4792A4B6570007994DC /* EmailCheckVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmailCheckVC.swift; sourceTree = "<group>"; };
+		B2FB5C372A6C5EEE00C4F103 /* AuthStepper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthStepper.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -455,14 +457,14 @@
 			isa = PBXGroup;
 			children = (
 				B19E832B2A6025BD004C5DE2 /* View */,
-				B1A301962A5437DB003834E6 /* ProfileSettingVC.swift */,
+				B2E2AC7F2A4772D3003DAE88 /* WelcomeVC.swift */,
 				B212D5862A45E8F40008DAD1 /* LoginVC.swift */,
-				B22222642A55F40100A2B7CB /* PrivacyAccessVC.swift */,
-				B21E58F32A574A46007CCAA0 /* RegionSettingVC.swift */,
 				B2E186CD2A474B4C00ABE98F /* SignupVC.swift */,
 				B2F3F4792A4B6570007994DC /* EmailCheckVC.swift */,
 				B2D2764D2A6C4D6A00441719 /* OtherEmailVC.swift */,
-				B2E2AC7F2A4772D3003DAE88 /* WelcomeVC.swift */,
+				B21E58F32A574A46007CCAA0 /* RegionSettingVC.swift */,
+				B1A301962A5437DB003834E6 /* ProfileSettingVC.swift */,
+				B22222642A55F40100A2B7CB /* PrivacyAccessVC.swift */,
 			);
 			path = ViewController;
 			sourceTree = "<group>";
@@ -661,6 +663,7 @@
 			children = (
 				B26A3B652A60AB8400AD61A5 /* AuthStep.swift */,
 				B26A3B602A60A79800AD61A5 /* AuthFlow.swift */,
+				B2FB5C372A6C5EEE00C4F103 /* AuthStepper.swift */,
 			);
 			path = Flow;
 			sourceTree = "<group>";
@@ -880,6 +883,7 @@
 				B26A3B6E2A60D5FA00AD61A5 /* FailVC.swift in Sources */,
 				B1A301BC2A543A2F003834E6 /* BaseModalVC.swift in Sources */,
 				B26A3B612A60A79800AD61A5 /* AuthFlow.swift in Sources */,
+				B2FB5C382A6C5EEE00C4F103 /* AuthStepper.swift in Sources */,
 				B1A301AE2A5439F0003834E6 /* Variant.swift in Sources */,
 				9816F6F22A494B3C00A7A284 /* NetworkLoggerPlugin.swift in Sources */,
 				B2E2AC802A4772D3003DAE88 /* WelcomeVC.swift in Sources */,

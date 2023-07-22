@@ -49,6 +49,8 @@ final class SplashFlow: Flow {
             return navigateToMainScreen()
         case .errorOccurred(let error):
             return navigateToFailScreen(with: error)
+        default:
+            return .none
         }
     }
     

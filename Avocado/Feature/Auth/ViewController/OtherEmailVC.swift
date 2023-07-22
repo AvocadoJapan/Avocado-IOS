@@ -47,19 +47,7 @@ final class OtherEmailVC: BaseVC {
     }
     
     private lazy var accountCenterButton: SubButton = SubButton(text: "계정 센터")
-    
-    let viewModel: EmailCheckVM
-    
-    init(viewModel: EmailCheckVM) {
-        self.viewModel = viewModel
-        super.init(nibName: nil, bundle: nil)
-    }
-    
-    required init?(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
-    }
-    
-    
+        
     override func setProperty() {
         view.backgroundColor = .white
         self.navigationController?.isNavigationBarHidden = true
@@ -122,7 +110,7 @@ import SwiftUI
 import RxSwift
 struct OtherEmailVCPreview: PreviewProvider {
     static var previews: some View {
-        return OtherEmailVC(viewModel: EmailCheckVM(service: AuthService(), email: "", password: "")).toPreview()
+        return OtherEmailVC().toPreview()
     }
 }
 #endif
