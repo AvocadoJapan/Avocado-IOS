@@ -121,16 +121,16 @@ final class ProfileSettingVC: BaseVC {
     }
     
     override func bindUI() {
-
-        viewModel.selectedImageSubject
+        let output = viewModel.transform(input: viewModel.input)
+        
+        //MARK: - INPUT BINDING
+        viewModel.input.selectedImageSubject
            .bind(to: profileButton.rx.image(for: .normal))
            .disposed(by: disposeBag)
         
         nameInput
             .userInput
-            .subscribe { [weak self] text in
-                self?.viewModel.nickNameInputRelay.accept(text)
-            }
+            .bind(to: viewModel.input.nickNameInputRelay)
             .disposed(by: disposeBag)
         
         confirmButton
@@ -140,14 +140,15 @@ final class ProfileSettingVC: BaseVC {
             .do(onNext: { [weak self] _ in
                 self?.confirmButton.isEnabled = false
             })
-            .drive(onNext: { [weak self] _ in
-                self?.viewModel.profileSetUp()
+            .drive(onNext: { [weak self] void in
+                self?.viewModel.input.actionProfileSetUpRelay.accept(void)
             })
             .disposed(by: disposeBag)
         
-        viewModel.successEventPublish
+        //MARK: - OUTPUT BINDING
+        output.successSignUpeRelay
             .asSignal()
-            .do(onNext: { [weak self] _ in
+            .do(onNext: {[weak self] _ in
                 self?.confirmButton.isEnabled = true
             })
             .emit(onNext: { _ in
@@ -155,18 +156,18 @@ final class ProfileSettingVC: BaseVC {
                 Util.changeRootViewController(to: tabbarviewController)
             })
             .disposed(by: disposeBag)
-        
-        viewModel.errEventPublish
+            
+        output.errEventPublish
             .asSignal()
             .do(onNext: { [weak self] _ in
                 self?.confirmButton.isEnabled = true
             })
-            .emit { [weak self] err in
+            .emit(onNext: { [weak self] err in
                 let alert = UIAlertController(title: "", message: err.errorDescription , preferredStyle: .alert)
                 alert.addAction(UIAlertAction(title: "확인", style: .default))
                 
                 self?.present(alert, animated: true)
-            }
+            })
             .disposed(by: disposeBag)
         
         RxKeyboard.instance.visibleHeight
@@ -205,7 +206,7 @@ extension ProfileSettingVC: PHPickerViewControllerDelegate {
             }
 
             if let image = object as? UIImage {
-                self!.viewModel.selectedImageSubject.onNext(image)
+                self!.viewModel.input.selectedImageSubject.onNext(image)
             }
         }
     }

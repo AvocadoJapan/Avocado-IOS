@@ -77,6 +77,7 @@ enum UserAuthError: AvocadoError {
     case emailNotConfirmed // 이메일 인증이 되지 않은 계정으로 접근 시도 할 경우
     case emailConfirmCodeMisMatch // 인증번호가 올바르지 않은 경우
     case emailConfirmCodeExpired // 만료된 인증번호로 접근 시도 할 경우
+    case userNickNameDuplicated // 중복된 닉네임이 존재하는 경우
     case unknown(message: String) // 그 외 오류
     
     var errorDescription: String {
@@ -113,6 +114,9 @@ enum UserAuthError: AvocadoError {
             
         case .emailConfirmCodeExpired:
             return "만료된 인증번호 입니다"
+            
+        case .userNickNameDuplicated:
+            return "중복된 닉네임이 존재합니다"
             
         case .unknown(let message):
             return message

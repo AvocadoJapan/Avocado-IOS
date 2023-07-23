@@ -178,14 +178,13 @@ final class EmailCheckVC: BaseVC {
             .throttle(.seconds(3), latest: false)
             .drive(onNext: { [weak self] _ in
                 self?.viewModel.confirmSignUpCode()
-                /* Mockingx
+                /* Mocking
                  let authService = AuthService()
                  let regionVM = RegionSettingVM(service: authService)
-                 let regionVC = RegionSettingVC(vm: regionVM)
+                 let regionVC = RegionSettingVC(viewModel: regionVM)
                  let navigaitonVC = regionVC.makeBaseNavigationController()
                  self?.present(navigaitonVC, animated: true)
                  */
-                
             })
             .disposed(by: disposeBag)
         

@@ -22,6 +22,8 @@ final class InputView: UIView {
     var rightLabelString = BehaviorRelay<String>(value: "")
     
     var userInput = BehaviorRelay<String>(value: "")
+    // 정규식 유효성 여부 Observable (기본적으로 false)
+    var isVaild = BehaviorRelay<Bool>(value: false)
     
     private var regSetting: RegVarient?
     
@@ -94,40 +96,39 @@ final class InputView: UIView {
         rightLabelString
             .bind(to: rightLabel.rx.text)
             .disposed(by: disposeBag)
-        
-        
+    
         textField
             .rx
-            .controlEvent(.editingDidEnd)
-            .withLatestFrom(textField.rx.text.orEmpty)
+            .text
+            .orEmpty
             .filter({ [weak self] text in
-                guard let rules = self?.regSetting?.rules else {
+                // 텍스트 입력을 하지 않은 경우 userinput에 값을 보내지 않음
+                guard !text.isEmpty else {
                     return false
                 }
                 
                 var isValid = true
                 
-                for rule in rules {
-                    if !rule.check(text) {
-                        self?.rightLabelString.accept(rule.errorMessage)
-                        isValid = false
-                        break
+                // 정규식 유효성
+                if let rules = self?.regSetting?.rules {
+                    for rule in rules {
+                        if !rule.check(text) {
+                            self?.rightLabelString.accept(rule.errorMessage)
+                            self?.isVaild.accept(false)
+                            isValid = false
+                            break
+                        }
                     }
-                }
-                
-                if isValid {
-                    self?.rightLabelString.accept("") // 에러 메시지를 초기화
+                    
+                    // 정규식 유효성 검사에 통과된 경우 에러메시지 초기화 및 isVaild true
+                    if isValid {
+                        self?.rightLabelString.accept("") // 에러 메시지를 초기화
+                        self?.isVaild.accept(true)
+                    }
                 }
                 
                 return isValid
             })
-            .bind(to: userInput)
-            .disposed(by: disposeBag)
-        
-        textField
-            .rx
-            .text
-            .orEmpty
             .bind(to: userInput)
             .disposed(by: disposeBag)
         
@@ -208,5 +209,11 @@ final class InputView: UIView {
      */
     public func keyboardHidden() {
         textField.resignFirstResponder()
+    }
+    /**
+     * - Description 텍스트 필드 흔들기 애니메이션 실행
+     */
+    public func playShakeAnimation() {
+        textField.shake()
     }
 }

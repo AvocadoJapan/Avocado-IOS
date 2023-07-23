@@ -120,74 +120,33 @@ final class SignupVC: BaseVC {
     }
     
     override func bindUI() {
+        let output = viewModel.transform(input: viewModel.input)
         
         //MARK: - INPUT BINDING
         emailInput
             .userInput
-            .subscribe(onNext: { [weak self] text in
-                self?.viewModel.emailBehavior.accept(text)
-            })
+            .bind(to: viewModel.input.emailBehavior)
+            .disposed(by: disposeBag)
+        
+        emailInput
+            .isVaild
+            .bind(to: viewModel.input.emailVaildPublish)
             .disposed(by: disposeBag)
         
         passwordInput
             .userInput
-            .subscribe(onNext: { [weak self] text in
-                self?.viewModel.passwordBehavior.accept(text)
-                
-            })
+            .bind(to: viewModel.input.passwordBehavior)
+            .disposed(by: disposeBag)
+        
+        passwordInput
+            .isVaild
+            .bind(to: viewModel.input.passwordVaildPublish)
             .disposed(by: disposeBag)
         
         passwordCheckInput
             .userInput
-            .subscribe(onNext: { [weak self] text in
-                guard let self = self else { return }
-                self.viewModel.passwordCheckBehavior.accept(text)
-                
-                self.passwordCheckInput
-                    .rightLabelString
-                    .accept(self.viewModel.validatePasswordMatch())
-            })
-            .disposed(by: disposeBag)
-        
-        //MARK: - OUTPUT BINDING
-        viewModel
-            .isValidObservable
-            .bind(to: confirmButton.rx.isEnabled)
-            .disposed(by: disposeBag)
-        
-        viewModel
-            .isValidObservable
-            .map { $0 ? .black : .lightGray}
-            .bind(to: confirmButton.rx.backgroundColor)
-            .disposed(by: disposeBag)
-        
-        viewModel
-            .errEventPublish
-            .asSignal()
-            .emit(onNext: { [weak self] message in
-                let alert = UIAlertController(title: "", message: message, preferredStyle: .alert)
-                alert.addAction(UIAlertAction(title: "확인", style: .default))
-                
-                self?.present(alert, animated: true)
-            })
-            .disposed(by: disposeBag)
-        
-        viewModel
-            .successEventPublish
-            .asSignal()
-            .emit(onNext: { [weak self] isSuccess in
-                guard let self = self else { return }
-                
-                if isSuccess {
-                    let authService = AuthService()
-                    let emailCheckVM = EmailCheckVM(service: authService,
-                                                    email: viewModel.emailBehavior.value,
-                                                    password: viewModel.passwordBehavior.value)
-                    let emailCheckVC = EmailCheckVC(viewModel: emailCheckVM)
-                    let emailCheckNavigationVC = emailCheckVC.makeBaseNavigationController()
-                    self.present(emailCheckNavigationVC, animated: true)
-                }
-            })
+            .filter { !$0.isEmpty }
+            .bind(to: viewModel.input.passwordCheckPublish)
             .disposed(by: disposeBag)
         
         confirmButton
@@ -200,19 +159,17 @@ final class SignupVC: BaseVC {
                 self?.passwordInput.keyboardHidden()
                 self?.passwordCheckInput.keyboardHidden()
             })
-            .drive(onNext: { [weak self] _ in
-                self?.viewModel.signUp()
-                /*
-                 Mocking
-                 
-                 guard let self = self else { return }
-                 let authService = AuthService()
-                 let emailCheckVM = EmailCheckVM(service: authService,
-                                                 email: viewModel.emailObserver.value,
-                                                 password: viewModel.passwordObserver.value)
-                 let emailCheckVC = EmailCheckVC(vm: emailCheckVM).makeBaseNavigationController()
-                 self.navigationController?.showDetailViewController(emailCheckVC, sender: nil)
-                 */
+            .drive(onNext: { [weak self] void in
+                self?.viewModel.input.actionSignUpRelay.accept(void)
+//                Mocking
+//                guard let self = self else { return }
+//                let authService = AuthService()
+//                let emailCheckVM = EmailCheckVM(service: authService,
+//                                                email: self.viewModel.input.emailBehavior.value,
+//                                                password: self.viewModel.input.passwordBehavior.value)
+//                let emailCheckVC = EmailCheckVC(viewModel: emailCheckVM)
+//                let emailCheckNavigationVC = emailCheckVC.makeBaseNavigationController()
+//                self.present(emailCheckNavigationVC, animated: true)
             })
             .disposed(by: disposeBag)
                 
@@ -227,6 +184,52 @@ final class SignupVC: BaseVC {
             })
             .disposed(by: disposeBag)
         
+        //MARK: - OUTPUT BINDING
+        output.successEventPublish
+            .asSignal()
+            .emit(onNext: { [weak self] isSuccess in
+                guard let self = self else { return }
+                
+                if isSuccess {
+                    let authService = AuthService()
+                    let emailCheckVM = EmailCheckVM(service: authService,
+                                                    email: self.viewModel.input.emailBehavior.value,
+                                                    password: self.viewModel.input.passwordBehavior.value)
+                    let emailCheckVC = EmailCheckVC(viewModel: emailCheckVM)
+                    let emailCheckNavigationVC = emailCheckVC.makeBaseNavigationController()
+                    self.present(emailCheckNavigationVC, animated: true)
+                }
+            })
+            .disposed(by: disposeBag)
+        
+        output.errEventPublish
+            .asSignal()
+            .emit(onNext: { [weak self] err in
+                let alert = UIAlertController(title: "", message: err.errorDescription, preferredStyle: .alert)
+                alert.addAction(UIAlertAction(title: "확인", style: .default))
+                
+                self?.present(alert, animated: true)
+            })
+            .disposed(by: disposeBag)
+        
+        
+        output
+            .isVaildBehavior
+            .bind(to: confirmButton.rx.isEnabled)
+            .disposed(by: disposeBag)
+                
+        output
+            .isVaildBehavior
+            .map {$0 ? .black : .lightGray}
+            .bind(to: confirmButton.rx.backgroundColor)
+            .disposed(by: disposeBag)
+        
+        output
+            .isVaildPasswordMatch
+            .subscribe(onNext: { [weak self] isVaild in
+                self?.passwordCheckInput.rightLabelString.accept(isVaild ? "" : "패스워드가 일치하지 않습니다")
+            })
+            .disposed(by: disposeBag)
     }
     
     override func viewWillDisappear(_ animated: Bool) {

@@ -47,8 +47,9 @@ final class AuthService: BaseAPIService<AuthAPI> {
                     }
                 }
                 catch let error as AuthError {
-                    Logger.e("An error occurred while registering a user \(error)")
-                    observer.onError(error)
+                    Logger.e("sign in failed \(error)")
+                    let convertError = self.cognitoAuthErrorHandling(error: error)
+                    observer.onError(convertError)
                 }
                 catch {
                     Logger.e("Unexpected Error \(error)")
@@ -118,14 +119,7 @@ final class AuthService: BaseAPIService<AuthAPI> {
                 }
                 catch let error as AuthError {
                     Logger.e("sign in failed \(error)")
-                    
-                    guard let cognitoAuthError = error.underlyingError as? AWSCognitoAuthError else {
-                        observer.onError(error)
-                        return
-                    }
-                    
-                    let convertError = self.cognitoAuthErrorHandling(error: cognitoAuthError)
-                    
+                    let convertError = self.cognitoAuthErrorHandling(error: error)
                     observer.onError(convertError)
                 }
                 catch {
@@ -400,14 +394,7 @@ final class AuthService: BaseAPIService<AuthAPI> {
                 }
                 catch let error as AuthError {
                     Logger.e("Fetch session faild with error \(error)")
-                    
-                    guard let cognitoAuthError = error.underlyingError as? AWSCognitoAuthError else {
-                        observer.onError(error)
-                        return
-                    }
-                    
-                    let convertError = self.cognitoAuthErrorHandling(error: cognitoAuthError)
-                    
+                    let convertError = self.cognitoAuthErrorHandling(error: error)
                     observer.onError(convertError)
                 }
                 catch {
@@ -493,7 +480,7 @@ final class AuthService: BaseAPIService<AuthAPI> {
                     }
                     
                     guard case .userCancelled = cognitoAuthError else {
-                        let convertError = self.cognitoAuthErrorHandling(error: cognitoAuthError)
+                        let convertError = self.cognitoAuthErrorHandling(error: error)
                         observable.onError(convertError)
                         return
                     }
@@ -623,13 +610,23 @@ final class AuthService: BaseAPIService<AuthAPI> {
      * - Description 코그니토 오류 핸들링
      * - Returns NetworkError
      */
-    private func cognitoAuthErrorHandling(error: AWSCognitoAuthError) -> NetworkError {
-        switch error {
+    private func cognitoAuthErrorHandling(error: AuthError) -> UserAuthError {
+
+        guard let cognitoError = error.underlyingError as? AWSCognitoAuthError else {
+            return UserAuthError.unknown(message: error.errorDescription)
+        }
+        
+        switch cognitoError {
+        case .usernameExists:
+            return UserAuthError.userEmailExists
         case .userNotConfirmed:
-            return NetworkError.unknown(-1, "이메일 인증이 되지 않은 사용자입니다")
-            
+            return UserAuthError.emailNotConfirmed
+        case .codeExpired:
+            return UserAuthError.emailConfirmCodeExpired
+        case .codeMismatch:
+            return UserAuthError.emailConfirmCodeMisMatch
         default:
-            return NetworkError.unknown(-1, error.localizedDescription)
+            return UserAuthError.unknown(message: error.localizedDescription)
         }
     }
 }
