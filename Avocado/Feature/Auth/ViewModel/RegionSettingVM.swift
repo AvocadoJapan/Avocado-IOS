@@ -9,6 +9,7 @@ import Foundation
 import RxSwift
 import RxCocoa
 import RxRelay
+import CoreLocation
 
 final class RegionSettingVM {
     
@@ -17,6 +18,7 @@ final class RegionSettingVM {
     var searchTextRelay = BehaviorRelay<String>(value: "")
     let regionIdRelay = BehaviorRelay<String>(value: "")
     let regionsRelay = BehaviorRelay<[Region]>(value: [])
+    let locationRelay = BehaviorRelay<CLLocation?>(value: nil)
     var isValid: Observable<Bool> {
         return Observable.create { [weak self] observer in
             guard let self = self else {
@@ -28,6 +30,12 @@ final class RegionSettingVM {
             
             return Disposables.create()
         }
+    }
+    
+    private var locationManager = CLLocationManager().then {
+        $0.desiredAccuracy = kCLLocationAccuracyBest
+        $0.requestWhenInUseAuthorization()
+        $0.startUpdatingLocation()
     }
     
     init(service: AuthService) {
@@ -50,5 +58,50 @@ final class RegionSettingVM {
                 // 여기에 에러 구현
             }
             .disposed(by: disposeBag)
+    }
+    
+    /**
+     * - Description 현재 위치 주소를 가져오는 Observable
+     * - Returns 현재 주소
+     */
+    func getCurrentAddress() -> Observable<String> {
+        return Observable.create { [weak self] observer in
+            let geocoder = CLGeocoder()
+            
+            guard let location = self?.locationManager.location else {
+                return Disposables.create()
+            }
+            
+            geocoder.reverseGeocodeLocation(location) { placeMarks, err in
+                if let err = err {
+                    Logger.e(err)
+                    return
+                }
+                
+                guard let placemark = placeMarks?.first else {
+                    return
+                }
+                
+                var address = ""
+                
+                if let administrativeArea = placemark.administrativeArea {
+                    address = "\(administrativeArea)"
+                }
+                
+                if let locality = placemark.locality {
+                    address.append(locality)
+                }
+                
+                if let thoroughfare = placemark.thoroughfare {
+                    address.append(thoroughfare)
+                }
+                
+                Logger.d(address)
+                observer.onNext(address)
+                observer.onCompleted()
+            }
+            
+            return Disposables.create()
+        }
     }
 }

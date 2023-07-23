@@ -12,7 +12,7 @@ import Then
 import RxSwift
 import RxCocoa
 
-final class InputView: UIView {
+final class InputView: UIView, UITextFieldDelegate {
     
     // MARK: - Properties
     private var labelString : String
@@ -36,6 +36,8 @@ final class InputView: UIView {
         $0.contentVerticalAlignment = .center
         $0.borderStyle = .none
         $0.autocorrectionType = .no
+        
+        $0.delegate = self
     }
     
     private lazy var leftLabel: UILabel = UILabel().then {
@@ -210,6 +212,24 @@ final class InputView: UIView {
     public func keyboardHidden() {
         textField.resignFirstResponder()
     }
+    
+    /**
+     * - Description emailAddress일 경우 대문자 입력방지 델리게이트 메소드
+     */
+    func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
+        if textField.keyboardType == .emailAddress {
+            let lowercasedString = string.lowercased()
+            
+            if string != lowercasedString {
+                if let text = textField.text, let textRange = Range(range, in: text) {
+                    textField.text = text.replacingCharacters(in: textRange, with: lowercasedString)
+                }
+                return false
+            }
+        }
+        return true
+    }
+    
     /**
      * - Description 텍스트 필드 흔들기 애니메이션 실행
      */

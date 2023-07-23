@@ -202,9 +202,8 @@ final class EmailCheckVC: BaseVC {
             .rx
             .tap
             .asDriver()
-            .throttle(.seconds(3), latest: false)
             .drive(onNext: { [weak self] _ in
-//                self?.viewModel.otherEmailSignUp()
+                self?.present(OtherEmailVC(), animated: true)
             })
             .disposed(by: disposeBag)
         

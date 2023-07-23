@@ -26,7 +26,6 @@ final class SplashVM {
     
     func checkLoginSession() {
         authService.checkLoginSession()
-            .observe(on: MainScheduler.instance)
             .subscribe(onNext: { [weak self] isLogin in
                 guard let self = self else { return }
                 
@@ -48,7 +47,6 @@ final class SplashVM {
 
     private func getProfile() {
         authService.getProfile()
-            .observe(on: MainScheduler.instance)
             .subscribe(onNext: { [weak self] user in
                 self?.successEventPublish.accept(user)
             }, onError: { error in

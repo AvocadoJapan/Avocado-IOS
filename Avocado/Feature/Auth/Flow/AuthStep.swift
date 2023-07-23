@@ -19,21 +19,17 @@ enum AuthStep: Step {
     
     // Login
     case loginIsRequired
-    case loginIsFail
     case loginIsComplete
     
     // SignUp
     case signUpIsRequired
-    case signUpIsFail
     case signUpIsComplete
     
     // Social
     case socialLoginIsComplete
-    case socialLoginIsFail
 
     // EmailCheck
     case emailCheckIsRequired
-    case emailCheckIsFail
     case emailCheckIsComplete
     
     // OtherEmail

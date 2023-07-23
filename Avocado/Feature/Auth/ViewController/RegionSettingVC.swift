@@ -160,60 +160,15 @@ final class RegionSettingVC: BaseVC {
     @objc func didTapScrollView() {
         self.view.endEditing(true)
     }
-    
-    /**
-     * - Description 현재 위치 주소를 가져오는 Observable
-     * - Returns 현재 주소
-     */
-    private func getCurrentAddress() -> Observable<String> {
-        return Observable.create { [weak self] observer in
-            let geocoder = CLGeocoder()
-            
-            guard let location = self?.locationManager.location else {
-                return Disposables.create()
-            }
-            
-            geocoder.reverseGeocodeLocation(location) { placeMarks, err in
-                if let err = err {
-                    Logger.e(err)
-                    return
-                }
-                
-                guard let placemark = placeMarks?.first else {
-                    return
-                }
-                
-                var address = ""
-                
-                if let administrativeArea = placemark.administrativeArea {
-                    address = "\(administrativeArea)"
-                }
-                
-                if let locality = placemark.locality {
-                    address.append(locality)
-                }
-                
-                if let thoroughfare = placemark.thoroughfare {
-                    address.append(thoroughfare)
-                }
-            
-                Logger.d(address)
-                observer.onNext(address)
-                observer.onCompleted()
-            }
-            
-            return Disposables.create()
-        }
-    }
 }
 
-//// MARK: - Preview 관련
-//#if DEBUG && canImport(SwiftUI)
-//import SwiftUI
-//import RxSwift
-//struct RegionSettingVCPreview: PreviewProvider {
-//    static var previews: some View {
-//        return RegionSettingVC(viewModel: RegionSettingVM(service: AuthService())).toPreview()
-//    }
-//}
-//#endif
+// MARK: - Preview 관련
+#if DEBUG && canImport(SwiftUI)
+import SwiftUI
+import RxSwift
+struct RegionSettingVCPreview: PreviewProvider {
+    static var previews: some View {
+        return RegionSettingVC(viewModel: RegionSettingVM(service: AuthService())).toPreview()
+    }
+}
+#endif
