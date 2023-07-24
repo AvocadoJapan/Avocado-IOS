@@ -93,6 +93,7 @@
 		B26A3B6B2A60BB6100AD61A5 /* SplashStep.swift in Sources */ = {isa = PBXBuildFile; fileRef = B26A3B6A2A60BB6100AD61A5 /* SplashStep.swift */; };
 		B26A3B6E2A60D5FA00AD61A5 /* FailVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = B26A3B6D2A60D5FA00AD61A5 /* FailVC.swift */; };
 		B26F8A4D2A544AC300F4BEA3 /* ProfileSettingVM.swift in Sources */ = {isa = PBXBuildFile; fileRef = B26F8A4C2A544AC300F4BEA3 /* ProfileSettingVM.swift */; };
+		B28892072A6E569800952A10 /* FadeAnimation.swift in Sources */ = {isa = PBXBuildFile; fileRef = B28892062A6E569800952A10 /* FadeAnimation.swift */; };
 		B28D45732A6A8F5B00C6C45A /* SplashStepper.swift in Sources */ = {isa = PBXBuildFile; fileRef = B28D45722A6A8F5B00C6C45A /* SplashStepper.swift */; };
 		B293420E2A58579C00F5CF30 /* RegionTVCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B293420D2A58579C00F5CF30 /* RegionTVCell.swift */; };
 		B29342132A58810E00F5CF30 /* RegionSettingVM.swift in Sources */ = {isa = PBXBuildFile; fileRef = B29342122A58810E00F5CF30 /* RegionSettingVM.swift */; };
@@ -204,6 +205,7 @@
 		B26A3B6A2A60BB6100AD61A5 /* SplashStep.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SplashStep.swift; sourceTree = "<group>"; };
 		B26A3B6D2A60D5FA00AD61A5 /* FailVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FailVC.swift; sourceTree = "<group>"; };
 		B26F8A4C2A544AC300F4BEA3 /* ProfileSettingVM.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileSettingVM.swift; sourceTree = "<group>"; };
+		B28892062A6E569800952A10 /* FadeAnimation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FadeAnimation.swift; sourceTree = "<group>"; };
 		B28D45722A6A8F5B00C6C45A /* SplashStepper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SplashStepper.swift; sourceTree = "<group>"; };
 		B293420D2A58579C00F5CF30 /* RegionTVCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegionTVCell.swift; sourceTree = "<group>"; };
 		B29342122A58810E00F5CF30 /* RegionSettingVM.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegionSettingVM.swift; sourceTree = "<group>"; };
@@ -590,6 +592,7 @@
 			children = (
 				B1A301C52A543B15003834E6 /* UIButton+Animation.swift */,
 				B1A9D17E2A6BD2400080B818 /* UIView+Animation.swift */,
+				B28892062A6E569800952A10 /* FadeAnimation.swift */,
 			);
 			path = Animation;
 			sourceTree = "<group>";
@@ -906,6 +909,7 @@
 				9848A8B32A5D853B008D43F5 /* UIColor+Extension.swift in Sources */,
 				B1BFDD672A49CF8100DB4955 /* LoginVM.swift in Sources */,
 				B1B1EA162A599904007B1894 /* SettingSectionModel.swift in Sources */,
+				B28892072A6E569800952A10 /* FadeAnimation.swift in Sources */,
 				9816F6EB2A494AF400A7A284 /* DTOResponseable.swift in Sources */,
 				98FD1C282A56B3860031D7C1 /* SettingService.swift in Sources */,
 				9816F6EF2A494B1B00A7A284 /* NetworkError.swift in Sources */,

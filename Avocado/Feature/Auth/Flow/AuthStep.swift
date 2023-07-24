@@ -17,6 +17,9 @@ import Foundation
 
 enum AuthStep: Step {
     
+    // Welcome
+    case welcomeIsRequired
+    
     // Login
     case loginIsRequired
     case loginIsComplete
@@ -43,8 +46,4 @@ enum AuthStep: Step {
     // Profile
     case profileIsRequired
     case profileIsComplete
-    
-    // Api Key
-    case apiKeyIsRequired
-    case apiKeyIsFilledIn
 }

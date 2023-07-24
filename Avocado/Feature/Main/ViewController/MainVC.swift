@@ -107,7 +107,7 @@ import RxSwift
     }
      
     //MARK: - Initalize Method
-    init(vm viewModel: MainVM = MainVM()) {
+     init(viewModel: MainVM = MainVM()) {
         self.viewModel = viewModel
         super.init(nibName: nil, bundle: nil)
     }
@@ -204,7 +204,7 @@ import SwiftUI
 import RxSwift
 struct MainVCPreview: PreviewProvider {
     static var previews: some View {
-        return UINavigationController(rootViewController: MainVC(vm: MainVM())).toPreview()
+        return UINavigationController(rootViewController: MainVC(viewModel: MainVM())).toPreview()
     }
 }
 #endif

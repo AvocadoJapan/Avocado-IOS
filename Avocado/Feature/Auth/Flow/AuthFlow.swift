@@ -61,16 +61,15 @@ final class AuthFlow: Flow {
             return navigateToProfileSettingScreen()
         case .profileIsComplete:
             return navigateToWelcomScreen()
-        case .apiKeyIsRequired:
-            return navigateToSplashScreen()
-        case .apiKeyIsFilledIn:
-            return navigateToSplashScreen()
         default:
             return .none
         }
     }
     
     private func navigateToWelcomScreen() -> FlowContributors {
+        let service = AuthService()
+        let viewModel = WelcomeVM(service: service)
+        let viewController = WelcomeVC(viewModel: viewModel)
         return .none
     }
     

@@ -19,7 +19,7 @@ final class Util {
         settingNavigationVC.tabBarItem = UITabBarItem(title: "", image: UIImage(systemName: "person.fill"), tag: 1)
         
         let mainVM = MainVM()
-        let mainVC = MainVC(vm: mainVM)
+        let mainVC = MainVC(viewModel: mainVM)
         let mainNavigationVC = mainVC.makeBaseNavigationController()
         mainNavigationVC.tabBarItem = UITabBarItem(title: "", image: UIImage(systemName: "house.fill"), tag: 1)
         

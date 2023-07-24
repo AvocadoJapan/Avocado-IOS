@@ -55,29 +55,42 @@ final class SplashFlow: Flow {
     }
     
     private func navigateToSplashScreen() -> FlowContributors {
-        let splashVM = SplashVM(service: AuthService())
-        let splashVC = SplashVC(viewModel: splashVM)
-        rootViewController.setViewControllers([splashVC], animated: false)
-        return .one(flowContributor: .contribute(withNext: splashVC))
+        let service = AuthService()
+        let viewModel = SplashVM(service: service)
+        let viewController = SplashVC(viewModel: viewModel)
+        
+        rootViewController.setViewControllers([viewController], animated: false)
+        return .one(flowContributor: .contribute(withNext: viewController))
     }
     
     private func navigateToWelcomeScreen() -> FlowContributors {
-        let welcomeVM = WelcomeVM(service: AuthService())
-        let welcomeVC = WelcomeVC(viewModel: welcomeVM)
-        rootViewController.setViewControllers([welcomeVC], animated: false)
-        return .one(flowContributor: .contribute(withNext: welcomeVC))
+        let service = AuthService()
+        let viewModel = WelcomeVM(service: service)
+        let viewController = WelcomeVC(viewModel: viewModel)
+
+        // 스무스 애니메이션 적용
+        let transition = CATransition()
+        transition.duration = 0.2
+        transition.type = CATransitionType.fade
+        rootViewController.view.layer.add(transition, forKey: kCATransition)
+
+        // 커스텀 애니메이션 적용시 animated: false 로 설정
+        rootViewController.setViewControllers([viewController], animated: false)
+        return .one(flowContributor: .contribute(withNext: viewController))
     }
     
     private func navigateToMainScreen() -> FlowContributors {
-        let mainVM = MainVM()
-        let mainVC = MainVC(vm: mainVM)
-        rootViewController.setViewControllers([mainVC], animated: false)
-        return .one(flowContributor: .contribute(withNext: mainVC))
+        let viewModel = MainVM()
+        let viewController = MainVC(viewModel: viewModel)
+        
+        rootViewController.setViewControllers([viewController], animated: true)
+        return .one(flowContributor: .contribute(withNext: viewController))
     }
 
     private func navigateToFailScreen (with error: NetworkError) -> FlowContributors {
-        let failVC = FailVC(error: error)
-        rootViewController.setViewControllers([failVC], animated: false)
-        return .one(flowContributor: .contribute(withNext: failVC))
+        let viewController = FailVC(error: error)
+        
+        rootViewController.setViewControllers([viewController], animated: true)
+        return .one(flowContributor: .contribute(withNext: viewController))
     }
 }

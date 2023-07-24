@@ -134,6 +134,14 @@ final class InputView: UIView, UITextFieldDelegate {
             .bind(to: userInput)
             .disposed(by: disposeBag)
         
+        isVaild
+            .distinctUntilChanged()
+            .filter { !$0 }
+            .subscribe(onNext: { [weak self] _ in
+                self?.playShakeAnimation()
+            })
+            .disposed(by: disposeBag)
+        
         rightLabelString
             .observe(on: MainScheduler.instance)
             .subscribe(onNext: { [weak self] text in
