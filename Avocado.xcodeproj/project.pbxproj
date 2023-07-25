@@ -86,6 +86,10 @@
 		B21E58F42A574A46007CCAA0 /* RegionSettingVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = B21E58F32A574A46007CCAA0 /* RegionSettingVC.swift */; };
 		B22222652A55F40100A2B7CB /* PrivacyAccessVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = B22222642A55F40100A2B7CB /* PrivacyAccessVC.swift */; };
 		B22222672A55F83300A2B7CB /* PrivacyElementView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B22222662A55F83300A2B7CB /* PrivacyElementView.swift */; };
+		B2382C602A6F9A4300A24AE3 /* Localize_Swift in Frameworks */ = {isa = PBXBuildFile; productRef = B2382C5F2A6F9A4300A24AE3 /* Localize_Swift */; };
+		B2382C652A6FD2E900A24AE3 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = B2382C632A6FD2E900A24AE3 /* Localizable.strings */; };
+		B2382C6A2A6FD55D00A24AE3 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = B2382C682A6FD55D00A24AE3 /* Localizable.strings */; };
+		B2382C6D2A6FD56400A24AE3 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = B2382C6B2A6FD56400A24AE3 /* Localizable.strings */; };
 		B26A3B612A60A79800AD61A5 /* AuthFlow.swift in Sources */ = {isa = PBXBuildFile; fileRef = B26A3B602A60A79800AD61A5 /* AuthFlow.swift */; };
 		B26A3B642A60A7D600AD61A5 /* RxFlow in Frameworks */ = {isa = PBXBuildFile; productRef = B26A3B632A60A7D600AD61A5 /* RxFlow */; };
 		B26A3B662A60AB8400AD61A5 /* AuthStep.swift in Sources */ = {isa = PBXBuildFile; fileRef = B26A3B652A60AB8400AD61A5 /* AuthStep.swift */; };
@@ -199,6 +203,9 @@
 		B21E58F32A574A46007CCAA0 /* RegionSettingVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegionSettingVC.swift; sourceTree = "<group>"; };
 		B22222642A55F40100A2B7CB /* PrivacyAccessVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PrivacyAccessVC.swift; sourceTree = "<group>"; };
 		B22222662A55F83300A2B7CB /* PrivacyElementView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PrivacyElementView.swift; sourceTree = "<group>"; };
+		B2382C642A6FD2E900A24AE3 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = Localizable.strings; sourceTree = "<group>"; };
+		B2382C692A6FD55D00A24AE3 /* ja */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ja; path = Localizable.strings; sourceTree = "<group>"; };
+		B2382C6C2A6FD56400A24AE3 /* ko */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ko; path = Localizable.strings; sourceTree = "<group>"; };
 		B26A3B602A60A79800AD61A5 /* AuthFlow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthFlow.swift; sourceTree = "<group>"; };
 		B26A3B652A60AB8400AD61A5 /* AuthStep.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthStep.swift; sourceTree = "<group>"; };
 		B26A3B682A60BB5100AD61A5 /* SplashFlow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SplashFlow.swift; sourceTree = "<group>"; };
@@ -237,6 +244,7 @@
 				9816F6DE2A494A1B00A7A284 /* AWSCognitoAuthPlugin in Frameworks */,
 				9816F6D92A49495500A7A284 /* Moya in Frameworks */,
 				9816F6DB2A49495500A7A284 /* RxMoya in Frameworks */,
+				B2382C602A6F9A4300A24AE3 /* Localize_Swift in Frameworks */,
 				04D2FCF82A2A51F100253028 /* RxCocoa in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -639,6 +647,7 @@
 			children = (
 				B2198B972A2A36EA0019032D /* AppDelegate.swift */,
 				B2198B992A2A36EA0019032D /* SceneDelegate.swift */,
+				B2382C612A6FD27700A24AE3 /* Localization */,
 				B19E83242A60259B004C5DE2 /* Feature */,
 				9816F6D32A4948BE00A7A284 /* Network */,
 				B1A301C32A543A7C003834E6 /* Common */,
@@ -662,6 +671,40 @@
 				B2198BBD2A2A36EC0019032D /* AvocadoUITestsLaunchTests.swift */,
 			);
 			path = AvocadoUITests;
+			sourceTree = "<group>";
+		};
+		B2382C612A6FD27700A24AE3 /* Localization */ = {
+			isa = PBXGroup;
+			children = (
+				B2382C672A6FD54A00A24AE3 /* ko.lproj */,
+				B2382C662A6FD53500A24AE3 /* ja.lproj */,
+				B2382C622A6FD2A000A24AE3 /* en.lproj */,
+			);
+			path = Localization;
+			sourceTree = "<group>";
+		};
+		B2382C622A6FD2A000A24AE3 /* en.lproj */ = {
+			isa = PBXGroup;
+			children = (
+				B2382C632A6FD2E900A24AE3 /* Localizable.strings */,
+			);
+			path = en.lproj;
+			sourceTree = "<group>";
+		};
+		B2382C662A6FD53500A24AE3 /* ja.lproj */ = {
+			isa = PBXGroup;
+			children = (
+				B2382C682A6FD55D00A24AE3 /* Localizable.strings */,
+			);
+			path = ja.lproj;
+			sourceTree = "<group>";
+		};
+		B2382C672A6FD54A00A24AE3 /* ko.lproj */ = {
+			isa = PBXGroup;
+			children = (
+				B2382C6B2A6FD56400A24AE3 /* Localizable.strings */,
+			);
+			path = ko.lproj;
 			sourceTree = "<group>";
 		};
 		B26A3B5F2A60A73C00AD61A5 /* Flow */ = {
@@ -713,6 +756,7 @@
 				9816F6DF2A494A1B00A7A284 /* Amplify */,
 				98C711072A53B48300C99393 /* RxKeyboard */,
 				B26A3B632A60A7D600AD61A5 /* RxFlow */,
+				B2382C5F2A6F9A4300A24AE3 /* Localize_Swift */,
 			);
 			productName = Avocado;
 			productReference = B2198B942A2A36EA0019032D /* Avocado.app */;
@@ -785,6 +829,8 @@
 			knownRegions = (
 				en,
 				Base,
+				ja,
+				ko,
 			);
 			mainGroup = B2198B8B2A2A36EA0019032D;
 			packageReferences = (
@@ -796,6 +842,7 @@
 				9816F6DC2A494A1B00A7A284 /* XCRemoteSwiftPackageReference "amplify-swift" */,
 				98C711062A53B48300C99393 /* XCRemoteSwiftPackageReference "RxKeyboard" */,
 				B26A3B622A60A7D600AD61A5 /* XCRemoteSwiftPackageReference "RxFlow" */,
+				B2382C5E2A6F9A4300A24AE3 /* XCRemoteSwiftPackageReference "Localize-Swift" */,
 			);
 			productRefGroup = B2198B952A2A36EA0019032D /* Products */;
 			projectDirPath = "";
@@ -813,7 +860,10 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				B2382C6A2A6FD55D00A24AE3 /* Localizable.strings in Resources */,
+				B2382C6D2A6FD56400A24AE3 /* Localizable.strings in Resources */,
 				B2198BA72A2A36EB0019032D /* LaunchScreen.storyboard in Resources */,
+				B2382C652A6FD2E900A24AE3 /* Localizable.strings in Resources */,
 				9816F6E92A494AC800A7A284 /* amplifyconfiguration.json in Resources */,
 				B2198BA42A2A36EB0019032D /* Assets.xcassets in Resources */,
 			);
@@ -964,6 +1014,30 @@
 				B2198BA62A2A36EB0019032D /* Base */,
 			);
 			name = LaunchScreen.storyboard;
+			sourceTree = "<group>";
+		};
+		B2382C632A6FD2E900A24AE3 /* Localizable.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				B2382C642A6FD2E900A24AE3 /* en */,
+			);
+			name = Localizable.strings;
+			sourceTree = "<group>";
+		};
+		B2382C682A6FD55D00A24AE3 /* Localizable.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				B2382C692A6FD55D00A24AE3 /* ja */,
+			);
+			name = Localizable.strings;
+			sourceTree = "<group>";
+		};
+		B2382C6B2A6FD56400A24AE3 /* Localizable.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				B2382C6C2A6FD56400A24AE3 /* ko */,
+			);
+			name = Localizable.strings;
 			sourceTree = "<group>";
 		};
 /* End PBXVariantGroup section */
@@ -1334,6 +1408,14 @@
 				minimumVersion = 2.0.0;
 			};
 		};
+		B2382C5E2A6F9A4300A24AE3 /* XCRemoteSwiftPackageReference "Localize-Swift" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/marmelroy/Localize-Swift.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 3.2.0;
+			};
+		};
 		B26A3B622A60A7D600AD61A5 /* XCRemoteSwiftPackageReference "RxFlow" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/RxSwiftCommunity/RxFlow.git";
@@ -1399,6 +1481,11 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 98C711062A53B48300C99393 /* XCRemoteSwiftPackageReference "RxKeyboard" */;
 			productName = RxKeyboard;
+		};
+		B2382C5F2A6F9A4300A24AE3 /* Localize_Swift */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = B2382C5E2A6F9A4300A24AE3 /* XCRemoteSwiftPackageReference "Localize-Swift" */;
+			productName = Localize_Swift;
 		};
 		B26A3B632A60A7D600AD61A5 /* RxFlow */ = {
 			isa = XCSwiftPackageProductDependency;

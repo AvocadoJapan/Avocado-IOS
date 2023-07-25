@@ -11,6 +11,7 @@ import RxCocoa
 import RxRelay
 import RxSwift
 import Then
+import Localize_Swift
 
 final class WelcomeVC: BaseVC {
     
@@ -20,16 +21,16 @@ final class WelcomeVC: BaseVC {
     }
     
     private lazy var titleLabel = UILabel().then {
-        $0.text = "아보카도를 이용하기 위해서는 로그인이 필요합니다"
+        $0.text = "아보카도를 이용하기 위해서는 로그인이 필요합니다".localized()
         $0.numberOfLines = 0
         $0.textAlignment = .left
         $0.font = UIFont.systemFont(ofSize: 25, weight: .heavy)
     }
     
-    private lazy var signupButton: SubButton = SubButton(text: "아직 계정이 없나요? 회원가입")
+    private lazy var signupButton: SubButton = SubButton(text: "아직 계정이 없나요? 회원가입".localized())
     
     private lazy var agreementLabel = UILabel().then {
-        $0.text = "로그인을 함으로써, 당사 약관 및 개인정보 정책에 동의한 것으로 간주합니다"
+        $0.text = "로그인을 함으로써, 당사 약관 및 개인정보 정책에 동의한 것으로 간주합니다".localized()
         $0.numberOfLines = 0
         $0.textAlignment = .right
         $0.textColor = .darkGray
@@ -44,7 +45,7 @@ final class WelcomeVC: BaseVC {
     }
     
     private lazy var appleLogin = UIButton().then {
-        $0.setTitle("Apple로 계속하기", for: .normal)
+        $0.setTitle("Apple로 계속하기".localized(), for: .normal)
         $0.backgroundColor = .white
         $0.setTitleColor(.black, for: .normal)
         $0.titleLabel?.font = UIFont.boldSystemFont(ofSize: 13)
@@ -60,7 +61,7 @@ final class WelcomeVC: BaseVC {
     }
     
     private lazy var googleLogin = UIButton().then {
-        $0.setTitle("Google로 계속하기", for: .normal)
+        $0.setTitle("Google로 계속하기".localized(), for: .normal)
         $0.backgroundColor = .white
         $0.setTitleColor(.black, for: .normal)
         $0.titleLabel?.font = UIFont.boldSystemFont(ofSize: 13)
@@ -75,7 +76,7 @@ final class WelcomeVC: BaseVC {
         $0.titleEdgeInsets = UIEdgeInsets(top: 0, left: 15, bottom: 0, right: 0)
     }
     
-    private lazy var avocadoLogin = BottomButton(text: "이메일로 로그인")
+    private lazy var avocadoLogin = BottomButton(text: "이메일로 로그인".localized())
     
     private let viewModel: WelcomeVM
     
