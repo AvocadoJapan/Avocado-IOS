@@ -64,19 +64,12 @@ final class SplashFlow: Flow {
     }
     
     private func navigateToWelcomeScreen() -> FlowContributors {
-        let service = AuthService()
-        let viewModel = WelcomeVM(service: service)
-        let viewController = WelcomeVC(viewModel: viewModel)
-
-        // 스무스 애니메이션 적용
-        let transition = CATransition()
-        transition.duration = 0.2
-        transition.type = CATransitionType.fade
-        rootViewController.view.layer.add(transition, forKey: kCATransition)
-
-        // 커스텀 애니메이션 적용시 animated: false 로 설정
-        rootViewController.setViewControllers([viewController], animated: false)
-        return .one(flowContributor: .contribute(withNext: viewController))
+        // flow 설정 { 현재 네비게이션을 루트 컨트롤러로 설정함 }
+        let flow = AuthFlow(root: self.rootViewController)
+        // welcome 페이지 이동
+        let nextStep = OneStepper(withSingleStep: AuthStep.welcomeIsRequired)
+        
+        return .one(flowContributor: .contribute(withNextPresentable: flow, withNextStepper: nextStep))
     }
     
     private func navigateToMainScreen() -> FlowContributors {

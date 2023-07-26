@@ -19,9 +19,10 @@ final class AuthFlow: Flow {
         return self.rootViewController
     }
     
-    private let rootViewController = UINavigationController()
+    private var rootViewController = UINavigationController()
     
-    init() {
+    init(root: UINavigationController) {
+        self.rootViewController = root
         Logger.d("AuthFlow init")
     }
     
@@ -34,7 +35,8 @@ final class AuthFlow: Flow {
         guard let step = step as? AuthStep else { return .none }
         
         switch step {
-            
+        case .welcomeIsRequired:
+            return navigateToWelcomScreen()
         case .loginIsRequired:
             return navigateToLoginScreen()
         case .loginIsComplete:
@@ -70,7 +72,17 @@ final class AuthFlow: Flow {
         let service = AuthService()
         let viewModel = WelcomeVM(service: service)
         let viewController = WelcomeVC(viewModel: viewModel)
-        return .none
+
+        // 스무스 애니메이션 적용
+        let transition = CATransition()
+        transition.duration = 0.2
+        transition.type = CATransitionType.fade
+        rootViewController.view.layer.add(transition, forKey: kCATransition)
+
+        // 커스텀 애니메이션 적용시 animated: false 로 설정
+        rootViewController.setViewControllers([viewController], animated: false)
+        
+        return .one(flowContributor: .contribute(withNext: viewController))
     }
     
     private func navigateToLoginScreen() -> FlowContributors {

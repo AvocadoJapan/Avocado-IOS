@@ -54,24 +54,24 @@ final class SplashVC: BaseVC {
     override func bindUI() {
         viewModel.successEventPublish
             .observe(on: MainScheduler.instance)
-            .subscribe(onNext: { user in
-                self.steps.accept(SplashStep.tokenGetComplete)
+            .subscribe(onNext: { [weak self] user in
+                self?.steps.accept(SplashStep.tokenGetComplete)
             })
             .disposed(by: disposeBag)
         
         viewModel.errEventPublish
             .debounce(.milliseconds(800), scheduler: MainScheduler.instance)
             .observe(on: MainScheduler.instance)
-            .subscribe(onNext: { error in
+            .subscribe(onNext: { [weak self] error in
                 switch error {
                 case .invaildResponse, .invaildURL, .pageNotFound, .serverConflict, .serverError:
-                    self.steps.accept(SplashStep.errorOccurred(error: error))
+                    self?.steps.accept(SplashStep.errorOccurred(error: error))
                 case .tokenExpired:
-                    self.steps.accept(SplashStep.tokenIsRequired)
+                    self?.steps.accept(SplashStep.tokenIsRequired)
                 case .tokenIsRequired:
-                    self.steps.accept(SplashStep.tokenIsRequired)
+                    self?.steps.accept(SplashStep.tokenIsRequired)
                 case .unknown:
-                    self.steps.accept(SplashStep.errorOccurred(error: error))
+                    self?.steps.accept(SplashStep.errorOccurred(error: error))
                 }
             })
             .disposed(by: disposeBag)
