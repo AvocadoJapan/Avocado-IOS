@@ -1,8 +1,8 @@
 //
-//  SplashFlow.swift
+//  SettingFlow.swift
 //  Avocado
 //
-//  Created by Jayden Jang on 2023/07/14.
+//  Created by Jayden Jang on 2023/07/31.
 //
 
 import Foundation
@@ -14,14 +14,14 @@ import RxCocoa
 import Then
 
 // 플로우는 화면 흐름 이벤트가 들어오면 로직처리 및 의존성 주입
-final class SplashFlow: Flow {
+final class SettingFlow: Flow {
     var root: Presentable {
         return self.rootViewController
     }
     
     init(root: UINavigationController) {
         self.rootViewController = root
-        Logger.d("SplashFlow init")
+        Logger.d("Setting init")
     }
     
     private var rootViewController = UINavigationController()
@@ -66,14 +66,7 @@ final class SplashFlow: Flow {
         let viewModel = MainVM()
         let viewController = MainVC(viewModel: viewModel)
         
-        // 스무스 애니메이션 적용
-        let transition = CATransition()
-        transition.duration = 0.2
-        transition.type = CATransitionType.fade
-        rootViewController.view.layer.add(transition, forKey: kCATransition)
-
-        // 커스텀 애니메이션 적용시 animated: false 로 설정
-        rootViewController.setViewControllers([viewController], animated: false)
+        rootViewController.setViewControllers([viewController], animated: true)
         return .one(flowContributor: .contribute(withNext: viewController))
     }
 
@@ -84,3 +77,4 @@ final class SplashFlow: Flow {
         return .one(flowContributor: .contribute(withNext: viewController))
     }
 }
+

@@ -1,8 +1,8 @@
 //
-//  SplashStepper.swift
+//  MainStepper.swift
 //  Avocado
 //
-//  Created by Jayden Jang on 2023/07/21.
+//  Created by Jayden Jang on 2023/07/31.
 //
 
 import Foundation
@@ -11,7 +11,7 @@ import RxRelay
 import RxSwift
 
 // 리모콘
-final class SplashStepper: Stepper {
+final class MainStepper: Stepper {
     let steps: PublishRelay<Step> = PublishRelay()
     private let disposeBag = DisposeBag()
     

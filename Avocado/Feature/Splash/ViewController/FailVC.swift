@@ -38,6 +38,7 @@ final class FailVC: BaseVC {
     override func setConstraint() {
         errorLabel.snp.makeConstraints {
             $0.centerX.centerY.equalToSuperview()
+            $0.left.equalToSuperview().offset(30)
         }
     }
 }

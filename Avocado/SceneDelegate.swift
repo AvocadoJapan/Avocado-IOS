@@ -22,13 +22,13 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         
         guard let windowSecene = (scene as? UIWindowScene) else { return }
         
-        let splashFlow = SplashFlow() // 흐름
-        let splashStepper = SplashStepper() // 흐름 트리거
+        let appFlow = AppFlow() // 흐름
+        let appStepper = AppStepper() // 흐름 트리거
         
         // 흐름 & 흐름 트리거 연결되었음
-        self.coordinator.coordinate(flow: splashFlow, with: splashStepper)
+        self.coordinator.coordinate(flow: appFlow, with: appStepper)
         
-        Flows.use(splashFlow, when: .created, block: { rootVC in
+        Flows.use(appFlow, when: .created, block: { rootVC in
             let window = UIWindow(windowScene: windowSecene)
             window.rootViewController = rootVC
             self.window = window

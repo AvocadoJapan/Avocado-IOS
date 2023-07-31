@@ -86,6 +86,15 @@
 		B21E58F42A574A46007CCAA0 /* RegionSettingVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = B21E58F32A574A46007CCAA0 /* RegionSettingVC.swift */; };
 		B22222652A55F40100A2B7CB /* PrivacyAccessVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = B22222642A55F40100A2B7CB /* PrivacyAccessVC.swift */; };
 		B22222672A55F83300A2B7CB /* PrivacyElementView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B22222662A55F83300A2B7CB /* PrivacyElementView.swift */; };
+		B22ECA2B2A75974B00CCA794 /* AppFlow.swift in Sources */ = {isa = PBXBuildFile; fileRef = B22ECA2A2A75974B00CCA794 /* AppFlow.swift */; };
+		B22ECA2D2A75975C00CCA794 /* AppStepper.swift in Sources */ = {isa = PBXBuildFile; fileRef = B22ECA2C2A75975C00CCA794 /* AppStepper.swift */; };
+		B22ECA2F2A75976500CCA794 /* AppStep.swift in Sources */ = {isa = PBXBuildFile; fileRef = B22ECA2E2A75976500CCA794 /* AppStep.swift */; };
+		B22ECA322A7789D900CCA794 /* MainFlow.swift in Sources */ = {isa = PBXBuildFile; fileRef = B22ECA312A7789D900CCA794 /* MainFlow.swift */; };
+		B22ECA342A7789E500CCA794 /* MainStepper.swift in Sources */ = {isa = PBXBuildFile; fileRef = B22ECA332A7789E500CCA794 /* MainStepper.swift */; };
+		B22ECA362A7789F100CCA794 /* MainStep.swift in Sources */ = {isa = PBXBuildFile; fileRef = B22ECA352A7789F100CCA794 /* MainStep.swift */; };
+		B22ECA382A778E8000CCA794 /* SettingFlow.swift in Sources */ = {isa = PBXBuildFile; fileRef = B22ECA372A778E8000CCA794 /* SettingFlow.swift */; };
+		B22ECA3B2A778E9000CCA794 /* SettingStepper.swift in Sources */ = {isa = PBXBuildFile; fileRef = B22ECA3A2A778E9000CCA794 /* SettingStepper.swift */; };
+		B22ECA3D2A778E9800CCA794 /* SettingStep.swift in Sources */ = {isa = PBXBuildFile; fileRef = B22ECA3C2A778E9800CCA794 /* SettingStep.swift */; };
 		B2382C602A6F9A4300A24AE3 /* Localize_Swift in Frameworks */ = {isa = PBXBuildFile; productRef = B2382C5F2A6F9A4300A24AE3 /* Localize_Swift */; };
 		B2382C652A6FD2E900A24AE3 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = B2382C632A6FD2E900A24AE3 /* Localizable.strings */; };
 		B2382C6A2A6FD55D00A24AE3 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = B2382C682A6FD55D00A24AE3 /* Localizable.strings */; };
@@ -203,6 +212,15 @@
 		B21E58F32A574A46007CCAA0 /* RegionSettingVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegionSettingVC.swift; sourceTree = "<group>"; };
 		B22222642A55F40100A2B7CB /* PrivacyAccessVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PrivacyAccessVC.swift; sourceTree = "<group>"; };
 		B22222662A55F83300A2B7CB /* PrivacyElementView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PrivacyElementView.swift; sourceTree = "<group>"; };
+		B22ECA2A2A75974B00CCA794 /* AppFlow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppFlow.swift; sourceTree = "<group>"; };
+		B22ECA2C2A75975C00CCA794 /* AppStepper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppStepper.swift; sourceTree = "<group>"; };
+		B22ECA2E2A75976500CCA794 /* AppStep.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppStep.swift; sourceTree = "<group>"; };
+		B22ECA312A7789D900CCA794 /* MainFlow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainFlow.swift; sourceTree = "<group>"; };
+		B22ECA332A7789E500CCA794 /* MainStepper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainStepper.swift; sourceTree = "<group>"; };
+		B22ECA352A7789F100CCA794 /* MainStep.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainStep.swift; sourceTree = "<group>"; };
+		B22ECA372A778E8000CCA794 /* SettingFlow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingFlow.swift; sourceTree = "<group>"; };
+		B22ECA3A2A778E9000CCA794 /* SettingStepper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingStepper.swift; sourceTree = "<group>"; };
+		B22ECA3C2A778E9800CCA794 /* SettingStep.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingStep.swift; sourceTree = "<group>"; };
 		B2382C642A6FD2E900A24AE3 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = Localizable.strings; sourceTree = "<group>"; };
 		B2382C692A6FD55D00A24AE3 /* ja */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ja; path = Localizable.strings; sourceTree = "<group>"; };
 		B2382C6C2A6FD56400A24AE3 /* ko */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ko; path = Localizable.strings; sourceTree = "<group>"; };
@@ -269,6 +287,7 @@
 		04BA131F2A2AD9FB0004E2FB /* Main */ = {
 			isa = PBXGroup;
 			children = (
+				B22ECA302A7789D100CCA794 /* Flow */,
 				04BA13232A2ADAC10004E2FB /* Model */,
 				04BA13222A2ADAB90004E2FB /* ViewModel */,
 				04BA13242A2ADAD00004E2FB /* ViewController */,
@@ -406,6 +425,7 @@
 		98FD1C212A56AD0F0031D7C1 /* Setting */ = {
 			isa = PBXGroup;
 			children = (
+				B22ECA392A778E8500CCA794 /* Flow */,
 				B1B1EA142A5998F5007B1894 /* Model */,
 				98B980F82A5BD7EC00982D3A /* ViewModel */,
 				B1B1EA0F2A597348007B1894 /* ViewController */,
@@ -426,6 +446,9 @@
 		B19E83242A60259B004C5DE2 /* Feature */ = {
 			isa = PBXGroup;
 			children = (
+				B22ECA2A2A75974B00CCA794 /* AppFlow.swift */,
+				B22ECA2C2A75975C00CCA794 /* AppStepper.swift */,
+				B22ECA2E2A75976500CCA794 /* AppStep.swift */,
 				B19E83252A6025A2004C5DE2 /* Auth */,
 				04BA131F2A2AD9FB0004E2FB /* Main */,
 				B19E83262A6025A6004C5DE2 /* Search */,
@@ -673,6 +696,26 @@
 			path = AvocadoUITests;
 			sourceTree = "<group>";
 		};
+		B22ECA302A7789D100CCA794 /* Flow */ = {
+			isa = PBXGroup;
+			children = (
+				B22ECA312A7789D900CCA794 /* MainFlow.swift */,
+				B22ECA332A7789E500CCA794 /* MainStepper.swift */,
+				B22ECA352A7789F100CCA794 /* MainStep.swift */,
+			);
+			path = Flow;
+			sourceTree = "<group>";
+		};
+		B22ECA392A778E8500CCA794 /* Flow */ = {
+			isa = PBXGroup;
+			children = (
+				B22ECA372A778E8000CCA794 /* SettingFlow.swift */,
+				B22ECA3A2A778E9000CCA794 /* SettingStepper.swift */,
+				B22ECA3C2A778E9800CCA794 /* SettingStep.swift */,
+			);
+			path = Flow;
+			sourceTree = "<group>";
+		};
 		B2382C612A6FD27700A24AE3 /* Localization */ = {
 			isa = PBXGroup;
 			children = (
@@ -900,10 +943,14 @@
 				B1D23D3F2A4C74F6006A2848 /* AvatarModel.swift in Sources */,
 				9816F6ED2A494B0900A7A284 /* BasePagenationResponse.swift in Sources */,
 				04C835F92A2B5E6500731E3E /* MainCategoryModel.swift in Sources */,
+				B22ECA362A7789F100CCA794 /* MainStep.swift in Sources */,
 				04C835EB2A2B280A00731E3E /* MainSectionModel.swift in Sources */,
+				B22ECA2D2A75975C00CCA794 /* AppStepper.swift in Sources */,
 				B22222672A55F83300A2B7CB /* PrivacyElementView.swift in Sources */,
+				B22ECA2B2A75974B00CCA794 /* AppFlow.swift in Sources */,
 				B1A301BE2A543A2F003834E6 /* Constant.swift in Sources */,
 				981A598D2A494FAE0031A917 /* AuthService.swift in Sources */,
+				B22ECA3D2A778E9800CCA794 /* SettingStep.swift in Sources */,
 				04C835FB2A2B5FCF00731E3E /* MainHeaderReusableView.swift in Sources */,
 				B29D78912A2B6FB1008B6945 /* SearchVC.swift in Sources */,
 				B1A705142A63C426005CD130 /* ViewModelType.swift in Sources */,
@@ -918,6 +965,7 @@
 				04C835EF2A2B2CC500731E3E /* BannerModel.swift in Sources */,
 				B1D23D392A4C6245006A2848 /* WelcomeVM.swift in Sources */,
 				04C835F72A2B46B600731E3E /* BannerCVCell.swift in Sources */,
+				B22ECA2F2A75976500CCA794 /* AppStep.swift in Sources */,
 				B1A301BD2A543A2F003834E6 /* BaseVC.swift in Sources */,
 				04BA13292A2AE0990004E2FB /* ProductCVCell.swift in Sources */,
 				B2F3D3642A511F2700FB05E1 /* SubButton.swift in Sources */,
@@ -935,6 +983,7 @@
 				B2D276512A6C4DB700441719 /* OtherEmailVM.swift in Sources */,
 				04BD03F72A2B058500330D8A /* MainCategoryCVCell.swift in Sources */,
 				9816F6F42A494B5400A7A284 /* APIRequestInterceptor.swift in Sources */,
+				B22ECA342A7789E500CCA794 /* MainStepper.swift in Sources */,
 				9816F6D62A49491E00A7A284 /* BaseTarget.swift in Sources */,
 				B26A3B6E2A60D5FA00AD61A5 /* FailVC.swift in Sources */,
 				B1A9D17F2A6BD2400080B818 /* UIView+Animation.swift in Sources */,
@@ -945,6 +994,7 @@
 				9816F6F22A494B3C00A7A284 /* NetworkLoggerPlugin.swift in Sources */,
 				B2E2AC802A4772D3003DAE88 /* WelcomeVC.swift in Sources */,
 				B2198B9A2A2A36EA0019032D /* SceneDelegate.swift in Sources */,
+				B22ECA322A7789D900CCA794 /* MainFlow.swift in Sources */,
 				04BA13212A2ADA160004E2FB /* MainVC.swift in Sources */,
 				04BA13262A2ADAEE0004E2FB /* MainVM.swift in Sources */,
 				B21E58F42A574A46007CCAA0 /* RegionSettingVC.swift in Sources */,
@@ -966,7 +1016,9 @@
 				9816F6E22A494A5900A7A284 /* BaseAPIService.swift in Sources */,
 				04C835FD2A2B5FE100731E3E /* MainFooterReusableView.swift in Sources */,
 				B293420E2A58579C00F5CF30 /* RegionTVCell.swift in Sources */,
+				B22ECA382A778E8000CCA794 /* SettingFlow.swift in Sources */,
 				B1A301A62A5439E7003834E6 /* UIViewController+Extension.swift in Sources */,
+				B22ECA3B2A778E9000CCA794 /* SettingStepper.swift in Sources */,
 				98AD11012A4BF713001C4734 /* UserModel.swift in Sources */,
 				B18F1A002A5ED730003440B6 /* Util.swift in Sources */,
 				B1A301A72A5439E7003834E6 /* UIView+Extension.swift in Sources */,
