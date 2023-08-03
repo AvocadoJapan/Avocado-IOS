@@ -50,32 +50,6 @@ final class SplashVC: BaseVC {
             $0.size.equalTo(150)
         }
     }
-    
-    override func bindUI() {
-        viewModel.successEventPublish
-            .observe(on: MainScheduler.instance)
-            .subscribe(onNext: { [weak self] user in
-                self?.steps.accept(SplashStep.tokenGetComplete)
-            })
-            .disposed(by: disposeBag)
-        
-        viewModel.errEventPublish
-            .debounce(.milliseconds(800), scheduler: MainScheduler.instance)
-            .observe(on: MainScheduler.instance)
-            .subscribe(onNext: { [weak self] error in
-                switch error {
-                case .invaildResponse, .invaildURL, .pageNotFound, .serverConflict, .serverError:
-                    self?.steps.accept(SplashStep.errorOccurred(error: error))
-                case .tokenExpired:
-                    self?.steps.accept(SplashStep.tokenIsRequired)
-                case .tokenIsRequired:
-                    self?.steps.accept(SplashStep.tokenIsRequired)
-                case .unknown:
-                    self?.steps.accept(SplashStep.errorOccurred(error: error))
-                }
-            })
-            .disposed(by: disposeBag)
-    }
 }
 
 #if DEBUG && canImport(SwiftUI)

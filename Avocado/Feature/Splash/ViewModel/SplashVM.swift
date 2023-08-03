@@ -11,17 +11,28 @@ import RxFlow
 import RxCocoa
 import Foundation
 
-final class SplashVM {
+final class SplashVM: Stepper {
     
+    // Service 인스턴스
     let authService: AuthService
-    let disposeBag = DisposeBag()
-    let successEventPublish = PublishRelay<User>()
-    let errEventPublish = PublishRelay<NetworkError>()
     
+    //MARK: - RXFlow
+    var steps: PublishRelay<Step> = PublishRelay()
+    
+    //MARK: - RX
+    // 에러 이벤트를 전달하는 인스턴스 <User>
+    let successEventPublish = PublishRelay<User>()
+    // 에러 이벤트를 전달하는 인스턴스
+    let errEventPublish = PublishRelay<NetworkError>()
+    let disposeBag = DisposeBag()
+    
+    // Private
     private var isCheckingSession = false
     
     init(service: AuthService) {
         self.authService = service
+        
+        bindRxFlow()
     }
     
     func checkLoginSession() {
@@ -54,6 +65,32 @@ final class SplashVM {
                     self.errEventPublish.accept(networkError)
                 } else {
                     self.errEventPublish.accept(NetworkError.unknown(-1, error.localizedDescription))
+                }
+            })
+            .disposed(by: disposeBag)
+    }
+    
+    private func bindRxFlow() {
+        successEventPublish
+            .observe(on: MainScheduler.instance)
+            .subscribe(onNext: { [weak self] user in
+                self?.steps.accept(SplashStep.tokenIsExist)
+            })
+            .disposed(by: disposeBag)
+        
+        errEventPublish
+            .debounce(.milliseconds(800), scheduler: MainScheduler.instance)
+            .observe(on: MainScheduler.instance)
+            .subscribe(onNext: { [weak self] error in
+                switch error {
+                case .invaildResponse, .invaildURL, .pageNotFound, .serverConflict, .serverError:
+                    self?.steps.accept(SplashStep.errorOccurred(error: error))
+                case .tokenExpired:
+                    self?.steps.accept(SplashStep.tokenIsRequired)
+                case .tokenIsRequired:
+                    self?.steps.accept(SplashStep.tokenIsRequired)
+                case .unknown:
+                    self?.steps.accept(SplashStep.errorOccurred(error: error))
                 }
             })
             .disposed(by: disposeBag)

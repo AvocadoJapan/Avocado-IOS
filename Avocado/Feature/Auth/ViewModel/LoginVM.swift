@@ -8,9 +8,13 @@
 import Foundation
 import RxRelay
 import RxSwift
+import RxFlow
 import Amplify
 
-final class LoginVM {
+final class LoginVM: Stepper {
+    //MARK: - RXFlow
+    var steps: PublishRelay<Step> = PublishRelay()
+    
     // 서비스를 제공하는 인스턴스
     private let authService: AuthService
     private let disposeBag = DisposeBag()
@@ -35,6 +39,15 @@ final class LoginVM {
     // 생성자
     init(service: AuthService) {
         self.authService = service
+
+        successEventPublish
+            .observe(on: MainScheduler.instance)
+            .subscribe(onNext: { [weak self] user in
+                
+                Logger.trace("\(user)")
+                self?.steps.accept(AuthStep.loginIsComplete)
+            })
+            .disposed(by: disposeBag)
     }
     
     // 로그인 요청하는 함수
@@ -58,4 +71,5 @@ final class LoginVM {
         
     }
     
+
 }

@@ -31,12 +31,11 @@ final class SplashFlow: Flow {
         guard let step = step as? SplashStep else { return .none }
         
         switch step {
-        
         case .splashIsRequired:
             return navigateToSplashScreen()
         case .tokenIsRequired:
             return navigateToWelcomeScreen()
-        case .tokenGetComplete:
+        case .tokenIsExist:
             return navigateToMainScreen()
         case .errorOccurred(let error):
             return navigateToFailScreen(with: error)
@@ -49,8 +48,8 @@ final class SplashFlow: Flow {
         let viewController = SplashVC(viewModel: viewModel)
         rootViewController.pushViewController(viewController, animated: false)
         
-//        rootViewController.setViewControllers([viewController], animated: false)
-        return .one(flowContributor: .contribute(withNext: viewController))
+        //        rootViewController.setViewControllers([viewController], animated: false)
+        return .one(flowContributor: .contribute(withNextPresentable: viewController, withNextStepper: viewModel))
     }
     
     private func navigateToWelcomeScreen() -> FlowContributors {
@@ -62,25 +61,21 @@ final class SplashFlow: Flow {
         return .one(flowContributor: .contribute(withNextPresentable: flow, withNextStepper: nextStep))
     }
     
-    private func navigateToMainScreen() -> FlowContributors {
-        let viewModel = MainVM()
-        let viewController = MainVC(viewModel: viewModel)
+    private func navigateToMainScreen() -> FlowContributors {        
+        // flow 설정 { 현재 네비게이션을 루트 컨트롤러로 설정함 }
+        let flow = MainFlow(root: self.rootViewController)
         
-        // 스무스 애니메이션 적용
-        let transition = CATransition()
-        transition.duration = 0.2
-        transition.type = CATransitionType.fade
-        rootViewController.view.layer.add(transition, forKey: kCATransition)
-
-        // 커스텀 애니메이션 적용시 animated: false 로 설정
-        rootViewController.setViewControllers([viewController], animated: false)
-        return .one(flowContributor: .contribute(withNext: viewController))
+        // 페이지 이동
+        let nextStep = OneStepper(withSingleStep: MainStep.errorOccurred(error: .unknown(-10, "성공적으로 MainStep에 도달했음. 추가개발필요.")))
+        
+        return .one(flowContributor: .contribute(withNextPresentable: flow, withNextStepper: nextStep))
     }
-
+    
     private func navigateToFailScreen (with error: NetworkError) -> FlowContributors {
         let viewController = FailVC(error: error)
+        let nextStep = OneStepper(withSingleStep: SplashStep.errorOccurred(error: error))
         
         rootViewController.setViewControllers([viewController], animated: true)
-        return .one(flowContributor: .contribute(withNext: viewController))
+        return .one(flowContributor: .contribute(withNextPresentable: viewController, withNextStepper: nextStep))
     }
 }

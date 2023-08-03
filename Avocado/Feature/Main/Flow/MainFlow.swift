@@ -28,22 +28,34 @@ final class MainFlow: Flow {
     
     func navigate(to step: Step) -> FlowContributors {
         
-        guard let step = step as? SplashStep else { return .none }
+        guard let step = step as? MainStep else { return .none }
         
         switch step {
-        
-        case .splashIsRequired:
+
+        case .errorOccurred(let error):
+            
+            return navigateToFailScreen(with: error)
+        case .mainIsRequired:
             return .none
         case .tokenIsRequired:
             return .none
         case .tokenGetComplete:
             return .none
-        case .errorOccurred(let error):
-            _ = error
-            return .none
         }
     }
     
-    // private func
+    private func navigateToFailScreen(with error: NetworkError) -> FlowContributors {
+        let viewController = FailVC(error: error)
+        
+        // 스무스 애니메이션 적용
+        let transition = CATransition()
+        transition.duration = 0.2
+        transition.type = CATransitionType.fade
+        rootViewController.view.layer.add(transition, forKey: kCATransition)
+        
+        rootViewController.setViewControllers([viewController], animated: false)
+        
+        return .one(flowContributor: .contribute(withNext: viewController))
+    }
 }
 

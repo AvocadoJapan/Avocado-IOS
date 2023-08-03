@@ -40,30 +40,10 @@ final class AuthFlow: Flow {
         case .loginIsRequired:
             return navigateToLoginScreen()
         case .loginIsComplete:
-            return navigateToWelcomScreen()
+            return navigateToMainScreen()
         case .signUpIsRequired:
             return navigateToSignupScreen()
-        case .signUpIsComplete:
-            return navigateToEmailCheckScreen()
-        case .socialLoginIsComplete:
-            return navigateToWelcomScreen()
-        case .emailCheckIsRequired:
-            return navigateToEmailCheckScreen()
-        case .emailCheckIsComplete:
-            return navigateToRegionSettingScreen()
-        case .otherEmailIsRequired:
-            return navigateToOtherEmailScreen()
-        case .otherEmailIsComplete:
-            return navigateToEmailCheckScreen()
-        case .regionIsRequired:
-            return navigateToRegionSettingScreen()
-        case .regionIsComplete:
-            return navigateToProfileSettingScreen()
-        case .profileIsRequired:
-            return navigateToProfileSettingScreen()
-        case .profileIsComplete:
-            return navigateToWelcomScreen()
-        default:
+        default :
             return .none
         }
     }
@@ -72,31 +52,36 @@ final class AuthFlow: Flow {
         let service = AuthService()
         let viewModel = WelcomeVM(service: service)
         let viewController = WelcomeVC(viewModel: viewModel)
-
+        
         // 스무스 애니메이션 적용
         let transition = CATransition()
         transition.duration = 0.2
         transition.type = CATransitionType.fade
         rootViewController.view.layer.add(transition, forKey: kCATransition)
-
+        
         // 커스텀 애니메이션 적용시 animated: false 로 설정
         rootViewController.setViewControllers([viewController], animated: false)
         
-        return .one(flowContributor: .contribute(withNext: viewController))
+        return .one(flowContributor: .contribute(withNextPresentable: viewController, withNextStepper: viewModel))
     }
     
     private func navigateToLoginScreen() -> FlowContributors {
-        return .none
+        let service = AuthService()
+        let viewModel = LoginVM(service: service)
+        let viewController = LoginVC(viewModel: viewModel)
+        
+        rootViewController.pushViewController(viewController, animated: true)
+        return .one(flowContributor: .contribute(withNextPresentable: viewController, withNextStepper: viewModel))
     }
     
     private func navigateToSignupScreen() -> FlowContributors {
         return .none
     }
-
+    
     private func navigateToEmailCheckScreen() -> FlowContributors {
         return .none
     }
-        
+    
     private func navigateToOtherEmailScreen() -> FlowContributors {
         return .none
     }
@@ -108,15 +93,23 @@ final class AuthFlow: Flow {
     private func navigateToProfileSettingScreen() -> FlowContributors {
         return .none
     }
-        
+    
     private func navigateToMainScreen() -> FlowContributors {
-        return .none
-    }
+        // flow 설정 { 현재 네비게이션을 루트 컨트롤러로 설정함 }
+        let flow = MainFlow(root: self.rootViewController)
         
+        // 페이지 이동
+        let nextStep = OneStepper(withSingleStep: MainStep.errorOccurred(error: .unknown(-10, "성공적으로 MainStep에 도달했음. 추가개발필요.")))
+        
+        return .one(flowContributor: .contribute(withNextPresentable: flow, withNextStepper: nextStep))
+    }
+    
     private func navigateToSplashScreen() -> FlowContributors {
-        let splashVM = SplashVM(service: AuthService())
-        let splashVC = SplashVC(viewModel: splashVM)
-        rootViewController.setViewControllers([splashVC], animated: false)
-        return .one(flowContributor: .contribute(withNext: splashVC))
+        let viewModel = SplashVM(service: AuthService())
+        let viewController = SplashVC(viewModel: viewModel)
+        
+        rootViewController.setViewControllers([viewController], animated: false)
+        
+        return .one(flowContributor: .contribute(withNextPresentable: viewController, withNextStepper: viewModel))
     }
 }

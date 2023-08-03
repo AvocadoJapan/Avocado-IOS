@@ -16,6 +16,7 @@ import RxKeyboard
 
 
 final class ProfileSettingVC: BaseVC {
+    
     private lazy var titleLabel = UILabel().then {
         $0.text = "프로필 설정"
         $0.numberOfLines = 1

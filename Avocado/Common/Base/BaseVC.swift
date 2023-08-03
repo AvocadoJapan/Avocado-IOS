@@ -18,10 +18,8 @@ import RxCocoa
  */
 class BaseVC: UIViewController, Stepper {
     
-    //MARK: - RXFlow
-    var steps: PublishRelay<Step> = PublishRelay()
+    let steps: PublishRelay<Step> = PublishRelay()
     
-    //MARK: - RX
     let disposeBag = DisposeBag()
 
     //MARK: - ViewLifeCycle

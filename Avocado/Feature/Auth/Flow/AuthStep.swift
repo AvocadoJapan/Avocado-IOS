@@ -14,8 +14,10 @@
 
 import RxFlow
 import Foundation
+import RxRelay
+import RxSwift
 
-enum AuthStep: Step {
+@frozen enum AuthStep: Step {
     
     // Welcome
     case welcomeIsRequired

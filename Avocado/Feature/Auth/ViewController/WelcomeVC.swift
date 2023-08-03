@@ -167,14 +167,8 @@ final class WelcomeVC: BaseVC {
             .rx
             .tap
             .asDriver()
-            .throttle(.seconds(3), latest: false)
             .drive(onNext: { [weak self] _ in
-                guard let self = self else { return }
-                let authService = AuthService()
-                let emailLoginVM = LoginVM(service: authService)
-                let emailLoginVC = LoginVC(viewModel: emailLoginVM)
-                
-                self.navigationController?.pushViewController(emailLoginVC, animated: true)
+                self?.viewModel.handleAvocadoLogin()
             })
             .disposed(by: disposeBag)
         
@@ -183,14 +177,8 @@ final class WelcomeVC: BaseVC {
             .rx
             .tap
             .asDriver()
-            .throttle(.seconds(3), latest: false)
             .drive(onNext: { [weak self] _ in
-                guard let self = self else { return }
-                let authService = AuthService()
-                let signUpVM = SignUpVM(service: authService)
-                let signUpVC = SignupVC(viewModel: signUpVM)
-                
-                self.navigationController?.pushViewController(signUpVC, animated: true)
+                self?.viewModel.handleSignup()
             })
             .disposed(by: disposeBag)
         
@@ -232,22 +220,6 @@ final class WelcomeVC: BaseVC {
                 }
             })
             .disposed(by: disposeBag)
-    }
-    
-    override func viewDidLoad() {
-        super.viewDidLoad()
-    
-//        emailInput.setUserInputAction(target: self, action: #selector(handleUserInputFromMainVC(_:)))
-        
-//        emailInput.userInput
-//                    .subscribe(onNext: { input in
-//                        print(#fileID, #function, #line, "- input : \(input)")
-//                    })
-//                    .disposed(by: disposeBag)
-    }
-    
-    @objc func handleUserInputFromMainVC(_ sender: UITextField){
-        print(#fileID, #function, #line, "- sender: \(sender.text ?? "")")
     }
 }
 

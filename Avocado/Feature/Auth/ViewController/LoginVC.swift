@@ -167,15 +167,6 @@ final class LoginVC: BaseVC {
             })
             .disposed(by: disposeBag)
         
-        viewModel
-            .successEventPublish
-            .asSignal()
-            .emit(onNext: { _ in
-                let tabbarViewController = Util.makeTabBarViewController()
-                Util.changeRootViewController(to: tabbarViewController)
-            })
-            .disposed(by: disposeBag)
-        
         // accountCenter 옵션
         // FIXME: 계정 센터 VC를 만들면 나중에 거기로 연결해야함
         accountCenterButton

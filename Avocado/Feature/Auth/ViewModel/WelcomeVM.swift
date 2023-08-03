@@ -8,10 +8,15 @@
 import Foundation
 import UIKit
 import RxSwift
+import RxFlow
 import Amplify
 import RxRelay
 
-final class WelcomeVM {
+final class WelcomeVM: Stepper {
+    
+    //MARK: - RXFlow
+    var steps: PublishRelay<Step> = PublishRelay()
+    
     // 서비스를 제공하는 인스턴스
     let authService: AuthService
     let disposeBag = DisposeBag()
@@ -55,5 +60,15 @@ final class WelcomeVM {
                 self.errEventPublish.accept(NetworkError.unknown(-1, authError.errorDescription))
             }
             .disposed(by: disposeBag)
+    }
+    
+    // 이메일 로그인 버튼 클릭 처리
+    func handleAvocadoLogin() {
+        steps.accept(AuthStep.loginIsRequired)
+    }
+
+    // 회원가입 버튼 클릭 처리
+    func handleSignup() {
+        steps.accept(AuthStep.loginIsRequired)
     }
 }

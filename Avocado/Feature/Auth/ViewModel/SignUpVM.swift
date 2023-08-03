@@ -7,17 +7,25 @@
 
 import Foundation
 import RxSwift
+import RxFlow
+import RxRelay
 import RxRelay
 import Amplify
 
 /// input : 입력
 /// output : 결과 화면에 보여주는 완성된 데이터
 /// 회원가입 뷰모델 = 연산 + 완성된 결과 보여줌
-final class SignUpVM: ViewModelType {
+final class SignUpVM: ViewModelType, Stepper {
+    
+    // RxFlow steps
+    let steps: PublishRelay<Step> = PublishRelay()
+    var disposeBag = DisposeBag()
+    
     // 서비스를 제공하는 인스턴스
     let service: AuthService
-    var disposeBag = DisposeBag()
+   
     private(set) var input: Input
+//    private(set) var output: Output
     
     struct Input {
         // 이메일을 입력받는 인스턴스 { value 값을 가져와야하기 때문에 BehaviorRelay로 선언 }
@@ -89,5 +97,24 @@ final class SignUpVM: ViewModelType {
             .disposed(by: disposeBag)
         
         return output
+    }
+    
+    private func bindRxFlow() {
+//        successEmailCheckPublish
+//            .asSignal()
+//            .emit(onNext: { [weak self] isSuccess in
+//                guard let self = self else { return }
+//                
+//                if isSuccess {
+//                    let authService = AuthService()
+//                    let emailCheckVM = EmailCheckVM(service: authService,
+//                                                    email: self.viewModel.input.emailBehavior.value,
+//                                                    password: self.viewModel.input.passwordBehavior.value)
+//                    let emailCheckVC = EmailCheckVC(viewModel: emailCheckVM)
+//                    let emailCheckNavigationVC = emailCheckVC.makeBaseNavigationController()
+//                    self.present(emailCheckNavigationVC, animated: true)
+//                }
+//            })
+//            .disposed(by: disposeBag)
     }
 }

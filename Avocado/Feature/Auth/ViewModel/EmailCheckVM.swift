@@ -28,6 +28,8 @@ final class EmailCheckVM {
         self.authService = service
         self.userEmailRelay.accept(email)
         self.userPasswordRelay.accept(password)
+        
+        bindRxFlow()
     }
     
     /* 이메일 인증번호 재 전송*/
@@ -96,5 +98,19 @@ final class EmailCheckVM {
             }
             .disposed(by: disposeBag)
 
+    }
+    
+    func bindRxFlow() {
+//        successEmailCheckPublish
+//            .asSignal()
+//            .emit(onNext: { [weak self] isSuccess in
+//                let authService = AuthService()
+//                let regionVM = RegionSettingVM(service: authService)
+//                let regionVC = RegionSettingVC(viewModel: regionVM)
+//                let navigaitonVC = regionVC.makeBaseNavigationController()
+//                
+//                self?.present(navigaitonVC, animated: true)
+//            })
+//            .disposed(by: disposeBag)
     }
 }
