@@ -58,6 +58,11 @@ final class ProfileSettingVM: ViewModelType, Stepper {
         input.actionProfileSetUpRelay.flatMap { [weak self] _ in
             // 순환 참조가 일어날 경우를 대비한 guard문, 만약 순환참조가 일어났을 경우 에러 리턴
             guard let self = self else { throw NetworkError.unknown(-1, "유효하지 않은 화면") }
+            // 회원가입 진행
+            return self.service.avocadoSignUp(to: input.nickNameInputRelay.value, with: self.regionId)
+        }
+        .flatMap { [weak self] _ in
+            guard let self = self else { throw NetworkError.unknown(-1, "유효하지 않은 화면") }
             // API로 presignedURL 요청
             return self.service.uploadAvatar(type: "image/jpeg", size: Int64(input.selectedImageDataRelay.value.count))
         }
@@ -66,13 +71,8 @@ final class ProfileSettingVM: ViewModelType, Stepper {
             // s3Upload 진행
             return self.s3Service.uploadS3(requestURL: data.url, uploadData: input.selectedImageDataRelay.value, parameter: data.fields)
         }
-        .flatMap { [weak self] _ in
-            guard let self = self else { throw NetworkError.unknown(-1, "유효하지 않은 화면") }
-            // 업로드에 성공했을 경우 회원가입 진행
-            return self.service.avocadoSignUp(to: input.nickNameInputRelay.value, with: self.regionId)
-        }
-        .subscribe { user in
-            output.successSignUpeRelay.accept(true)
+        .subscribe {
+            output.successSignUpeRelay.accept($0)
         } onError: { err in
             output.errEventPublish.accept(.unknown(message: err.localizedDescription))
         }

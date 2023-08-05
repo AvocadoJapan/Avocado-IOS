@@ -77,7 +77,12 @@ final class AuthFlow: Flow {
     }
     
     private func navigateToSignupScreen() -> FlowContributors {
-        return .none
+        let service = AuthService()
+        let viewModel = SignUpVM(service: service)
+        let viewController = SignupVC(viewModel: viewModel)
+        
+        rootViewController.pushViewController(viewController, animated: true)
+        return .one(flowContributor: .contribute(withNextPresentable: viewController, withNextStepper: viewModel))
     }
     
     private func navigateToEmailCheckScreen() -> FlowContributors {

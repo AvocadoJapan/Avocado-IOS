@@ -69,6 +69,6 @@ final class WelcomeVM: Stepper {
 
     // 회원가입 버튼 클릭 처리
     func handleSignup() {
-        steps.accept(AuthStep.loginIsRequired)
+        steps.accept(AuthStep.signUpIsRequired)
     }
 }
