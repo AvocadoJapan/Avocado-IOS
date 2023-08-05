@@ -556,12 +556,20 @@ final class AuthService: BaseAPIService<AuthAPI> {
     
     /**
      * - Description 프로필 이미지변경 API
-     * - Parameter to 닉네임
-     * - Parameter with 활동지역 ID
-     * - Returns S3 버킷에 업로드할 pre-signed URL
+     * - Parameter to 이미지 ID
+     * - Returns 아바타 정보
      */
-    func changeAvatar(to nickName: String, with regionId: String) -> Observable<CommonModel.SingleURL> {
-        return singleRequest(.changeAvatar(name: nickName, regionId: regionId)).asObservable()
+    func changeAvatar(to imageId: String) -> Observable<Avatar> {
+        return singleRequest(.changeAvatar(imageId: imageId)).asObservable()
+    }
+    /**
+     * - Description 이미지 presignedURL 요청 API
+     * - Parameter type 이미지 타입 ex image/jpeg, image/png... {앱에서는 jpeg 고정으로 사용 (용량이 가장 작기 때문)}
+     * - Parameter size 파일 사이즈
+     * - Returns S3 버킷에 올릴 데이터 정보
+     */
+    func uploadAvatar(type: String, size: Int64) -> Observable<Common.PresignedURLData> {
+        return singleRequest(.uploadAvatar(type: type, size: size)).asObservable()
     }
     
     /**

@@ -38,7 +38,7 @@ enum SocialType {
 /**
  * - Description 공통적으로 사용되는 모델 enum ()
  */
-enum CommonModel {
+enum Common {
     /**
      * - Description response가 url 하나만 있는 경우의 CommonModel
      */
@@ -46,10 +46,19 @@ enum CommonModel {
         let url: String
     }
     
-    struct UserDefault {
-        enum Auth {
-            static let signUpEmail = "cognitoSignUpEmail"
-            static let signUpSuccess = "isCogintoSignUp"
+    /**
+     * - Description PresignedURL 데이터 정보 { 해당 값을 가지고 S3 버킷에 업로드 }
+     */
+    struct PresignedURLData: Codable {
+        let id: String
+        let url: String
+        let fields: [String: String]
+        
+        enum CodingKeys: String, CodingKey {
+            case id = "id"
+            case url = "url"
+            case fields = "fields"
         }
     }
+
 }

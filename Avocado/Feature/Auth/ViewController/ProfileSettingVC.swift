@@ -125,10 +125,6 @@ final class ProfileSettingVC: BaseVC {
         let output = viewModel.transform(input: viewModel.input)
         
         //MARK: - INPUT BINDING
-        viewModel.input.selectedImageSubject
-           .bind(to: profileButton.rx.image(for: .normal))
-           .disposed(by: disposeBag)
-        
         nameInput
             .userInput
             .bind(to: viewModel.input.nickNameInputRelay)
@@ -206,8 +202,12 @@ extension ProfileSettingVC: PHPickerViewControllerDelegate {
                 return
             }
 
-            if let image = object as? UIImage {
-                self!.viewModel.input.selectedImageSubject.onNext(image)
+            // 이미지 데이터 형식으로 변환 및 사용자 이미지 show
+            // 사용자 이미지 resizing
+            if let image = object as? UIImage,
+               let imageData = image.resize(width: 120).jpegData(compressionQuality: 1.0) {
+                self?.profileButton.rx.image(for: .normal).onNext(image.resize(width: 120))
+                self!.viewModel.input.selectedImageDataRelay.accept(imageData)
             }
         }
     }
@@ -219,7 +219,7 @@ import SwiftUI
 import RxSwift
 struct ProfileSettingVCPreview: PreviewProvider {
     static var previews: some View {
-        return ProfileSettingVC(vm: ProfileSettingVM(service: AuthService(), regionid: "")).toPreview()
+        return ProfileSettingVC(vm: ProfileSettingVM(service: AuthService(), regionid: "", s3Service: S3Service())).toPreview()
     }
 }
 #endif

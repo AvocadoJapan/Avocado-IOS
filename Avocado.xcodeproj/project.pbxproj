@@ -67,9 +67,11 @@
 		B1A301C62A543B15003834E6 /* UIButton+Animation.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1A301C52A543B15003834E6 /* UIButton+Animation.swift */; };
 		B1A705142A63C426005CD130 /* ViewModelType.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1A705132A63C426005CD130 /* ViewModelType.swift */; };
 		B1A9D17F2A6BD2400080B818 /* UIView+Animation.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1A9D17E2A6BD2400080B818 /* UIView+Animation.swift */; };
+		B1AB44DF2A7E52F9004EC75D /* UIImage+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1AB44DE2A7E52F9004EC75D /* UIImage+Extension.swift */; };
 		B1B1EA132A5973C7007B1894 /* SettingTVCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1B1EA122A5973C7007B1894 /* SettingTVCell.swift */; };
 		B1B1EA162A599904007B1894 /* SettingSectionModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1B1EA152A599904007B1894 /* SettingSectionModel.swift */; };
 		B1BFDD672A49CF8100DB4955 /* LoginVM.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1BFDD662A49CF8100DB4955 /* LoginVM.swift */; };
+		B1C8B7C32A7CD99A005B1D3D /* S3Service.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1C8B7C22A7CD99A005B1D3D /* S3Service.swift */; };
 		B1D23D392A4C6245006A2848 /* WelcomeVM.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1D23D382A4C6245006A2848 /* WelcomeVM.swift */; };
 		B1D23D3F2A4C74F6006A2848 /* AvatarModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1D23D3E2A4C74F6006A2848 /* AvatarModel.swift */; };
 		B20AFE682A2BAE73004A646B /* SearchBarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B20AFE672A2BAE73004A646B /* SearchBarView.swift */; };
@@ -185,9 +187,11 @@
 		B1A301C52A543B15003834E6 /* UIButton+Animation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIButton+Animation.swift"; sourceTree = "<group>"; };
 		B1A705132A63C426005CD130 /* ViewModelType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewModelType.swift; sourceTree = "<group>"; };
 		B1A9D17E2A6BD2400080B818 /* UIView+Animation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView+Animation.swift"; sourceTree = "<group>"; };
+		B1AB44DE2A7E52F9004EC75D /* UIImage+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIImage+Extension.swift"; sourceTree = "<group>"; };
 		B1B1EA122A5973C7007B1894 /* SettingTVCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingTVCell.swift; sourceTree = "<group>"; };
 		B1B1EA152A599904007B1894 /* SettingSectionModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingSectionModel.swift; sourceTree = "<group>"; };
 		B1BFDD662A49CF8100DB4955 /* LoginVM.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginVM.swift; sourceTree = "<group>"; };
+		B1C8B7C22A7CD99A005B1D3D /* S3Service.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = S3Service.swift; sourceTree = "<group>"; };
 		B1D23D382A4C6245006A2848 /* WelcomeVM.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WelcomeVM.swift; sourceTree = "<group>"; };
 		B1D23D3E2A4C74F6006A2848 /* AvatarModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AvatarModel.swift; sourceTree = "<group>"; };
 		B20AFE672A2BAE73004A646B /* SearchBarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchBarView.swift; sourceTree = "<group>"; };
@@ -344,6 +348,7 @@
 		9816F6D32A4948BE00A7A284 /* Network */ = {
 			isa = PBXGroup;
 			children = (
+				B1AB44DB2A7E418E004EC75D /* Services */,
 				9816F6F02A494B2600A7A284 /* Plugin */,
 				9816F6D42A49490A00A7A284 /* Base */,
 			);
@@ -570,6 +575,7 @@
 				B1A301A42A5439E7003834E6 /* UIView+Extension.swift */,
 				B1A301A52A5439E7003834E6 /* UIViewController+Extension.swift */,
 				9848A8B22A5D853B008D43F5 /* UIColor+Extension.swift */,
+				B1AB44DE2A7E52F9004EC75D /* UIImage+Extension.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -618,6 +624,14 @@
 				B28892062A6E569800952A10 /* FadeAnimation.swift */,
 			);
 			path = Animation;
+			sourceTree = "<group>";
+		};
+		B1AB44DB2A7E418E004EC75D /* Services */ = {
+			isa = PBXGroup;
+			children = (
+				B1C8B7C22A7CD99A005B1D3D /* S3Service.swift */,
+			);
+			path = Services;
 			sourceTree = "<group>";
 		};
 		B1B1EA0F2A597348007B1894 /* ViewController */ = {
@@ -948,6 +962,7 @@
 				04C835F12A2B2CFA00731E3E /* MainDataModel.swift in Sources */,
 				B212D5872A45E8F40008DAD1 /* LoginVC.swift in Sources */,
 				B1A301AF2A5439F0003834E6 /* CollectionView+Protocol.swift in Sources */,
+				B1AB44DF2A7E52F9004EC75D /* UIImage+Extension.swift in Sources */,
 				B2198BA22A2A36EA0019032D /* Avocado.xcdatamodeld in Sources */,
 				B29342132A58810E00F5CF30 /* RegionSettingVM.swift in Sources */,
 				04C835EF2A2B2CC500731E3E /* BannerModel.swift in Sources */,
@@ -970,6 +985,7 @@
 				B2D276512A6C4DB700441719 /* OtherEmailVM.swift in Sources */,
 				04BD03F72A2B058500330D8A /* MainCategoryCVCell.swift in Sources */,
 				9816F6F42A494B5400A7A284 /* APIRequestInterceptor.swift in Sources */,
+				B1C8B7C32A7CD99A005B1D3D /* S3Service.swift in Sources */,
 				9816F6D62A49491E00A7A284 /* BaseTarget.swift in Sources */,
 				B26A3B6E2A60D5FA00AD61A5 /* FailVC.swift in Sources */,
 				B1A9D17F2A6BD2400080B818 /* UIView+Animation.swift in Sources */,

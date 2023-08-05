@@ -40,6 +40,4 @@ protocol ViewModelType {
     var disposeBag: DisposeBag {get set}
     
     func transform(input: Input) -> Output
-    
-    init(service: Service)
 }

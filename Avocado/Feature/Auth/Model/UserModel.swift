@@ -17,6 +17,7 @@ struct User: DTOResponseable {
     let updateAt: Int64 // 업데이트 시간
     let createdAt: Int64 // 생성 시간
     let accounts: Accounts // 로그인 정보
+    let avatar: Avatar? // 아바타 정보
     
     enum CodingKeys: String, CodingKey {
         case userId = "id"
@@ -24,10 +25,11 @@ struct User: DTOResponseable {
         case updateAt = "updatedAt"
         case createdAt = "createdAt"
         case accounts = "accounts"
+        case avatar = "avatar"
     }
     
     func toDTO() -> UserDTO {
-        return UserDTO(nickName: nickName)
+        return UserDTO(nickName: nickName, imageId: avatar?.id)
     }
 }
 
@@ -37,4 +39,5 @@ struct Accounts:Decodable {
 
 struct UserDTO: Decodable {
     let nickName: String
+    let imageId: String?
 }

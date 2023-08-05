@@ -141,7 +141,8 @@ final class RegionSettingVC: BaseVC {
             .asDriver()
             .drive(onNext: { [weak self] _ in
                 let authService = AuthService()
-                let profileVM = ProfileSettingVM(service: authService, regionid: self?.viewModel.regionIdRelay.value ?? "")
+                let s3Service = S3Service()
+                let profileVM = ProfileSettingVM(service: authService, regionid: self?.viewModel.regionIdRelay.value ?? "", s3Service: s3Service)
                 let profileVC = ProfileSettingVC(vm: profileVM)
                 self?.navigationController?.pushViewController(profileVC, animated: true)
             })

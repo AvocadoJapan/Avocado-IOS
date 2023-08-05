@@ -43,6 +43,8 @@ final class AuthFlow: Flow {
             return navigateToMainScreen()
         case .signUpIsRequired:
             return navigateToSignupScreen()
+        case.profileIsRequired:
+            return navigateToProfileSettingScreen()
         default :
             return .none
         }
@@ -91,7 +93,13 @@ final class AuthFlow: Flow {
     }
     
     private func navigateToProfileSettingScreen() -> FlowContributors {
-        return .none
+        let service = AuthService()
+        let s3Service = S3Service()
+        let viewModel = ProfileSettingVM(service: service, s3Service: s3Service)
+        let viewController = ProfileSettingVC(vm: viewModel)
+        
+        rootViewController.pushViewController(viewController, animated: true)
+        return .one(flowContributor: .contribute(withNextPresentable: viewController, withNextStepper: viewModel))
     }
     
     private func navigateToMainScreen() -> FlowContributors {

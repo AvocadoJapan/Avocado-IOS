@@ -11,8 +11,9 @@ import Moya
 enum AuthAPI {
     case profile
     case signUp(name:String, regionId: String)
-    case changeAvatar(name:String, regionId: String)
+    case changeAvatar(imageId: String)
     case region(searchkeyword: String, depth: Int)
+    case uploadAvatar(type: String, size: Int64)
 }
 
 extension AuthAPI: BaseTarget {
@@ -25,10 +26,13 @@ extension AuthAPI: BaseTarget {
             return "/v1/sign-up"
             
         case .changeAvatar:
-            return "/v1/change-avatar"
+            return "/v1/profile/avatar"
             
         case .region:
             return "/v1/regions"
+            
+        case .uploadAvatar:
+            return "/v1/images"
         }
     }
     
@@ -37,8 +41,11 @@ extension AuthAPI: BaseTarget {
         case .profile, .region:
             return .get
             
-        case .changeAvatar, .signUp:
+        case .uploadAvatar, .signUp:
             return .post
+            
+        case .changeAvatar:
+            return .put
         }
     }
     
@@ -53,10 +60,9 @@ extension AuthAPI: BaseTarget {
                 "regionId": regionId
             ])
             
-        case .changeAvatar(let name, let regionId):
+        case .changeAvatar(let imageId):
             return .requestJSONEncodable([
-                "name": name,
-                "regionId" : regionId
+                "imageId": imageId,
             ])
             
         case .region(let searchKeyword, let depth):
@@ -64,6 +70,12 @@ extension AuthAPI: BaseTarget {
                 "search-keyword": searchKeyword,
                 "depth": depth
             ], encoding: URLEncoding.queryString)
+            
+        case .uploadAvatar(let type, let size):
+            return .requestJSONEncodable([
+                "type": type,
+                "size": "\(size)"
+            ])
         }
     }
 }
