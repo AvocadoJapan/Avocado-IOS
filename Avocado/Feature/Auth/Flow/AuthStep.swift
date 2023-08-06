@@ -34,7 +34,7 @@ import RxSwift
     case socialLoginIsComplete
 
     // EmailCheck
-    case emailCheckIsRequired
+    case emailCheckIsRequired(email: String, password: String)
     case emailCheckIsComplete
     
     // OtherEmail

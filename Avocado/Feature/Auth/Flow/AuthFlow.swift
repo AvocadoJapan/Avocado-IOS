@@ -43,8 +43,10 @@ final class AuthFlow: Flow {
             return navigateToMainScreen()
         case .signUpIsRequired:
             return navigateToSignupScreen()
-        case.profileIsRequired:
+        case .profileIsRequired:
             return navigateToProfileSettingScreen()
+        case .emailCheckIsRequired(let email, let password):
+            return navigateToEmailCheckScreen(email: email, password: password)
         default :
             return .none
         }
@@ -85,8 +87,18 @@ final class AuthFlow: Flow {
         return .one(flowContributor: .contribute(withNextPresentable: viewController, withNextStepper: viewModel))
     }
     
-    private func navigateToEmailCheckScreen() -> FlowContributors {
-        return .none
+    private func navigateToEmailCheckScreen(email: String, password: String) -> FlowContributors {
+        
+        let service = AuthService()
+        let viewModel = EmailCheckVM(service: service,
+                                        email: email,
+                                        password: password)
+        let viewController = EmailCheckVC(viewModel: viewModel)
+        
+        viewController.modalPresentationStyle = .fullScreen
+        rootViewController.present(viewController, animated: true)
+        
+        return .one(flowContributor: .contribute(withNext: viewController))
     }
     
     private func navigateToOtherEmailScreen() -> FlowContributors {

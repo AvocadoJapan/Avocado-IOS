@@ -123,19 +123,21 @@ final class EmailCheckVC: BaseVC {
     }
     
     override func bindUI() {
-        viewModel.userEmailRelay
+        let output = viewModel.transform(input: viewModel.input)
+        
+        viewModel.input.userEmailRelay
             .bind(to: emailLabel.rx.text)
             .disposed(by: disposeBag)
         
         confirmCodeInput
             .userInput
             .subscribe(onNext: { [weak self] text in
-                self?.viewModel.confirmCodeRelay.accept(text)
+                self?.viewModel.input.confirmCodeRelay.accept(text)
             })
             .disposed(by: disposeBag)
         
         // 이메일 인증
-        viewModel
+        output
             .successEmailCheckPublish
             .asSignal()
             .emit(onNext: { [weak self] isSuccess in
@@ -149,7 +151,7 @@ final class EmailCheckVC: BaseVC {
             .disposed(by: disposeBag)
         
         // 이메일 재 전송
-        viewModel
+        output
             .successEmailResendPublish
             .asSignal()
             .emit(onNext: { [weak self] _ in
@@ -160,7 +162,7 @@ final class EmailCheckVC: BaseVC {
             })
             .disposed(by: disposeBag)
         
-        viewModel
+        output
             .errEventPublish
             .asSignal()
             .emit(onNext: { [weak self] err in
@@ -176,8 +178,11 @@ final class EmailCheckVC: BaseVC {
             .tap
             .asDriver()
             .throttle(.seconds(3), latest: false)
-            .drive(onNext: { [weak self] _ in
-                self?.viewModel.confirmSignUpCode()
+            .do(onNext: { [weak self] _ in
+                self?.confirmButton.isEnabled = false
+            })
+            .drive(onNext: { [weak self] void in
+                self?.viewModel.input.actionConfirmSignUpCodeRelay.accept(void)
                 /* Mocking
                  let authService = AuthService()
                  let regionVM = RegionSettingVM(service: authService)
@@ -193,8 +198,8 @@ final class EmailCheckVC: BaseVC {
             .tap
             .asDriver()
             .throttle(.seconds(3), latest: false)
-            .drive(onNext: { [weak self] _ in
-                self?.viewModel.resendSignUpCode()
+            .drive(onNext: { [weak self] void in
+                self?.viewModel.input.actionResendSignUpCodeRelay.accept(void)
             })
             .disposed(by: disposeBag)
         
