@@ -96,25 +96,17 @@ final class SignUpVM: ViewModelType, Stepper {
             .bind(to: output.isVaildPasswordMatch)
             .disposed(by: disposeBag)
         
+        // 화면 이동
+        output.successEventPublish
+            .observe(on: MainScheduler.instance)
+            .subscribe(onNext: { [weak self] isSuccess in
+                Logger.trace("SignUpVM successEventPublish : \(isSuccess)")
+                Logger.trace("SignUpVM email : \(input.emailBehavior.value)")
+                Logger.trace("SignUpVM password : \(input.passwordBehavior.value)")
+                self?.steps.accept(AuthStep.emailCheckIsRequired(email: input.emailBehavior.value, password: input.passwordBehavior.value))
+            })
+            .disposed(by: disposeBag)
+        
         return output
-    }
-    
-    private func bindRxFlow() {
-//        successEmailCheckPublish
-//            .asSignal()
-//            .emit(onNext: { [weak self] isSuccess in
-//                guard let self = self else { return }
-//                
-//                if isSuccess {
-//                    let authService = AuthService()
-//                    let emailCheckVM = EmailCheckVM(service: authService,
-//                                                    email: self.viewModel.input.emailBehavior.value,
-//                                                    password: self.viewModel.input.passwordBehavior.value)
-//                    let emailCheckVC = EmailCheckVC(viewModel: emailCheckVM)
-//                    let emailCheckNavigationVC = emailCheckVC.makeBaseNavigationController()
-//                    self.present(emailCheckNavigationVC, animated: true)
-//                }
-//            })
-//            .disposed(by: disposeBag)
     }
 }

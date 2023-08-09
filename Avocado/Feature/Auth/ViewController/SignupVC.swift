@@ -185,23 +185,6 @@ final class SignupVC: BaseVC {
             .disposed(by: disposeBag)
         
         //MARK: - OUTPUT BINDING
-        output.successEventPublish
-            .asSignal()
-            .emit(onNext: { [weak self] isSuccess in
-                guard let self = self else { return }
-                
-                if isSuccess {
-                    let authService = AuthService()
-                    let emailCheckVM = EmailCheckVM(service: authService,
-                                                    email: self.viewModel.input.emailBehavior.value,
-                                                    password: self.viewModel.input.passwordBehavior.value)
-                    let emailCheckVC = EmailCheckVC(viewModel: emailCheckVM)
-                    let emailCheckNavigationVC = emailCheckVC.makeBaseNavigationController()
-                    self.present(emailCheckNavigationVC, animated: true)
-                }
-            })
-            .disposed(by: disposeBag)
-        
         output.errEventPublish
             .asSignal()
             .emit(onNext: { [weak self] err in
