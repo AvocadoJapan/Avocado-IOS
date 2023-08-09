@@ -10,27 +10,14 @@ import RxSwift
 import RxCocoa
 import RxRelay
 import CoreLocation
+import RxFlow
 
-final class RegionSettingVM {
+final class RegionSettingVM: ViewModelType, Stepper {
     
-    let authService: AuthService
-    let disposeBag = DisposeBag()
-    var searchTextRelay = BehaviorRelay<String>(value: "")
-    let regionIdRelay = BehaviorRelay<String>(value: "")
-    let regionsRelay = BehaviorRelay<[Region]>(value: [])
-    let locationRelay = BehaviorRelay<CLLocation?>(value: nil)
-    var isValid: Observable<Bool> {
-        return Observable.create { [weak self] observer in
-            guard let self = self else {
-                return Disposables.create()
-            }
-            
-            observer.onNext(self.regionIdRelay.value.isEmpty)
-            observer.onCompleted()
-            
-            return Disposables.create()
-        }
-    }
+    let service: AuthService
+    var disposeBag = DisposeBag()
+    var steps: PublishRelay<Step> = PublishRelay() // RxFlow 처리 Step
+    private (set) var input: Input
     
     private var locationManager = CLLocationManager().then {
         $0.desiredAccuracy = kCLLocationAccuracyBest
@@ -38,26 +25,63 @@ final class RegionSettingVM {
         $0.startUpdatingLocation()
     }
     
-    init(service: AuthService) {
-        self.authService = service
-        
-        searchTextRelay
-            .debounce(RxTimeInterval.milliseconds(300), scheduler: MainScheduler.instance)
-            .distinctUntilChanged()
-            .subscribe(onNext: { [weak self] _ in
-                self?.fetchRegion()
-            })
-            .disposed(by: disposeBag)
+    struct Input {
+        var searchTextRelay = BehaviorRelay<String>(value: "")
+        let regionIdRelay = BehaviorRelay<String>(value: "")
+        let actionViewDidLoad = PublishRelay<Void>()
     }
     
-    func fetchRegion() {
-        authService.getRegions(keyword: searchTextRelay.value, depth: 3)
-            .subscribe { regions in
-                self.regionsRelay.accept(regions)
-            } onError: { err in
-                // 여기에 에러 구현
+    struct Output {
+        let regionsRelay = BehaviorRelay<[Region]>(value: [])
+        let locationRelay = BehaviorRelay<CLLocation?>(value: nil)
+        let errorRelay = PublishRelay<NetworkError>()
+    }
+    
+    init(service: AuthService) {
+        self.service = service
+        self.input = Input()
+    }
+    
+    func transform(input: Input) -> Output {
+        let output = Output()
+        
+        input.actionViewDidLoad.flatMap { [weak self] _ in
+            guard let self = self else { throw NetworkError.unknown(-1, "유효하지 않은 화면입니다") }
+            return self.service.getRegions(keyword: "", depth: 3)
+        }
+        .subscribe { regions in
+            output.regionsRelay.accept(regions)
+        } onError: { error in
+            if let error = error as? NetworkError {
+                output.errorRelay.accept(error)
             }
+            else {
+                output.errorRelay.accept(NetworkError.unknown(-1, error.localizedDescription))
+            }
+        }
+        .disposed(by: disposeBag)
+
+        
+        input.searchTextRelay
+            .debounce(RxTimeInterval.milliseconds(300), scheduler: MainScheduler.instance)
+            .distinctUntilChanged()
+            .flatMap({ [weak self] keyword in
+                guard let self = self else { throw NetworkError.unknown(-1, "유효하지 않은 화면입니다") }
+                return self.service.getRegions(keyword: keyword, depth: 3)
+            })
+            .subscribe(onNext: { regions in
+                output.regionsRelay.accept(regions)
+            }, onError: { error in
+                if let error = error as? NetworkError {
+                    output.errorRelay.accept(error)
+                }
+                else {
+                    output.errorRelay.accept(NetworkError.unknown(-1, error.localizedDescription))
+                }
+            })
             .disposed(by: disposeBag)
+        
+        return output
     }
     
     /**

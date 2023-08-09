@@ -56,7 +56,7 @@ final class RegionSettingVC: BaseVC {
     override func viewDidLoad() {
         super.viewDidLoad()
         // 지역 정보 조회 API call
-        viewModel.fetchRegion()
+        viewModel.input.actionViewDidLoad.accept(())
     }
     
     override func setProperty() {
@@ -97,41 +97,31 @@ final class RegionSettingVC: BaseVC {
     }
 
     override func bindUI() {
+        let output = viewModel.transform(input: viewModel.input)
         
         searchBar.searchBarTextFiled
             .rx
             .text
             .orEmpty
             .distinctUntilChanged()
-            .do(onNext: { text in
-                    Logger.d("Text changed to: \(text)")
-                })
-                .bind(to: viewModel.searchTextRelay)
-            .disposed(by: disposeBag)
-        
-        viewModel.regionsRelay
-            .bind(to: tableView.rx.items(cellIdentifier: RegionTVCell.identifier, cellType: RegionTVCell.self)) { _, region, cell in
-                cell.configure(with: region)
-            }
+            .bind(to: viewModel.input.searchTextRelay)
             .disposed(by: disposeBag)
         
         tableView
             .rx
             .modelSelected(Region.self)
             .subscribe(onNext: { [weak self] data in
-                self?.viewModel.regionIdRelay.accept(data.id)
+                self?.viewModel.input.regionIdRelay.accept(data.id)
             })
             .disposed(by: disposeBag)
         
-        viewModel
-            .regionIdRelay
+        viewModel.input.regionIdRelay
             .map { $0.isEmpty ? .lightGray : .black }
             .bind(to: confirmButton.rx.backgroundColor)
             .disposed(by: disposeBag)
         
-        viewModel
-            .regionIdRelay
-            .map({ !$0.isEmpty })
+        viewModel.input.regionIdRelay
+            .map { !$0.isEmpty }
             .bind(to: confirmButton.rx.isEnabled)
             .disposed(by: disposeBag)
         
@@ -142,7 +132,7 @@ final class RegionSettingVC: BaseVC {
             .drive(onNext: { [weak self] _ in
                 let authService = AuthService()
                 let s3Service = S3Service()
-                let profileVM = ProfileSettingVM(service: authService, regionid: self?.viewModel.regionIdRelay.value ?? "", s3Service: s3Service)
+                let profileVM = ProfileSettingVM(service: authService, regionid: self?.viewModel.input.regionIdRelay.value ?? "", s3Service: s3Service)
                 let profileVC = ProfileSettingVC(vm: profileVM)
                 self?.navigationController?.pushViewController(profileVC, animated: true)
             })
@@ -153,6 +143,19 @@ final class RegionSettingVC: BaseVC {
             .drive(onNext: { [weak self] height in
                 guard let self = self else { return }
                 self.confirmButton.keyboardMovement(from: self.view, height: height)
+            })
+            .disposed(by: disposeBag)
+        
+        //MARK: OUTPUT BINDING
+        output.regionsRelay
+            .bind(to: tableView.rx.items(cellIdentifier: RegionTVCell.identifier, cellType: RegionTVCell.self)) { _, region, cell in
+                cell.configure(with: region)
+            }
+            .disposed(by: disposeBag)
+        
+        output.errorRelay
+            .subscribe(onNext: { error in
+                Logger.e(error.errorDescription)
             })
             .disposed(by: disposeBag)
     }
