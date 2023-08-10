@@ -71,10 +71,18 @@ final class SettingFlow: Flow {
         return .one(flowContributor: .contribute(withNext: viewController))
     }
 
-    private func navigateToFailScreen (with error: NetworkError) -> FlowContributors {
+    private func navigateToFailScreen(with error: NetworkError) -> FlowContributors {
+        
         let viewController = FailVC(error: error)
         
-        rootViewController.setViewControllers([viewController], animated: true)
+        // 스무스 애니메이션 적용
+        let transition = CATransition()
+        transition.duration = 0.2
+        transition.type = CATransitionType.fade
+        rootViewController.view.layer.add(transition, forKey: kCATransition)
+        
+        rootViewController.setViewControllers([viewController], animated: false)
+        
         return .one(flowContributor: .contribute(withNext: viewController))
     }
 }

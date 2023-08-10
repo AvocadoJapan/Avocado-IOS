@@ -71,11 +71,18 @@ final class SplashFlow: Flow {
         return .one(flowContributor: .contribute(withNextPresentable: flow, withNextStepper: nextStep))
     }
     
-    private func navigateToFailScreen (with error: NetworkError) -> FlowContributors {
-        let viewController = FailVC(error: error)
-        let nextStep = OneStepper(withSingleStep: SplashStep.errorOccurred(error: error))
+    private func navigateToFailScreen(with error: NetworkError) -> FlowContributors {
         
-        rootViewController.setViewControllers([viewController], animated: true)
-        return .one(flowContributor: .contribute(withNextPresentable: viewController, withNextStepper: nextStep))
+        let viewController = FailVC(error: error)
+        
+        // 스무스 애니메이션 적용
+        let transition = CATransition()
+        transition.duration = 0.2
+        transition.type = CATransitionType.fade
+        rootViewController.view.layer.add(transition, forKey: kCATransition)
+        
+        rootViewController.setViewControllers([viewController], animated: false)
+        
+        return .one(flowContributor: .contribute(withNext: viewController))
     }
 }

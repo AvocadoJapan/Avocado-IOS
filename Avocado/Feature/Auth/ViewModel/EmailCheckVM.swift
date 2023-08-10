@@ -57,6 +57,7 @@ final class EmailCheckVM: ViewModelType, Stepper  {
 
         input.userEmailRelay.accept(email)
         input.userPasswordRelay.accept(password)
+        
     }
     
     func transform(input: Input) -> Output {
@@ -95,6 +96,7 @@ final class EmailCheckVM: ViewModelType, Stepper  {
             .subscribe(onNext: { isSuccess in
                 if isSuccess {
                     output.successEmailCheckPublish.accept(true)
+                    Logger.d("successEmailCheckPublish : \(output.successEmailCheckPublish.values)")
                 } else {
                     output.errEventPublish.accept(NetworkError.unknown(-1, "로그인에 실패하였습니다"))
                 }
@@ -122,6 +124,19 @@ final class EmailCheckVM: ViewModelType, Stepper  {
             }
             .disposed(by: disposeBag)
         
+        // RegionSettingVC 화면이동 steps
+        output
+            .successEmailCheckPublish
+            .asObservable()
+            .filter { $0 == true }
+            .debug("⭐️")
+            .observe(on: MainScheduler.instance)
+            .subscribe(onNext: { [weak self] _ in
+                
+                self?.steps.accept(AuthStep.regionIsRequired)
+            })
+            .disposed(by: disposeBag)
+        
         return output
     }
 }
@@ -137,12 +152,12 @@ final class EmailCheckVM: ViewModelType, Stepper  {
 //                    self.errEventPublish.accept(NetworkError.unknown(-1, err.localizedDescription))
 //                    return
 //                }
-//                
+//
 //                self.errEventPublish.accept(NetworkError.unknown(-1, authError.errorDescription))
 //            }
 //            .disposed(by: disposeBag)
 //    }
-//    
+//
 //    /* 이메일 인증번호 확인 */
 //    func confirmSignUpCode() {
 //        authService.confirmSignUp(for: userEmailRelay.value, with: confirmCodeRelay.value)
@@ -151,7 +166,7 @@ final class EmailCheckVM: ViewModelType, Stepper  {
 //                    self.errEventPublish.accept(NetworkError.unknown(-1, "인증번호 실패"))
 //                    return
 //                }
-//                
+//
 //                // 인증번호가 정상 인경우, 코그니토 로그인 로직 실행
 //                self.authService.login(email: self.userEmailRelay.value, password: self.userPasswordRelay.value)
 //                    .subscribe(onNext: { isSuccess in
@@ -161,23 +176,23 @@ final class EmailCheckVM: ViewModelType, Stepper  {
 //                        else {
 //                            self.errEventPublish.accept(NetworkError.unknown(-1, "로그인에 실패하였습니다"))
 //                        }
-//                        
+//
 //                    }) { err in
 //                        self.errEventPublish.accept(NetworkError.unknown(-1, err.localizedDescription))
 //                    }
 //                    .disposed(by: self.disposeBag)
-//                
+//
 //            } onError: { err in
 //                guard let authError = err as? AuthError else {
 //                    self.errEventPublish.accept(NetworkError.unknown(-1, err.localizedDescription))
 //                    return
 //                }
-//                
+//
 //                self.errEventPublish.accept(NetworkError.unknown(-1, authError.errorDescription))
 //            }
 //            .disposed(by: disposeBag)
 //    }
-//    
+//
 //    /* 다른 이메일로 인증 */
 //    func otherEmailSignUp() {
 //        authService.deleteAccount()
@@ -188,7 +203,7 @@ final class EmailCheckVM: ViewModelType, Stepper  {
 //                    self.errEventPublish.accept(NetworkError.unknown(-1, err.localizedDescription))
 //                    return
 //                }
-//                
+//
 //                self.errEventPublish.accept(NetworkError.unknown(-1, authError.errorDescription))
 //            }
 //            .disposed(by: disposeBag)

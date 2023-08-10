@@ -60,5 +60,4 @@ enum Common {
             case fields = "fields"
         }
     }
-
 }

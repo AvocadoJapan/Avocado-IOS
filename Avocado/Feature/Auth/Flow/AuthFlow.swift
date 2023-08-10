@@ -47,6 +47,8 @@ final class AuthFlow: Flow {
             return navigateToProfileSettingScreen()
         case .emailCheckIsRequired(let email, let password):
             return navigateToEmailCheckScreen(email: email, password: password)
+        case .regionIsRequired:
+            return navigateToRegionSettingScreen()
         default :
             return .none
         }
@@ -98,7 +100,7 @@ final class AuthFlow: Flow {
         viewController.modalPresentationStyle = .fullScreen
         rootViewController.present(viewController, animated: true)
         
-        return .one(flowContributor: .contribute(withNext: viewController))
+        return .one(flowContributor: .contribute(withNextPresentable: viewController, withNextStepper: viewModel))
     }
     
     private func navigateToOtherEmailScreen() -> FlowContributors {
@@ -106,7 +108,19 @@ final class AuthFlow: Flow {
     }
     
     private func navigateToRegionSettingScreen() -> FlowContributors {
-        return .none
+        
+        let service = AuthService()
+        let viewModel = RegionSettingVM(service: service)
+        let viewController = RegionSettingVC(viewModel: viewModel)
+        
+        
+        if let emailCheckVC = rootViewController.presentedViewController {
+            emailCheckVC.dismiss(animated: true, completion: {
+                self.rootViewController.pushViewController(viewController, animated: true)
+            })
+        }
+        
+        return .one(flowContributor: .contribute(withNext: viewController))
     }
     
     private func navigateToProfileSettingScreen() -> FlowContributors {
