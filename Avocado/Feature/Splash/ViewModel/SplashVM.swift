@@ -74,16 +74,17 @@ final class SplashVM: Stepper {
         successEventPublish
             .observe(on: MainScheduler.instance)
             .subscribe(onNext: { [weak self] user in
-                self?.steps.accept(SplashStep.tokenIsExist)
+                self?.steps.accept(SplashStep.tokenIsExist(user: user))
+//                self?.steps.accept(SplashStep.errorOccurred(error: NetworkError.unknown(500, "Unknown Error")))
             })
             .disposed(by: disposeBag)
         
         errEventPublish
-            .debounce(.milliseconds(800), scheduler: MainScheduler.instance)
+            .debounce(.milliseconds(200), scheduler: MainScheduler.instance)
             .observe(on: MainScheduler.instance)
             .subscribe(onNext: { [weak self] error in
                 switch error {
-                case .invaildResponse, .invaildURL, .pageNotFound, .serverConflict, .serverError:
+                case .invalidResponse, .invalidURL, .pageNotFound, .serverConflict, .serverError:
                     self?.steps.accept(SplashStep.errorOccurred(error: error))
                 case .tokenExpired:
                     self?.steps.accept(SplashStep.tokenIsRequired)

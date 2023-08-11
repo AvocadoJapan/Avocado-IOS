@@ -43,9 +43,7 @@ final class LoginVM: Stepper {
         successEventPublish
             .observe(on: MainScheduler.instance)
             .subscribe(onNext: { [weak self] user in
-                
-                Logger.trace("\(user)")
-                self?.steps.accept(AuthStep.loginIsComplete)
+                self?.steps.accept(AuthStep.loginIsComplete(user: user))
             })
             .disposed(by: disposeBag)
     }

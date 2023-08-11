@@ -35,8 +35,8 @@ final class MainFlow: Flow {
         case .errorOccurred(let error):
             
             return navigateToFailScreen(with: error)
-        case .mainIsRequired:
-            return .none
+        case .mainIsRequired(let user):
+            return navigateToMainScreen(user: user)
         case .tokenIsRequired:
             return .none
         case .tokenGetComplete:
@@ -47,6 +47,22 @@ final class MainFlow: Flow {
     private func navigateToFailScreen(with error: NetworkError) -> FlowContributors {
         
         let viewController = FailVC(error: error)
+        
+        // 스무스 애니메이션 적용
+        let transition = CATransition()
+        transition.duration = 0.2
+        transition.type = CATransitionType.fade
+        rootViewController.view.layer.add(transition, forKey: kCATransition)
+        
+        rootViewController.setViewControllers([viewController], animated: false)
+        
+        return .one(flowContributor: .contribute(withNext: viewController))
+    }
+    
+    private func navigateToMainScreen(user: User) -> FlowContributors {
+        
+        let viewModel = MainVM()
+        let viewController = MainVC(viewModel: viewModel)
         
         // 스무스 애니메이션 적용
         let transition = CATransition()

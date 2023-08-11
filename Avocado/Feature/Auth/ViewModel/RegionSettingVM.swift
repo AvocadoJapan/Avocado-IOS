@@ -63,7 +63,7 @@ final class RegionSettingVM: ViewModelType, Stepper {
 
         
         input.searchTextRelay
-            .debounce(RxTimeInterval.milliseconds(300), scheduler: MainScheduler.instance)
+            .debounce(RxTimeInterval.milliseconds(200), scheduler: MainScheduler.instance)
             .distinctUntilChanged()
             .flatMap({ [weak self] keyword in
                 guard let self = self else { throw NetworkError.unknown(-1, "유효하지 않은 화면입니다") }

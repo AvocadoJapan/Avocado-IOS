@@ -35,8 +35,8 @@ final class SplashFlow: Flow {
             return navigateToSplashScreen()
         case .tokenIsRequired:
             return navigateToWelcomeScreen()
-        case .tokenIsExist:
-            return navigateToMainScreen()
+        case .tokenIsExist(let user):
+            return navigateToMainScreen(user: user)
         case .errorOccurred(let error):
             return navigateToFailScreen(with: error)
         }
@@ -61,12 +61,12 @@ final class SplashFlow: Flow {
         return .one(flowContributor: .contribute(withNextPresentable: flow, withNextStepper: nextStep))
     }
     
-    private func navigateToMainScreen() -> FlowContributors {        
+    private func navigateToMainScreen(user: User) -> FlowContributors {
         // flow 설정 { 현재 네비게이션을 루트 컨트롤러로 설정함 }
         let flow = MainFlow(root: self.rootViewController)
         
         // 페이지 이동
-        let nextStep = OneStepper(withSingleStep: MainStep.errorOccurred(error: .unknown(-10, "성공적으로 MainStep에 도달했음. 추가개발필요.")))
+        let nextStep = OneStepper(withSingleStep: MainStep.mainIsRequired(user: user))
         
         return .one(flowContributor: .contribute(withNextPresentable: flow, withNextStepper: nextStep))
     }
