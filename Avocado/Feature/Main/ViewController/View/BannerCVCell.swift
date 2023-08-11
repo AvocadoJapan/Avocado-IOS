@@ -17,7 +17,7 @@ final class BannerCVCell: UICollectionViewCell, CollectionCellIdentifierable {
     var disposeBag = DisposeBag()
     
     private lazy var imageView = UIImageView().then {
-        $0.backgroundColor = .red
+        $0.backgroundColor = .systemGray6
     }
     
     override init(frame: CGRect) {

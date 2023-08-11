@@ -60,8 +60,8 @@ final class MainFlow: Flow {
     }
     
     private func navigateToMainScreen(user: User) -> FlowContributors {
-        
-        let viewModel = MainVM()
+        let service = MainService()
+        let viewModel = MainVM(service: service, user: user)
         let viewController = MainVC(viewModel: viewModel)
         
         // 스무스 애니메이션 적용
