@@ -17,7 +17,7 @@ final class MainHeaderReusableView: UICollectionReusableView {
                     もふもふの
                     お友達
                     """
-        $0.font = UIFont.boldSystemFont(ofSize: 20)
+        $0.font = UIFont.systemFont(ofSize: 18, weight: .heavy)
         $0.numberOfLines = 2
     }
     

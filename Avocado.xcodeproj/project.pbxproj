@@ -99,6 +99,7 @@
 		B2382C652A6FD2E900A24AE3 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = B2382C632A6FD2E900A24AE3 /* Localizable.strings */; };
 		B2382C6A2A6FD55D00A24AE3 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = B2382C682A6FD55D00A24AE3 /* Localizable.strings */; };
 		B2382C6D2A6FD56400A24AE3 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = B2382C6B2A6FD56400A24AE3 /* Localizable.strings */; };
+		B248C6A82A86A153006AE008 /* ProductGroupView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B248C6A72A86A153006AE008 /* ProductGroupView.swift */; };
 		B26A3B612A60A79800AD61A5 /* AuthFlow.swift in Sources */ = {isa = PBXBuildFile; fileRef = B26A3B602A60A79800AD61A5 /* AuthFlow.swift */; };
 		B26A3B642A60A7D600AD61A5 /* RxFlow in Frameworks */ = {isa = PBXBuildFile; productRef = B26A3B632A60A7D600AD61A5 /* RxFlow */; };
 		B26A3B662A60AB8400AD61A5 /* AuthStep.swift in Sources */ = {isa = PBXBuildFile; fileRef = B26A3B652A60AB8400AD61A5 /* AuthStep.swift */; };
@@ -222,6 +223,7 @@
 		B2382C642A6FD2E900A24AE3 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = Localizable.strings; sourceTree = "<group>"; };
 		B2382C692A6FD55D00A24AE3 /* ja */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ja; path = Localizable.strings; sourceTree = "<group>"; };
 		B2382C6C2A6FD56400A24AE3 /* ko */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ko; path = Localizable.strings; sourceTree = "<group>"; };
+		B248C6A72A86A153006AE008 /* ProductGroupView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProductGroupView.swift; sourceTree = "<group>"; };
 		B26A3B602A60A79800AD61A5 /* AuthFlow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthFlow.swift; sourceTree = "<group>"; };
 		B26A3B652A60AB8400AD61A5 /* AuthStep.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthStep.swift; sourceTree = "<group>"; };
 		B26A3B682A60BB5100AD61A5 /* SplashFlow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SplashFlow.swift; sourceTree = "<group>"; };
@@ -324,6 +326,7 @@
 			isa = PBXGroup;
 			children = (
 				04BA13282A2AE0990004E2FB /* ProductCVCell.swift */,
+				B248C6A72A86A153006AE008 /* ProductGroupView.swift */,
 				04BD03F62A2B058500330D8A /* MainCategoryCVCell.swift */,
 				04C835F62A2B46B600731E3E /* BannerCVCell.swift */,
 				04C835FA2A2B5FCF00731E3E /* MainHeaderReusableView.swift */,
@@ -1009,6 +1012,7 @@
 				B2E186CE2A474B4C00ABE98F /* SignupVC.swift in Sources */,
 				9848A8B32A5D853B008D43F5 /* UIColor+Extension.swift in Sources */,
 				B1BFDD672A49CF8100DB4955 /* LoginVM.swift in Sources */,
+				B248C6A82A86A153006AE008 /* ProductGroupView.swift in Sources */,
 				B1B1EA162A599904007B1894 /* SettingSectionModel.swift in Sources */,
 				B28892072A6E569800952A10 /* FadeAnimation.swift in Sources */,
 				9816F6EB2A494AF400A7A284 /* DTOResponseable.swift in Sources */,

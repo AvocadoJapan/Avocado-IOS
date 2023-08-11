@@ -177,7 +177,7 @@ extension MainVC: CollectionViewLayoutable {
                 item.contentInsets = NSDirectionalEdgeInsets(top: itemInset, leading: itemInset, bottom: itemInset, trailing: itemInset)
                 
                 // 상품을 넣을 Group 사이즈 설정 및 레이아웃 설정, 한 화면에 3개가 보이고 높이는 전체 사이즈의 3분의 1로 설정
-                let groupSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1), heightDimension: .fractionalHeight(0.3))
+                let groupSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1), heightDimension: .fractionalHeight(0.25))
                 let group = NSCollectionLayoutGroup.horizontal(layoutSize: groupSize, subitem: item, count: 3)
                 
                 // 상품 Section 설정, 인셋 값을 추가하고 스크롤은 종 스크롤을 사용
@@ -189,7 +189,7 @@ extension MainVC: CollectionViewLayoutable {
                 let footer = NSCollectionLayoutBoundarySupplementaryItem(layoutSize: footerSize, elementKind: UICollectionView.elementKindSectionFooter, alignment: .bottom)
                 
                 //상품 상단 타이틀 헤더 추가, 높이는 56으로 고정
-                let headerSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1), heightDimension: .absolute(56))
+                let headerSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1), heightDimension: .absolute(30))
                 let header = NSCollectionLayoutBoundarySupplementaryItem(layoutSize: headerSize, elementKind: UICollectionView.elementKindSectionHeader, alignment: .top)
                 section.boundarySupplementaryItems = [header, footer]
                 
