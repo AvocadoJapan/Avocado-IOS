@@ -6,6 +6,8 @@
 //
 
 import UIKit
+import Then
+import SnapKit
 import RxDataSources
 import RxRelay
 import RxSwift
@@ -15,6 +17,20 @@ import RxSwift
 final class MainVC: BaseVC {
     
     private var viewModel: MainVM
+    
+    private let scrollView = UIScrollView().then {
+        $0.showsVerticalScrollIndicator = false
+    }
+    private let stackView = UIStackView().then {
+        $0.axis = .vertical
+        $0.spacing = 10
+    }
+    
+    private let productGroupView = ProductGroupView()
+    private let productGroupView2 = ProductGroupView()
+    private let productGroupView3 = ProductGroupView()
+    private let productGroupView4 = ProductGroupView()
+    private let productGroupView5 = ProductGroupView()
     
     init(viewModel: MainVM) {
         self.viewModel = viewModel
@@ -30,14 +46,36 @@ final class MainVC: BaseVC {
     }
     
     override func setProperty() {
+        view.addSubview(scrollView)
+        scrollView.addSubview(stackView)
         
+        [productGroupView, productGroupView2, productGroupView3, productGroupView4, productGroupView5].forEach {
+            stackView.addArrangedSubview($0)
+        }
+        
+        self.view.backgroundColor = .white
+        self.navigationController?.setNavigationBarHidden(true, animated: true)
     }
     
     override func setLayout() {
         
     }
     override func setConstraint() {
+        scrollView.snp.makeConstraints { make in
+            make.edges.equalToSuperview()
+        }
         
+        stackView.snp.makeConstraints { make in
+            make.leading.trailing.top.bottom.equalTo(scrollView)
+            make.width.equalTo(scrollView)
+        }
+        
+        [productGroupView, productGroupView2, productGroupView3, productGroupView4, productGroupView5].forEach {
+            $0.snp.makeConstraints { make in
+                make.horizontalEdges.equalToSuperview()
+                make.height.equalTo(540)
+            }
+        }
     }
 }
 
