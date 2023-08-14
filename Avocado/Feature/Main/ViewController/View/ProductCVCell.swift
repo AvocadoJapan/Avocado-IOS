@@ -14,7 +14,8 @@ final class ProductCVCell: UICollectionViewCell, CollectionCellIdentifierable {
         $0.backgroundColor = .systemGray6
         $0.layer.cornerRadius = 10
         $0.layer.masksToBounds = true
-        $0.contentMode = .scaleAspectFit // 이미지 콘텐츠 모드
+        $0.contentMode = .scaleAspectFill
+        $0.image = UIImage(named: "demo_product")
     }
     private lazy var productNameLabel = UILabel().then {
         $0.text = "아이패드 프로 12.9 5세대"

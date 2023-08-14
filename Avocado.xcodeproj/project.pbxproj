@@ -18,8 +18,6 @@
 		04C835F42A2B315300731E3E /* RxDataSources in Frameworks */ = {isa = PBXBuildFile; productRef = 04C835F32A2B315300731E3E /* RxDataSources */; };
 		04C835F72A2B46B600731E3E /* BannerCVCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04C835F62A2B46B600731E3E /* BannerCVCell.swift */; };
 		04C835F92A2B5E6500731E3E /* MainCategoryModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04C835F82A2B5E6500731E3E /* MainCategoryModel.swift */; };
-		04C835FB2A2B5FCF00731E3E /* MainHeaderReusableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04C835FA2A2B5FCF00731E3E /* MainHeaderReusableView.swift */; };
-		04C835FD2A2B5FE100731E3E /* MainFooterReusableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04C835FC2A2B5FE100731E3E /* MainFooterReusableView.swift */; };
 		04C835FF2A2B5FEF00731E3E /* BannerFooterReusableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04C835FE2A2B5FEF00731E3E /* BannerFooterReusableView.swift */; };
 		04D2FCF82A2A51F100253028 /* RxCocoa in Frameworks */ = {isa = PBXBuildFile; productRef = 04D2FCF72A2A51F100253028 /* RxCocoa */; };
 		04D2FCFA2A2A51F100253028 /* RxRelay in Frameworks */ = {isa = PBXBuildFile; productRef = 04D2FCF92A2A51F100253028 /* RxRelay */; };
@@ -150,8 +148,6 @@
 		04C835F02A2B2CFA00731E3E /* MainDataModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainDataModel.swift; sourceTree = "<group>"; };
 		04C835F62A2B46B600731E3E /* BannerCVCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BannerCVCell.swift; sourceTree = "<group>"; };
 		04C835F82A2B5E6500731E3E /* MainCategoryModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainCategoryModel.swift; sourceTree = "<group>"; };
-		04C835FA2A2B5FCF00731E3E /* MainHeaderReusableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainHeaderReusableView.swift; sourceTree = "<group>"; };
-		04C835FC2A2B5FE100731E3E /* MainFooterReusableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainFooterReusableView.swift; sourceTree = "<group>"; };
 		04C835FE2A2B5FEF00731E3E /* BannerFooterReusableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BannerFooterReusableView.swift; sourceTree = "<group>"; };
 		9816F6D52A49491E00A7A284 /* BaseTarget.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseTarget.swift; sourceTree = "<group>"; };
 		9816F6E12A494A5900A7A284 /* BaseAPIService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseAPIService.swift; sourceTree = "<group>"; };
@@ -332,8 +328,6 @@
 				B248C6A72A86A153006AE008 /* ProductGroupView.swift */,
 				04BD03F62A2B058500330D8A /* MainCategoryCVCell.swift */,
 				04C835F62A2B46B600731E3E /* BannerCVCell.swift */,
-				04C835FA2A2B5FCF00731E3E /* MainHeaderReusableView.swift */,
-				04C835FC2A2B5FE100731E3E /* MainFooterReusableView.swift */,
 				04C835FE2A2B5FEF00731E3E /* BannerFooterReusableView.swift */,
 			);
 			path = View;
@@ -967,7 +961,6 @@
 				B1A301BE2A543A2F003834E6 /* Constant.swift in Sources */,
 				981A598D2A494FAE0031A917 /* AuthService.swift in Sources */,
 				B22ECA3D2A778E9800CCA794 /* SettingStep.swift in Sources */,
-				04C835FB2A2B5FCF00731E3E /* MainHeaderReusableView.swift in Sources */,
 				B29D78912A2B6FB1008B6945 /* SearchVC.swift in Sources */,
 				B1A705142A63C426005CD130 /* ViewModelType.swift in Sources */,
 				B2D1309E2A4B4C5800538EFB /* BottomButton.swift in Sources */,
@@ -1031,7 +1024,6 @@
 				98FD1C282A56B3860031D7C1 /* SettingService.swift in Sources */,
 				9816F6EF2A494B1B00A7A284 /* NetworkError.swift in Sources */,
 				9816F6E22A494A5900A7A284 /* BaseAPIService.swift in Sources */,
-				04C835FD2A2B5FE100731E3E /* MainFooterReusableView.swift in Sources */,
 				B293420E2A58579C00F5CF30 /* RegionTVCell.swift in Sources */,
 				B22ECA382A778E8000CCA794 /* SettingFlow.swift in Sources */,
 				B1A301A62A5439E7003834E6 /* UIViewController+Extension.swift in Sources */,

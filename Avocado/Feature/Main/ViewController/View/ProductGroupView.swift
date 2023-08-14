@@ -19,28 +19,25 @@ final class ProductGroupView: UIView {
     private let titleLabel = UILabel().then {
         $0.font = UIFont.systemFont(ofSize: 18, weight: .bold)
         $0.textColor = .black
-        $0.text = "한국어 데모"
+        $0.text = "최근 본 상품과 비슷해요"
         $0.textAlignment = .left
         $0.contentMode = .center
     }
     
-    private lazy var collectionView: UICollectionView = {
-        let layout = UICollectionViewFlowLayout()
+    let flowLayout = UICollectionViewFlowLayout().then {
+//        let width = (self.frame.width / 3 == 0) ? (400 - 42) / 3 : (self.frame.width - 42) / 3
+//
+//        $0.itemSize = CGSize(width: width, height: 200)
         
-        let width = (self.frame.width / 3 == 0) ? (400 - 42) / 3 : (self.frame.width - 42) / 3
-
-        layout.itemSize = CGSize(width: width, height: 200)
-        
-//        layout.minimumInteritemSpacing = 5 // 셀 간 수평 간격
-//        layout.minimumLineSpacing = 5 // 셀 간 수직 간격
-        layout.sectionInset = UIEdgeInsets(top: 7, left: 7, bottom: 7, right: 7) // 섹션 내부 마진
-        
-        let collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
-        collectionView.register(ProductCVCell.self, forCellWithReuseIdentifier: ProductCVCell.identifier)
-        collectionView.dataSource = self
-        
-        return collectionView
-    }()
+//        $0.minimumInteritemSpacing = 5 // 셀 간 수평 간격
+//        $0.minimumLineSpacing = 5 // 셀 간 수직 간격
+        $0.sectionInset = UIEdgeInsets(top: 7, left: 7, bottom: 7, right: 7) // 섹션 내부 마진
+    }
+    private lazy var collectionView = UICollectionView(frame: .zero, collectionViewLayout: flowLayout).then {
+        $0.register(ProductCVCell.self, forCellWithReuseIdentifier: ProductCVCell.identifier)
+        $0.dataSource = self
+        $0.showsVerticalScrollIndicator = false
+    }
     
     lazy var moreButton = UIButton().then {
         $0.setTitle("더보기", for: .normal)
@@ -81,6 +78,11 @@ final class ProductGroupView: UIView {
     
     required init?(coder: NSCoder) {
         super.init(coder: coder)
+    }
+    
+    override func layoutSubviews() {
+        flowLayout.itemSize = CGSize(width: self.frame.width/3 - 12, height: 200)
+        self.collectionView.collectionViewLayout = flowLayout
     }
 }
 

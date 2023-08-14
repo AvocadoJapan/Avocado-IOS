@@ -19,6 +19,7 @@ final class BannerFooterReusableView: UICollectionReusableView {
         $0.currentPage = 3
         $0.currentPageIndicatorTintColor = .black
         $0.pageIndicatorTintColor = .lightGray
+        $0.backgroundStyle = .prominent
     }
     private let disposeBag = DisposeBag()
     
