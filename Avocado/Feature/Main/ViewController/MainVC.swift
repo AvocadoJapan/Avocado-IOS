@@ -26,7 +26,7 @@ final class MainVC: BaseVC, UICollectionViewDelegate, UICollectionViewDataSource
     }
     private lazy var stackView = UIStackView().then {
         $0.axis = .vertical
-        $0.spacing = 20
+//        $0.spacing = 10
     }
     
     private lazy var bannerCollectionViewLayout = UICollectionViewFlowLayout().then {
@@ -41,14 +41,14 @@ final class MainVC: BaseVC, UICollectionViewDelegate, UICollectionViewDataSource
         $0.backgroundColor = .clear
     }
     
-    private lazy var MainCategoryCollectionViewLayout = UICollectionViewFlowLayout().then {
-        $0.scrollDirection = .vertical
-        $0.minimumLineSpacing = 0
-        $0.minimumInteritemSpacing = 10
-        $0.sectionInset = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
+    
+    private lazy var mainCategoryCollectionViewLayout = UICollectionViewFlowLayout().then {
+        $0.scrollDirection = .horizontal
+        $0.minimumLineSpacing = 14
+        $0.sectionInset = UIEdgeInsets(top: 10, left: 7, bottom: 10, right: 7)
     }
-    private lazy var MainCategoryCollectionView = UICollectionView(frame: .zero, collectionViewLayout: self.MainCategoryCollectionViewLayout).then {
-        $0.showsVerticalScrollIndicator = false
+    private lazy var mainCategoryCollectionView = UICollectionView(frame: .zero, collectionViewLayout: self.mainCategoryCollectionViewLayout).then {
+        $0.showsHorizontalScrollIndicator = false
         $0.isPagingEnabled = true
         $0.backgroundColor = .clear
     }
@@ -97,11 +97,11 @@ final class MainVC: BaseVC, UICollectionViewDelegate, UICollectionViewDataSource
         bannerCollectionView.register(BannerCVCell.self, forCellWithReuseIdentifier: BannerCVCell.identifier)
         
         // Configure Main Category Collection View
-        MainCategoryCollectionView.delegate = self
-        MainCategoryCollectionView.dataSource = self
-        MainCategoryCollectionView.register(MainCategoryCVCell.self, forCellWithReuseIdentifier: MainCategoryCVCell.identifier)
+        mainCategoryCollectionView.delegate = self
+        mainCategoryCollectionView.dataSource = self
+        mainCategoryCollectionView.register(MainCategoryCVCell.self, forCellWithReuseIdentifier: MainCategoryCVCell.identifier)
         
-        [bannerCollectionView, MainCategoryCollectionView].forEach {
+        [bannerCollectionView, mainCategoryCollectionView].forEach {
             stackView.addArrangedSubview($0)
         }
         
@@ -131,21 +131,40 @@ final class MainVC: BaseVC, UICollectionViewDelegate, UICollectionViewDataSource
             //            make.horizontalEdges.equalToSuperview()
             make.height.equalTo(300) // Or whatever height you want for the banner
         }
+        
+        mainCategoryCollectionView.snp.makeConstraints { make in
+            make.height.equalTo(95) // Or whatever height you want for the banner
+        }
     }
     
     // MARK: - UICollectionViewDataSource
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return 3
+        if collectionView == bannerCollectionView {
+            return 3
+        } else if collectionView == mainCategoryCollectionView {
+            return 6
+        }
+        return 0
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: BannerCVCell.identifier, for: indexPath) as! BannerCVCell
-        
-        return cell
+        if collectionView == bannerCollectionView {
+            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: BannerCVCell.identifier, for: indexPath) as! BannerCVCell
+            
+            return cell
+        } else {
+            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: MainCategoryCVCell.identifier, for: indexPath) as! MainCategoryCVCell
+            
+            return cell
+        }
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        return collectionView.frame.size
+        if collectionView == bannerCollectionView {
+            return collectionView.frame.size
+        } else {
+            return CGSize(width: 60, height: 75)
+        }
     }
     
     // MARK: - UIScrollViewDelegate

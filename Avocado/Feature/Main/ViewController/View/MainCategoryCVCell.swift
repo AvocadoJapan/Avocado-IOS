@@ -17,13 +17,22 @@ final class MainCategoryCVCell: UICollectionViewCell, CollectionCellIdentifierab
     var disposeBag = DisposeBag()
     
     private lazy var iconImageView = UIImageView().then {
-        $0.image = UIImage(systemName: "person.crop.circle")
+        $0.tintColor = .darkText
+        $0.image = UIImage(systemName: "person.fill")
     }
     
     private lazy var nameLabel = UILabel().then {
         $0.text = "가전제품"
-        $0.font = UIFont.boldSystemFont(ofSize: 12)
+        $0.font = UIFont.boldSystemFont(ofSize: 11)
         $0.textAlignment = .center
+        $0.textColor = .darkText
+    }
+    
+    private lazy var stackView = UIStackView().then {
+        $0.axis = .vertical
+        $0.alignment = .center
+        $0.distribution = .equalSpacing
+        $0.spacing = 4
     }
     
     override init(frame: CGRect) {
@@ -31,21 +40,27 @@ final class MainCategoryCVCell: UICollectionViewCell, CollectionCellIdentifierab
         onData = cellData.asObserver()
         super.init(frame: frame)
         
+        //setProporty
+        self.backgroundColor = .systemGray6
+        self.layer.cornerRadius = 10
+        
         //setLayout
         [iconImageView, nameLabel].forEach {
-            addSubview($0)
+            stackView.addArrangedSubview($0)
         }
+        self.addSubview(stackView)
         
         //setConstraint
+        stackView.snp.makeConstraints {
+            $0.center.equalToSuperview()
+            $0.left.top.equalToSuperview().offset(10)
+        }
+        
         iconImageView.snp.makeConstraints {
             $0.top.left.right.equalToSuperview()
             $0.height.equalTo(iconImageView.snp.width)
         }
         
-        nameLabel.snp.makeConstraints {
-            $0.top.equalTo(iconImageView.snp.bottom)
-            $0.left.right.bottom.equalToSuperview()
-        }
         //bindUI
         cellData.observe(on: MainScheduler.instance)
             .subscribe(onNext: { [weak self] data in
@@ -64,7 +79,7 @@ final class MainCategoryCVCell: UICollectionViewCell, CollectionCellIdentifierab
 import SwiftUI
 struct MainCategoryCCPreview:PreviewProvider {
     static var previews: some View {
-        return MainCategoryCVCell().toPreview().previewLayout(.fixed(width: 60, height: 80))
+        return MainCategoryCVCell().toPreview().previewLayout(.fixed(width: 60, height: 75))
     }
 }
 #endif
