@@ -38,7 +38,7 @@ import RxSwift
     case emailCheckIsComplete
     
     // OtherEmail
-    case otherEmailIsRequired
+    case otherEmailIsRequired(oldEmail: String)
     case otherEmailIsComplete
 
     // Region

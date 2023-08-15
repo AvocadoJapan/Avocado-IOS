@@ -11,7 +11,8 @@ import AWSPluginsCore
 import AWSCognitoAuthPlugin
 import RxSwift
 import UIKit
-
+import AWSCognitoIdentityProvider
+import ClientRuntime
 /**
  * - Description 인증관련 API
  */
@@ -570,6 +571,91 @@ final class AuthService: BaseAPIService<AuthAPI> {
      */
     func uploadAvatar(type: String, size: Int64) -> Observable<Common.PresignedURLData> {
         return singleRequest(.uploadAvatar(type: type, size: size)).asObservable()
+    }
+    /**
+     * - Description 관리자 권한으로 사용자 이메일 변경 함수
+     * - Parameter oldEmail: 변경 전 이메일
+     * - Parameter newEmail:변경 후 이메일
+     * - Warning 해당 기능을 이용할 경우 `Xcode` > `Edit Scheme` > `Arguments`에 아래 내용을 기입 하여야 함
+     * ```
+     * `AWS_REGION`: AWS 리전 정보
+     * `AWS_ACCESS_KEY_ID`: AWS 액세스 키 정보
+     * `AWS_SECRET_ACCESS_KEY`: AWS 시크릿 키 정보
+     * ```
+     */
+    func changeUserEmail(oldEmail: String, newEmail: String) -> Observable<Bool> {
+        
+        return Observable.create { [weak self] observer in
+            
+            guard let self = self else {
+                return Disposables.create()
+            }
+            
+            Task {
+                do {
+                    
+                    let client = self.cognitoIdentityProviderClient()
+                    
+                    // 사용자 정보를 관리자 권한으로 업데이트
+                    // email: 변경 할 이메일
+                    // email_verified: 이메일 확인 여부
+                    let _ = try await client.adminUpdateUserAttributes(input: AdminUpdateUserAttributesInput(
+                        userAttributes: [
+                            CognitoIdentityProviderClientTypes.AttributeType(name: "email", value: newEmail),
+                            CognitoIdentityProviderClientTypes.AttributeType(name: "email_verified", value: "true"),
+                        ],
+                        userPoolId: "ap-northeast-2_k1tD9KrYe",
+                        username: oldEmail)
+                    )
+                    
+                    observer.onNext(true)
+                    observer.onCompleted()
+                    
+                }
+                catch let error as SdkError<AdminUpdateUserAttributesOutputError> {
+                    
+                    if case let .client(clientError, _) = error,
+                       case let .retryError(serviceError) = clientError,
+                       case let .service(authError, _) = serviceError as? SdkError<AdminUpdateUserAttributesOutputError>{
+                        
+                        switch authError {
+                        case .aliasExistsException(let exception):
+                            Logger.e(exception.message!)
+                            observer.onError(UserAuthError.userEmailExists)
+                            
+                        case .invalidParameterException:
+                            observer.onError(UserAuthError.emailRoleMisMatch)
+                            
+                        default:
+                            Logger.e(error.localizedDescription)
+                            observer.onError(UserAuthError.unknown(message: error.localizedDescription))
+                        }
+                    }
+                    else {
+                        Logger.e(error.localizedDescription)
+                        observer.onError(UserAuthError.unknown(message: error.localizedDescription))
+                    }
+                }
+            }
+            
+            
+            return Disposables.create()
+        }
+    }
+    
+    /**
+     * - Description Amplify에서 지원하지 않는 함수를 사용하기 위한 Client 사용자 get 함수
+     * - Returns 함수 사용에 필요한 객체
+     */
+    private func cognitoIdentityProviderClient() -> CognitoIdentityProviderClient {
+        let plugin = try? Amplify.Auth.getPlugin(for: "awsCognitoAuthPlugin") as? AWSCognitoAuthPlugin
+        
+        if case .userPool(let userPoolClient) = plugin?.getEscapeHatch() {
+            return userPoolClient
+        }
+        else {
+            fatalError("No user pool configuration found")
+        }
     }
     
     /**

@@ -163,13 +163,7 @@ final class SignupVC: BaseVC {
                 self?.viewModel.input.actionSignUpRelay.accept(void)
 //                Mocking
 //                guard let self = self else { return }
-//                let authService = AuthService()
-//                let emailCheckVM = EmailCheckVM(service: authService,
-//                                                email: self.viewModel.input.emailBehavior.value,
-//                                                password: self.viewModel.input.passwordBehavior.value)
-//                let emailCheckVC = EmailCheckVC(viewModel: emailCheckVM)
-//                let emailCheckNavigationVC = emailCheckVC.makeBaseNavigationController()
-//                self.present(emailCheckNavigationVC, animated: true)
+//                self.viewModel.steps.accept(AuthStep.emailCheckIsRequired(email: viewModel.input.emailBehavior.value, password: viewModel.input.passwordBehavior.value))
             })
             .disposed(by: disposeBag)
                 

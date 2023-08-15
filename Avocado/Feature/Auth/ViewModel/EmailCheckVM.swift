@@ -108,12 +108,8 @@ final class EmailCheckVM: ViewModelType, Stepper  {
         
         // 다른 이메일 인증
         input.actionOtherEmailSignUpRelay
-            .flatMap { [weak self] _  in
-                guard let self = self else { throw NetworkError.unknown(-1, "유효하지 않은 화면") }
-                return self.service.deleteAccount()
-            }
-            .subscribe {
-                output.successDeleteTepmAccount.accept($0)
+            .subscribe { _ in
+                output.successDeleteTepmAccount.accept(true)
             } onError: { err in
                 guard let authError = err as? AuthError else {
                     output.errEventPublish.accept(NetworkError.unknown(-1, err.localizedDescription))
