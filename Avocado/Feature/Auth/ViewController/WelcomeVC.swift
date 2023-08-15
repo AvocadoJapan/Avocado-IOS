@@ -184,10 +184,9 @@ final class WelcomeVC: BaseVC {
         
         // 소셜 로그인 성공 여부
         viewModel.successEventPublish
-            .asSignal()
-            .emit(onNext: { _ in
-                let tabbarviewController = Util.makeTabBarViewController()
-                Util.changeRootViewController(to: tabbarviewController)
+            .observe(on: MainScheduler.instance)
+            .subscribe(onNext: { [weak self] user in
+                self?.steps.accept(AuthStep.loginIsComplete(user: user))
             })
             .disposed(by: disposeBag)
         

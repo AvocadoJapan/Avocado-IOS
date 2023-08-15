@@ -23,6 +23,6 @@ import RxSwift
     // Loding
     case splashIsRequired
     case tokenIsRequired
-    case tokenIsExist
+    case tokenIsExist(user: User)
     case errorOccurred(error: NetworkError)
 }

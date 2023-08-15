@@ -39,7 +39,7 @@ final class MainCategoryCVCell: UICollectionViewCell, CollectionCellIdentifierab
         //setConstraint
         iconImageView.snp.makeConstraints {
             $0.top.left.right.equalToSuperview()
-            $0.height.equalTo(60)
+            $0.height.equalTo(iconImageView.snp.width)
         }
         
         nameLabel.snp.makeConstraints {

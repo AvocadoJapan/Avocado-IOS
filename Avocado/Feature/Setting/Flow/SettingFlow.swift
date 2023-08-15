@@ -36,8 +36,8 @@ final class SettingFlow: Flow {
             return navigateToSplashScreen()
         case .tokenIsRequired:
             return navigateToWelcomeScreen()
-        case .tokenIsExist:
-            return navigateToMainScreen()
+        case .tokenIsExist(let user):
+            return navigateToMainScreen(user: user)
         case .errorOccurred(let error):
             return navigateToFailScreen(with: error)
         }
@@ -63,8 +63,9 @@ final class SettingFlow: Flow {
     }
     
     // FIXME: 추후 메인 MainVM을 Stepper로 개발후 return값 변경해야됨
-    private func navigateToMainScreen() -> FlowContributors {
-        let viewModel = MainVM()
+    private func navigateToMainScreen(user: User) -> FlowContributors {
+        let service = MainService()
+        let viewModel = MainVM(service: service, user: user)
         let viewController = MainVC(viewModel: viewModel)
         
         rootViewController.setViewControllers([viewController], animated: true)

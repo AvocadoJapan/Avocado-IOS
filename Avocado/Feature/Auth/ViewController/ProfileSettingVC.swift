@@ -143,16 +143,16 @@ final class ProfileSettingVC: BaseVC {
             .disposed(by: disposeBag)
         
         //MARK: - OUTPUT BINDING
-        output.successSignUpeRelay
-            .asSignal()
-            .do(onNext: {[weak self] _ in
-                self?.confirmButton.isEnabled = true
-            })
-            .emit(onNext: { _ in
-                let tabbarviewController = Util.makeTabBarViewController()
-                Util.changeRootViewController(to: tabbarviewController)
-            })
-            .disposed(by: disposeBag)
+//        output.successSignUpeRelay
+//            .asSignal()
+//            .do(onNext: {[weak self] _ in
+//                self?.confirmButton.isEnabled = true
+//            })
+//            .emit(onNext: { _ in
+//                let tabbarviewController = Util.makeTabBarViewController()
+//                Util.changeRootViewController(to: tabbarviewController)
+//            })
+//            .disposed(by: disposeBag)
             
         output.errEventPublish
             .asSignal()

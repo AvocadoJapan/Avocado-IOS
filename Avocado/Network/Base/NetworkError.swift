@@ -15,17 +15,17 @@ protocol AvocadoError: Error {
 
 /**
  * - Description  Network관련 오류 enum
- * `invaildResponse` :  Response가 잘못되었을 경우
+ * `invalidResponse` :  Response가 잘못되었을 경우
  * `tokenExpired`:  토큰이 만료가 되었을 경우
- * `invaildURL`:  URLRequest에 매핑하지 못한 경우
+ * `invalidURL`:  URLRequest에 매핑하지 못한 경우
  * `pageNotFound`:  사용자가 없는경우, page를 잘못 호출 한 경우
  * `unknown`: 그 외 오류가 발생했을 경우 `code`값과 `message`값을 넣어표시
  */
 enum NetworkError: AvocadoError {
-    case invaildResponse
+    case invalidResponse
     case tokenExpired
     case tokenIsRequired
-    case invaildURL
+    case invalidURL
     case pageNotFound
     case serverError
     case serverConflict
@@ -33,7 +33,7 @@ enum NetworkError: AvocadoError {
     
     var errorDescription: String {
         switch self {
-        case .invaildResponse:
+        case .invalidResponse:
             return "Response가 잘못 되었습니다"
             
         case .tokenExpired:
@@ -42,7 +42,7 @@ enum NetworkError: AvocadoError {
         case .tokenIsRequired:
             return "토큰이 필요합니다"
             
-        case .invaildURL:
+        case .invalidURL:
             return "서버 요청에 실패하였습니다"
             
         case .pageNotFound:
@@ -55,7 +55,7 @@ enum NetworkError: AvocadoError {
             return "중복된 요청입니다"
             
         case .unknown(let code, let message):
-            return "오류 코드 : \(code)\n 오류 메시지 : \(message)"
+            return "Error Code : \(code)\n Message : \(message)"
         }
     }
 }

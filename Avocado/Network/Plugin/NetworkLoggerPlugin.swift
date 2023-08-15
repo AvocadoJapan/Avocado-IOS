@@ -15,7 +15,7 @@ struct NetworkLoggerPlugin: PluginType {
     
     func willSend(_ request: RequestType, target: TargetType) {
         guard let httpRequest = request.request else {
-            Logger.e("HTTP Request Invaild Request")
+            Logger.e("HTTP Request Invalid Request")
             return
         }
         

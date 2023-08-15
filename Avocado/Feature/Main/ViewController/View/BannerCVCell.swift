@@ -17,7 +17,8 @@ final class BannerCVCell: UICollectionViewCell, CollectionCellIdentifierable {
     var disposeBag = DisposeBag()
     
     private lazy var imageView = UIImageView().then {
-        $0.backgroundColor = .red
+        $0.backgroundColor = .systemGray6
+        $0.image = UIImage(named: "demo_photo")
     }
     
     override init(frame: CGRect) {
@@ -36,7 +37,7 @@ final class BannerCVCell: UICollectionViewCell, CollectionCellIdentifierable {
         //bindUI
         cellData.observe(on: MainScheduler.instance)
             .subscribe(onNext: { [weak self] data in
-                self?.imageView.image = UIImage(named: data.imageURL)
+                self?.imageView.image = UIImage(named: "demo_photo")
             })
             .disposed(by: disposeBag)
         

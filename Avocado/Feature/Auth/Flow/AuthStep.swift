@@ -24,7 +24,7 @@ import RxSwift
     
     // Login
     case loginIsRequired
-    case loginIsComplete
+    case loginIsComplete(user: User)
     
     // SignUp
     case signUpIsRequired

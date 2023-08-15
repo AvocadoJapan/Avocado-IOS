@@ -154,7 +154,7 @@ class BaseAPIService<Target: BaseTarget> {
         
         guard let response = moyaError.response,
               let errDescription = moyaError.errorDescription else {
-            return NetworkError.invaildURL
+            return NetworkError.invalidURL
         }
         
         return restAPIErrorHandling(code: response.statusCode, message: errDescription)
