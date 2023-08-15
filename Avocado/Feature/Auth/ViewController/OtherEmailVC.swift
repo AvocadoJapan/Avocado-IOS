@@ -47,10 +47,27 @@ final class OtherEmailVC: BaseVC {
     }
     
     private lazy var accountCenterButton: SubButton = SubButton(text: "계정 센터")
-        
+    
+    private var viewModel: OtherEmailVM
+    
+    init(viewModel: OtherEmailVM) {
+        self.viewModel = viewModel
+        super.init(nibName: nil, bundle: nil)
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
     override func setProperty() {
         view.backgroundColor = .white
-        self.navigationController?.isNavigationBarHidden = true
+        
+        // 닫기버튼 추가
+        let closeButton = UIBarButtonItem(systemItem: .close, primaryAction: UIAction(handler: { [weak self] _ in
+            self?.dismiss(animated: true)
+        }))
+        
+        navigationItem.leftBarButtonItem = closeButton
     }
     
     override func setLayout() {
@@ -92,6 +109,62 @@ final class OtherEmailVC: BaseVC {
     }
     
     override func bindUI() {
+        let output = viewModel.transform(input: viewModel.input)
+        
+        viewModel
+            .input
+            .userOldEmailBehavior
+            .bind(to: prevEmailLabel.rx.text)
+            .disposed(by: disposeBag)
+        
+        otherEmailInput
+            .userInput
+            .bind(to: viewModel.input.userNewEmailBehavior)
+            .disposed(by: disposeBag)
+        
+        confirmButton.rx
+            .tap
+            .asDriver()
+            .throttle(.seconds(3), latest: false)
+            .drive(onNext: { [weak self] void in
+                self?.viewModel.input.actionOtherEmailCodePublish.accept(void)
+            })
+            .disposed(by: disposeBag)
+        
+        otherEmailInput
+            .isVaild
+            .bind(to: confirmButton.rx.isEnabled)
+            .disposed(by: disposeBag)
+        
+        otherEmailInput
+            .isVaild
+            .map {$0 ? .black : .lightGray}
+            .bind(to: confirmButton.rx.backgroundColor)
+            .disposed(by: disposeBag)
+        
+        output.successOtherEmailCodePublish
+            .asSignal()
+            .emit(onNext: { [weak self] _ in
+                self?.dismiss(animated: true, completion: {
+                    // 인증번호 전송이 되었을 경우 notification 발송
+                    NotificationCenter.default.post(
+                        name: NSNotification.Name("reloadEmailCheck"),
+                        object:self?.viewModel.input.userNewEmailBehavior.value)
+                })
+
+            })
+            .disposed(by: disposeBag)
+        
+        output.errorEventPublish
+            .asSignal()
+            .emit(onNext: { [weak self] error in
+                let alertController = UIAlertController(title: "", message: error.errorDescription, preferredStyle: .alert)
+                alertController.addAction(UIAlertAction(title: "확인", style: .default))
+                
+                self?.present(alertController, animated: true)
+            })
+            .disposed(by: disposeBag)
+        
         //키보드 버튼 애니메이션
         RxKeyboard.instance.visibleHeight
             .skip(1)
@@ -110,7 +183,7 @@ import SwiftUI
 import RxSwift
 struct OtherEmailVCPreview: PreviewProvider {
     static var previews: some View {
-        return OtherEmailVC().toPreview()
+        return OtherEmailVC(viewModel: OtherEmailVM(service: AuthService(), oldEmail: "sample@avocadojp.com")).toPreview()
     }
 }
 #endif

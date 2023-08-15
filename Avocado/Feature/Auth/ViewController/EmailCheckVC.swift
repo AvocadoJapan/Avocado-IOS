@@ -162,6 +162,16 @@ final class EmailCheckVC: BaseVC {
             })
             .disposed(by: disposeBag)
         
+        // 다른 이메일로 인증
+        output
+            .successDeleteTepmAccount
+            .asSignal()
+            .emit(onNext: { [weak self] _ in
+                guard let self = self else { return }
+                self.viewModel.steps.accept(AuthStep.otherEmailIsRequired(oldEmail: self.viewModel.input.userEmailRelay.value))
+            })
+            .disposed(by: disposeBag)
+        
         output
             .errEventPublish
             .asSignal()
@@ -207,19 +217,32 @@ final class EmailCheckVC: BaseVC {
             .rx
             .tap
             .asDriver()
+            .throttle(.seconds(3), latest: false)
             .drive(onNext: { [weak self] _ in
-                self?.present(OtherEmailVC(), animated: true)
+                self?.viewModel.input.actionOtherEmailSignUpRelay.accept(())
             })
             .disposed(by: disposeBag)
         
         //키보드 버튼 애니메이션
         RxKeyboard.instance.visibleHeight
-            .skip(1)
-            .drive(onNext: { [weak self] height in
-                guard let self = self else { return }
-                self.confirmButton.keyboardMovement(from:self.view, height: height)
-            })
-            .disposed(by: disposeBag)       
+                .skip(1)
+                .drive(onNext: { [weak self] height in
+                    guard let self = self else { return }
+                    self.confirmButton.keyboardMovement(from:self.view, height: height)
+                })
+                .disposed(by: disposeBag)
+                
+        // Notification
+        NotificationCenter.default.rx
+                .notification(Notification.Name("reloadEmailCheck"))
+                .withUnretained(self)
+                .bind { [weak self] (_, notification) in
+                    guard let self = self else { return }
+                    let newEmail = notification.object as! String
+                    self.viewModel.input.userEmailRelay.accept(newEmail)
+                }
+                .disposed(by: disposeBag)
+                
     }
 
 }
