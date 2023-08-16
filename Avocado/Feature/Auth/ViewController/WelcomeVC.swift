@@ -138,15 +138,20 @@ final class WelcomeVC: BaseVC {
     }
     
     override func bindUI() {
+        let output = viewModel.transform(input: viewModel.input)
+        
+        // 현재 화면 뷰모델에 바인딩
+        viewModel.input.targetViewRelay.accept(view)
+        
         // 구글 로그인
         googleLogin
             .rx
             .tap
             .asDriver()
             .throttle(.seconds(3), latest: false)
-            .drive(onNext: { [weak self] _ in
+            .drive(onNext: { [weak self] void in
                 guard let self = self else { return }
-                self.viewModel.socialLoginWithGoogle(view: self.view)
+                self.viewModel.input.actionWithGoogleLoginPublish.accept(void)
             })
             .disposed(by: disposeBag)
         
@@ -156,9 +161,9 @@ final class WelcomeVC: BaseVC {
             .tap
             .asDriver()
             .throttle(.seconds(3), latest: false)
-            .drive { [weak self] _ in
+            .drive { [weak self] void in
                 guard let self = self else { return }
-                self.viewModel.socialLoginWithApple(view: self.view)
+                self.viewModel.input.actionWithAppleLoginPublish.accept(void)
             }
             .disposed(by: disposeBag)
         
@@ -183,7 +188,7 @@ final class WelcomeVC: BaseVC {
             .disposed(by: disposeBag)
         
         // 소셜 로그인 성공 여부
-        viewModel.successEventPublish
+        output.successEventPublish
             .observe(on: MainScheduler.instance)
             .subscribe(onNext: { [weak self] user in
                 self?.steps.accept(AuthStep.loginIsComplete(user: user))
@@ -191,7 +196,7 @@ final class WelcomeVC: BaseVC {
             .disposed(by: disposeBag)
         
         //소셜 로그인 에러 여부
-        viewModel.errEventPublish
+        output.errEventPublish
             .asSignal()
             .emit(onNext:{ [weak self] err in
                 switch err {
@@ -200,10 +205,7 @@ final class WelcomeVC: BaseVC {
                     let alert = UIAlertController(title: "", message: "사용자가 존재하지 않습니다\n 아보카도 회원가입 먼저 부탁드립니다", preferredStyle: .alert)
                     
                     alert.addAction(UIAlertAction(title: "확인", style: .default,handler: { _ in
-                        let authService = AuthService()
-                        let signUpVM = SignUpVM(service: authService)
-                        let signUPVC = SignupVC(viewModel: signUpVM)
-                        self?.navigationController?.pushViewController(signUPVC, animated: true)
+                        self?.viewModel.handleSignup()
                     }))
                     
                     self?.present(alert, animated: true)
