@@ -26,7 +26,7 @@ final class MainVC: BaseVC, UICollectionViewDelegate, UICollectionViewDataSource
     }
     private lazy var stackView = UIStackView().then {
         $0.axis = .vertical
-//        $0.spacing = 10
+        $0.spacing = 10
     }
     
     private lazy var bannerCollectionViewLayout = UICollectionViewFlowLayout().then {
@@ -44,8 +44,8 @@ final class MainVC: BaseVC, UICollectionViewDelegate, UICollectionViewDataSource
     
     private lazy var mainCategoryCollectionViewLayout = UICollectionViewFlowLayout().then {
         $0.scrollDirection = .horizontal
-        $0.minimumLineSpacing = 14
-        $0.sectionInset = UIEdgeInsets(top: 10, left: 7, bottom: 10, right: 7)
+        $0.minimumLineSpacing = 10
+        $0.sectionInset = UIEdgeInsets(top: 0, left: 7, bottom: 0, right: 7)
     }
     private lazy var mainCategoryCollectionView = UICollectionView(frame: .zero, collectionViewLayout: self.mainCategoryCollectionViewLayout).then {
         $0.showsHorizontalScrollIndicator = false
@@ -56,6 +56,8 @@ final class MainVC: BaseVC, UICollectionViewDelegate, UICollectionViewDataSource
     private let productGroupView = ProductGroupView()
     private let productGroupView2 = ProductGroupView()
     private let productGroupView3 = ProductGroupView()
+    
+    private let legalView = LegalView()
     
     init(viewModel: MainVM) {
         self.viewModel = viewModel
@@ -79,11 +81,42 @@ final class MainVC: BaseVC, UICollectionViewDelegate, UICollectionViewDataSource
         self.navigationController?.setNavigationBarHidden(true, animated: true)
         navigationController?.navigationBar.shadowImage = UIImage()
         
-        let logo = UIImageView().then {
-            $0.image = UIImage(named: "logo_avocado")
+        // 1. Create a container view
+        let logoContainer = UIView(frame: CGRect(x: 0, y: 0, width: 100, height: 20))
+        
+        // 2. Create an image view for the logo
+        let logoImageView = UIImageView().then {
+            $0.image = UIImage(systemName: "apple.logo")
             $0.contentMode = .scaleAspectFit
+            $0.tintColor = .black
         }
-        let leftItem = UIBarButtonItem(customView: logo)
+        
+        // 3. Create a label for the text
+        let label = UILabel().then {
+            $0.text = "Avocado Beta"
+            $0.textColor = .black
+            $0.font = .systemFont(ofSize: 14, weight: .bold)
+        }
+        
+        // 4. Add the image view and label to the container view
+        logoContainer.addSubview(logoImageView)
+        logoContainer.addSubview(label)
+        
+        // 5. Set the layout
+        logoImageView.snp.makeConstraints { make in
+            make.left.equalToSuperview()
+            make.centerY.equalToSuperview()
+            make.width.equalTo(20)
+            make.height.equalTo(20)
+        }
+        
+        label.snp.makeConstraints { make in
+            make.left.equalTo(logoImageView.snp.right).offset(8)
+            make.centerY.equalToSuperview()
+        }
+        
+        // 6. Set the container view as the left bar button item
+        let leftItem = UIBarButtonItem(customView: logoContainer)
         navigationItem.leftBarButtonItem = leftItem
     }
     
@@ -99,13 +132,13 @@ final class MainVC: BaseVC, UICollectionViewDelegate, UICollectionViewDataSource
         // Configure Main Category Collection View
         mainCategoryCollectionView.delegate = self
         mainCategoryCollectionView.dataSource = self
-        mainCategoryCollectionView.register(MainCategoryCVCell.self, forCellWithReuseIdentifier: MainCategoryCVCell.identifier)
+        mainCategoryCollectionView.register(MainSubMenuCVCell.self, forCellWithReuseIdentifier: MainSubMenuCVCell.identifier)
         
         [bannerCollectionView, mainCategoryCollectionView].forEach {
             stackView.addArrangedSubview($0)
         }
         
-        [productGroupView, productGroupView2, productGroupView3 ].forEach {
+        [productGroupView, productGroupView2, productGroupView3, legalView ].forEach {
             stackView.addArrangedSubview($0)
         }
     }
@@ -133,7 +166,12 @@ final class MainVC: BaseVC, UICollectionViewDelegate, UICollectionViewDataSource
         }
         
         mainCategoryCollectionView.snp.makeConstraints { make in
-            make.height.equalTo(95) // Or whatever height you want for the banner
+            make.height.equalTo(75)
+        }
+        
+        legalView.snp.makeConstraints {
+            $0.horizontalEdges.equalToSuperview()
+            $0.height.equalTo(250)
         }
     }
     
@@ -142,7 +180,7 @@ final class MainVC: BaseVC, UICollectionViewDelegate, UICollectionViewDataSource
         if collectionView == bannerCollectionView {
             return 3
         } else if collectionView == mainCategoryCollectionView {
-            return 6
+            return MainSubMenuType.count
         }
         return 0
     }
@@ -153,7 +191,13 @@ final class MainVC: BaseVC, UICollectionViewDelegate, UICollectionViewDataSource
             
             return cell
         } else {
-            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: MainCategoryCVCell.identifier, for: indexPath) as! MainCategoryCVCell
+            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: MainSubMenuCVCell.identifier, for: indexPath) as! MainSubMenuCVCell
+            
+            // MainSubMenuType 열거형에서 해당 indexPath에 맞는 케이스를 가져옵니다.
+            let menuType = MainSubMenuType.allCases[indexPath.item]
+            
+            // 셀을 해당 데이터로 구성합니다.
+            cell.configure(imageName: menuType.imageName, title: menuType.title, navigateTo: menuType.navigateTo)
             
             return cell
         }
@@ -170,7 +214,7 @@ final class MainVC: BaseVC, UICollectionViewDelegate, UICollectionViewDataSource
     // MARK: - UIScrollViewDelegate
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
         let yOffset = scrollView.contentOffset.y
-        if yOffset > 100 {
+        if yOffset > 50 {
             navigationController?.setNavigationBarHidden(false, animated: true) // 네비게이션바 표시
         } else {
             navigationController?.setNavigationBarHidden(true, animated: true) // 네비게이션바 숨기기

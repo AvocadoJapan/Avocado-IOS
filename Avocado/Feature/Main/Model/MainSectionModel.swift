@@ -38,7 +38,7 @@ struct SectionOfMainData {
 enum SectionMainItem {
     case banner(data:Banner)
     case product(data:Product)
-    case category(data:MainCategory)
+    case category(data:MainSubMenuCVCell)
 }
 
 extension SectionOfMainData: SectionModelType {

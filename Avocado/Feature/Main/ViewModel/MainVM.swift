@@ -30,7 +30,7 @@ final class MainVM: ViewModelType, Stepper {
         // 배너 클릭 이벤트 인스턴스
         let actionBannerRelay = PublishRelay<Banner>()
         // 메인카테고리 메뉴 클릭 이벤트 인스턴스
-        let actionMainCategoryRelay = PublishRelay<MainCategory>()
+        let actionMainCategoryRelay = PublishRelay<MainSubMenu>()
         // 단일상품 클릭 이벤트 인스턴스
         let actionSingleProductRelay = PublishRelay<Product>()
     }
@@ -64,14 +64,7 @@ final class MainVM: ViewModelType, Stepper {
         ]),
         
         SectionOfMainData(items: [
-            .category(data: MainCategory(categoryImage: "person.crop.circle", categoryName: "Apple")),
-            .category(data: MainCategory(categoryImage: "person.crop.circle", categoryName: "Camera")),
-            .category(data: MainCategory(categoryImage: "person.crop.circle", categoryName: "Closet")),
-            .category(data: MainCategory(categoryImage: "person.crop.circle", categoryName: "Shoe")),
-            .category(data: MainCategory(categoryImage: "person.crop.circle", categoryName: "Machine")),
-            .category(data: MainCategory(categoryImage: "person.crop.circle", categoryName: "Computer")),
-            .category(data: MainCategory(categoryImage: "person.crop.circle", categoryName: "Samsung")),
-            .category(data: MainCategory(categoryImage: "person.crop.circle", categoryName: "More"))
+//            .category(data: MainSubMenu(MainSubMenuImage: "person.crop.circle", MainSubMenuName: "Apple")),
         ]),
         
         SectionOfMainData(items: [

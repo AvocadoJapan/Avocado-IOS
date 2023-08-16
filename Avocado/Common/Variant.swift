@@ -98,6 +98,63 @@ enum RegVarient {
     }
 }
 
+protocol CaseCountable: CaseIterable {
+    static var count: Int { get }
+}
+
+extension CaseCountable {
+    static var count: Int {
+        return Self.allCases.count
+    }
+}
+
+enum MainSubMenuType: CaseCountable {
+    
+    case favorite
+    case recent
+    case nearCurrentLocation
+    case event
+    case community
+    case bargain
+    case customerCenter
+    
+    var imageName: String {
+        switch self {
+        case .favorite: return "heart.fill"
+        case .recent: return "clock.fill"
+        case .nearCurrentLocation: return "location.fill"
+        case .event: return "party.popper.fill"
+        case .community: return "person.2.fill"
+        case .bargain: return "bolt.badge.clock.fill"
+        case .customerCenter: return "person.icloud.fill"
+        }
+    }
+    
+    var title: String {
+        switch self {
+        case .favorite: return "찜목록"
+        case .recent: return "최근이력"
+        case .nearCurrentLocation: return "근처상품"
+        case .event: return "이벤트"
+        case .community: return "동네고수"
+        case .bargain: return "급처상품"
+        case .customerCenter: return "고객센터"
+        }
+    }
+    
+    var navigateTo: String {
+        switch self {
+        case .favorite: return "./"
+        case .recent: return "./"
+        case .nearCurrentLocation: return "./"
+        case .event: return "./"
+        case .community: return "./"
+        case .bargain: return "./"
+        case .customerCenter: return "./"
+        }
+    }
+}
+
 
 enum PrivacyType {
     case notification

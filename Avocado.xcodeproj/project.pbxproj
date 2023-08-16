@@ -10,7 +10,7 @@
 		04BA13212A2ADA160004E2FB /* MainVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04BA13202A2ADA160004E2FB /* MainVC.swift */; };
 		04BA13262A2ADAEE0004E2FB /* MainVM.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04BA13252A2ADAEE0004E2FB /* MainVM.swift */; };
 		04BA13292A2AE0990004E2FB /* ProductCVCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04BA13282A2AE0990004E2FB /* ProductCVCell.swift */; };
-		04BD03F72A2B058500330D8A /* MainCategoryCVCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04BD03F62A2B058500330D8A /* MainCategoryCVCell.swift */; };
+		04BD03F72A2B058500330D8A /* MainSubMenuCVCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04BD03F62A2B058500330D8A /* MainSubMenuCVCell.swift */; };
 		04C835EB2A2B280A00731E3E /* MainSectionModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04C835EA2A2B280A00731E3E /* MainSectionModel.swift */; };
 		04C835ED2A2B2BE700731E3E /* ProductModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04C835EC2A2B2BE700731E3E /* ProductModel.swift */; };
 		04C835EF2A2B2CC500731E3E /* BannerModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04C835EE2A2B2CC500731E3E /* BannerModel.swift */; };
@@ -97,6 +97,7 @@
 		B2382C652A6FD2E900A24AE3 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = B2382C632A6FD2E900A24AE3 /* Localizable.strings */; };
 		B2382C6A2A6FD55D00A24AE3 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = B2382C682A6FD55D00A24AE3 /* Localizable.strings */; };
 		B2382C6D2A6FD56400A24AE3 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = B2382C6B2A6FD56400A24AE3 /* Localizable.strings */; };
+		B23B24ED2A8C528800F179A7 /* LegalView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B23B24EC2A8C528800F179A7 /* LegalView.swift */; };
 		B248C6A82A86A153006AE008 /* ProductGroupView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B248C6A72A86A153006AE008 /* ProductGroupView.swift */; };
 		B248C6AB2A86C918006AE008 /* MainService.swift in Sources */ = {isa = PBXBuildFile; fileRef = B248C6AA2A86C918006AE008 /* MainService.swift */; };
 		B26A3B612A60A79800AD61A5 /* AuthFlow.swift in Sources */ = {isa = PBXBuildFile; fileRef = B26A3B602A60A79800AD61A5 /* AuthFlow.swift */; };
@@ -141,7 +142,7 @@
 		04BA13202A2ADA160004E2FB /* MainVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainVC.swift; sourceTree = "<group>"; };
 		04BA13252A2ADAEE0004E2FB /* MainVM.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainVM.swift; sourceTree = "<group>"; };
 		04BA13282A2AE0990004E2FB /* ProductCVCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProductCVCell.swift; sourceTree = "<group>"; };
-		04BD03F62A2B058500330D8A /* MainCategoryCVCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainCategoryCVCell.swift; sourceTree = "<group>"; };
+		04BD03F62A2B058500330D8A /* MainSubMenuCVCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainSubMenuCVCell.swift; sourceTree = "<group>"; };
 		04C835EA2A2B280A00731E3E /* MainSectionModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainSectionModel.swift; sourceTree = "<group>"; };
 		04C835EC2A2B2BE700731E3E /* ProductModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProductModel.swift; sourceTree = "<group>"; };
 		04C835EE2A2B2CC500731E3E /* BannerModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BannerModel.swift; sourceTree = "<group>"; };
@@ -220,6 +221,7 @@
 		B2382C642A6FD2E900A24AE3 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = Localizable.strings; sourceTree = "<group>"; };
 		B2382C692A6FD55D00A24AE3 /* ja */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ja; path = Localizable.strings; sourceTree = "<group>"; };
 		B2382C6C2A6FD56400A24AE3 /* ko */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ko; path = Localizable.strings; sourceTree = "<group>"; };
+		B23B24EC2A8C528800F179A7 /* LegalView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LegalView.swift; sourceTree = "<group>"; };
 		B248C6A72A86A153006AE008 /* ProductGroupView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProductGroupView.swift; sourceTree = "<group>"; };
 		B248C6AA2A86C918006AE008 /* MainService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainService.swift; sourceTree = "<group>"; };
 		B26A3B602A60A79800AD61A5 /* AuthFlow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthFlow.swift; sourceTree = "<group>"; };
@@ -326,7 +328,7 @@
 			children = (
 				04BA13282A2AE0990004E2FB /* ProductCVCell.swift */,
 				B248C6A72A86A153006AE008 /* ProductGroupView.swift */,
-				04BD03F62A2B058500330D8A /* MainCategoryCVCell.swift */,
+				04BD03F62A2B058500330D8A /* MainSubMenuCVCell.swift */,
 				04C835F62A2B46B600731E3E /* BannerCVCell.swift */,
 				04C835FE2A2B5FEF00731E3E /* BannerFooterReusableView.swift */,
 			);
@@ -554,6 +556,7 @@
 			isa = PBXGroup;
 			children = (
 				B22222662A55F83300A2B7CB /* PrivacyElementView.swift */,
+				B23B24EC2A8C528800F179A7 /* LegalView.swift */,
 				B2D1309D2A4B4C5800538EFB /* BottomButton.swift */,
 				B2F3D3632A511F2700FB05E1 /* SubButton.swift */,
 				B212D58A2A45F1740008DAD1 /* InputView.swift */,
@@ -990,11 +993,12 @@
 				9848A8B12A5D848D008D43F5 /* SplashVC.swift in Sources */,
 				B1A301C62A543B15003834E6 /* UIButton+Animation.swift in Sources */,
 				B2D276512A6C4DB700441719 /* OtherEmailVM.swift in Sources */,
-				04BD03F72A2B058500330D8A /* MainCategoryCVCell.swift in Sources */,
+				04BD03F72A2B058500330D8A /* MainSubMenuCVCell.swift in Sources */,
 				9816F6F42A494B5400A7A284 /* APIRequestInterceptor.swift in Sources */,
 				B1C8B7C32A7CD99A005B1D3D /* S3Service.swift in Sources */,
 				9816F6D62A49491E00A7A284 /* BaseTarget.swift in Sources */,
 				B26A3B6E2A60D5FA00AD61A5 /* FailVC.swift in Sources */,
+				B23B24ED2A8C528800F179A7 /* LegalView.swift in Sources */,
 				B1A9D17F2A6BD2400080B818 /* UIView+Animation.swift in Sources */,
 				B1A301BC2A543A2F003834E6 /* BaseModalVC.swift in Sources */,
 				B26A3B612A60A79800AD61A5 /* AuthFlow.swift in Sources */,

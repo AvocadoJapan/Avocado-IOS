@@ -6,7 +6,7 @@
 //
 
 import Foundation
-struct MainCategory {
-    let categoryImage: String
-    let categoryName: String
+struct MainSubMenu {
+    let MainSubMenuImage: String
+    let MainSubMenuName: String
 }
