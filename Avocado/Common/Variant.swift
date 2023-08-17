@@ -132,13 +132,13 @@ enum MainSubMenuType: CaseCountable {
     
     var title: String {
         switch self {
-        case .favorite: return "찜목록"
-        case .recent: return "최근이력"
-        case .nearCurrentLocation: return "근처상품"
-        case .event: return "이벤트"
-        case .community: return "동네고수"
-        case .bargain: return "급처상품"
-        case .customerCenter: return "고객센터"
+        case .favorite: return "찜목록" //いいね
+        case .recent: return "최근본상품" //閲覧履歴
+        case .nearCurrentLocation: return "근처상품" //近くの商品
+        case .event: return "이벤트" //キャンペーン
+        case .community: return "동네고수" //達人
+        case .bargain: return "급처상품" //注目商品
+        case .customerCenter: return "고객센터" //事務局
         }
     }
     

@@ -14,9 +14,11 @@ import RxCocoa
 
 final class LegalView: UIView {
     
-    private var title : String
+    private let title : String
     
-    private var discription: String
+    private let discription: String
+    
+    private let copyright: String
     
     lazy var titleLabel = UILabel().then {
         $0.text = self.title
@@ -34,9 +36,21 @@ final class LegalView: UIView {
         $0.textColor = .systemGray
     }
     
+    lazy var copyrightLabel = UILabel().then {
+        $0.text = self.copyright
+        $0.numberOfLines = 0
+        $0.textAlignment = .left
+        $0.font = UIFont.systemFont(ofSize: 10, weight: .medium)
+        $0.textColor = .systemGray
+    }
+    
     override init(frame: CGRect) {
         self.title = "株式会社アボカド事業者情報、利用規約およびその他の法的通知"
         self.discription = "株式会社アボカド（以下、アボカド）は、通信販売の仲介者であり、通信販売の当事者ではありません。電子商取引などの消費者保護に関する法律などの関連法規及びアボカドの規約に従い、商品、商品情報、取引に関する責任は個々の販売者に帰属し、アボカドは原則として会員間の取引に対して責任を負いません。また、プライバシーポリシーに関しましては、弊社グループで取得情報を管理・利用する業務に従事する者は、お客様の取得情報について厳重に管理を行い、個人情報への不当なアクセス、紛失、漏洩、改ざん等が起きないよう、取得情報の取り扱いに十分な注意を払い、その業務に努めます。"
+        
+        self.copyright = "Copyright 2023 AvocadoLabs All RIGHTS RESERVED"
+        
+        
         super.init(frame: .zero)
         
         self.backgroundColor = .systemGray6
@@ -48,33 +62,15 @@ final class LegalView: UIView {
             make.top.equalToSuperview().inset(20)
             make.left.right.equalToSuperview().inset(10)
         }
-        
     }
-    
-    //    convenience init(type: PrivacyType,
-    //                     require: Bool = false) {
-    //        self.init(frame: .zero)
-    //
-    //        self.title = type.title
-    //        self.discription = type.discription
-    //
-    //        self.backgroundColor = .systemGray6
-    //
-    //        //MARK: - UI 설정
-    //        let stackView = buildStackView()
-    //        self.addSubview(stackView)
-    //        stackView.snp.makeConstraints { make in
-    //            make.center.equalToSuperview()
-    //            make.top.left.equalToSuperview().inset(20)
-    //        }
-    //    }
-    //
     required init?(coder: NSCoder) {
         self.title = "株式会社アボカド事業者情報、利用規約およびその他の法的通知"
         self.discription =
                     """
                     株式会社アボカド（以下、アボカド）は、通信販売の仲介者であり、通信販売の当事者ではありません。電子商取引などの消費者保護に関する法律などの関連法規及びアボカドの規約に従い、商品、商品情報、取引に関する責任は個々の販売者に帰属し、アボカドは原則として会員間の取引に対して責任を負いません。また、プライバシーポリシーに関しましては、弊社グループで取得情報を管理・利用する業務に従事する者は、お客様の取得情報について厳重に管理を行い、個人情報への不当なアクセス、紛失、漏洩、改ざん等が起きないよう、取得情報の取り扱いに十分な注意を払い、その業務に努めます。
                     """
+        self.copyright = "Copyright 2023 AvocadoLabs All RIGHTS RESERVED"
+        
         super.init(coder: coder)
     }
     
@@ -87,6 +83,7 @@ final class LegalView: UIView {
             $0.spacing = 10
             $0.addArrangedSubview(titleLabel)
             $0.addArrangedSubview(discriptionLabel)
+            $0.addArrangedSubview(copyrightLabel)
         }
         
         return wapperView

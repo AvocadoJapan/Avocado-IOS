@@ -35,8 +35,8 @@ final class MainSubMenuCVCell: UICollectionViewCell {
         $0.font = .systemFont(ofSize: 11, weight: .bold)
         $0.textAlignment = .center
         $0.textColor = .darkText
-        $0.textAlignment = .center
-        $0.numberOfLines = 0
+        $0.numberOfLines = 0 // 라벨이 필요한 만큼의 라인 수를 사용하도록 설정
+        $0.lineBreakMode = .byWordWrapping // 단어 단위로 줄바꿈
     }
     
     private lazy var stackView = UIStackView().then {
@@ -76,11 +76,12 @@ final class MainSubMenuCVCell: UICollectionViewCell {
         // setConstraint
         stackView.snp.makeConstraints {
             $0.center.equalToSuperview()
-            $0.top.left.equalToSuperview().inset(10)
+            $0.top.equalToSuperview().inset(10)
+            $0.left.equalToSuperview().inset(5)
         }
         
         iconImageView.snp.makeConstraints {
-            $0.left.right.equalToSuperview().inset(2)
+            $0.left.right.equalToSuperview().inset(7)
             $0.height.equalTo(iconImageView.snp.width) // 높이를 너비와 같게 설정
         }
     }
