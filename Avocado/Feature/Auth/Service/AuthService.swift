@@ -462,7 +462,24 @@ final class AuthService: BaseAPIService<AuthAPI> {
                     }
                     
                     // 토큰 생성 후 서버 프로필 조회
+                    // 이때 404 발생 시 사용자가 없는 것으로 판단하여 코그니토 로그아웃 실행
                     self.getProfile()
+                        .catch { [unowned self] error in
+                            let networkError = error as! NetworkError
+                            if case .pageNotFound = networkError {
+                                Task {
+                                    do {
+                                        try await self.logout()
+                                        observable.onError(networkError)
+                                    }
+                                    catch {
+                                        observable.onError(networkError)
+                                    }
+                                }
+                            }
+                            
+                            return .empty()
+                        }
                         .subscribe { user in
                             observable.onNext(user)
                             observable.onCompleted()
@@ -512,38 +529,7 @@ final class AuthService: BaseAPIService<AuthAPI> {
      * - Returns 사용자 정보 모델 Observable값
      */
     func getProfile() -> Observable<User> {
-        return Observable.create { observer in
-            self.singleRequest<User>(.profile)
-                .subscribe { user in
-                    observer.onNext(user)
-                    observer.onCompleted()
-                } onFailure: { err in
-                    guard let err = err as? NetworkError else {
-                        observer.onError(err)
-                        return
-                    }
-                    
-                    switch err {
-                    case .pageNotFound:
-                        // avocado서버에 사용자가 없으면 로그아웃 진행
-                        Task {
-                            do {
-                                try await self.logout()
-                                observer.onError(err) // 로그아웃에 성공한 경우 이전 에러를 그대로 리턴
-                            }
-                            catch let networkerror as NetworkError {
-                                observer.onError(networkerror) // 로그아웃에 실패한 경우
-                            }
-                        }
-                        
-                    default:
-                        observer.onError(err)
-                    }
-                }
-                .disposed(by: self.disposeBag)
-            
-            return Disposables.create()
-        }
+        return singleRequest<User>(.profile).asObservable()
     }
     
     /**

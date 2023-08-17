@@ -12,54 +12,65 @@ import RxFlow
 import Amplify
 import RxRelay
 
-final class WelcomeVM: Stepper {
-    
+final class WelcomeVM:ViewModelType, Stepper {
+
     //MARK: - RXFlow
     var steps: PublishRelay<Step> = PublishRelay()
     
     // 서비스를 제공하는 인스턴스
-    let authService: AuthService
-    let disposeBag = DisposeBag()
-    // 로그인 성공 이벤트를 전달하는 인스턴스
-    let successEventPublish = PublishRelay<User>()
-    // 에러 이벤트를 전달하는 인스턴스
-    let errEventPublish = PublishRelay<NetworkError>()
+    let service: AuthService
+    let input: Input
+    var disposeBag = DisposeBag()
+    
+    struct Input {
+        let targetViewRelay = BehaviorRelay<UIView>(value: UIView())
+        let actionWithGoogleLoginPublish = PublishRelay<Void>()
+        let actionWithAppleLoginPublish = PublishRelay<Void>()
+    }
+    
+    struct Output {
+        // 로그인 성공 이벤트를 전달하는 인스턴스
+        let successEventPublish = PublishRelay<User>()
+        // 에러 이벤트를 전달하는 인스턴스
+        let errEventPublish = PublishRelay<NetworkError>()
+    }
     
     // 생성자
     init(service: AuthService) {
-        self.authService = service
+        self.service = service
+        input = Input()
     }
     
-    // 애플 로그인 함수
-    func socialLoginWithApple(view: UIView) {
-        authService.socialLogin(view: view, socialType: .apple)
-            .subscribe { user in
-                self.successEventPublish.accept(user)
-            } onError: { err in
-                guard let authError = err as? AuthError else {
-                    Logger.e(err)
-                    self.errEventPublish.accept(err as! NetworkError)
-                    return
-                }
-                self.errEventPublish.accept(NetworkError.unknown(-1, authError.errorDescription))
-            }
+    func transform(input: Input) -> Output {
+        let output = Output()
+        
+        // FIXME: subscribe 구문 추후 개선 필요
+        // googleLogin
+        input.actionWithGoogleLoginPublish.subscribe(onNext: { [weak self] _ in
+            guard let self = self else { return }
+            self.service.socialLogin(view: input.targetViewRelay.value, socialType: .google).subscribe(onNext: {
+                output.successEventPublish.accept($0)
+            }, onError: { error in
+                output.errEventPublish.accept(error as! NetworkError)
+            })
             .disposed(by: disposeBag)
-    }
-    
-    // 구글 로그인 함수
-    func socialLoginWithGoogle(view: UIView) {
-        authService.socialLogin(view: view, socialType: .google)
-            .subscribe { user in
-                self.successEventPublish.accept(user)
-            } onError: { err in
-                guard let authError = err as? AuthError else {
-                    Logger.e(err)
-                    self.errEventPublish.accept(err as! NetworkError)
-                    return
-                }
-                self.errEventPublish.accept(NetworkError.unknown(-1, authError.errorDescription))
-            }
+        })
+        .disposed(by: disposeBag)
+        
+        // FIXME: subscribe 구문 추후 개선 필요
+        // appleLogin
+        input.actionWithAppleLoginPublish.subscribe { [weak self] _ in
+            guard let self = self else { return }
+            self.service.socialLogin(view: input.targetViewRelay.value, socialType: .apple).subscribe(onNext: {
+                    output.successEventPublish.accept($0)
+            }, onError: { error in
+                output.errEventPublish.accept(error as! NetworkError)
+            })
             .disposed(by: disposeBag)
+        }
+        .disposed(by: disposeBag)
+        
+        return output
     }
     
     // 이메일 로그인 버튼 클릭 처리

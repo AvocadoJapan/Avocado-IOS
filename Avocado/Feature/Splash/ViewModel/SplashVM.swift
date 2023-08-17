@@ -37,36 +37,34 @@ final class SplashVM: Stepper {
     
     func checkLoginSession() {
         authService.checkLoginSession()
-            .subscribe(onNext: { [weak self] isLogin in
-                guard let self = self else { return }
-                
-                if isLogin {
-                    self.getProfile()
-                } else {
-                    self.errEventPublish.accept(NetworkError.tokenIsRequired)
-                }
-            }, onError: { error in
-                if let networkError = error as? NetworkError {
+            .flatMap { [weak self] isLogin -> Observable<User> in
+                guard let self = self else { throw NetworkError.unknown(-1, "유효하지 않은 화면입니다") }
+                // 로그인이 되지 않은 경우 welcome 페이지로 이동
+                guard isLogin else { throw NetworkError.tokenIsRequired }
+                // avocado 서버 프로필 조회
+                return self.authService.getProfile()
+            }
+            .catch { [weak self] err in
+                let networkError = err as! NetworkError
+                guard let self = self else { throw NetworkError.unknown(-1, "유효하지 않은 화면입니다") }
+                /*
+                 Response 응답값이 404인 경우 avocado에서 사용자를 만들지 않은 경우이기 때문에 사용자 삭제 후 welcome페이지로 이동
+                 그 외인 경우 에러값 설정 후 스트림 종료
+                 */
+                switch networkError {
+                case .pageNotFound:
+                    
+                    // 사용자 삭제 후 스트림 종료
+                    return self.authService.deleteAccount()
+                        .map { _ in self.errEventPublish.accept(NetworkError.tokenIsRequired) }
+                        .flatMap { _ in return Observable.empty() }
+                    
+                default:
                     self.errEventPublish.accept(networkError)
-                } else {
-                    self.errEventPublish.accept(NetworkError.unknown(-1, error.localizedDescription))
+                    return Observable.empty()
                 }
-            })
-            .disposed(by: disposeBag)
-    }
-
-
-    private func getProfile() {
-        authService.getProfile()
-            .subscribe(onNext: { [weak self] user in
-                self?.successEventPublish.accept(user)
-            }, onError: { error in
-                if let networkError = error as? NetworkError {
-                    self.errEventPublish.accept(networkError)
-                } else {
-                    self.errEventPublish.accept(NetworkError.unknown(-1, error.localizedDescription))
-                }
-            })
+            }
+            .bind(to: successEventPublish)
             .disposed(by: disposeBag)
     }
     
