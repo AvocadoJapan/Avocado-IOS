@@ -36,16 +36,20 @@ final class AuthService: BaseAPIService<AuthAPI> {
                 do {
                     let signUpResult = try await Amplify.Auth.signUp(username: email, password: password, options: options)
                     
+                    // 이메일 인증
                     if case let .confirmUser(deliveryDetails, _, userid) = signUpResult.nextStep {
                         Logger.d("Delivery details \(String(describing: deliveryDetails)) for userId \(String(describing: userid))")
-                        observer.onNext(true)
-                        observer.onCompleted()
+                        /*
+                         이메일 인증 값 설정 { 해당 값은 이메일 인증 시 값이 삭제 될 예정 }
+                         이메일 인증 도중 앱을 종료한 경우 해당 값으로 체크 {다른 이메일로 로그인을 할 수 있기 때문에 userId로 저장 }
+                         */
+                        UserDefaults.standard.set(userid, forKey: UserDefaultsKey.Auth.notConfirmedUserID)
                     }
-                    else {
-                        Logger.d("SignUpComplted")
-                        observer.onNext(true)
-                        observer.onCompleted()
-                    }
+                    
+                    // 회원가입에 성공한 경우
+                    observer.onNext(true)
+                    observer.onCompleted()
+                    
                 }
                 catch let error as AuthError {
                     Logger.e("sign in failed \(error)")
@@ -73,6 +77,9 @@ final class AuthService: BaseAPIService<AuthAPI> {
         return Observable.create { observer in
             Task {
                 do {
+                    // 사용자가 인증을 진행했으므로 인증이메일 키 삭제
+                    UserDefaults.standard.removeObject(forKey: UserDefaultsKey.Auth.notConfirmedUserID)
+                    
                     let confirmSignUpResult = try await Amplify.Auth.confirmSignUp(for: email, confirmationCode: confirmationCode)
                     Logger.d("Confirm signUp result Complted \(confirmSignUpResult.isSignUpComplete)")
                     observer.onNext(confirmSignUpResult.isSignUpComplete)
@@ -350,8 +357,11 @@ final class AuthService: BaseAPIService<AuthAPI> {
      */
     func checkLoginSession() -> Observable<Bool> {
         
-        return Observable.create { observer in
-            Task {
+        return Observable.create { [weak self] observer in
+            
+            guard let self = self else { return Disposables.create() }
+            
+            let task = Task {
                 do {
                     let session = try await Amplify.Auth.fetchAuthSession()
                     Logger.d("Is user signed in - \(session.isSignedIn)")
@@ -379,7 +389,8 @@ final class AuthService: BaseAPIService<AuthAPI> {
                                 // 로그아웃 후 에러 리턴
                                 do {
                                     try await self.logout()
-                                    observer.onError(error) //로그아웃 성공 후 이전 에러를 그대로 리턴
+                                    let convertError = self.cognitoAuthErrorHandling(error: error)
+                                    observer.onError(convertError) //로그아웃 성공 후 이전 에러를 그대로 리턴
                                 }
                                 catch let networkerror as NetworkError {
                                     observer.onError(networkerror) // 로그아웃에 실패한 경우 에러 리턴
@@ -404,7 +415,9 @@ final class AuthService: BaseAPIService<AuthAPI> {
                 }
             }
             
-            return Disposables.create()
+            return Disposables.create {
+                task.cancel()
+            }
         }
     }
     /**
@@ -626,6 +639,62 @@ final class AuthService: BaseAPIService<AuthAPI> {
             
             
             return Disposables.create()
+        }
+    }
+    
+    /**
+     * - description 관리자 권한으로 사용자 삭제 함수
+     * - parameter userId: 사용자 아이디
+     * - returns 반환값이 없는 옵저버블 반환
+     * - Warning 해당 기능을 이용할 경우 `Xcode` > `Edit Scheme` > `Arguments`에 아래 내용을 기입 하여야 함
+     * ```
+     * `AWS_REGION`: AWS 리전 정보
+     * `AWS_ACCESS_KEY_ID`: AWS 액세스 키 정보
+     * `AWS_SECRET_ACCESS_KEY`: AWS 시크릿 키 정보
+     * ```
+     */
+    func adminDeleteUserAccount(userId: String) -> Observable<Void> {
+        return Observable.create { [weak self] observer in
+            guard let self = self else {
+                return Disposables.create()
+            }
+            
+            let task = Task {
+                do {
+                    
+                    // 사용자 삭제
+                    UserDefaults.standard.removeObject(forKey: UserDefaultsKey.Auth.notConfirmedUserID)
+                    
+                    let client = self.cognitoIdentityProviderClient()
+                    let _ = try await client.adminDeleteUser(input: AdminDeleteUserInput(userPoolId: "ap-northeast-2_k1tD9KrYe",
+                                                                               username: userId))
+                    observer.onNext(())
+                    observer.onCompleted()
+                }
+                catch let error as SdkError<AdminDeleteUserOutputError> {
+                    
+                    if case let .client(clientError, _) = error,
+                       case let .retryError(serviceError) = clientError,
+                       case let .service(authError, _) = serviceError as? SdkError<AdminDeleteUserOutputError>{
+                        
+                        switch authError {
+                        case .userNotFoundException:
+                            observer.onError(UserAuthError.userNotFound)
+                        default:
+                            observer.onError(UserAuthError.unknown(message: authError.localizedDescription))
+                        }
+                    }
+                    else {
+                        Logger.e(error.localizedDescription)
+                        observer.onError(UserAuthError.unknown(message: error.localizedDescription))
+                    }
+                }
+            }
+            
+            return Disposables.create {
+                task.cancel()
+            }
+            
         }
     }
     

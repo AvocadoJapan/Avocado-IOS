@@ -69,6 +69,7 @@ enum UserAuthError: AvocadoError {
     case createTokenFailed // 키체인 토큰 생성에 실패한 경우
     
     /// `Login`관련
+    case userSignUpFailed // 유저가 회원가입에 실패한 경우
     case userSocialLoginCanceled // 유저가 소셜로그인을 취소한 경우 {Apple 로그인의 경우 소셜 로그인 취소시 처리가 필요}
     case userEmailExists //이메일이 존재하는 경우
     case userNotFound // 유저가 존재하지 않을 경우
@@ -83,47 +84,21 @@ enum UserAuthError: AvocadoError {
     
     var errorDescription: String {
         switch self {
-        case .createTokenFailed:
-            return "토큰 생성에 실패하였습니다"
-            
-        case .updateTokenFailed:
-            return "토큰 업데이트에 실패하였습니다"
-            
-        case .deleteTokenFailed:
-            return "토큰 삭제에 실패하였습니다"
-            
-        case .userEmailExists:
-            return "이미 가입한 계정이 존재합니다"
-            
-        case .userSocialLoginCanceled:
-            return "소셜 로그인을 취소합니다"
-            
-        case .userNotFound:
-            return "유저가 존재하지 않습니다"
-            
-        case .userLoginFailed:
-            return "로그인에 실패 하였습니다"
-            
-        case .userLogoutFailed:
-            return "로그아웃에 실패 하였습니다"
-            
-        case .emailNotConfirmed:
-            return "이메일 인증이 되지 않은 계정입니다"
-            
-        case .emailConfirmCodeMisMatch:
-            return "이메일 인증번호가 올바르지 않습니다"
-            
-        case .emailConfirmCodeExpired:
-            return "만료된 인증번호 입니다"
-            
-        case .emailRoleMisMatch:
-            return "이메일 형식이 맞지 않습니다"
-            
-        case .userNickNameDuplicated:
-            return "중복된 닉네임이 존재합니다"
-            
-        case .unknown(let message):
-            return message
+        case .userSignUpFailed: return "회원가입에 실패하였습니다"
+        case .createTokenFailed: return "토큰 생성에 실패하였습니다"
+        case .updateTokenFailed: return "토큰 업데이트에 실패하였습니다"
+        case .deleteTokenFailed: return "토큰 삭제에 실패하였습니다"
+        case .userEmailExists: return "이미 가입한 계정이 존재합니다"
+        case .userSocialLoginCanceled: return "소셜 로그인을 취소합니다"
+        case .userNotFound: return "유저가 존재하지 않습니다"
+        case .userLoginFailed: return "로그인에 실패 하였습니다"
+        case .userLogoutFailed: return "로그아웃에 실패 하였습니다"
+        case .emailNotConfirmed: return "이메일 인증이 되지 않은 계정입니다"
+        case .emailConfirmCodeMisMatch: return "이메일 인증번호가 올바르지 않습니다"
+        case .emailConfirmCodeExpired: return "만료된 인증번호 입니다"
+        case .emailRoleMisMatch: return "이메일 형식이 맞지 않습니다"
+        case .userNickNameDuplicated: return "중복된 닉네임이 존재합니다"
+        case .unknown(let message): return message
         }
     }
     

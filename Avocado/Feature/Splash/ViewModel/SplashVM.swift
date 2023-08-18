@@ -39,14 +39,36 @@ final class SplashVM: Stepper {
         authService.checkLoginSession()
             .flatMap { [weak self] isLogin -> Observable<User> in
                 guard let self = self else { throw NetworkError.unknown(-1, "유효하지 않은 화면입니다") }
+                
                 // 로그인이 되지 않은 경우 welcome 페이지로 이동
-                guard isLogin else { throw NetworkError.tokenIsRequired }
+                guard isLogin else {
+                    
+                    // 시용자가 이메일인증을 받지 않고 종료한 경우, 유저 삭제 진행
+                    if let notConfirmedUserID = UserDefaults.standard.string(forKey: UserDefaultsKey.Auth.notConfirmedUserID) {
+                        // 사용자 삭제 후 welcome 페이지 이동
+                        return self.authService.adminDeleteUserAccount(userId: notConfirmedUserID).map { throw NetworkError.tokenExpired }
+                    }
+                    else {
+                        throw NetworkError.tokenIsRequired
+                    }
+                }
+                
                 // avocado 서버 프로필 조회
                 return self.authService.getProfile()
             }
             .catch { [weak self] err in
-                let networkError = err as! NetworkError
-                guard let self = self else { throw NetworkError.unknown(-1, "유효하지 않은 화면입니다") }
+                
+                guard let networkError = err as? NetworkError else {
+                    let error = err as! UserAuthError
+                    self?.errEventPublish.accept(NetworkError.unknown(-1, error.errorDescription))
+                    return Observable.empty()
+                }
+                
+                guard let self = self else {
+                    self?.errEventPublish.accept(NetworkError.unknown(-1, "유효하지 않은 화면입니다"))
+                    return Observable.empty()
+                }
+                
                 /*
                  Response 응답값이 404인 경우 avocado에서 사용자를 만들지 않은 경우이기 때문에 사용자 삭제 후 welcome페이지로 이동
                  그 외인 경우 에러값 설정 후 스트림 종료

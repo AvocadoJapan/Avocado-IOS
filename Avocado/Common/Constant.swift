@@ -61,3 +61,11 @@ enum Common {
         }
     }
 }
+/**
+ * - description UserDefault 키 정보 값 세부 정보는 enum으로 분류
+ */
+enum UserDefaultsKey {
+    enum Auth {
+        static let notConfirmedUserID = "userNotConfirmedId"
+    }
+}
