@@ -15,7 +15,7 @@ import RxCocoa
 /**
  *##화면 명: Avocado 메인화면 (배너, 카테고리 별 상품 정보를 확인가능)
  */
-final class MainVC: BaseVC, UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout, UIScrollViewDelegate {
+final class MainVC: BaseVC, UICollectionViewDelegate{
     
     private var viewModel: MainVM
     
@@ -29,33 +29,40 @@ final class MainVC: BaseVC, UICollectionViewDelegate, UICollectionViewDataSource
         $0.spacing = 10
     }
     
-    private lazy var bannerCollectionViewLayout = UICollectionViewFlowLayout().then {
+    private lazy var bannerCVLayout = UICollectionViewFlowLayout().then {
         $0.scrollDirection = .horizontal
         $0.minimumLineSpacing = 0
         $0.minimumInteritemSpacing = 0
         $0.sectionInset = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
     }
-    private lazy var bannerCollectionView = UICollectionView(frame: .zero, collectionViewLayout: self.bannerCollectionViewLayout).then {
+    private lazy var bannerCV = UICollectionView(frame: .zero, collectionViewLayout: self.bannerCVLayout).then {
         $0.showsHorizontalScrollIndicator = false
         $0.isPagingEnabled = true
         $0.backgroundColor = .clear
     }
     
     
-    private lazy var mainCategoryCollectionViewLayout = UICollectionViewFlowLayout().then {
+    private lazy var mainCategoryCVLayout = UICollectionViewFlowLayout().then {
         $0.scrollDirection = .horizontal
         $0.minimumLineSpacing = 10
         $0.sectionInset = UIEdgeInsets(top: 0, left: 7, bottom: 0, right: 7)
     }
-    private lazy var mainCategoryCollectionView = UICollectionView(frame: .zero, collectionViewLayout: self.mainCategoryCollectionViewLayout).then {
+    private lazy var mainCategoryCV = UICollectionView(frame: .zero, collectionViewLayout: self.mainCategoryCVLayout).then {
         $0.showsHorizontalScrollIndicator = false
         $0.isPagingEnabled = true
         $0.backgroundColor = .clear
     }
     
-    private let productGroupView = ProductGroupView()
-    private let productGroupView2 = ProductGroupView()
-    private let productGroupView3 = ProductGroupView()
+    private lazy var productGroupCVLayout = UICollectionViewFlowLayout().then {
+        $0.scrollDirection = .vertical
+        $0.minimumLineSpacing = 10
+        $0.sectionInset = UIEdgeInsets(top: 0, left: 7, bottom: 0, right: 7)
+    }
+    private lazy var productGroupCV = UICollectionView(frame: .zero, collectionViewLayout: self.productGroupCVLayout).then {
+        $0.showsVerticalScrollIndicator = false
+        $0.isPagingEnabled = true
+        $0.backgroundColor = .clear
+    }
     
     private let legalView = LegalView()
     
@@ -68,56 +75,11 @@ final class MainVC: BaseVC, UICollectionViewDelegate, UICollectionViewDataSource
         fatalError("init(coder:) has not been implemented")
     }
     
-    override func bindUI() {
-        //        viewModel.banners
-        //            .bind(to: bannerCollectionView.rx.items(cellIdentifier: BannerCVCell.identifier, cellType: BannerCVCell.self)) { row, banner, cell in
-        //                cell.onData.onNext(banner)
-        //            }
-        //            .disposed(by: disposeBag)
-    }
-    
     override func setProperty() {
         self.view.backgroundColor = .white
         self.navigationController?.setNavigationBarHidden(true, animated: true)
-        navigationController?.navigationBar.shadowImage = UIImage()
         
-        // 1. Create a container view
-        let logoContainer = UIView(frame: CGRect(x: 0, y: 0, width: 100, height: 20))
-        
-        // 2. Create an image view for the logo
-        let logoImageView = UIImageView().then {
-            $0.image = UIImage(systemName: "apple.logo")
-            $0.contentMode = .scaleAspectFit
-            $0.tintColor = .black
-        }
-        
-        // 3. Create a label for the text
-        let label = UILabel().then {
-            $0.text = "Avocado Beta"
-            $0.textColor = .black
-            $0.font = .systemFont(ofSize: 14, weight: .bold)
-        }
-        
-        // 4. Add the image view and label to the container view
-        logoContainer.addSubview(logoImageView)
-        logoContainer.addSubview(label)
-        
-        // 5. Set the layout
-        logoImageView.snp.makeConstraints { make in
-            make.left.equalToSuperview()
-            make.centerY.equalToSuperview()
-            make.width.equalTo(20)
-            make.height.equalTo(20)
-        }
-        
-        label.snp.makeConstraints { make in
-            make.left.equalTo(logoImageView.snp.right).offset(8)
-            make.centerY.equalToSuperview()
-        }
-        
-        // 6. Set the container view as the left bar button item
-        let leftItem = UIBarButtonItem(customView: logoContainer)
-        navigationItem.leftBarButtonItem = leftItem
+        navigationController?.setupNavbar(with: "Avocado Beta", logoImage: UIImage(systemName: "apple.logo"))
     }
     
     override func setLayout() {
@@ -125,48 +87,46 @@ final class MainVC: BaseVC, UICollectionViewDelegate, UICollectionViewDataSource
         scrollView.addSubview(stackView)
         
         // Configure Banner Collection View
-        bannerCollectionView.delegate = self
-        bannerCollectionView.dataSource = self
-        bannerCollectionView.register(BannerCVCell.self, forCellWithReuseIdentifier: BannerCVCell.identifier)
+        bannerCV.delegate = self
+        bannerCV.dataSource = self
+        bannerCV.register(BannerCVCell.self, forCellWithReuseIdentifier: BannerCVCell.identifier)
         
         // Configure Main Category Collection View
-        mainCategoryCollectionView.delegate = self
-        mainCategoryCollectionView.dataSource = self
-        mainCategoryCollectionView.register(MainSubMenuCVCell.self, forCellWithReuseIdentifier: MainSubMenuCVCell.identifier)
+        mainCategoryCV.delegate = self
+        mainCategoryCV.dataSource = self
+        mainCategoryCV.register(MainSubMenuCVCell.self, forCellWithReuseIdentifier: MainSubMenuCVCell.identifier)
         
-        [bannerCollectionView, mainCategoryCollectionView].forEach {
-            stackView.addArrangedSubview($0)
-        }
+        // Configure Product Group  Collection View
+        productGroupCV.delegate = self
+        productGroupCV.dataSource = self
+        productGroupCV.register(ProductGroupCVCell.self, forCellWithReuseIdentifier: ProductGroupCVCell.identifier)
         
-        [productGroupView, productGroupView2, productGroupView3, legalView ].forEach {
+        
+        [bannerCV, mainCategoryCV, productGroupCV, legalView].forEach {
             stackView.addArrangedSubview($0)
         }
     }
     
     override func setConstraint() {
-        scrollView.snp.makeConstraints { make in
-            make.edges.equalToSuperview()
+        scrollView.snp.makeConstraints {
+            $0.edges.equalToSuperview()
         }
         
-        stackView.snp.makeConstraints { make in
-            make.leading.trailing.top.bottom.equalTo(scrollView)
-            make.width.equalTo(scrollView)
+        stackView.snp.makeConstraints {
+            $0.leading.trailing.top.bottom.equalTo(scrollView)
+            $0.width.equalTo(scrollView)
         }
         
-        [productGroupView, productGroupView2, productGroupView3].forEach {
-            $0.snp.makeConstraints { make in
-                //                make.horizontalEdges.equalToSuperview()
-                make.height.equalTo(540)
-            }
+        productGroupCV.snp.makeConstraints {
+             $0.height.equalTo(540 * 3 + 20)
+         }
+        
+        bannerCV.snp.makeConstraints {
+            $0.height.equalTo(300)
         }
         
-        bannerCollectionView.snp.makeConstraints { make in
-            //            make.horizontalEdges.equalToSuperview()
-            make.height.equalTo(300) // Or whatever height you want for the banner
-        }
-        
-        mainCategoryCollectionView.snp.makeConstraints { make in
-            make.height.equalTo(75)
+        mainCategoryCV.snp.makeConstraints {
+            $0.height.equalTo(75)
         }
         
         legalView.snp.makeConstraints {
@@ -174,23 +134,27 @@ final class MainVC: BaseVC, UICollectionViewDelegate, UICollectionViewDataSource
             $0.height.equalTo(250)
         }
     }
-    
+}
+
+extension MainVC: UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
     // MARK: - UICollectionViewDataSource
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        if collectionView == bannerCollectionView {
+        if collectionView == bannerCV {
             return 3
-        } else if collectionView == mainCategoryCollectionView {
+        } else if collectionView == mainCategoryCV {
             return MainSubMenuType.count
+        } else if collectionView == productGroupCV {
+            return 3
         }
         return 0
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        if collectionView == bannerCollectionView {
+        if collectionView == bannerCV {
             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: BannerCVCell.identifier, for: indexPath) as! BannerCVCell
             
             return cell
-        } else {
+        } else if collectionView == mainCategoryCV {
             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: MainSubMenuCVCell.identifier, for: indexPath) as! MainSubMenuCVCell
             
             // MainSubMenuType 열거형에서 해당 indexPath에 맞는 케이스를 가져옵니다.
@@ -200,17 +164,25 @@ final class MainVC: BaseVC, UICollectionViewDelegate, UICollectionViewDataSource
             cell.configure(imageName: menuType.imageName, title: menuType.title, navigateTo: menuType.navigateTo)
             
             return cell
+        } else {
+            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: ProductGroupCVCell.identifier, for: indexPath) as! ProductGroupCVCell
+            
+            return cell
         }
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        if collectionView == bannerCollectionView {
+        if collectionView == bannerCV {
             return collectionView.frame.size
-        } else {
+        } else if collectionView == mainCategoryCV {
             return CGSize(width: 60, height: 75)
+        } else {
+            return  CGSize(width: collectionView.frame.width, height: 540)
         }
     }
-    
+}
+
+extension MainVC: UIScrollViewDelegate {
     // MARK: - UIScrollViewDelegate
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
         let yOffset = scrollView.contentOffset.y

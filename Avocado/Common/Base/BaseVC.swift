@@ -29,6 +29,7 @@ class BaseVC: UIViewController, Stepper {
         setProperty()
         setLayout()
         setConstraint()
+        setViewDidLoad()
     }
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
@@ -75,6 +76,15 @@ class BaseVC: UIViewController, Stepper {
      ```
      */
     public func setConstraint() {}
+    /**
+     - Description: 위 메서드 이외에 ViewDidLoad에서 수행하고 싶은 작업 추가
+     ```
+     override setConstraint() {
+       하위뷰.snp.makeConstraint {...}
+     }
+     ```
+     */
+    public func setViewDidLoad() {}
     
     deinit {
         Logger.trace(String(describing: self))

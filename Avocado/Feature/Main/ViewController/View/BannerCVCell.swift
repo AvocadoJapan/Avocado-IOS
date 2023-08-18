@@ -19,6 +19,7 @@ final class BannerCVCell: UICollectionViewCell, CollectionCellIdentifierable {
     private lazy var imageView = UIImageView().then {
         $0.backgroundColor = .systemGray6
         $0.image = UIImage(named: "demo_photo")
+        $0.contentMode = .scaleAspectFill
     }
     
     override init(frame: CGRect) {
