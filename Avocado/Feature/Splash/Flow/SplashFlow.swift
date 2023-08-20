@@ -19,12 +19,14 @@ final class SplashFlow: Flow {
         return self.rootViewController
     }
     
-    init(root: UINavigationController) {
+    init(root: BaseNavigationVC) {
+        // 스플래시 화면에서 네비게이션바가 보이면 안되기 때문에 hidden 처리
+        root.setNavigationBarHidden(true, animated: false)
         self.rootViewController = root
         Logger.d("SplashFlow init")
     }
     
-    private var rootViewController = UINavigationController()
+    private var rootViewController = BaseNavigationVC()
     
     func navigate(to step: Step) -> FlowContributors {
         

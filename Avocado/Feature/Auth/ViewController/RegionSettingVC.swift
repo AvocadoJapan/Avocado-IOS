@@ -115,26 +115,12 @@ final class RegionSettingVC: BaseVC {
             })
             .disposed(by: disposeBag)
         
-        viewModel.input.regionIdRelay
-            .map { $0.isEmpty ? .lightGray : .black }
-            .bind(to: confirmButton.rx.backgroundColor)
-            .disposed(by: disposeBag)
-        
-        viewModel.input.regionIdRelay
-            .map { !$0.isEmpty }
-            .bind(to: confirmButton.rx.isEnabled)
-            .disposed(by: disposeBag)
-        
         confirmButton
             .rx
             .tap
             .asDriver()
             .drive(onNext: { [weak self] _ in
-                let authService = AuthService()
-                let s3Service = S3Service()
-                let profileVM = ProfileSettingVM(service: authService, regionid: self?.viewModel.input.regionIdRelay.value ?? "", s3Service: s3Service)
-                let profileVC = ProfileSettingVC(vm: profileVM)
-                self?.navigationController?.pushViewController(profileVC, animated: true)
+                self?.viewModel.steps.accept(AuthStep.profileIsRequired)
             })
             .disposed(by: disposeBag)
         

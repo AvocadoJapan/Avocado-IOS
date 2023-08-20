@@ -136,20 +136,6 @@ final class EmailCheckVC: BaseVC {
             })
             .disposed(by: disposeBag)
         
-        // RegionSettingVC 화면이동 레거시
-//        output
-//            .successEmailCheckPublish
-//            .asSignal()
-//            .emit(onNext: { [weak self] isSuccess in
-//                let authService = AuthService()
-//                let regionVM = RegionSettingVM(service: authService)
-//                let regionVC = RegionSettingVC(viewModel: regionVM)
-//                let navigaitonVC = regionVC.makeBaseNavigationController()
-//                
-//                self?.present(navigaitonVC, animated: true)
-//            })
-//            .disposed(by: disposeBag)
-        
         // 이메일 재 전송
         output
             .successEmailResendPublish
@@ -194,11 +180,7 @@ final class EmailCheckVC: BaseVC {
             .drive(onNext: { [weak self] void in
                 self?.viewModel.input.actionConfirmSignUpCodeRelay.accept(void)
                 /* Mocking
-                 let authService = AuthService()
-                 let regionVM = RegionSettingVM(service: authService)
-                 let regionVC = RegionSettingVC(viewModel: regionVM)
-                 let navigaitonVC = regionVC.makeBaseNavigationController()
-                 self?.present(navigaitonVC, animated: true)
+                self?.viewModel.steps.accept(AuthStep.regionIsRequired)
                  */
             })
             .disposed(by: disposeBag)

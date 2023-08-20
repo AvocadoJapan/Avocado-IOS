@@ -19,12 +19,12 @@ final class MainFlow: Flow {
         return self.rootViewController
     }
     
-    init(root: UINavigationController) {
+    init(root: BaseNavigationVC) {
         self.rootViewController = root
         Logger.d("MainFlow init")
     }
     
-    private var rootViewController = UINavigationController()
+    private var rootViewController = BaseNavigationVC()
     
     func navigate(to step: Step) -> FlowContributors {
         
