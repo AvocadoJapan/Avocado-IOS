@@ -7,14 +7,23 @@
 
 import UIKit
 import CoreData
+import Amplify
+import AWSCognitoAuthPlugin
 
 @main
 class AppDelegate: UIResponder, UIApplicationDelegate {
 
-
-
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         // Override point for customization after application launch.
+        do {
+            Amplify.Logging.logLevel = .info
+            try Amplify.add(plugin: AWSCognitoAuthPlugin())
+            try Amplify.configure()
+            Logger.d("Amplify configured with auth plugin")
+        }
+        catch {
+            Logger.e("Failed to initialize Amplify with \(error)")
+        }
         return true
     }
 

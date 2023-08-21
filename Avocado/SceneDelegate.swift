@@ -6,17 +6,44 @@
 //
 
 import UIKit
+import RxSwift
+import RxFlow
+import RxRelay
+import RxCocoa
 
 class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 
     var window: UIWindow?
+    var coordinator = FlowCoordinator()
+    let disposeBag = DisposeBag()
 
-
+    
     func scene(_ scene: UIScene, willConnectTo session: UISceneSession, options connectionOptions: UIScene.ConnectionOptions) {
-        // Use this method to optionally configure and attach the UIWindow `window` to the provided UIWindowScene `scene`.
-        // If using a storyboard, the `window` property will automatically be initialized and attached to the scene.
-        // This delegate does not imply the connecting scene or session are new (see `application:configurationForConnectingSceneSession` instead).
-        guard let _ = (scene as? UIWindowScene) else { return }
+        
+        guard let windowSecene = (scene as? UIWindowScene) else { return }
+        
+        let appFlow = AppFlow() // 흐름
+        let appStepper = AppStepper() // 흐름 트리거
+        
+        // 흐름 & 흐름 트리거 연결되었음
+        self.coordinator.coordinate(flow: appFlow, with: appStepper)
+        
+        Flows.use(appFlow, when: .created, block: { rootVC in
+            let window = UIWindow(windowScene: windowSecene)
+            window.rootViewController = rootVC
+            self.window = window
+            window.makeKeyAndVisible()
+        })
+        
+        
+        self.coordinator.rx.willNavigate.subscribe(onNext: { (flow, step) in
+            Logger.trace("will navigate to flow=\(flow) and step=\(step)")
+        }).disposed(by: self.disposeBag)
+
+        self.coordinator.rx.didNavigate.subscribe(onNext: { (flow, step) in
+            Logger.trace("did navigate to flow=\(flow) and step=\(step)")
+        }).disposed(by: self.disposeBag)
+        
     }
 
     func sceneDidDisconnect(_ scene: UIScene) {
@@ -48,6 +75,27 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 
         // Save changes in the application's managed object context when the application transitions to the background.
         (UIApplication.shared.delegate as? AppDelegate)?.saveContext()
+    }
+    
+    func scene(_ scene: UIScene, openURLContexts URLContexts: Set<UIOpenURLContext>) {
+        
+        if let url = URLContexts.first?.url {
+            // 소셜 계정 연동 스킴
+            if let host = url.host,
+               host == "socialSync" {
+               
+                guard let rootViewController = self.window?.rootViewController else {
+                    Logger.d("rootVC Not found")
+                    return
+                }
+                
+                rootViewController.dismiss(animated: true) {
+                    let alertController = UIAlertController(title: "", message: "소셜 계정이 연동 되었습니다", preferredStyle: .alert)
+                    alertController.addAction(UIAlertAction(title: "확인", style: .default))
+                    rootViewController.present(alertController, animated: true)
+                }
+            }
+        }
     }
 
 
