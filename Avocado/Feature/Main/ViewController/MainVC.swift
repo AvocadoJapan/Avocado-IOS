@@ -77,7 +77,7 @@ final class MainVC: BaseVC, UICollectionViewDelegate{
     
     override func viewDidLoad() {
         // 초기 메인데이터 API call
-        viewModel.input.actionViewDidLoad.accept(())
+//        viewModel.input.actionViewDidLoad.accept(())
     }
     
     override func setProperty() {
@@ -138,6 +138,16 @@ final class MainVC: BaseVC, UICollectionViewDelegate{
             $0.horizontalEdges.equalToSuperview()
             $0.height.equalTo(250)
         }
+    }
+    
+    override func bindUI() {
+        let output = viewModel.transform(input: viewModel.input)
+        
+        output.productSectionDataPublish
+            .subscribe { product in
+                Logger.d(product)
+            }
+            .disposed(by: disposeBag)
     }
 }
 
@@ -207,18 +217,7 @@ struct MainVCPreview: PreviewProvider {
         return UINavigationController(
             rootViewController: MainVC(
                 viewModel: MainVM(
-                    service: MainService(),
-                    user: User(
-                        userId: "demo",
-                        nickName: "demo",
-                        updateAt: 1234567,
-                        createdAt: 1234567,
-                        accounts: Accounts(cognito: "demo"),
-                        avatar: Avatar(
-                            id: "1234",
-                            changedAt: 1234567
-                        )
-                    )
+                    service: MainService()
                 )
             )
         ).toPreview()

@@ -21,7 +21,6 @@ final class MainVM: ViewModelType, Stepper {
     
     // 서비스를 제공하는 인스턴스
     let service: MainService
-    let user: User
    
     private(set) var input: Input
 //    private(set) var output: Output
@@ -47,9 +46,8 @@ final class MainVM: ViewModelType, Stepper {
     }
     
     // 생성자
-    init(service: MainService, user: User) {
-        self.service = service
-        self.user = user
+    init(service: MainService) {
+        self.service = MainService(isStub: true, sampleStatusCode: 200)
         
         input = Input()
     }
@@ -57,12 +55,13 @@ final class MainVM: ViewModelType, Stepper {
     func transform(input: Input) -> Output {
         let output = Output()
         
-        input.actionViewDidLoad.flatMap { [weak self] _ in
+        input.actionViewDidLoad.flatMap { [weak self] _ -> Observable<MainDataModel> in
             guard let self = self else { throw NetworkError.unknown(-1, "유효하지 않은 화면입니다") }
-            return {}
+            return service.getMain()
         }
-        .subscribe { _ in
-//            output.errEventPublish.accept(regions)
+        .subscribe { mainData in
+            output.bannerSectionDataPublish.accept(mainData.bannerList)
+            output.productSectionDataPublish.accept(mainData.productSection)
         } onError: { error in
             if let error = error as? NetworkError {
                 output.errEventPublish.accept(error)

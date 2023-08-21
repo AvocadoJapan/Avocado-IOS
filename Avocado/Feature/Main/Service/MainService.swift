@@ -8,8 +8,13 @@
 import Foundation
 import RxSwift
 
-final class MainService: BaseAPIService<AuthAPI> {
+final class MainService: BaseAPIService<MainAPI> {
     
     // Observable처리 disposeBag
     private let disposeBag = DisposeBag()
+    
+    func getMain() -> Observable<MainDataModel> {
+        return singleRequest(.main)
+                .asObservable()
+    }
 }

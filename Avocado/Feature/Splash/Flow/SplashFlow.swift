@@ -68,7 +68,7 @@ final class SplashFlow: Flow {
         let flow = MainFlow(root: self.rootViewController)
         
         // 페이지 이동
-        let nextStep = OneStepper(withSingleStep: MainStep.mainIsRequired(user: user))
+        let nextStep = OneStepper(withSingleStep: MainStep.mainIsRequired)
         
         return .one(flowContributor: .contribute(withNextPresentable: flow, withNextStepper: nextStep))
     }

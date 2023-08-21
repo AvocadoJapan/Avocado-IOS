@@ -14,7 +14,7 @@ import RxSwift
 @frozen enum MainStep: Step {
     
     // Loding
-    case mainIsRequired(user: User)
+    case mainIsRequired
     case tokenIsRequired
     case tokenGetComplete
     case errorOccurred(error: NetworkError)

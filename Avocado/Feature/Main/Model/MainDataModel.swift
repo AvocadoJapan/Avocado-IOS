@@ -16,18 +16,21 @@ struct MainDataModel: Codable {
 
 // MARK: - BannerList
 struct Banner: Codable {
-    let id, name: String
-    let url: String
+    let id: String
+    let name: String
+    let imageId: String
 }
 
 // MARK: - ProductSection
 struct ProductSection: Codable {
-    let id, name: String
+    let id: String
+    let name: String
     let products: [Product]
 }
 
 // MARK: - Product
 struct Product: Codable {
+    let productId : String
     let imageId: String
     let name: String
     let price: String
