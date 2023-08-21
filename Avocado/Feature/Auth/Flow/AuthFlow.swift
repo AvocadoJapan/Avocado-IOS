@@ -19,9 +19,9 @@ final class AuthFlow: Flow {
         return self.rootViewController
     }
     
-    private var rootViewController = UINavigationController()
+    private var rootViewController = BaseNavigationVC()
     
-    init(root: UINavigationController) {
+    init(root: BaseNavigationVC) {
         self.rootViewController = root
         Logger.d("AuthFlow init")
     }
@@ -98,9 +98,10 @@ final class AuthFlow: Flow {
                                         email: email,
                                         password: password)
         let viewController = EmailCheckVC(viewModel: viewModel)
+        // 이메일 체크 화면에서도 화면이동이 필요한 경우가 있기 떄문에 navigation 설정
+        let navigationController = BaseNavigationVC(rootViewController: viewController)
         
-        viewController.modalPresentationStyle = .fullScreen
-        rootViewController.present(viewController, animated: true)
+        rootViewController.present(navigationController, animated: true)
         
         return .one(flowContributor: .contribute(withNextPresentable: viewController, withNextStepper: viewModel))
     }
@@ -112,8 +113,7 @@ final class AuthFlow: Flow {
         
         let viewController = OtherEmailVC(viewModel: viewModel)
         
-        let navigationController = UINavigationController(rootViewController: viewController)
-        navigationController.modalPresentationStyle = .fullScreen
+        let navigationController = BaseNavigationVC(rootViewController: viewController)
         
         if let presentedViewController = rootViewController.presentedViewController {
             presentedViewController.present(navigationController, animated: true)
@@ -131,15 +131,16 @@ final class AuthFlow: Flow {
         let service = AuthService()
         let viewModel = RegionSettingVM(service: service)
         let viewController = RegionSettingVC(viewModel: viewModel)
+        let navigationController = BaseNavigationVC(rootViewController: viewController)
         
-        
+        // 사용자 설정 플로우에서는 뒤로 돌아갈 수 없으므로 present
         if let emailCheckVC = rootViewController.presentedViewController {
             emailCheckVC.dismiss(animated: true, completion: {
-                self.rootViewController.pushViewController(viewController, animated: true)
+                self.rootViewController.present(navigationController, animated: true)
             })
         }
         
-        return .one(flowContributor: .contribute(withNext: viewController))
+        return .one(flowContributor: .contribute(withNextPresentable: viewController, withNextStepper: viewModel))
     }
     
     private func navigateToProfileSettingScreen() -> FlowContributors {
@@ -148,13 +149,21 @@ final class AuthFlow: Flow {
         let viewModel = ProfileSettingVM(service: service, s3Service: s3Service)
         let viewController = ProfileSettingVC(vm: viewModel)
         
-        rootViewController.pushViewController(viewController, animated: true)
+        if let navigationController = rootViewController.presentedViewController as? BaseNavigationVC {
+            navigationController.pushViewController(viewController, animated: true)
+        }
+        
         return .one(flowContributor: .contribute(withNextPresentable: viewController, withNextStepper: viewModel))
     }
     
     private func navigateToMainScreen(user: User) -> FlowContributors {
         // flow 설정 { 현재 네비게이션을 루트 컨트롤러로 설정함 }
-        let flow = MainFlow(root: self.rootViewController)
+        let flow = MainFlow(root: rootViewController)
+        
+        //FIXME: 기존 authFlow의 네비게이션이 메인플로우와 동일할 필요가 없음 해당내용 개선 필요 {논의 필요}
+        if let navigationController = rootViewController.presentedViewController as? BaseNavigationVC {
+            navigationController.dismiss(animated: false)
+        }
         
         // 페이지 이동
         let nextStep = OneStepper(withSingleStep: MainStep.mainIsRequired(user: user))

@@ -8,6 +8,9 @@
 import UIKit
 import Foundation
 
+/**
+ * - description 커스텀 네비게이션
+ */
 final class BaseNavigationVC: UINavigationController {
     
     override func viewDidLoad() {
@@ -30,13 +33,5 @@ final class BaseNavigationVC: UINavigationController {
                 
         navigationBar.standardAppearance = appearance
         navigationBar.scrollEdgeAppearance = appearance
-    }
-
-    override init(rootViewController: UIViewController) {
-        super.init(rootViewController: rootViewController)
-    }
-    
-    required init?(coder aDecoder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
     }
 }

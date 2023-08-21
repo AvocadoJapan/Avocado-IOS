@@ -191,7 +191,7 @@ final class WelcomeVC: BaseVC {
         output.successEventPublish
             .observe(on: MainScheduler.instance)
             .subscribe(onNext: { [weak self] user in
-                self?.steps.accept(AuthStep.loginIsComplete(user: user))
+                self?.viewModel.steps.accept(AuthStep.loginIsComplete(user: user))
             })
             .disposed(by: disposeBag)
         

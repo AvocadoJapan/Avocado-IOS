@@ -530,10 +530,11 @@ final class AuthService: BaseAPIService<AuthAPI> {
      * - Description 아보카도 프로필 등록 API{활동지역, 닉네임}
      * - Parameter to : 닉네임
      * - Parameter with: 활동지역ID
-     * - Returns 등록여부 Observable값 **수정될 수  있음**
+     * - Returns 유저 정보
      */
-    func avocadoSignUp(to nickName: String, with regionId: String) -> Observable<UserDTO> {
-        return singleRequest(.signUp(name: nickName, regionId: regionId), responseType: User.self).asObservable()
+    func avocadoSignUp(to nickName: String, with regionId: String) -> Observable<User> /*Observable<UserDTO>*/ {
+//        return singleRequest(.signUp(name: nickName, regionId: regionId), responseType: User.self).asObservable()
+        return singleRequest(.signUp(name: nickName, regionId: regionId)).asObservable()
     }
     
     /**

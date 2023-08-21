@@ -39,7 +39,7 @@ final class ProfileSettingVC: BaseVC {
     }
     
     private lazy var profileView = UIView().then {
-        $0.backgroundColor = .blue
+        $0.backgroundColor = .clear
         $0.layer.cornerRadius = 60
         $0.layer.masksToBounds = true
     }
@@ -135,24 +135,26 @@ final class ProfileSettingVC: BaseVC {
             .tap
             .asDriver()
             .do(onNext: { [weak self] _ in
-                self?.confirmButton.isEnabled = false
+                self?.confirmButton.isEnabled = true
             })
             .drive(onNext: { [weak self] void in
                 self?.viewModel.input.actionProfileSetUpRelay.accept(void)
+                /* mocking
+                let user = User(userId: "asd", nickName: "asdasd", updateAt: 123, createdAt: 123, accounts: Accounts(cognito: ""), avatar: Avatar(id: "asd", changedAt: 1234))
+                self?.viewModel.steps.accept(AuthStep.loginIsComplete(user: user)) */
             })
             .disposed(by: disposeBag)
         
         //MARK: - OUTPUT BINDING
-//        output.successSignUpeRelay
-//            .asSignal()
-//            .do(onNext: {[weak self] _ in
-//                self?.confirmButton.isEnabled = true
-//            })
-//            .emit(onNext: { _ in
-//                let tabbarviewController = Util.makeTabBarViewController()
-//                Util.changeRootViewController(to: tabbarviewController)
-//            })
-//            .disposed(by: disposeBag)
+        output.successSignUpeRelay
+            .asSignal()
+            .do(onNext: {[weak self] _ in
+                self?.confirmButton.isEnabled = true
+            })
+            .emit(onNext: { [weak self] user in
+                self?.viewModel.steps.accept(AuthStep.loginIsComplete(user: user))
+            })
+            .disposed(by: disposeBag)
             
         output.errEventPublish
             .asSignal()

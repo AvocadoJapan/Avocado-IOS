@@ -18,7 +18,7 @@ final class AppFlow: Flow {
         return self.rootViewController
     }
     
-    private let rootViewController = UINavigationController()
+    private let rootViewController = BaseNavigationVC()
     
     func navigate(to step: Step) -> FlowContributors {
         
