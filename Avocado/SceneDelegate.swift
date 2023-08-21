@@ -21,20 +21,14 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     func scene(_ scene: UIScene, willConnectTo session: UISceneSession, options connectionOptions: UIScene.ConnectionOptions) {
         
         guard let windowSecene = (scene as? UIWindowScene) else { return }
-        
-        let appFlow = AppFlow() // 흐름
+        let window = UIWindow(windowScene: windowSecene)
+        self.window = window
+        let appFlow = AppFlow(window: window) // 흐름
         let appStepper = AppStepper() // 흐름 트리거
         
         // 흐름 & 흐름 트리거 연결되었음
         self.coordinator.coordinate(flow: appFlow, with: appStepper)
-        
-        Flows.use(appFlow, when: .created, block: { rootVC in
-            let window = UIWindow(windowScene: windowSecene)
-            window.rootViewController = rootVC
-            self.window = window
-            window.makeKeyAndVisible()
-        })
-        
+        window.makeKeyAndVisible()
         
         self.coordinator.rx.willNavigate.subscribe(onNext: { (flow, step) in
             Logger.trace("will navigate to flow=\(flow) and step=\(step)")

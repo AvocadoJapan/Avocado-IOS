@@ -19,14 +19,13 @@ final class SplashFlow: Flow {
         return self.rootViewController
     }
     
-    init(root: BaseNavigationVC) {
-        // 스플래시 화면에서 네비게이션바가 보이면 안되기 때문에 hidden 처리
-        root.setNavigationBarHidden(true, animated: false)
-        self.rootViewController = root
-        Logger.d("SplashFlow init")
+    private lazy var rootViewController = BaseNavigationVC().then {
+        $0.setNavigationBarHidden(true, animated: true)
     }
     
-    private var rootViewController = BaseNavigationVC()
+    deinit {
+        Logger.i("deinit \(self)")
+    }
     
     func navigate(to step: Step) -> FlowContributors {
         
@@ -36,9 +35,9 @@ final class SplashFlow: Flow {
         case .splashIsRequired:
             return navigateToSplashScreen()
         case .tokenIsRequired:
-            return navigateToWelcomeScreen()
-        case .tokenIsExist(let user):
-            return navigateToMainScreen(user: user)
+            return .end(forwardToParentFlowWithStep: AppStep.authIsRequired)
+        case .tokenIsExist:
+            return .end(forwardToParentFlowWithStep: AppStep.mainIsRequired)
         case .errorOccurred(let error):
             return navigateToFailScreen(with: error)
         }
@@ -52,25 +51,6 @@ final class SplashFlow: Flow {
         
         //        rootViewController.setViewControllers([viewController], animated: false)
         return .one(flowContributor: .contribute(withNextPresentable: viewController, withNextStepper: viewModel))
-    }
-    
-    private func navigateToWelcomeScreen() -> FlowContributors {
-        // flow 설정 { 현재 네비게이션을 루트 컨트롤러로 설정함 }
-        let flow = AuthFlow(root: self.rootViewController)
-        // welcome 페이지 이동
-        let nextStep = OneStepper(withSingleStep: AuthStep.welcomeIsRequired)
-        
-        return .one(flowContributor: .contribute(withNextPresentable: flow, withNextStepper: nextStep))
-    }
-    
-    private func navigateToMainScreen(user: User) -> FlowContributors {
-        // flow 설정 { 현재 네비게이션을 루트 컨트롤러로 설정함 }
-        let flow = MainFlow(root: self.rootViewController)
-        
-        // 페이지 이동
-        let nextStep = OneStepper(withSingleStep: MainStep.mainIsRequired)
-        
-        return .one(flowContributor: .contribute(withNextPresentable: flow, withNextStepper: nextStep))
     }
     
     private func navigateToFailScreen(with error: NetworkError) -> FlowContributors {

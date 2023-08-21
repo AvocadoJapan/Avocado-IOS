@@ -26,7 +26,7 @@ final class RegionSettingVM: ViewModelType, Stepper {
     }
     
     struct Input {
-        var searchTextRelay = BehaviorRelay<String>(value: "")
+        var searchTextRelay = PublishRelay<String>()
         let regionIdRelay = BehaviorRelay<String>(value: "")
         let actionViewDidLoad = PublishRelay<Void>()
     }

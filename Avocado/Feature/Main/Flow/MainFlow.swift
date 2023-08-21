@@ -33,7 +33,6 @@ final class MainFlow: Flow {
         switch step {
 
         case .errorOccurred(let error):
-            
             return navigateToFailScreen(with: error)
         case .mainIsRequired:
             return navigateToMainScreen()

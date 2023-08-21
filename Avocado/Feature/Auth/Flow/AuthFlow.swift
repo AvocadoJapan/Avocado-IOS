@@ -39,8 +39,8 @@ final class AuthFlow: Flow {
             return navigateToWelcomScreen()
         case .loginIsRequired:
             return navigateToLoginScreen()
-        case .loginIsComplete(let user):
-            return navigateToMainScreen(user: user)
+        case .loginIsComplete:
+            return .end(forwardToParentFlowWithStep: AppStep.mainIsRequired)
         case .signUpIsRequired:
             return navigateToSignupScreen()
         case .profileIsRequired:
@@ -152,30 +152,6 @@ final class AuthFlow: Flow {
         if let navigationController = rootViewController.presentedViewController as? BaseNavigationVC {
             navigationController.pushViewController(viewController, animated: true)
         }
-        
-        return .one(flowContributor: .contribute(withNextPresentable: viewController, withNextStepper: viewModel))
-    }
-    
-    private func navigateToMainScreen(user: User) -> FlowContributors {
-        // flow 설정 { 현재 네비게이션을 루트 컨트롤러로 설정함 }
-        let flow = MainFlow(root: rootViewController)
-        
-        //FIXME: 기존 authFlow의 네비게이션이 메인플로우와 동일할 필요가 없음 해당내용 개선 필요 {논의 필요}
-        if let navigationController = rootViewController.presentedViewController as? BaseNavigationVC {
-            navigationController.dismiss(animated: false)
-        }
-        
-        // 페이지 이동
-        let nextStep = OneStepper(withSingleStep: MainStep.mainIsRequired)
-        
-        return .one(flowContributor: .contribute(withNextPresentable: flow, withNextStepper: nextStep))
-    }
-    
-    private func navigateToSplashScreen() -> FlowContributors {
-        let viewModel = SplashVM(service: AuthService())
-        let viewController = SplashVC(viewModel: viewModel)
-        
-        rootViewController.setViewControllers([viewController], animated: false)
         
         return .one(flowContributor: .contribute(withNextPresentable: viewController, withNextStepper: viewModel))
     }

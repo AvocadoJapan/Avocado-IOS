@@ -33,29 +33,14 @@ enum NetworkError: AvocadoError {
     
     var errorDescription: String {
         switch self {
-        case .invalidResponse:
-            return "Response가 잘못 되었습니다"
-            
-        case .tokenExpired:
-            return "토큰이 만료되었습니다"
-            
-        case .tokenIsRequired:
-            return "토큰이 필요합니다"
-            
-        case .invalidURL:
-            return "서버 요청에 실패하였습니다"
-            
-        case .pageNotFound:
-            return "경로가 잘못 되었습니다 \n 앱을 다시 실행해주세요"
-            
-        case .serverError:
-            return "서버 오류 입니다"
-            
-        case .serverConflict:
-            return "중복된 요청입니다"
-            
-        case .unknown(let code, let message):
-            return "Error Code : \(code)\n Message : \(message)"
+        case .invalidResponse: return "Response가 잘못 되었습니다"
+        case .tokenExpired: return "토큰이 만료되었습니다"
+        case .tokenIsRequired: return "토큰이 필요합니다"
+        case .invalidURL: return "서버 요청에 실패하였습니다"
+        case .pageNotFound: return "경로가 잘못 되었습니다 \n 앱을 다시 실행해주세요"
+        case .serverError: return "서버 오류 입니다"
+        case .serverConflict: return "중복된 요청입니다"
+        case .unknown(let code, let message): return "Error Code : \(code)\n Message : \(message)"
         }
     }
 }

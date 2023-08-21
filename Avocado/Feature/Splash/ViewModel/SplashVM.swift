@@ -26,15 +26,21 @@ final class SplashVM: Stepper {
     let errEventPublish = PublishRelay<NetworkError>()
     let disposeBag = DisposeBag()
     
-    // Private
-    private var isCheckingSession = false
-    
     init(service: AuthService) {
         self.authService = service
-        
         bindRxFlow()
     }
-    
+    /**
+     * - description 테스트 계정 로그인
+     */
+    private var isDemoLogin: Bool {
+    #if DEBUG
+        return true
+    #else
+        return false
+    #endif
+    }
+
     func checkLoginSession() {
         authService.checkLoginSession()
             .flatMap { [weak self] isLogin -> Observable<User> in
@@ -47,6 +53,16 @@ final class SplashVM: Stepper {
                     if let notConfirmedUserID = UserDefaults.standard.string(forKey: UserDefaultsKey.Auth.notConfirmedUserID) {
                         // 사용자 삭제 후 welcome 페이지 이동
                         return self.authService.adminDeleteUserAccount(userId: notConfirmedUserID).map { throw NetworkError.tokenExpired }
+                    }
+                    else if isDemoLogin {
+                        guard let testAccountEmail = ProcessInfo.processInfo.environment["TEST_ACCOUNT_EMAIL"],
+                              let testAccountPassword = ProcessInfo.processInfo.environment["TEST_ACCOUNT_PASSWORD"] else {
+                            throw NetworkError.tokenIsRequired
+                        }
+                        
+                        return self.authService.login(email: testAccountEmail, password: testAccountPassword).flatMap { _ -> Observable<User> in
+                            return self.authService.getProfile()
+                        }
                     }
                     else {
                         throw NetworkError.tokenIsRequired
@@ -93,8 +109,8 @@ final class SplashVM: Stepper {
     private func bindRxFlow() {
         successEventPublish
             .observe(on: MainScheduler.instance)
-            .subscribe(onNext: { [weak self] user in
-                self?.steps.accept(SplashStep.tokenIsExist(user: user))
+            .subscribe(onNext: { [weak self] _ in
+                self?.steps.accept(SplashStep.tokenIsExist)
 //                self?.steps.accept(SplashStep.errorOccurred(error: NetworkError.unknown(500, "Unknown Error")))
             })
             .disposed(by: disposeBag)
