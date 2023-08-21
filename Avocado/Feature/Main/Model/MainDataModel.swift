@@ -7,9 +7,35 @@
 
 import Foundation
 
-struct MainData {
+// MARK: - Model
+struct MainDataModel: Codable {
+    let userID: String
     let bannerList: [Banner]
-    let recommandProductList: [Product]
-    let friendProductList: [Product]
-    let fruitProductList: [Product]
+    let productSection: [ProductSection]
+}
+
+// MARK: - BannerList
+struct Banner: Codable {
+    let id, name: String
+    let url: String
+}
+
+// MARK: - ProductSection
+struct ProductSection: Codable {
+    let id, name: String
+    let products: [Product]
+}
+
+// MARK: - Product
+struct Product: Codable {
+    let imageId: String
+    let name: String
+    let price: String
+    let location: String
+}
+
+// MARK: - MainCategoryMenu
+struct MainCategoryMenu {
+    let image: String
+    let name: String
 }

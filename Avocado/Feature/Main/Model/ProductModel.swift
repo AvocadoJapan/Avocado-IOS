@@ -7,10 +7,4 @@
 
 import Foundation
 
-struct Product:Decodable {
-    let imageURL: String
-    let name: String
-    let price: String
-    let location: String
-}
 

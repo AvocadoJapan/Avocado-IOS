@@ -48,6 +48,4 @@ extension SectionOfMainData: SectionModelType {
         self = original
         self.items = items
     }
-    
-    
 }

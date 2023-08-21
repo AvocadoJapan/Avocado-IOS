@@ -11,3 +11,4 @@ struct Banner {
     let imageURL: String
 }
 
+typealias Banners = [Banner]

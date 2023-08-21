@@ -5,9 +5,16 @@
 //  Created by Jayden Jang on 2023/06/24.
 //
 
+
+/**
+ - Description: 화면에 직접적으로 관여하는 상수를 Variant로 분리
+ */
 import Foundation
 import UIKit
 
+/**
+ - Description: 자사 컬러디자인 모음
+ */
 enum ColorVariant {
     case normal
     case success
@@ -32,7 +39,6 @@ enum ColorVariant {
         }
     }
 }
-
 enum ButtonColorType {
     case primary
     case secondary
@@ -59,6 +65,9 @@ enum ButtonColorType {
     }
 }
 
+/**
+ - Description: 정규식 체크 룰
+ */
 class Rule {
     let check: (String) -> Bool
     let errorMessage: String
@@ -68,7 +77,6 @@ class Rule {
         self.errorMessage = errorMessage
     }
 }
-
 enum RegVarient {
     case email
     case password
@@ -98,16 +106,9 @@ enum RegVarient {
     }
 }
 
-protocol CaseCountable: CaseIterable {
-    static var count: Int { get }
-}
-
-extension CaseCountable {
-    static var count: Int {
-        return Self.allCases.count
-    }
-}
-
+/**
+ - Description: 메인화면 서브메뉴 enum (정적인 데이터이므로 enum으로 정의)
+ */
 enum MainSubMenuType: CaseCountable {
     
     case favorite
@@ -155,7 +156,9 @@ enum MainSubMenuType: CaseCountable {
     }
 }
 
-
+/**
+ - Description: 유저 권한 enum (현재 사용하지 않음)
+ */
 enum PrivacyType {
     case notification
     case location

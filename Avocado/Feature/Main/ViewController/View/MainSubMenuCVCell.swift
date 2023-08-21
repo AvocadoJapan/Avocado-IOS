@@ -17,7 +17,6 @@ import RxCocoa
 // 정적인 데이터기 때문에 Identifiable 프로토콜 채택 안함
 
 final class MainSubMenuCVCell: UICollectionViewCell {
-    typealias T = MainSubMenu
     static var identifier: String = "MainSubMenuCVCell"
     
     private var imageName: String = ""

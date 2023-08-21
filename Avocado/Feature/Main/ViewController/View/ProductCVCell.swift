@@ -86,7 +86,7 @@ final class ProductCVCell: UICollectionViewCell, CollectionCellIdentifierable {
             .observe(on: MainScheduler.instance)
             .subscribe(onNext: { [weak self] data in
                 self?.productNameLabel.text = data.name
-                self?.productImageView.image = UIImage(named: data.imageURL)
+                self?.productImageView.image = UIImage(named: data.imageId)
                 self?.locationLabel.text = data.location
                 self?.priceLabel.text = data.price
             })

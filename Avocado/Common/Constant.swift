@@ -5,22 +5,21 @@
 //  Created by Jayden Jang on 2023/06/04.
 //
 
+
+/**
+ - Description: 유저가 직접 볼수 없는 상수를 Constant로 분리 (ex. Url, Cell identifier ...)
+ */
 import Foundation
 
 /**
- - Description: 자주 사용하는 상수를 Constant 로 분리해놓음 (ex. Url, Cell identifier ...)
+ - Description: API URL을 모아둔 enum
  */
 enum API {
     static let BASE_URL = "https://api.avocadojapan.com"
 }
-
-// Cell identifier
-enum IDENTIFIER {
-//    static let CAT_CV_CELL = "catCVCell"
-//    static let BADGE_TV_CELL = "badgeTVCell"
-//    static let STAR_LIST_TV_CELL = "starListTVCell"
-}
-
+/**
+ - Description: 소셜 로그인 타입
+ */
 enum SocialType {
     case google
     case apple
@@ -34,7 +33,6 @@ enum SocialType {
         }
     }
 }
-
 /**
  * - Description 공통적으로 사용되는 모델 enum ()
  */
@@ -69,3 +67,6 @@ enum UserDefaultsKey {
         static let notConfirmedUserID = "userNotConfirmedId"
     }
 }
+
+
+

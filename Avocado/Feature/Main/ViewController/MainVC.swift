@@ -75,6 +75,11 @@ final class MainVC: BaseVC, UICollectionViewDelegate{
         fatalError("init(coder:) has not been implemented")
     }
     
+    override func viewDidLoad() {
+        // 초기 메인데이터 API call
+        viewModel.input.actionViewDidLoad.accept(())
+    }
+    
     override func setProperty() {
         self.view.backgroundColor = .white
         self.navigationController?.setNavigationBarHidden(true, animated: true)

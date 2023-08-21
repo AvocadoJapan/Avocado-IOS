@@ -30,12 +30,18 @@ final class MainVM: ViewModelType, Stepper {
         // 배너 클릭 이벤트 인스턴스
         let actionBannerRelay = PublishRelay<Banner>()
         // 메인카테고리 메뉴 클릭 이벤트 인스턴스
-        let actionMainCategoryRelay = PublishRelay<MainSubMenu>()
+        let actionMainCategoryRelay = PublishRelay<MainCategoryMenu>()
         // 단일상품 클릭 이벤트 인스턴스
         let actionSingleProductRelay = PublishRelay<Product>()
+        // viewDidLoad가 탓음을 감지하는 인스턴스
+        let actionViewDidLoad = PublishRelay<Void>()
     }
     
     struct Output {
+        // 배너 정보를 전달하는 인스턴스
+        let bannerSectionDataPublish = PublishRelay<[Banner]>()
+        // 상품 데이터를 전달하는 인스턴스
+        let productSectionDataPublish = PublishRelay<[ProductSection]>()
         // 에러 이벤트를 전달하는 인스턴스
         let errEventPublish = PublishRelay<NetworkError>()
     }
@@ -51,41 +57,22 @@ final class MainVM: ViewModelType, Stepper {
     func transform(input: Input) -> Output {
         let output = Output()
         
+        input.actionViewDidLoad.flatMap { [weak self] _ in
+            guard let self = self else { throw NetworkError.unknown(-1, "유효하지 않은 화면입니다") }
+            return {}
+        }
+        .subscribe { _ in
+//            output.errEventPublish.accept(regions)
+        } onError: { error in
+            if let error = error as? NetworkError {
+                output.errEventPublish.accept(error)
+            }
+            else {
+                output.errEventPublish.accept(NetworkError.unknown(-1, error.localizedDescription))
+            }
+        }
+        .disposed(by: disposeBag)
+        
         return output
     }
-    
-    
-    public lazy var sectionData = BehaviorRelay<[SectionOfMainData]>(value: [
-        
-        SectionOfMainData(items: [
-            .banner(data: Banner(imageURL: "https://www.google.com")),
-            .banner(data: Banner(imageURL: "https://www.google.com")),
-            .banner(data: Banner(imageURL: "https://www.google.com"))
-        ]),
-        
-        SectionOfMainData(items: [
-//            .category(data: MainSubMenu(MainSubMenuImage: "person.crop.circle", MainSubMenuName: "Apple")),
-        ]),
-        
-        SectionOfMainData(items: [
-            .product(data: Product(imageURL: "", name: "아이패드 미니 64기가 화이트 미개봉", price: "100,000원", location: "서초구 서초1동")),
-            .product(data: Product(imageURL: "", name: "아이패드 미니 64기가 화이트 미개봉", price: "100,000원", location: "영등포구 여의동")),
-            .product(data: Product(imageURL: "", name: "아이패드 미니 64기가 화이트 미개봉", price: "100,000원", location: "관악구 보라매동")),
-            .product(data: Product(imageURL: "", name: "아이패드 미니 64기가 화이트 미개봉", price: "100,000원", location: "관악구 행운동")),
-            .product(data: Product(imageURL: "", name: "아이패드 미니 64기가 화이트 미개봉", price: "100,000원", location: "강서구 화곡6동")),
-            .product(data: Product(imageURL: "", name: "아이패드 미니 64기가 화이트 미개봉", price: "100,000원", location: "서초구 서초1동")),
-        ], title: "한국어 데모"),
-
-        SectionOfMainData(items: [
-            .product(data: Product(imageURL: "", name: "パナソニック", price: "123,456円", location: "東京都足立区")),
-            .product(data: Product(imageURL: "", name: "美味しいご飯が炊ける炊飯器", price: "123,456円", location: "東京都足立区")),
-            .product(data: Product(imageURL: "", name: "涼しいエアコン10畳以上", price: "123,456円", location: "東京都渋谷区")),
-            .product(data: Product(imageURL: "", name: "ダイソン掃除機未開封", price: "123,456円", location: "東京都世田谷区")),
-            .product(data: Product(imageURL: "", name: "任天堂スイッチ有機EL", price: "123,456円", location: "東京都台東区")),
-            .product(data: Product(imageURL: "", name: "モバイルポータブル充電器", price: "123,456円", location: "東京都港区")),
-        ], title: "日本語Demo"),
-    ])
-    
-    public let currentBannerPage = BehaviorRelay<Int>(value: 0) // 현재 배너페이지에 대한 Observable
-    
 }
