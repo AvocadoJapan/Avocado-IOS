@@ -42,8 +42,8 @@ final class LoginVM: Stepper {
 
         successEventPublish
             .observe(on: MainScheduler.instance)
-            .subscribe(onNext: { [weak self] user in
-                self?.steps.accept(AuthStep.loginIsComplete(user: user))
+            .subscribe(onNext: { [weak self] _ in
+                self?.steps.accept(AuthStep.loginIsComplete)
             })
             .disposed(by: disposeBag)
     }

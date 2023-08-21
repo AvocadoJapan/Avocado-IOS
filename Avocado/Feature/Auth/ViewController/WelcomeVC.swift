@@ -190,8 +190,8 @@ final class WelcomeVC: BaseVC {
         // 소셜 로그인 성공 여부
         output.successEventPublish
             .observe(on: MainScheduler.instance)
-            .subscribe(onNext: { [weak self] user in
-                self?.viewModel.steps.accept(AuthStep.loginIsComplete(user: user))
+            .subscribe(onNext: { [weak self] _ in
+                self?.viewModel.steps.accept(AuthStep.loginIsComplete)
             })
             .disposed(by: disposeBag)
         

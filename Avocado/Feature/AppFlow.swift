@@ -15,10 +15,15 @@ import Then
 
 final class AppFlow: Flow {
     var root: Presentable {
-        return self.rootViewController
+        return self.window
     }
     
-    private let rootViewController = BaseNavigationVC()
+    var window: UIWindow
+    
+    init(window: UIWindow) {
+        self.window = window
+        Logger.i("AppFlow init")
+    }
     
     func navigate(to step: Step) -> FlowContributors {
         
@@ -27,9 +32,12 @@ final class AppFlow: Flow {
         switch step {
             
         case .appIsStarted:
-            return navigateToSplashFlow()
+            return navigateToSplashFlow() //스플래시 화면이동
         case .mainIsRequired:
-            return navigateToMainFlow()
+            return navigateToMainFlow() // 메인화면이동
+        case .authIsRequired:
+            return navigateToAuthFlow() // 인증화면이동
+            
         case .userLogout:
             return .none
         case .userAccountDelete:
@@ -39,26 +47,55 @@ final class AppFlow: Flow {
         }
     }
     
+    /**
+     * - description 스플래시 이동화면 플로우
+     */
     private func navigateToSplashFlow() -> FlowContributors {
-        let splashFlow = SplashFlow(root: self.rootViewController)
+        let splashFlow = SplashFlow()
+        
+        Flows.use(splashFlow, when: .created) { [unowned self] root in
+            self.window.rootViewController = root
+        }
         
         return .one(flowContributor: .contribute(withNextPresentable: splashFlow, withNextStepper: OneStepper(withSingleStep: SplashStep.splashIsRequired)))
     }
     
+    /**
+     * - description 인증화면 이동 플로우 함수
+     */
     private func navigateToAuthFlow() -> FlowContributors {
-        let authFlow = AuthFlow(root: self.rootViewController)
+        let authFlow = AuthFlow(root: BaseNavigationVC())
         
-        return .one(flowContributor: .contribute(withNextPresentable: authFlow, withNextStepper: OneStepper(withSingleStep: AuthStep.loginIsRequired)))
+        Flows.use(authFlow, when: .created) { [unowned self] root in
+            self.window.rootViewController = root
+        }
+        
+        return .one(flowContributor: .contribute(withNextPresentable: authFlow, withNextStepper: OneStepper(withSingleStep: AuthStep.welcomeIsRequired)))
     }
     
+    /**
+     * - description 메인화면 이동 플로우 함수
+     */
     private func navigateToMainFlow() -> FlowContributors {
-        let mainFlow = AuthFlow(root: self.rootViewController)
+        let mainFlow = MainFlow(root: BaseNavigationVC())
         
-        return .one(flowContributor: .contribute(withNextPresentable: mainFlow, withNextStepper: OneStepper(withSingleStep: MainStep.errorOccurred(error: .unknown(-10, "정의되어있지않은 플로우입니다. 추가개발필요.")))))
+        Flows.use(mainFlow, when: .created) { [unowned self] root in
+            self.window.rootViewController = root
+            UIView.transition(with: self.window, duration: 0.2, options: [.transitionCrossDissolve], animations: nil)
+        }
+        
+        return .one(flowContributor: .contribute(withNextPresentable: mainFlow, withNextStepper: OneStepper(withSingleStep: MainStep.mainIsRequired)))
     }
     
+    /**
+     * - description 에러화면 이동 플로우 함수
+     */
     private func errorTrigger(error: NetworkError) -> FlowContributors {
-        let splashFlow = SplashFlow(root: self.rootViewController)
+        let splashFlow = SplashFlow()
+        
+        Flows.use(splashFlow, when: .created) { [unowned self] root in
+            self.window.rootViewController = root
+        }
         
         return .one(flowContributor: .contribute(withNextPresentable: splashFlow, withNextStepper: OneStepper(withSingleStep: SplashStep.errorOccurred(error: error))))
     }

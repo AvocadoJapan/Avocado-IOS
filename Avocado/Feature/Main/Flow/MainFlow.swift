@@ -33,10 +33,9 @@ final class MainFlow: Flow {
         switch step {
 
         case .errorOccurred(let error):
-            
             return navigateToFailScreen(with: error)
-        case .mainIsRequired(let user):
-            return navigateToMainScreen(user: user)
+        case .mainIsRequired:
+            return navigateToMainScreen()
         case .tokenIsRequired:
             return .none
         case .tokenGetComplete:
@@ -59,9 +58,9 @@ final class MainFlow: Flow {
         return .one(flowContributor: .contribute(withNext: viewController))
     }
     
-    private func navigateToMainScreen(user: User) -> FlowContributors {
+    private func navigateToMainScreen() -> FlowContributors {
         let service = MainService()
-        let viewModel = MainVM(service: service, user: user)
+        let viewModel = MainVM(service: service, user: User(userId: "", nickName: "", updateAt: 0, createdAt: 0, accounts: Accounts(cognito: ""), avatar: nil))
         let viewController = MainVC(viewModel: viewModel)
         
         // 스무스 애니메이션 적용

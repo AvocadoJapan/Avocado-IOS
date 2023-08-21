@@ -151,8 +151,8 @@ final class ProfileSettingVC: BaseVC {
             .do(onNext: {[weak self] _ in
                 self?.confirmButton.isEnabled = true
             })
-            .emit(onNext: { [weak self] user in
-                self?.viewModel.steps.accept(AuthStep.loginIsComplete(user: user))
+            .emit(onNext: { [weak self] _ in
+                self?.viewModel.steps.accept(AuthStep.loginIsComplete)
             })
             .disposed(by: disposeBag)
             
