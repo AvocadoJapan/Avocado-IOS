@@ -13,8 +13,9 @@ import RxSwift
 final class BannerCVCell: UICollectionViewCell, CollectionCellIdentifierable {
     typealias T = Banner
     static var identifier: String = "BannerCC"
-    public var onData: AnyObserver<Banner>
     var disposeBag = DisposeBag()
+    
+    private var banner: Banner?
     
     private lazy var imageView = UIImageView().then {
         $0.backgroundColor = .systemGray6
@@ -23,8 +24,6 @@ final class BannerCVCell: UICollectionViewCell, CollectionCellIdentifierable {
     }
     
     override init(frame: CGRect) {
-        let cellData = PublishSubject<Banner>()
-        onData = cellData.asObserver()
         
         super.init(frame: frame)
         // setLayout
@@ -34,14 +33,10 @@ final class BannerCVCell: UICollectionViewCell, CollectionCellIdentifierable {
         imageView.snp.makeConstraints {
             $0.edges.equalToSuperview()
         }
-        
-        //bindUI
-        cellData.observe(on: MainScheduler.instance)
-            .subscribe(onNext: { [weak self] data in
-                self?.imageView.image = UIImage(named: "demo_photo")
-            })
-            .disposed(by: disposeBag)
-        
+    }
+    
+    func config(banner: Banner) {
+        self.banner = banner
     }
     
     required init?(coder: NSCoder) {

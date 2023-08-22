@@ -18,4 +18,6 @@ import RxSwift
     case tokenIsRequired
     case tokenGetComplete
     case errorOccurred(error: NetworkError)
+    
+    case singleProductIsRequired(product: Product)
 }

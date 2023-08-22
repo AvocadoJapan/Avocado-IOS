@@ -13,16 +13,17 @@ import RxFlow
 // FIXME: 추후 RxCocoa 를 이용한 바인딩 추가해야됨
 
 final class ProductGroupCVCell: UICollectionViewCell, CollectionCellIdentifierable {
-    
+
     typealias T = Product
     static var identifier: String = "ProductGroupCVCell"
-    var onData: AnyObserver<Product>
     var disposeBag = DisposeBag()
+    
+    private var productSection: ProductSection?
 
-    private let titleLabel = UILabel().then {
+    private lazy var titleLabel = UILabel().then {
         $0.font = UIFont.systemFont(ofSize: 18, weight: .bold)
         $0.textColor = .black
-        $0.text = "최근 본 상품과 비슷해요"
+        $0.text = "알 수 없는 오류"
         $0.textAlignment = .left
         $0.contentMode = .center
     }
@@ -46,9 +47,6 @@ final class ProductGroupCVCell: UICollectionViewCell, CollectionCellIdentifierab
     }
 
     override init(frame: CGRect) {
-        let cellData = PublishSubject<Product>()
-        onData = cellData.asObserver()
-        
         super.init(frame: frame)
         
         [titleLabel, collectionView, moreButton].forEach {
@@ -72,9 +70,6 @@ final class ProductGroupCVCell: UICollectionViewCell, CollectionCellIdentifierab
     }
 
     required init?(coder: NSCoder) {
-        let cellData = PublishSubject<Product>()
-        onData = cellData.asObserver()
-        
         super.init(coder: coder)
     }
     
@@ -82,6 +77,16 @@ final class ProductGroupCVCell: UICollectionViewCell, CollectionCellIdentifierab
         super.layoutSubviews()
         flowLayout.itemSize = CGSize(width: self.frame.width/3 - 12, height: 200)
         self.collectionView.collectionViewLayout = flowLayout
+    }
+    
+    func config(productSection: ProductSection) {
+        self.productSection = productSection
+        
+        titleLabel.text = productSection.name
+    }
+    
+    override func prepareForReuse() {
+        self.productSection = nil
     }
 }
 
@@ -91,8 +96,10 @@ extension ProductGroupCVCell: UICollectionViewDataSource {
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: ProductCVCell.identifier, for: indexPath)
-        // cell.backgroundColor = .blue
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: ProductCVCell.identifier, for: indexPath) as! ProductCVCell
+        
+//        cell.config(product: productSection)
+        
         return cell
     }
 }

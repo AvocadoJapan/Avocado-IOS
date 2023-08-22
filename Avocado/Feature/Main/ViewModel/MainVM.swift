@@ -32,7 +32,7 @@ final class MainVM: ViewModelType, Stepper {
         let actionMainCategoryRelay = PublishRelay<MainCategoryMenu>()
         // 단일상품 클릭 이벤트 인스턴스
         let actionSingleProductRelay = PublishRelay<Product>()
-        // viewDidLoad가 탓음을 감지하는 인스턴스
+        // viewDidLoad를 감지하는 인스턴스 (초기 data fetching 에 사용)
         let actionViewDidLoad = PublishRelay<Void>()
     }
     
@@ -48,6 +48,7 @@ final class MainVM: ViewModelType, Stepper {
     // 생성자
     init(service: MainService) {
         self.service = MainService(isStub: true, sampleStatusCode: 200)
+//        self.service = service
         
         input = Input()
     }
@@ -55,14 +56,22 @@ final class MainVM: ViewModelType, Stepper {
     func transform(input: Input) -> Output {
         let output = Output()
         
-        input.actionViewDidLoad.flatMap { [weak self] _ -> Observable<MainDataModel> in
+        //-> Observable<MainDataModel>
+        
+        
+        input.actionViewDidLoad.flatMap { [weak self] _ in
             guard let self = self else { throw NetworkError.unknown(-1, "유효하지 않은 화면입니다") }
-            return service.getMain()
+             let mainData = service.getMain()
+            
+            Logger.d(mainData)
+            
+            return mainData
         }
         .subscribe { mainData in
             output.bannerSectionDataPublish.accept(mainData.bannerList)
             output.productSectionDataPublish.accept(mainData.productSection)
         } onError: { error in
+            Logger.e(error)
             if let error = error as? NetworkError {
                 output.errEventPublish.accept(error)
             }
@@ -71,6 +80,12 @@ final class MainVM: ViewModelType, Stepper {
             }
         }
         .disposed(by: disposeBag)
+        
+        input.actionSingleProductRelay
+            .subscribe { [weak self] product in
+                self?.steps.accept(MainStep.singleProductIsRequired(product: Product(productId: "smaple", mainImageId: "smaple", imageIds: ["smaple"], name: "smaple", price: "smaple", location: "smaple")))
+            }
+            .disposed(by: disposeBag)
         
         return output
     }

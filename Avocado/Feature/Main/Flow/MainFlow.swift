@@ -40,6 +40,8 @@ final class MainFlow: Flow {
             return .none
         case .tokenGetComplete:
             return .none
+        case .singleProductIsRequired(let product):
+            return navigateToSingleProductScreen(product: product)
         }
     }
     
@@ -72,6 +74,15 @@ final class MainFlow: Flow {
         rootViewController.setViewControllers([viewController], animated: false)
         
         return .one(flowContributor: .contribute(withNext: viewController))
+    }
+    
+    private func navigateToSingleProductScreen(product: Product) -> FlowContributors {
+        let service = MainService()
+        let viewModel = SingleProductVM(service: service, product: product)
+        let viewController = SingleProductVC(viewModel: viewModel)
+        
+        rootViewController.pushViewController(viewController, animated: true)
+        return .one(flowContributor: .contribute(withNextPresentable: viewController, withNextStepper: viewModel))
     }
 }
 

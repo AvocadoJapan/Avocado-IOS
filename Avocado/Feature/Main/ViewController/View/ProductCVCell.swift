@@ -1,5 +1,7 @@
 import UIKit
 import RxSwift
+import RxRelay
+import RxCocoa
 
 /**
  * ##화면 명: 상품 셀
@@ -7,8 +9,17 @@ import RxSwift
 final class ProductCVCell: UICollectionViewCell, CollectionCellIdentifierable {
     typealias T = Product
     static var identifier: String = "ProductCC"
-    var onData: AnyObserver<Product>
+
     var disposeBag = DisposeBag()
+    
+    let productSelectedRelay = PublishRelay<Void>()
+    
+    private var product: Product?
+//    
+//    private var title: String?
+//    private var price: String?
+//    private var location: String?
+//    private var productId: String?
     
     private lazy var productImageView = UIImageView().then {
         $0.backgroundColor = .systemGray6
@@ -17,31 +28,31 @@ final class ProductCVCell: UICollectionViewCell, CollectionCellIdentifierable {
         $0.contentMode = .scaleAspectFill
         $0.image = UIImage(named: "demo_product")
     }
-    private lazy var productNameLabel = UILabel().then {
-        $0.text = "아이패드 프로 12.9 5세대"
+    private lazy var productTitleLabel = UILabel().then {
+        $0.text = product?.name
         $0.textColor = .darkGray
         $0.numberOfLines = 2
         $0.font = UIFont.systemFont(ofSize: 12, weight: .semibold)
     }
     private lazy var priceLabel = UILabel().then {
-        $0.text = "123,456원"
+        $0.text = product?.price
         $0.font = UIFont.systemFont(ofSize: 14, weight: .bold)
     }
     private lazy var locationLabel = UILabel().then {
-        $0.text = "영등포구 여의동"
+        $0.text = product?.location
         $0.font = UIFont.boldSystemFont(ofSize: 12)
         $0.textColor = .lightGray
     }
     
     override init(frame: CGRect) {
-        let cellData = PublishSubject<Product>()
-        onData = cellData.asObserver()
-        
+
         super.init(frame: frame)
         setLayout()
         setConstraints()
         setProperties()
-        bindUI(cellData)
+        
+        let tapRecognizer = UITapGestureRecognizer(target: self, action: #selector(handleTap))
+        self.addGestureRecognizer(tapRecognizer)
     }
     
     required init?(coder: NSCoder) {
@@ -49,7 +60,7 @@ final class ProductCVCell: UICollectionViewCell, CollectionCellIdentifierable {
     }
     
     private func setLayout() {
-        [productImageView, productNameLabel, priceLabel, locationLabel].forEach { addSubview($0) }
+        [productImageView, productTitleLabel, priceLabel, locationLabel].forEach { addSubview($0) }
     }
     
     private func setConstraints() {
@@ -58,7 +69,7 @@ final class ProductCVCell: UICollectionViewCell, CollectionCellIdentifierable {
             $0.height.equalTo(productImageView.snp.width)
         }
         
-        productNameLabel.snp.makeConstraints {
+        productTitleLabel.snp.makeConstraints {
             $0.top.equalTo(priceLabel.snp.bottom).offset(5)
             $0.left.right.equalTo(productImageView)
         }
@@ -69,28 +80,34 @@ final class ProductCVCell: UICollectionViewCell, CollectionCellIdentifierable {
         }
         
         locationLabel.snp.makeConstraints {
-            $0.top.equalTo(productNameLabel.snp.bottom).offset(5)
+            $0.top.equalTo(productTitleLabel.snp.bottom).offset(5)
             $0.left.right.equalTo(productImageView)
             $0.bottom.equalToSuperview()
         }
     }
     
     private func setProperties() {
-        productNameLabel.setContentHuggingPriority(.defaultHigh, for: .vertical)
+        productTitleLabel.setContentHuggingPriority(.defaultHigh, for: .vertical)
         priceLabel.setContentHuggingPriority(.defaultHigh, for: .vertical)
         locationLabel.setContentHuggingPriority(.defaultLow, for: .vertical)
     }
-
-    private func bindUI(_ cellData: PublishSubject<Product>) {
-        cellData
-            .observe(on: MainScheduler.instance)
-            .subscribe(onNext: { [weak self] data in
-                self?.productNameLabel.text = data.name
-                self?.productImageView.image = UIImage(named: data.imageId)
-                self?.locationLabel.text = data.location
-                self?.priceLabel.text = data.price
-            })
-            .disposed(by: disposeBag)
+    
+    func config(product: Product) {
+        self.product = product
+        
+//        productTitleLabel.text = product.name
+//        // FIXME: 나중에 실제 image 로 대치해야함
+////        productImageView.image = product?.name
+//        locationLabel.text = product.name
+//        priceLabel.text = product.price
+    }
+    
+    @objc private func handleTap() {
+       productSelectedRelay.accept(())
+   }
+    
+    override func prepareForReuse() {
+        self.product = nil
     }
 }
 

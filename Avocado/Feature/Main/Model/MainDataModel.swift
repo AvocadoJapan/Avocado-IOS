@@ -1,5 +1,5 @@
 //
-//  MainDataM.swift
+//  MainDataModel.swift
 //  Avocado
 //
 //  Created by 최현우 on 2023/06/03.
@@ -18,7 +18,7 @@ struct MainDataModel: Codable {
 struct Banner: Codable {
     let id: String
     let name: String
-    let imageId: String
+    let image: String
 }
 
 // MARK: - ProductSection
@@ -30,8 +30,9 @@ struct ProductSection: Codable {
 
 // MARK: - Product
 struct Product: Codable {
-    let productId : String
-    let imageId: String
+    let productId: String
+    let mainImageId: String
+    let imageIds: [String]
     let name: String
     let price: String
     let location: String

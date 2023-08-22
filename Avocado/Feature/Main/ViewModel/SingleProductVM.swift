@@ -17,19 +17,14 @@ final class SingleProductVM: ViewModelType, Stepper {
     
     // 서비스를 제공하는 인스턴스
     let service: MainService
-    let user: User
     let product: Product
     
     private(set) var input: Input
 //    private(set) var output: Output
     
     struct Input {
-        // 배너 클릭 이벤트 인스턴스
-        let actionBannerRelay = PublishRelay<Banner>()
-        // 메인카테고리 메뉴 클릭 이벤트 인스턴스
-        let actionMainCategoryRelay = PublishRelay<Category>()
-        // 단일상품 클릭 이벤트 인스턴스
-        let actionSingleProductRelay = PublishRelay<Product>()
+        // viewDidLoad를 감지하는 인스턴스 (초기 data fetching 에 사용)
+        let actionViewDidLoad = PublishRelay<Void>()
     }
     
     struct Output {
@@ -38,9 +33,8 @@ final class SingleProductVM: ViewModelType, Stepper {
     }
     
     // 생성자
-    init(service: MainService, user: User, product: Product) {
+    init(service: MainService, product: Product) {
         self.service = service
-        self.user = user
         self.product = product
         
         input = Input()
