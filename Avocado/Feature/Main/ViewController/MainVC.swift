@@ -15,7 +15,7 @@ import RxCocoa
 /**
  *##화면 명: Avocado 메인화면 (배너, 카테고리 별 상품 정보를 확인가능)
  */
-final class MainVC: BaseVC, UICollectionViewDelegate{
+final class MainVC: BaseVC {
     
     private var viewModel: MainVM
     
@@ -42,16 +42,16 @@ final class MainVC: BaseVC, UICollectionViewDelegate{
     }
     
     
-//    private lazy var mainCategoryCVLayout = UICollectionViewFlowLayout().then {
-//        $0.scrollDirection = .horizontal
-//        $0.minimumLineSpacing = 10
-//        $0.sectionInset = UIEdgeInsets(top: 0, left: 7, bottom: 0, right: 7)
-//    }
-//    private lazy var mainCategoryCV = UICollectionView(frame: .zero, collectionViewLayout: self.mainCategoryCVLayout).then {
-//        $0.showsHorizontalScrollIndicator = false
-//        $0.isPagingEnabled = true
-//        $0.backgroundColor = .clear
-//    }
+    private lazy var mainCategoryCVLayout = UICollectionViewFlowLayout().then {
+        $0.scrollDirection = .horizontal
+        $0.minimumLineSpacing = 10
+        $0.sectionInset = UIEdgeInsets(top: 0, left: 7, bottom: 0, right: 7)
+    }
+    private lazy var mainCategoryCV = UICollectionView(frame: .zero, collectionViewLayout: self.mainCategoryCVLayout).then {
+        $0.showsHorizontalScrollIndicator = false
+        $0.isPagingEnabled = true
+        $0.backgroundColor = .clear
+    }
     
     private lazy var productGroupCVLayout = UICollectionViewFlowLayout().then {
         $0.scrollDirection = .vertical
@@ -86,19 +86,15 @@ final class MainVC: BaseVC, UICollectionViewDelegate{
         
         navigationController?.setupNavbar(with: "Avocado Beta", logoImage: UIImage(systemName: "apple.logo"))
         
-        // Configure Banner Collection View
-//        bannerCV.delegate = self
-//        bannerCV.dataSource = self
+
+        
+        // Configure Main Category Collection View
+        mainCategoryCV.delegate = self
+        mainCategoryCV.dataSource = self
+        mainCategoryCV.register(MainSubMenuCVCell.self, forCellWithReuseIdentifier: MainSubMenuCVCell.identifier)
+        
+
         bannerCV.register(BannerCVCell.self, forCellWithReuseIdentifier: BannerCVCell.identifier)
-        
-//        // Configure Main Category Collection View
-//        mainCategoryCV.delegate = self
-//        mainCategoryCV.dataSource = self
-//        mainCategoryCV.register(MainSubMenuCVCell.self, forCellWithReuseIdentifier: MainSubMenuCVCell.identifier)
-        
-//        // Configure Product Group  Collection View
-//        productGroupCV.delegate = self
-//        productGroupCV.dataSource = self
         productGroupCV.register(ProductGroupCVCell.self, forCellWithReuseIdentifier: ProductGroupCVCell.identifier)
     }
     
@@ -106,7 +102,7 @@ final class MainVC: BaseVC, UICollectionViewDelegate{
         view.addSubview(scrollView)
         scrollView.addSubview(stackView)
         
-        [bannerCV, productGroupCV, legalView].forEach {
+        [bannerCV, mainCategoryCV, productGroupCV, legalView].forEach {
             stackView.addArrangedSubview($0)
         }
     }
@@ -122,16 +118,16 @@ final class MainVC: BaseVC, UICollectionViewDelegate{
         }
         
         productGroupCV.snp.makeConstraints {
-             $0.height.equalTo(540 * 3 + 20)
+             $0.height.equalTo(540 * 4 + 30)
          }
         
         bannerCV.snp.makeConstraints {
             $0.height.equalTo(300)
         }
         
-//        mainCategoryCV.snp.makeConstraints {
-//            $0.height.equalTo(75)
-//        }
+        mainCategoryCV.snp.makeConstraints {
+            $0.height.equalTo(75)
+        }
         
         legalView.snp.makeConstraints {
             $0.horizontalEdges.equalToSuperview()
@@ -144,12 +140,6 @@ final class MainVC: BaseVC, UICollectionViewDelegate{
         
         productGroupCV.rx.setDelegate(self).disposed(by: disposeBag)
         bannerCV.rx.setDelegate(self).disposed(by: disposeBag)
-        
-//        output.productSectionDataPublish
-//            .subscribe { product in
-//                Logger.d(product)
-//            }
-//            .disposed(by: disposeBag)
         
         output.productSectionDataPublish
             .bind(to: productGroupCV.rx.items(cellIdentifier: ProductGroupCVCell.identifier, cellType: ProductGroupCVCell.self)) { index, model, cell in
@@ -186,12 +176,33 @@ extension MainVC: UICollectionViewDelegateFlowLayout {
         if collectionView == bannerCV {
             return collectionView.frame.size
         }
-        // else if collectionView == mainCategoryCV {
-        //     return CGSize(width: 60, height: 75)
-        // }
+         else if collectionView == mainCategoryCV {
+             return CGSize(width: 60, height: 75)
+         }
         else {
             return CGSize(width: collectionView.frame.width, height: 540)
         }
+    }
+}
+
+extension MainVC: UICollectionViewDelegate, UICollectionViewDataSource{
+    
+    // 아래는 MainSubMenuCVCell만 관할
+    // 이외 collectionView는 RX를 이용하여 처리
+    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        return MainSubMenuType.count
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: MainSubMenuCVCell.identifier, for: indexPath) as! MainSubMenuCVCell
+        
+        // MainSubMenuType 열거형에서 해당 indexPath에 맞는 케이스를 가져옵니다.
+        let menuType = MainSubMenuType.allCases[indexPath.item]
+        
+        // 셀을 해당 데이터로 구성합니다.
+        cell.configure(imageName: menuType.imageName, title: menuType.title, navigateTo: menuType.navigateTo)
+        
+        return cell
     }
 }
 

@@ -61,7 +61,7 @@ extension MainAPI: BaseTarget {
                                 "imageIds": ["sample1", "sample2"],
                                 "name": "맥북 프로 M2Pro 14인치 기본형",
                                 "price": "1,700,000원",
-                                "location": "서울시 종로구"
+                                "location": "종로구 혜화동"
                               },
                               {
                                 "productId": "random-uuid-3",
@@ -69,7 +69,7 @@ extension MainAPI: BaseTarget {
                                 "imageIds": ["sample3", "sample4"],
                                 "name": "에어팟 맥스",
                                 "price": "550,000원",
-                                "location": "서울시 노원구"
+                                "location": "중구 중림동"
                               },
                               {
                                 "productId": "random-uuid-5",
@@ -77,7 +77,7 @@ extension MainAPI: BaseTarget {
                                 "imageIds": ["sample5", "sample6"],
                                 "name": "아이폰 12프로 기본형",
                                 "price": "800,000원",
-                                "location": "서울시 영등포구"
+                                "location": "동대문구 용산동"
                               },
                               {
                                 "productId": "random-uuid-7",
@@ -85,7 +85,7 @@ extension MainAPI: BaseTarget {
                                 "imageIds": ["sample1", "sample2"],
                                 "name": "아이패드 프로 12.9인치 2022년형",
                                 "price": "890,000원",
-                                "location": "서울시 서초구"
+                                "location": "동대문구 제기동"
                               },
                               {
                                 "productId": "random-uuid-9",
@@ -93,7 +93,7 @@ extension MainAPI: BaseTarget {
                                 "imageIds": ["sample7", "sample8"],
                                 "name": "소니 카메라",
                                 "price": "500,000원",
-                                "location": "서울시 강남구"
+                                "location": "강북구 미아동"
                               },
                               {
                                 "productId": "random-uuid-11",
@@ -101,13 +101,67 @@ extension MainAPI: BaseTarget {
                                 "imageIds": ["sample1", "sample2"],
                                 "name": "브라이틀링 콜트 오토메틱 시계",
                                 "price": "170,000원",
-                                "location": "서울시 중량구"
+                                "location": "마포구 신수동"
                               }
                             ]
                           },
                           {
                             "id": "f261ca49-a07c-4eab-a417-c2233ec3ff65",
-                            "name": "애플 인기 상품",
+                            "name": "내 주변 인기 상품",
+                            "products": [
+                              {
+                                "productId": "random-uuid-13",
+                                "mainImageId": "random-uuid-14",
+                                "imageIds": ["sample9", "sample10"],
+                                "name": "초소형 믹서기",
+                                "price": "1,120,000원",
+                                "location": "구로구 신도림동"
+                              },
+                              {
+                                "productId": "random-uuid-15",
+                                "mainImageId": "random-uuid-16",
+                                "imageIds": ["sample11", "sample12"],
+                                "name": "다이슨 청소기",
+                                "price": "299,000원",
+                                "location": "양천구 목2동"
+                              },
+                              {
+                                "productId": "random-uuid-17",
+                                "mainImageId": "random-uuid-18",
+                                "imageIds": ["sample13", "sample14"],
+                                "name": "나이키 범고래 신발",
+                                "price": "110,000원",
+                                "location": "강남구 대치1동"
+                              },
+                              {
+                                "productId": "random-uuid-19",
+                                "mainImageId": "random-uuid-20",
+                                "imageIds": ["sample15", "sample16"],
+                                "name": "샤오미 가습기",
+                                "price": "134,000원",
+                                "location": "강남구 대치2동"
+                              },
+                              {
+                                "productId": "random-uuid-21",
+                                "mainImageId": "random-uuid-22",
+                                "imageIds": ["sample17", "sample18"],
+                                "name": "비스포크 냉장고",
+                                "price": "990,000원",
+                                "location": "강남구 청담동"
+                              },
+                              {
+                                "productId": "random-uuid-23",
+                                "mainImageId": "random-uuid-24",
+                                "imageIds": ["sample19", "sample20"],
+                                "name": "닌텐도 스위치",
+                                "price": "415,000원",
+                                "location": "서초구 반포1동"
+                              }
+                            ]
+                          },
+                          {
+                            "id": "f261ca49-a07c-4eab-a417-c2233ec3ff65",
+                            "name": "애플 제품 모음전",
                             "products": [
                               {
                                 "productId": "random-uuid-13",
@@ -115,7 +169,7 @@ extension MainAPI: BaseTarget {
                                 "imageIds": ["sample9", "sample10"],
                                 "name": "맥북 프로 14인치 32기가 CTO모델",
                                 "price": "1,120,000원",
-                                "location": "서울시 종로구"
+                                "location": "구로구 신도림동"
                               },
                               {
                                 "productId": "random-uuid-15",
@@ -123,7 +177,7 @@ extension MainAPI: BaseTarget {
                                 "imageIds": ["sample11", "sample12"],
                                 "name": "아이폰 13프로",
                                 "price": "680,000원",
-                                "location": "부산"
+                                "location": "양천구 목2동"
                               },
                               {
                                 "productId": "random-uuid-17",
@@ -131,7 +185,7 @@ extension MainAPI: BaseTarget {
                                 "imageIds": ["sample13", "sample14"],
                                 "name": "아이폰 12프로 급처",
                                 "price": "540,000원",
-                                "location": "서울"
+                                "location": "강남구 대치1동"
                               },
                               {
                                 "productId": "random-uuid-19",
@@ -139,7 +193,7 @@ extension MainAPI: BaseTarget {
                                 "imageIds": ["sample15", "sample16"],
                                 "name": "아이패드 프로 128기가 3세대",
                                 "price": "820,000원",
-                                "location": "인천"
+                                "location": "강남구 대치2동"
                               },
                               {
                                 "productId": "random-uuid-21",
@@ -147,7 +201,7 @@ extension MainAPI: BaseTarget {
                                 "imageIds": ["sample17", "sample18"],
                                 "name": "아이팟 클래식 새제품 미개봉",
                                 "price": "80,000원",
-                                "location": "대구"
+                                "location": "강남구 청담동"
                               },
                               {
                                 "productId": "random-uuid-23",
@@ -155,7 +209,7 @@ extension MainAPI: BaseTarget {
                                 "imageIds": ["sample19", "sample20"],
                                 "name": "맥북 에어 13인치 M2 영문자판",
                                 "price": "800,000원",
-                                "location": "광주"
+                                "location": "서초구 반포1동"
                               }
                             ]
                           },
@@ -185,7 +239,7 @@ extension MainAPI: BaseTarget {
                                 "imageIds": ["sample25", "sample26"],
                                 "name": "까르띠에 발롱블루 42미리 자동시계",
                                 "price": "4,020,000원",
-                                "location": "서울시 강남구"
+                                "location": "송파구 마천2동"
                               },
                               {
                                 "productId": "random-uuid-31",
@@ -201,7 +255,7 @@ extension MainAPI: BaseTarget {
                                 "imageIds": ["sample1", "sample2"],
                                 "name": "국정원 절대시계",
                                 "price": "102,000원",
-                                "location": "대구시 유성구"
+                                "location": "강동구 상일동"
                               },
                               {
                                 "productId": "random-uuid-35",
@@ -209,7 +263,7 @@ extension MainAPI: BaseTarget {
                                 "imageIds": ["sample29", "sample30"],
                                 "name": "오메가 씨마스터 새제품급",
                                 "price": "7,300,500원",
-                                "location": "대전시 서구"
+                                "location": "동작구 대방동"
                               }
                             ]
                           }

@@ -92,13 +92,18 @@ final class ProductGroupCVCell: UICollectionViewCell, CollectionCellIdentifierab
 
 extension ProductGroupCVCell: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return 6 // 6개의 셀
+        return productSection?.products.count ?? 0 // 6개의 셀
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: ProductCVCell.identifier, for: indexPath) as! ProductCVCell
         
-//        cell.config(product: productSection)
+        if let product = productSection?.products[indexPath.row] {
+            cell.config(product: product)
+        } else {
+            // Handle the case where the product is nil or productSection is nil.
+            // You might want to configure the cell with some default values or handle it differently.
+        }
         
         return cell
     }

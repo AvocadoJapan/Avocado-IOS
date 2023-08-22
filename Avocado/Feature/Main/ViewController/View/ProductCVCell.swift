@@ -33,6 +33,7 @@ final class ProductCVCell: UICollectionViewCell, CollectionCellIdentifierable {
         $0.textColor = .darkGray
         $0.numberOfLines = 2
         $0.font = UIFont.systemFont(ofSize: 12, weight: .semibold)
+        $0.lineBreakMode = .byCharWrapping
     }
     private lazy var priceLabel = UILabel().then {
         $0.text = product?.price
@@ -95,11 +96,11 @@ final class ProductCVCell: UICollectionViewCell, CollectionCellIdentifierable {
     func config(product: Product) {
         self.product = product
         
-//        productTitleLabel.text = product.name
-//        // FIXME: 나중에 실제 image 로 대치해야함
-////        productImageView.image = product?.name
-//        locationLabel.text = product.name
-//        priceLabel.text = product.price
+        productTitleLabel.text = product.name
+        // FIXME: 나중에 실제 image 로 대치해야함
+//        productImageView.image = product?.name
+        locationLabel.text = product.location
+        priceLabel.text = product.price
     }
     
     @objc private func handleTap() {
