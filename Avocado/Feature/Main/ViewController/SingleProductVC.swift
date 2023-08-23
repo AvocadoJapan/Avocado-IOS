@@ -26,7 +26,7 @@ final class SingleProductVC: BaseVC {
     }
     private lazy var stackView = UIStackView().then {
         $0.axis = .vertical
-        $0.spacing = 10
+        $0.spacing = 20
     }
     
     private lazy var productImageCVLayout = UICollectionViewFlowLayout().then {
@@ -41,28 +41,109 @@ final class SingleProductVC: BaseVC {
         $0.backgroundColor = .clear
     }
     
-    private lazy var titleView = UIView().then {
-        $0.backgroundColor = .clear
+    private lazy var titleStackView = UIStackView().then {
+        $0.axis = .vertical
+        $0.spacing = 10
     }
     
     private lazy var titleLabel = UILabel().then {
-        $0.text = "아이패드 프로 12.9인치 6세대 M2 셀룰러 신품급"
+        $0.text = "아이패드 프로 6세대 11인치 128기가 셀룰러 미개봉"
+        $0.lineBreakMode = .byCharWrapping
+        $0.numberOfLines = 2
+        $0.font = .systemFont(ofSize: 22, weight: .semibold)
+        $0.textColor = .darkText
     }
+    
+    private lazy var titleSubInfoStackView = UIStackView().then {
+        $0.axis = .horizontal
+//        $0.spacing = 10
+        $0.alignment = .leading
         
+    }
+    
     private lazy var locationLabel = UILabel().then {
-        $0.text = "화성시 진안동"
+        $0.text = "경기도 화성시 진안동"
+        $0.numberOfLines = 1
+        $0.font = .systemFont(ofSize: 14, weight: .medium)
+        $0.textColor = .darkGray
+    }
+    
+    private lazy var dotLabel = UILabel().then {
+        $0.text = "・"
+        $0.numberOfLines = 1
+        $0.font = .systemFont(ofSize: 14, weight: .medium)
+        $0.textColor = .darkGray
     }
     
     private lazy var updateAtLabel = UILabel().then {
         $0.text = "20시간 전"
-    }
-    
-    private lazy var viewer = UILabel().then {
-        $0.text = "20시간 전"
+        $0.numberOfLines = 1
+        $0.font = .systemFont(ofSize: 14, weight: .medium)
+        $0.textColor = .darkGray
     }
     
     private lazy var priceLabel = UILabel().then {
-        $0.text = "1,500,000원"
+        $0.text = "1,298,000원"
+        $0.numberOfLines = 1
+        $0.font = .systemFont(ofSize: 22, weight: .semibold)
+        $0.textColor = .darkText
+    }
+    
+    private lazy var uploaderView = UIView().then {
+        $0.backgroundColor = .clear
+    }
+    
+    private lazy var starRateLabel = UILabel().then {
+        $0.text = "⭐️4.5"
+    }
+    
+    private lazy var reviewLabel = UILabel().then {
+        $0.text = "이 유저의 거래후기 345"
+    }
+    
+    private lazy var uploaderNameLabel = UILabel().then {
+        $0.text = "Amanda"
+    }
+    
+    private lazy var profileImageView = UIImageView().then {
+        $0.contentMode = .scaleAspectFill
+        $0.layer.cornerRadius = 50
+        $0.clipsToBounds = true
+        $0.backgroundColor = .systemGray5
+    }
+    
+    private lazy var bottomView = UIView().then {
+        $0.backgroundColor = .white
+    }
+    
+    
+    private lazy var buttomButtonStackView = UIStackView().then {
+        $0.axis = .horizontal
+        $0.spacing = 10
+        $0.alignment = .center
+        $0.distribution = .fillProportionally
+    }
+    private lazy var purchaseButton = BottomButton(text: "결제하기", buttonType: .primary)
+    private lazy var dmButton = BottomButton(text: "DM보내기", buttonType: .secondary)
+    
+    private lazy var descriptionStackView = UIStackView().then {
+        $0.axis = .vertical
+        $0.spacing = 10
+        $0.alignment = .leading
+    }
+    
+    private lazy var descriptionLabel = UILabel().then {
+        $0.numberOfLines = 0
+        $0.font = .systemFont(ofSize: 15, weight: .medium)
+        $0.textColor = .darkText
+        $0.text =
+        """
+        국회의원의 수는 법률로 정하되, 200인 이상으로 한다. 법률은 특별한 규정이 없는 한 공포한 날로부터 20일을 경과함으로써 효력을 발생한다. 대통령이 임시회의 집회를 요구할 때에는 기간과 집회요구의 이유를 명시하여야 한다.
+        
+        공개하지 아니한 회의내용의 공표에 관하여는 법률이 정하는 바에 의한다. 사면·감형 및 복권에 관한 사항은 법률로 정한다. 대통령은 법률에서 구체적으로 범위를 정하여 위임받은 사항과 법률을 집행하기 위하여 필요한 사항에 관하여 대통령령을 발할 수 있다.
+        
+        국가는 국민 모두의 생산 및 생활의 기반이 되는 국토의 효율적이고 균형있는 이용·개발과 보전을 위하여 법률이 정하는 바에 의하여 그에 관한 필요한 제한과 의무를 과할 수 있다.
+        """
     }
     
     private let legalView = LegalView()
@@ -79,6 +160,7 @@ final class SingleProductVC: BaseVC {
     override func setViewDidLoad() {
         // 초기 메인데이터 API call]
         viewModel.input.actionViewDidLoad.accept(())
+//        scrollView.refreshControl = refreshControl
     }
     
     override func setProperty() {
@@ -94,16 +176,52 @@ final class SingleProductVC: BaseVC {
     
     override func setLayout() {
         view.addSubview(scrollView)
+        view.addSubview(bottomView)
         scrollView.addSubview(stackView)
         
-        [productImageCV, legalView].forEach {
+        [dmButton, purchaseButton].forEach {
+            buttomButtonStackView.addArrangedSubview($0)
+        }
+        
+        bottomView.addSubview(buttomButtonStackView)
+        
+        [productImageCV, titleStackView, descriptionStackView, legalView].forEach {
             stackView.addArrangedSubview($0)
+        }
+        
+        [titleLabel, titleSubInfoStackView, priceLabel].forEach {
+            titleStackView.addArrangedSubview($0)
+        }
+        
+        [locationLabel, dotLabel, updateAtLabel].forEach {
+            titleSubInfoStackView.addArrangedSubview($0)
+        }
+        
+        [locationLabel, dotLabel, updateAtLabel].forEach {
+            titleSubInfoStackView.addArrangedSubview($0)
+        }
+        
+        [descriptionLabel].forEach {
+            descriptionStackView.addArrangedSubview($0)
         }
     }
     
     override func setConstraint() {
+        buttomButtonStackView.snp.makeConstraints {
+            $0.right.equalToSuperview().inset(10)
+            $0.verticalEdges.equalToSuperview()
+            $0.width.equalTo(250)
+        }
+        
+
         scrollView.snp.makeConstraints {
             $0.edges.equalToSuperview()
+        }
+        
+        bottomView.snp.makeConstraints {
+            $0.height.equalTo(70)
+            $0.horizontalEdges.equalToSuperview()
+            $0.bottom.equalToSuperview()
         }
         
         stackView.snp.makeConstraints {
@@ -119,8 +237,15 @@ final class SingleProductVC: BaseVC {
             $0.horizontalEdges.equalToSuperview()
             $0.height.equalTo(250)
         }
+        
+        titleStackView.snp.makeConstraints {
+            $0.horizontalEdges.equalToSuperview().inset(20)
+        }
+        
+        descriptionStackView.snp.makeConstraints {
+            $0.horizontalEdges.equalToSuperview().inset(20)
+        }
     }
-    
 }
 
 extension SingleProductVC: UICollectionViewDelegate, UICollectionViewDataSource{
