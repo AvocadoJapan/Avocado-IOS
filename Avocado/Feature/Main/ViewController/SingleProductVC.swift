@@ -237,6 +237,7 @@ final class SingleProductVC: BaseVC {
         }
         
         productImageCV.snp.makeConstraints {
+            $0.horizontalEdges.equalToSuperview()
             $0.height.equalTo(productImageCV.snp.width)
         }
         
@@ -273,8 +274,16 @@ extension SingleProductVC: UICollectionViewDelegateFlowLayout {
     }
 }
 
-extension SingleProductVC: UIScrollViewDelegate{
-    
+extension SingleProductVC: UIScrollViewDelegate {
+    // MARK: - UIScrollViewDelegate
+    func scrollViewDidScroll(_ scrollView: UIScrollView) {
+        let yOffset = scrollView.contentOffset.y
+        if yOffset > 200 {
+            navigationController?.setNavigationBarHidden(false, animated: true) // 네비게이션바 표시
+        } else {
+            navigationController?.setNavigationBarHidden(true, animated: true) // 네비게이션바 숨기기
+        }
+    }
 }
 
 #if DEBUG && canImport(SwiftUI)
