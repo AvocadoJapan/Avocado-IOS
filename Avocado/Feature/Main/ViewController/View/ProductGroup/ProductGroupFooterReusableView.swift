@@ -18,10 +18,23 @@ final class ProductGroupFooterReusableView: UICollectionReusableView {
     
     static var identifier = "ProductGroupFooterRV"
     
+    private lazy var moreButton = UIButton().then {
+        $0.setTitle("더보기", for: .normal)
+        $0.titleLabel?.font = UIFont.boldSystemFont(ofSize: 14)
+        $0.setTitleColor(UIColor.white, for: .normal)
+        $0.backgroundColor = .black
+        $0.layer.cornerRadius = 10
+        $0.layer.masksToBounds = true
+    }
+    
     private let disposeBag = DisposeBag()
     
     override init(frame: CGRect) {
         super.init(frame: frame)
+        
+        moreButton.snp.makeConstraints {
+            $0.edges.equalToSuperview()
+        }
     }
     
     required init?(coder: NSCoder) {

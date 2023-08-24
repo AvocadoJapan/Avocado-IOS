@@ -50,15 +50,16 @@ enum ButtonColorType {
     var tintColor: UIColor {
         switch self {
         case .primary: return .white
-        case .secondary, .warning, .info: return .black
+        case .warning, .info: return .black
         case .success, .danger: return .white
+        case .secondary: return .white
         }
     }
 
     var bgColor: UIColor {
         switch self {
         case .primary, .danger, .warning: return .black
-        case .secondary: return .white
+        case .secondary: return .darkGray
         case .success: return .systemBlue
         case .info: return .systemCyan
         }

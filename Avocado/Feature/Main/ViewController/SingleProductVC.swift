@@ -50,7 +50,7 @@ final class SingleProductVC: BaseVC {
         $0.text = "아이패드 프로 6세대 11인치 128기가 셀룰러 미개봉"
         $0.lineBreakMode = .byCharWrapping
         $0.numberOfLines = 2
-        $0.font = .systemFont(ofSize: 22, weight: .semibold)
+        $0.font = .systemFont(ofSize: 20, weight: .semibold)
         $0.textColor = .darkText
     }
     
@@ -64,28 +64,28 @@ final class SingleProductVC: BaseVC {
     private lazy var locationLabel = UILabel().then {
         $0.text = "경기도 화성시 진안동"
         $0.numberOfLines = 1
-        $0.font = .systemFont(ofSize: 14, weight: .medium)
+        $0.font = .systemFont(ofSize: 13, weight: .medium)
         $0.textColor = .darkGray
     }
     
     private lazy var dotLabel = UILabel().then {
         $0.text = "・"
         $0.numberOfLines = 1
-        $0.font = .systemFont(ofSize: 14, weight: .medium)
+        $0.font = .systemFont(ofSize: 13, weight: .medium)
         $0.textColor = .darkGray
     }
     
     private lazy var updateAtLabel = UILabel().then {
         $0.text = "20시간 전"
         $0.numberOfLines = 1
-        $0.font = .systemFont(ofSize: 14, weight: .medium)
+        $0.font = .systemFont(ofSize: 13, weight: .medium)
         $0.textColor = .darkGray
     }
     
     private lazy var priceLabel = UILabel().then {
         $0.text = "1,298,000원"
         $0.numberOfLines = 1
-        $0.font = .systemFont(ofSize: 22, weight: .semibold)
+        $0.font = .systemFont(ofSize: 20, weight: .semibold)
         $0.textColor = .darkText
     }
     
@@ -134,10 +134,16 @@ final class SingleProductVC: BaseVC {
     
     private lazy var descriptionLabel = UILabel().then {
         $0.numberOfLines = 0
-        $0.font = .systemFont(ofSize: 15, weight: .medium)
+        $0.font = .systemFont(ofSize: 14, weight: .regular)
         $0.textColor = .darkText
         $0.text =
         """
+        국회의원의 수는 법률로 정하되, 200인 이상으로 한다. 법률은 특별한 규정이 없는 한 공포한 날로부터 20일을 경과함으로써 효력을 발생한다. 대통령이 임시회의 집회를 요구할 때에는 기간과 집회요구의 이유를 명시하여야 한다.
+        
+        공개하지 아니한 회의내용의 공표에 관하여는 법률이 정하는 바에 의한다. 사면·감형 및 복권에 관한 사항은 법률로 정한다. 대통령은 법률에서 구체적으로 범위를 정하여 위임받은 사항과 법률을 집행하기 위하여 필요한 사항에 관하여 대통령령을 발할 수 있다.
+        
+        국가는 국민 모두의 생산 및 생활의 기반이 되는 국토의 효율적이고 균형있는 이용·개발과 보전을 위하여 법률이 정하는 바에 의하여 그에 관한 필요한 제한과 의무를 과할 수 있다.
+        
         국회의원의 수는 법률로 정하되, 200인 이상으로 한다. 법률은 특별한 규정이 없는 한 공포한 날로부터 20일을 경과함으로써 효력을 발생한다. 대통령이 임시회의 집회를 요구할 때에는 기간과 집회요구의 이유를 명시하여야 한다.
         
         공개하지 아니한 회의내용의 공표에 관하여는 법률이 정하는 바에 의한다. 사면·감형 및 복권에 관한 사항은 법률로 정한다. 대통령은 법률에서 구체적으로 범위를 정하여 위임받은 사항과 법률을 집행하기 위하여 필요한 사항에 관하여 대통령령을 발할 수 있다.
@@ -165,15 +171,8 @@ final class SingleProductVC: BaseVC {
 //        scrollView.refreshControl = refreshControl
     }
     
-    override func viewWillAppear(_ animated: Bool) {
-//        self.navigationController?.isNavigationBarHidden = false
-        self.navigationController?.setNavigationBarHidden(false, animated: true)
-    }
-    
     override func setProperty() {
         view.backgroundColor = .white
-        navigationController?.setNavigationBarHidden(true, animated: true)
-        navigationController?.setupNavbar(with: "Avocado Beta", logoImage: UIImage(systemName: "apple.logo"))
         
         // Configure productImageCV
         productImageCV.delegate = self
@@ -216,7 +215,7 @@ final class SingleProductVC: BaseVC {
     override func setConstraint() {
         buttomButtonStackView.snp.makeConstraints {
             $0.right.equalToSuperview().inset(10)
-            $0.verticalEdges.equalToSuperview()
+            $0.bottom.equalTo(self.view.safeAreaLayoutGuide.snp.bottom)
             $0.width.equalTo(250)
         }
         
@@ -226,7 +225,7 @@ final class SingleProductVC: BaseVC {
         }
         
         bottomView.snp.makeConstraints {
-            $0.height.equalTo(70)
+            $0.height.equalTo(100)
             $0.horizontalEdges.equalToSuperview()
             $0.bottom.equalToSuperview()
         }
@@ -278,7 +277,7 @@ extension SingleProductVC: UIScrollViewDelegate {
     // MARK: - UIScrollViewDelegate
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
         let yOffset = scrollView.contentOffset.y
-        if yOffset > 200 {
+        if yOffset > 50 {
             navigationController?.setNavigationBarHidden(false, animated: true) // 네비게이션바 표시
         } else {
             navigationController?.setNavigationBarHidden(true, animated: true) // 네비게이션바 숨기기

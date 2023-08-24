@@ -11,6 +11,7 @@ import SnapKit
 import RxSwift
 import RxRelay
 import RxCocoa
+import RxDataSources
 
 /**
  *##화면 명: Avocado 메인화면 (배너, 카테고리 별 상품 정보를 확인가능)
@@ -91,10 +92,13 @@ final class MainVC: BaseVC {
         mainCategoryCV.delegate = self
         mainCategoryCV.dataSource = self
         mainCategoryCV.register(MainSubMenuCVCell.self, forCellWithReuseIdentifier: MainSubMenuCVCell.identifier)
-        
 
         bannerCV.register(BannerCVCell.self, forCellWithReuseIdentifier: BannerCVCell.identifier)
-        productGroupCV.register(ProductGroupCVCell.self, forCellWithReuseIdentifier: ProductGroupCVCell.identifier)
+        
+        // productGroupCV 셀등록 및 푸터 헤더 등록
+        productGroupCV.register(ProductCVCell.self, forCellWithReuseIdentifier: ProductCVCell.identifier)
+        productGroupCV.register(ProductGroupFooterReusableView.self, forSupplementaryViewOfKind: UICollectionView.elementKindSectionFooter, withReuseIdentifier: ProductGroupFooterReusableView.identifier)
+        productGroupCV.register(ProductGroupHeaderReusableView.self, forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier: ProductGroupHeaderReusableView.identifier)
     }
     
     override func setLayout() {
@@ -142,7 +146,8 @@ final class MainVC: BaseVC {
         bannerCV.rx.setDelegate(self).disposed(by: disposeBag)
         
         output.productSectionDataPublish
-            .bind(to: productGroupCV.rx.items(cellIdentifier: ProductGroupCVCell.identifier, cellType: ProductGroupCVCell.self)) { index, model, cell in
+            .bind(to: productGroupCV.rx.items(cellIdentifier: ProductCVCell.identifier, cellType: ProductCVCell.self)) { index, model, cell in
+                
                 cell.config(productSection: model)
                 Logger.d(model)
             }
