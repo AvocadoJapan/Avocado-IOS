@@ -55,8 +55,7 @@ final class MainVC: BaseVC {
     
     private lazy var productGroupCVLayout = UICollectionViewFlowLayout().then {
         $0.scrollDirection = .vertical
-        $0.minimumLineSpacing = 10
-        $0.sectionInset = UIEdgeInsets(top: 0, left: 7, bottom: 0, right: 7)
+        $0.minimumLineSpacing = 5
     }
     private lazy var productGroupCV = UICollectionView(frame: .zero, collectionViewLayout: self.productGroupCVLayout).then {
         $0.showsVerticalScrollIndicator = false
@@ -118,7 +117,8 @@ final class MainVC: BaseVC {
         }
         
         productGroupCV.snp.makeConstraints {
-             $0.height.equalTo(540 * 4 + 30)
+            $0.horizontalEdges.equalToSuperview().inset(5)
+             $0.height.equalTo(570 * 4 + 30)
          }
         
         bannerCV.snp.makeConstraints {
@@ -144,7 +144,6 @@ final class MainVC: BaseVC {
         output.productSectionDataPublish
             .bind(to: productGroupCV.rx.items(cellIdentifier: ProductGroupCVCell.identifier, cellType: ProductGroupCVCell.self)) { index, model, cell in
                 cell.config(productSection: model)
-                
                 Logger.d(model)
             }
             .disposed(by: disposeBag)
@@ -180,7 +179,7 @@ extension MainVC: UICollectionViewDelegateFlowLayout {
              return CGSize(width: 60, height: 75)
          }
         else {
-            return CGSize(width: collectionView.frame.width, height: 540)
+            return CGSize(width: collectionView.frame.width, height: 570)
         }
     }
 }

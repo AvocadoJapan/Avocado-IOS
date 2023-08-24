@@ -151,6 +151,8 @@ final class SingleProductVC: BaseVC {
     init(viewModel: SingleProductVM) {
         self.viewModel = viewModel
         super.init(nibName: nil, bundle: nil)
+        
+//        self.navigationController?.isNavigationBarHidden = false
     }
     
     required init?(coder: NSCoder) {
@@ -161,6 +163,11 @@ final class SingleProductVC: BaseVC {
         // 초기 메인데이터 API call]
         viewModel.input.actionViewDidLoad.accept(())
 //        scrollView.refreshControl = refreshControl
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+//        self.navigationController?.isNavigationBarHidden = false
+        self.navigationController?.setNavigationBarHidden(false, animated: true)
     }
     
     override func setProperty() {

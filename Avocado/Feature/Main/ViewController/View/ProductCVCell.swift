@@ -15,18 +15,18 @@ final class ProductCVCell: UICollectionViewCell, CollectionCellIdentifierable {
     let productSelectedRelay = PublishRelay<Void>()
     
     private var product: Product?
-//    
-//    private var title: String?
-//    private var price: String?
-//    private var location: String?
-//    private var productId: String?
     
     private lazy var productImageView = UIImageView().then {
-        $0.backgroundColor = .systemGray6
+//        $0.backgroundColor = .systemGray6
+        $0.backgroundColor = [
+            .systemRed, .systemBlue, .systemGreen, .systemYellow,
+            .systemOrange, .systemPurple, .systemPink, .systemTeal,
+            .systemGray, .systemIndigo
+        ].randomElement()
         $0.layer.cornerRadius = 10
         $0.layer.masksToBounds = true
         $0.contentMode = .scaleAspectFill
-        $0.image = UIImage(named: "demo_product")
+//        $0.image = UIImage(named: "demo_product")
     }
     private lazy var productTitleLabel = UILabel().then {
         $0.text = product?.name
@@ -83,7 +83,6 @@ final class ProductCVCell: UICollectionViewCell, CollectionCellIdentifierable {
         locationLabel.snp.makeConstraints {
             $0.top.equalTo(productTitleLabel.snp.bottom).offset(5)
             $0.left.right.equalTo(productImageView)
-            $0.bottom.equalToSuperview()
         }
     }
     
@@ -105,6 +104,10 @@ final class ProductCVCell: UICollectionViewCell, CollectionCellIdentifierable {
     
     @objc private func handleTap() {
        productSelectedRelay.accept(())
+        
+        let sendData : [String: Any] = ["productId": self.product?.productId ?? ""]
+        
+        NotificationCenter.default.post(name: .productItemClickEvent, object: nil, userInfo: sendData)
    }
     
     override func prepareForReuse() {
@@ -120,3 +123,8 @@ struct ProductCCPreview: PreviewProvider {
     }
 }
 #endif
+
+extension Notification.Name {
+    /// 상품아이템 클릭 이벤트
+    static let productItemClickEvent = Notification.Name("AvocadoProductItemClickEvent")
+}

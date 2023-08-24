@@ -125,9 +125,10 @@ final class LoginVC: BaseVC {
     override func bindUI() {
         emailInput
             .userInput
-            .subscribe(onNext: { [weak self] text in
-                self?.viewModel.emailBehavior.accept(text)
-            })
+            .bind(to: self.viewModel.emailBehavior)
+//            .subscribe(onNext: { [weak self] text in
+//                self?.viewModel.emailBehavior.accept(text)
+//            })
             .disposed(by: disposeBag)
         
         passwordInput
