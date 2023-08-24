@@ -6,6 +6,7 @@
 //
 
 import RxSwift
+import RxFlow
 
 // RxFlow를 강제하는 프로토콜이 아니기 때문에 ViewModelType에는 RxFlow관련 내용을 넣지 않음.
 /**
@@ -30,7 +31,7 @@ import RxSwift
  * }
  * ```
  */
-protocol ViewModelType {
+protocol ViewModelType: Stepper {
     
     associatedtype Input
     associatedtype Output
