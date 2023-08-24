@@ -123,48 +123,34 @@ final class LoginVC: BaseVC {
     }
     
     override func bindUI() {
+        let output = viewModel.transform(input: viewModel.input)
+        
         emailInput
             .userInput
-            .bind(to: self.viewModel.emailBehavior)
-//            .subscribe(onNext: { [weak self] text in
-//                self?.viewModel.emailBehavior.accept(text)
-//            })
+            .bind(to: viewModel.input.emailBehavior)
             .disposed(by: disposeBag)
         
         passwordInput
             .userInput
-            .subscribe(onNext: { [weak self] text in
-                self?.viewModel.passwordBehavior.accept(text)
-            })
+            .bind(to: viewModel.input.passwordBehavior)
             .disposed(by: disposeBag)
         
-        viewModel
-            .isValidObservable
-            .map { $0 ? .black : .lightGray}
-            .bind(to: confirmButton.rx.backgroundColor)
+        emailInput
+            .isVaild
+            .bind(to: viewModel.input.emailVaildBehavior)
             .disposed(by: disposeBag)
         
-        viewModel
-            .isValidObservable
-            .bind(to: confirmButton.rx.isEnabled)
+        passwordInput
+            .isVaild
+            .bind(to: viewModel.input.passwordVaildBehavior)
             .disposed(by: disposeBag)
         
         confirmButton
             .rx
             .tap
-            .subscribe { [weak self] _ in
-                self?.viewModel.login()
-            }
-            .disposed(by: disposeBag)
-        
-        viewModel
-            .errEventPublish
-            .asSignal()
-            .emit(onNext: { [weak self] message in
-                let alert = UIAlertController(title: "", message: message, preferredStyle: .alert)
-                alert.addAction(UIAlertAction(title: "확인", style: .default))
-                
-                self?.present(alert, animated: true)
+            .asDriver()
+            .drive(onNext: { [weak self] void in
+                self?.viewModel.input.actionLoginPublish.accept(void)
             })
             .disposed(by: disposeBag)
         
@@ -179,6 +165,34 @@ final class LoginVC: BaseVC {
             })
             .disposed(by: disposeBag)
         
+        
+        output.successEventPublish
+            .asSignal()
+            .emit(onNext: { [weak self] _ in
+                self?.viewModel.steps.accept(AuthStep.loginIsComplete)
+            })
+            .disposed(by: disposeBag)
+        
+        output.errEventPublish
+            .asSignal()
+            .emit { [weak self] err in
+                let alert = UIAlertController(title: "", message: err.errorDescription, preferredStyle: .alert)
+                alert.addAction(UIAlertAction(title: "확인", style: .default))
+                
+                self?.present(alert, animated: true)
+            }
+            .disposed(by: disposeBag)
+        
+        output
+            .confirmEnabledPublish
+            .map { $0 ? .black : .lightGray }
+            .bind(to: confirmButton.rx.backgroundColor)
+            .disposed(by: disposeBag)
+        
+        output
+            .confirmEnabledPublish
+            .bind(to: confirmButton.rx.isEnabled)
+            .disposed(by: disposeBag)
         
         //키보드 버튼 애니메이션
         RxKeyboard.instance.visibleHeight

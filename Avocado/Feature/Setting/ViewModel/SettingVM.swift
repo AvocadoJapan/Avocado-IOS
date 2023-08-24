@@ -8,10 +8,9 @@
 import Foundation
 import RxSwift
 import RxRelay
+import RxFlow
 
 final class SettingVM: ViewModelType {
-    
-    typealias Service = SettingService
     
     // 사용자 입력 정보
     struct Input {
@@ -37,6 +36,7 @@ final class SettingVM: ViewModelType {
         
     let service: SettingService
     var disposeBag = DisposeBag()
+    let steps: PublishRelay<Step> = PublishRelay()
     private(set) var input: Input // 내부에서는 get,set 외부에서는 read-only
     
     init(service: SettingService) {
