@@ -26,6 +26,10 @@ struct ProductSection: Codable {
     let id: String
     let name: String
     let products: [Product]
+    
+    func toDTO() -> ProductDataSection {
+        return ProductDataSection(header: name, items: products, productSectionId: id)
+    }
 }
 
 // MARK: - Product

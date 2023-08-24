@@ -40,7 +40,7 @@ final class MainVM: ViewModelType, Stepper {
         // 배너 정보를 전달하는 인스턴스
         let bannerSectionDataPublish = PublishRelay<[Banner]>()
         // 상품 데이터를 전달하는 인스턴스
-        let productSectionDataPublish = PublishRelay<[ProductSection]>()
+        let productSectionDataPublish = PublishRelay<[ProductDataSection]>()
         // 에러 이벤트를 전달하는 인스턴스
         let errEventPublish = PublishRelay<NetworkError>()
     }
@@ -84,7 +84,14 @@ final class MainVM: ViewModelType, Stepper {
         }
         .subscribe { mainData in
             output.bannerSectionDataPublish.accept(mainData.bannerList)
-            output.productSectionDataPublish.accept(mainData.productSection)
+            
+            var arr: [ProductDataSection] = []
+            
+            mainData.productSection.forEach { data in
+                arr.append(data.toDTO())
+            }
+            
+            output.productSectionDataPublish.accept(arr)
         } onError: { error in
             Logger.e(error)
             if let error = error as? NetworkError {

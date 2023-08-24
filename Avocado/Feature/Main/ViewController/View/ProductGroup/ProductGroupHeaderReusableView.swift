@@ -30,12 +30,19 @@ final class ProductGroupHeaderReusableView: UICollectionReusableView {
     override init(frame: CGRect) {
         super.init(frame: frame)
         
+        addSubview(titleLabel)
+        
         titleLabel.snp.makeConstraints {
-            $0.edges.equalToSuperview()
+            $0.verticalEdges.equalToSuperview()
+            $0.horizontalEdges.equalToSuperview().inset(10)
         }
     }
     
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
+    }
+    
+    func setProperty(title: String) {
+        titleLabel.text = title
     }
 }

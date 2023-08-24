@@ -56,7 +56,9 @@ final class MainVC: BaseVC {
     
     private lazy var productGroupCVLayout = UICollectionViewFlowLayout().then {
         $0.scrollDirection = .vertical
-        $0.minimumLineSpacing = 5
+//        $0.minimumLineSpacing = 5
+        
+        $0.sectionInset = UIEdgeInsets(top: 0, left: 10, bottom: 10, right: 10)
     }
     private lazy var productGroupCV = UICollectionView(frame: .zero, collectionViewLayout: self.productGroupCVLayout).then {
         $0.showsVerticalScrollIndicator = false
@@ -121,8 +123,8 @@ final class MainVC: BaseVC {
         }
         
         productGroupCV.snp.makeConstraints {
-            $0.horizontalEdges.equalToSuperview().inset(5)
-             $0.height.equalTo(570 * 4 + 30)
+//            $0.horizontalEdges.equalToSuperview().inset(10)
+            $0.height.equalTo(4000)
          }
         
         bannerCV.snp.makeConstraints {
@@ -145,13 +147,36 @@ final class MainVC: BaseVC {
         productGroupCV.rx.setDelegate(self).disposed(by: disposeBag)
         bannerCV.rx.setDelegate(self).disposed(by: disposeBag)
         
-        output.productSectionDataPublish
-            .bind(to: productGroupCV.rx.items(cellIdentifier: ProductCVCell.identifier, cellType: ProductCVCell.self)) { index, model, cell in
-                
-                cell.config(productSection: model)
-                Logger.d(model)
+        
+        
+        
+        let dataSource = RxCollectionViewSectionedReloadDataSource<ProductDataSection>(
+            configureCell: { dataSource, collectionView, indexPath, item in
+                let cell = collectionView.dequeueReusableCell(withReuseIdentifier: ProductCVCell.identifier, for: indexPath) as! ProductCVCell
+    
+                cell.config(product: item)
+                return cell
+            },
+            configureSupplementaryView: { dataSource, collectionView, kind, indexPath in
+                if kind == UICollectionView.elementKindSectionHeader {
+                    
+                    let headerView = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: ProductGroupHeaderReusableView.identifier, for: indexPath) as! ProductGroupHeaderReusableView
+                    
+                    let item = dataSource[indexPath.section].header
+                    headerView.setProperty(title: item ?? "알수없는 오류")
+                    
+                    Logger.d(item)
+                    
+                    return headerView
+                }
+                return UICollectionReusableView()  // 기본적인 reusable view를 반환합니다. 필요하다면 다른 view를 반환할 수도 있습니다.
             }
+        )
+        
+        output.productSectionDataPublish
+            .bind(to: productGroupCV.rx.items(dataSource: dataSource))
             .disposed(by: disposeBag)
+    
 
         
         output.bannerSectionDataPublish
@@ -184,7 +209,8 @@ extension MainVC: UICollectionViewDelegateFlowLayout {
              return CGSize(width: 60, height: 75)
          }
         else {
-            return CGSize(width: collectionView.frame.width, height: 570)
+            let width = collectionView.frame.width/3 - 14
+            return CGSize(width: width , height: width * 1.8)
         }
     }
 }
@@ -208,7 +234,18 @@ extension MainVC: UICollectionViewDelegate, UICollectionViewDataSource{
         
         return cell
     }
+    
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, referenceSizeForHeaderInSection section: Int) -> CGSize {
+        if collectionView == productGroupCV {
+            return CGSize(width: collectionView.frame.width, height: 60)
+        }
+        
+        return CGSize(width: 0, height: 0)
+    }
 }
+
+
+
 
 
 #if DEBUG && canImport(SwiftUI)
