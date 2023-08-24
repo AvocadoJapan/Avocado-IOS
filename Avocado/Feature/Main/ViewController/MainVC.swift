@@ -11,6 +11,7 @@ import SnapKit
 import RxSwift
 import RxRelay
 import RxCocoa
+import RxDataSources
 
 /**
  *##화면 명: Avocado 메인화면 (배너, 카테고리 별 상품 정보를 확인가능)
@@ -55,8 +56,7 @@ final class MainVC: BaseVC {
     
     private lazy var productGroupCVLayout = UICollectionViewFlowLayout().then {
         $0.scrollDirection = .vertical
-        $0.minimumLineSpacing = 10
-        $0.sectionInset = UIEdgeInsets(top: 0, left: 7, bottom: 0, right: 7)
+        $0.minimumLineSpacing = 5
     }
     private lazy var productGroupCV = UICollectionView(frame: .zero, collectionViewLayout: self.productGroupCVLayout).then {
         $0.showsVerticalScrollIndicator = false
@@ -92,10 +92,13 @@ final class MainVC: BaseVC {
         mainCategoryCV.delegate = self
         mainCategoryCV.dataSource = self
         mainCategoryCV.register(MainSubMenuCVCell.self, forCellWithReuseIdentifier: MainSubMenuCVCell.identifier)
-        
 
         bannerCV.register(BannerCVCell.self, forCellWithReuseIdentifier: BannerCVCell.identifier)
-        productGroupCV.register(ProductGroupCVCell.self, forCellWithReuseIdentifier: ProductGroupCVCell.identifier)
+        
+        // productGroupCV 셀등록 및 푸터 헤더 등록
+        productGroupCV.register(ProductCVCell.self, forCellWithReuseIdentifier: ProductCVCell.identifier)
+        productGroupCV.register(ProductGroupFooterReusableView.self, forSupplementaryViewOfKind: UICollectionView.elementKindSectionFooter, withReuseIdentifier: ProductGroupFooterReusableView.identifier)
+        productGroupCV.register(ProductGroupHeaderReusableView.self, forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier: ProductGroupHeaderReusableView.identifier)
     }
     
     override func setLayout() {
@@ -118,7 +121,8 @@ final class MainVC: BaseVC {
         }
         
         productGroupCV.snp.makeConstraints {
-             $0.height.equalTo(540 * 4 + 30)
+            $0.horizontalEdges.equalToSuperview().inset(5)
+             $0.height.equalTo(570 * 4 + 30)
          }
         
         bannerCV.snp.makeConstraints {
@@ -142,9 +146,9 @@ final class MainVC: BaseVC {
         bannerCV.rx.setDelegate(self).disposed(by: disposeBag)
         
         output.productSectionDataPublish
-            .bind(to: productGroupCV.rx.items(cellIdentifier: ProductGroupCVCell.identifier, cellType: ProductGroupCVCell.self)) { index, model, cell in
-                cell.config(productSection: model)
+            .bind(to: productGroupCV.rx.items(cellIdentifier: ProductCVCell.identifier, cellType: ProductCVCell.self)) { index, model, cell in
                 
+                cell.config(productSection: model)
                 Logger.d(model)
             }
             .disposed(by: disposeBag)
@@ -180,7 +184,7 @@ extension MainVC: UICollectionViewDelegateFlowLayout {
              return CGSize(width: 60, height: 75)
          }
         else {
-            return CGSize(width: collectionView.frame.width, height: 540)
+            return CGSize(width: collectionView.frame.width, height: 570)
         }
     }
 }

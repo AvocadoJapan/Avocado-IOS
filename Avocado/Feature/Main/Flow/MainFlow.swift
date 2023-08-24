@@ -73,7 +73,7 @@ final class MainFlow: Flow {
         
         rootViewController.setViewControllers([viewController], animated: false)
         
-        return .one(flowContributor: .contribute(withNext: viewController))
+        return .one(flowContributor: .contribute(withNextPresentable: viewController, withNextStepper: viewModel))
     }
     
     private func navigateToSingleProductScreen(product: Product) -> FlowContributors {

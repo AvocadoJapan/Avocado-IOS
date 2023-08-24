@@ -51,6 +51,21 @@ final class MainVM: ViewModelType, Stepper {
 //        self.service = service
         
         input = Input()
+        
+        NotificationCenter.default
+            .rx.notification(.productItemClickEvent)
+            .debug("productItemClickEvent 1")
+            .compactMap { noti -> String? in
+                return noti.userInfo?["productId"] as? String
+            }
+//            .flatMapLatest{
+//                
+//            }
+            .map{ MainStep.singleProductIsRequired(product: Product(productId: $0, mainImageId: "", imageIds: [], name: "", price: "", location: "")) }
+            .debug("productItemClickEvent 2")
+            .bind(to: self.steps)
+            .disposed(by: disposeBag)
+        
     }
     
     func transform(input: Input) -> Output {

@@ -18,7 +18,7 @@ final class ProductImageCVCell: UICollectionViewCell, CollectionCellIdentifierab
     
     private lazy var imageView = UIImageView().then {
         $0.backgroundColor = .systemGray6
-        $0.image = UIImage(named: "demo_product")
+        $0.image = UIImage(named: "demo_product_ipad")
         $0.contentMode = .scaleAspectFill
     }
     
