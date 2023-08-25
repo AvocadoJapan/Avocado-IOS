@@ -58,9 +58,14 @@ final class LegalView: UIView {
         //MARK: - UI 설정
         let stackView = buildStackView()
         self.addSubview(stackView)
+        
         stackView.snp.makeConstraints { make in
             make.top.equalToSuperview().inset(20)
             make.left.right.equalToSuperview().inset(10)
+        }
+        
+        self.snp.makeConstraints {
+            $0.height.equalTo(300)
         }
     }
     required init?(coder: NSCoder) {

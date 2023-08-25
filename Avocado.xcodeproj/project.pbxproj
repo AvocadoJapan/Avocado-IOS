@@ -292,7 +292,7 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		04BA131F2A2AD9FB0004E2FB /* Main */ = {
+		04BA131F2A2AD9FB0004E2FB /* Home */ = {
 			isa = PBXGroup;
 			children = (
 				B248C6A92A86C8D4006AE008 /* Service */,
@@ -301,7 +301,7 @@
 				04BA13222A2ADAB90004E2FB /* ViewModel */,
 				04BA13242A2ADAD00004E2FB /* ViewController */,
 			);
-			path = Main;
+			path = Home;
 			sourceTree = "<group>";
 		};
 		04BA13222A2ADAB90004E2FB /* ViewModel */ = {
@@ -458,7 +458,7 @@
 				B22ECA2C2A75975C00CCA794 /* AppStepper.swift */,
 				B22ECA2E2A75976500CCA794 /* AppStep.swift */,
 				B19E83252A6025A2004C5DE2 /* Auth */,
-				04BA131F2A2AD9FB0004E2FB /* Main */,
+				04BA131F2A2AD9FB0004E2FB /* Home */,
 				B19E83262A6025A6004C5DE2 /* Search */,
 				98FD1C212A56AD0F0031D7C1 /* Setting */,
 				9848A8B42A5D86E0008D43F5 /* Splash */,

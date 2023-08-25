@@ -31,9 +31,12 @@ final class ProductGroupFooterReusableView: UICollectionReusableView {
         super.init(frame: frame)
         
         addSubview(pageControl)
+
         
         pageControl.snp.makeConstraints {
-            $0.edges.equalToSuperview()
+            $0.horizontalEdges.equalToSuperview()
+            $0.top.equalToSuperview()
+            $0.height.equalTo(10)
         }
     }
     

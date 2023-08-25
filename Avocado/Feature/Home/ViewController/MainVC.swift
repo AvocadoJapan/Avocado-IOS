@@ -56,8 +56,7 @@ final class MainVC: BaseVC {
     
     private lazy var productGroupCVLayout = UICollectionViewFlowLayout().then {
         $0.scrollDirection = .vertical
-//        $0.minimumLineSpacing = 100
-        $0.sectionInset = UIEdgeInsets(top: 0, left: 10, bottom: 30, right: 10)
+        $0.sectionInset = UIEdgeInsets(top: 0, left: 10, bottom: 0, right: 10)
     }
     private lazy var productGroupCV = UICollectionView(frame: .zero, collectionViewLayout: self.productGroupCVLayout).then {
         $0.showsVerticalScrollIndicator = false
@@ -89,11 +88,12 @@ final class MainVC: BaseVC {
         
 
         
-        // Configure Main Category Collection View
+        // mainCategoryCV delegate설정, 셀등록
         mainCategoryCV.delegate = self
         mainCategoryCV.dataSource = self
         mainCategoryCV.register(MainSubMenuCVCell.self, forCellWithReuseIdentifier: MainSubMenuCVCell.identifier)
 
+        // bannerCV 셀등록
         bannerCV.register(BannerCVCell.self, forCellWithReuseIdentifier: BannerCVCell.identifier)
         
         // productGroupCV 셀등록 및 푸터 헤더 등록
@@ -122,8 +122,7 @@ final class MainVC: BaseVC {
         }
         
         productGroupCV.snp.makeConstraints {
-//            $0.horizontalEdges.equalToSuperview().inset(10)
-            $0.height.equalTo(2500)
+            $0.height.equalTo(productGroupCV.snp.width).multipliedBy(5.4)
          }
         
         bannerCV.snp.makeConstraints {
@@ -132,11 +131,6 @@ final class MainVC: BaseVC {
         
         mainCategoryCV.snp.makeConstraints {
             $0.height.equalTo(75)
-        }
-        
-        legalView.snp.makeConstraints {
-            $0.horizontalEdges.equalToSuperview()
-            $0.height.equalTo(250)
         }
     }
     
@@ -250,7 +244,7 @@ extension MainVC: UICollectionViewDelegate, UICollectionViewDataSource{
     // productGroupCV의 푸터 크기 정의
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, referenceSizeForFooterInSection section: Int) -> CGSize {
         if collectionView == productGroupCV {
-            return CGSize(width: collectionView.frame.width, height: 40)
+            return CGSize(width: collectionView.frame.width, height: 30)
         }
         
         return CGSize(width: 0, height: 0)

@@ -182,14 +182,11 @@ final class SingleProductVC: BaseVC {
     
     override func setLayout() {
         view.addSubview(scrollView)
-        view.addSubview(bottomView)
         scrollView.addSubview(stackView)
         
         [dmButton, purchaseButton].forEach {
             buttomButtonStackView.addArrangedSubview($0)
         }
-        
-        bottomView.addSubview(buttomButtonStackView)
         
         [productImageCV, titleStackView, descriptionStackView, legalView].forEach {
             stackView.addArrangedSubview($0)
@@ -213,44 +210,18 @@ final class SingleProductVC: BaseVC {
     }
     
     override func setConstraint() {
-        buttomButtonStackView.snp.makeConstraints {
-            $0.right.equalToSuperview().inset(10)
-            $0.bottom.equalTo(self.view.safeAreaLayoutGuide.snp.bottom)
-            $0.width.equalTo(250)
-        }
-        
 
         scrollView.snp.makeConstraints {
             $0.edges.equalToSuperview()
-        }
-        
-        bottomView.snp.makeConstraints {
-            $0.height.equalTo(100)
-            $0.horizontalEdges.equalToSuperview()
-            $0.bottom.equalToSuperview()
         }
         
         stackView.snp.makeConstraints {
             $0.leading.trailing.top.bottom.equalTo(scrollView)
             $0.width.equalTo(scrollView)
         }
-        
+    
         productImageCV.snp.makeConstraints {
-            $0.horizontalEdges.equalToSuperview()
-            $0.height.equalTo(productImageCV.snp.width)
-        }
-        
-        legalView.snp.makeConstraints {
-            $0.horizontalEdges.equalToSuperview()
-            $0.height.equalTo(250)
-        }
-        
-        titleStackView.snp.makeConstraints {
-            $0.horizontalEdges.equalToSuperview().inset(20)
-        }
-        
-        descriptionStackView.snp.makeConstraints {
-            $0.horizontalEdges.equalToSuperview().inset(20)
+            $0.size.equalTo(self.view.snp.width)
         }
     }
 }
@@ -302,7 +273,7 @@ struct SingleProductVCPreview: PreviewProvider {
         
         let viewModel = SingleProductVM(service: MainService(), product: sampleProduct)
         
-        return UINavigationController(rootViewController: SingleProductVC(viewModel: viewModel)).toPreview().ignoresSafeArea()
+        return UINavigationController(rootViewController: SingleProductVC(viewModel: viewModel)).toPreview()
     }
 }
 #endif

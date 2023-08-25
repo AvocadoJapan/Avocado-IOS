@@ -51,7 +51,7 @@ final class ProductCVCell: UICollectionViewCell, CollectionCellIdentifierable {
         setLayout()
         setConstraints()
         setProperties()
-        
+
         let tapRecognizer = UITapGestureRecognizer(target: self, action: #selector(handleTap))
         self.addGestureRecognizer(tapRecognizer)
     }
