@@ -56,29 +56,27 @@ final class SingleProductVC: BaseVC {
     
     private lazy var titleSubInfoStackView = UIStackView().then {
         $0.axis = .horizontal
-//        $0.spacing = 10
         $0.alignment = .leading
-        
     }
     
     private lazy var locationLabel = UILabel().then {
         $0.text = "경기도 화성시 진안동"
         $0.numberOfLines = 1
-        $0.font = .systemFont(ofSize: 13, weight: .medium)
+        $0.font = .systemFont(ofSize: 13, weight: .regular)
         $0.textColor = .darkGray
     }
     
     private lazy var dotLabel = UILabel().then {
-        $0.text = "・"
+        $0.text = " ・ "
         $0.numberOfLines = 1
-        $0.font = .systemFont(ofSize: 13, weight: .medium)
+        $0.font = .systemFont(ofSize: 13, weight: .regular)
         $0.textColor = .darkGray
     }
     
     private lazy var updateAtLabel = UILabel().then {
         $0.text = "20시간 전"
         $0.numberOfLines = 1
-        $0.font = .systemFont(ofSize: 13, weight: .medium)
+        $0.font = .systemFont(ofSize: 13, weight: .regular)
         $0.textColor = .darkGray
     }
     
