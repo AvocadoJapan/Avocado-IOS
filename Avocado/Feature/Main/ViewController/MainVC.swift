@@ -56,9 +56,8 @@ final class MainVC: BaseVC {
     
     private lazy var productGroupCVLayout = UICollectionViewFlowLayout().then {
         $0.scrollDirection = .vertical
-//        $0.minimumLineSpacing = 5
-        
-        $0.sectionInset = UIEdgeInsets(top: 0, left: 10, bottom: 10, right: 10)
+//        $0.minimumLineSpacing = 100
+        $0.sectionInset = UIEdgeInsets(top: 0, left: 10, bottom: 30, right: 10)
     }
     private lazy var productGroupCV = UICollectionView(frame: .zero, collectionViewLayout: self.productGroupCVLayout).then {
         $0.showsVerticalScrollIndicator = false
@@ -124,7 +123,7 @@ final class MainVC: BaseVC {
         
         productGroupCV.snp.makeConstraints {
 //            $0.horizontalEdges.equalToSuperview().inset(10)
-            $0.height.equalTo(4000)
+            $0.height.equalTo(2500)
          }
         
         bannerCV.snp.makeConstraints {
@@ -165,9 +164,14 @@ final class MainVC: BaseVC {
                     let item = dataSource[indexPath.section].header
                     headerView.setProperty(title: item ?? "알수없는 오류")
                     
-                    Logger.d(item)
-                    
                     return headerView
+                } else if kind == UICollectionView.elementKindSectionFooter {
+                    let footerView = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: ProductGroupFooterReusableView.identifier, for: indexPath) as! ProductGroupFooterReusableView
+                    
+                    let item = dataSource[indexPath.section].productSectionId
+//                    footerView.setProperty(id: item)
+                    
+                    return footerView
                 }
                 return UICollectionReusableView()  // 기본적인 reusable view를 반환합니다. 필요하다면 다른 view를 반환할 수도 있습니다.
             }
@@ -203,22 +207,21 @@ extension MainVC: UIScrollViewDelegate {
 extension MainVC: UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         if collectionView == bannerCV {
-            return collectionView.frame.size
+            return collectionView.frame.size //bannerCV의 사이즈
         }
          else if collectionView == mainCategoryCV {
-             return CGSize(width: 60, height: 75)
+             return CGSize(width: 60, height: 75) //mainCategoryCV의 사이즈
          }
         else {
             let width = collectionView.frame.width/3 - 14
-            return CGSize(width: width , height: width * 1.8)
+            return CGSize(width: width , height: width * 1.8) // ProductCVCell의 사이즈
         }
     }
 }
 
 extension MainVC: UICollectionViewDelegate, UICollectionViewDataSource{
     
-    // 아래는 MainSubMenuCVCell만 관할
-    // 이외 collectionView는 RX를 이용하여 처리
+    // MainSubMenuCVCell 이외 collectionView는 RX를 이용하여 처리
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return MainSubMenuType.count
     }
@@ -226,18 +229,28 @@ extension MainVC: UICollectionViewDelegate, UICollectionViewDataSource{
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: MainSubMenuCVCell.identifier, for: indexPath) as! MainSubMenuCVCell
         
-        // MainSubMenuType 열거형에서 해당 indexPath에 맞는 케이스를 가져옵니다.
+        // MainSubMenuType 열거형에서 해당 indexPath에 맞는 케이스를 가져옴
         let menuType = MainSubMenuType.allCases[indexPath.item]
         
-        // 셀을 해당 데이터로 구성합니다.
+        // 셀을 해당 데이터로 구성함
         cell.configure(imageName: menuType.imageName, title: menuType.title, navigateTo: menuType.navigateTo)
         
         return cell
     }
     
+    // productGroupCV의 헤더 크기 정의
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, referenceSizeForHeaderInSection section: Int) -> CGSize {
         if collectionView == productGroupCV {
             return CGSize(width: collectionView.frame.width, height: 60)
+        }
+        
+        return CGSize(width: 0, height: 0)
+    }
+    
+    // productGroupCV의 푸터 크기 정의
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, referenceSizeForFooterInSection section: Int) -> CGSize {
+        if collectionView == productGroupCV {
+            return CGSize(width: collectionView.frame.width, height: 40)
         }
         
         return CGSize(width: 0, height: 0)

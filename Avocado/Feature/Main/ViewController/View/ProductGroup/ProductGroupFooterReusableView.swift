@@ -18,21 +18,21 @@ final class ProductGroupFooterReusableView: UICollectionReusableView {
     
     static var identifier = "ProductGroupFooterRV"
     
-    private lazy var moreButton = UIButton().then {
-        $0.setTitle("더보기", for: .normal)
-        $0.titleLabel?.font = UIFont.boldSystemFont(ofSize: 14)
-        $0.setTitleColor(UIColor.white, for: .normal)
-        $0.backgroundColor = .black
-        $0.layer.cornerRadius = 10
-        $0.layer.masksToBounds = true
+    private lazy var pageControl = UIPageControl().then {
+        $0.hidesForSinglePage = true
+        $0.currentPage = 3
+        $0.currentPageIndicatorTintColor = .black
+        $0.pageIndicatorTintColor = .lightGray
+        $0.backgroundStyle = .prominent
     }
-    
     private let disposeBag = DisposeBag()
     
     override init(frame: CGRect) {
         super.init(frame: frame)
         
-        moreButton.snp.makeConstraints {
+        addSubview(pageControl)
+        
+        pageControl.snp.makeConstraints {
             $0.edges.equalToSuperview()
         }
     }
