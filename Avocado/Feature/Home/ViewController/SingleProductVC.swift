@@ -50,7 +50,7 @@ final class SingleProductVC: BaseVC {
         $0.text = "아이패드 프로 6세대 11인치 128기가 셀룰러 미개봉"
         $0.lineBreakMode = .byCharWrapping
         $0.numberOfLines = 2
-        $0.font = .systemFont(ofSize: 20, weight: .semibold)
+        $0.font = .systemFont(ofSize: 19, weight: .bold)
         $0.textColor = .darkText
     }
     
@@ -60,30 +60,30 @@ final class SingleProductVC: BaseVC {
     }
     
     private lazy var locationLabel = UILabel().then {
-        $0.text = "경기도 화성시 진안동"
+        $0.text = "서울특별시 성북구 안암동"
         $0.numberOfLines = 1
-        $0.font = .systemFont(ofSize: 13, weight: .regular)
-        $0.textColor = .darkGray
+        $0.font = .systemFont(ofSize: 12, weight: .regular)
+        $0.textColor = .gray
     }
     
     private lazy var dotLabel = UILabel().then {
         $0.text = " ・ "
         $0.numberOfLines = 1
-        $0.font = .systemFont(ofSize: 13, weight: .regular)
+        $0.font = .systemFont(ofSize: 12, weight: .regular)
         $0.textColor = .darkGray
     }
     
     private lazy var updateAtLabel = UILabel().then {
         $0.text = "20시간 전"
         $0.numberOfLines = 1
-        $0.font = .systemFont(ofSize: 13, weight: .regular)
-        $0.textColor = .darkGray
+        $0.font = .systemFont(ofSize: 12, weight: .regular)
+        $0.textColor = .gray
     }
     
     private lazy var priceLabel = UILabel().then {
         $0.text = "1,298,000원"
         $0.numberOfLines = 1
-        $0.font = .systemFont(ofSize: 20, weight: .semibold)
+        $0.font = .systemFont(ofSize: 22, weight: .bold)
         $0.textColor = .darkText
     }
     
@@ -130,9 +130,26 @@ final class SingleProductVC: BaseVC {
         $0.alignment = .leading
     }
     
+    private lazy var productBadgeStackView = UIStackView().then {
+        $0.axis = .vertical
+        $0.alignment = .leading
+        $0.spacing = 15
+        $0.distribution = .fillEqually
+    }
+    
+    private lazy var productBadgeDemo = ProductBadgeView(type: .avocadoPay)
+    private lazy var productBadgeDemo2 = ProductBadgeView(type: .business)
+    private lazy var productBadgeDemo3 = ProductBadgeView(type: .fastShipping)
+    private lazy var productBadgeDemo4 = ProductBadgeView(type: .freeShipping)
+    private lazy var productBadgeDemo5 = ProductBadgeView(type: .handmade)
+    private lazy var productBadgeDemo6 = ProductBadgeView(type: .premiumSeller)
+    private lazy var productBadgeDemo7 = ProductBadgeView(type: .refundable)
+    private lazy var productBadgeDemo8 = ProductBadgeView(type: .unused)
+    private lazy var productBadgeDemo9 = ProductBadgeView(type: .verified)
+    
     private lazy var descriptionLabel = UILabel().then {
         $0.numberOfLines = 0
-        $0.font = .systemFont(ofSize: 14, weight: .regular)
+        $0.font = .systemFont(ofSize: 14.5, weight: .regular)
         $0.textColor = .darkText
         $0.text =
         """
@@ -155,8 +172,6 @@ final class SingleProductVC: BaseVC {
     init(viewModel: SingleProductVM) {
         self.viewModel = viewModel
         super.init(nibName: nil, bundle: nil)
-        
-//        self.navigationController?.isNavigationBarHidden = false
     }
     
     required init?(coder: NSCoder) {
@@ -166,11 +181,13 @@ final class SingleProductVC: BaseVC {
     override func setViewDidLoad() {
         // 초기 메인데이터 API call]
         viewModel.input.actionViewDidLoad.accept(())
-//        scrollView.refreshControl = refreshControl
+        //        scrollView.refreshControl = refreshControl
     }
     
     override func setProperty() {
         view.backgroundColor = .white
+        
+        navigationController?.setNavigationBarHidden(false, animated: true)
         
         // Configure productImageCV
         productImageCV.delegate = self
@@ -186,16 +203,16 @@ final class SingleProductVC: BaseVC {
             buttomButtonStackView.addArrangedSubview($0)
         }
         
-        [productImageCV, titleStackView, descriptionStackView, legalView].forEach {
+        [productImageCV, titleStackView, productBadgeStackView, descriptionStackView, legalView].forEach {
             stackView.addArrangedSubview($0)
+        }
+        
+        [productBadgeDemo, productBadgeDemo2, productBadgeDemo3, productBadgeDemo4, productBadgeDemo5, productBadgeDemo6, productBadgeDemo7, productBadgeDemo8, productBadgeDemo9].forEach {
+            productBadgeStackView.addArrangedSubview($0)
         }
         
         [titleLabel, titleSubInfoStackView, priceLabel].forEach {
             titleStackView.addArrangedSubview($0)
-        }
-        
-        [locationLabel, dotLabel, updateAtLabel].forEach {
-            titleSubInfoStackView.addArrangedSubview($0)
         }
         
         [locationLabel, dotLabel, updateAtLabel].forEach {
@@ -208,18 +225,31 @@ final class SingleProductVC: BaseVC {
     }
     
     override func setConstraint() {
-
+        
         scrollView.snp.makeConstraints {
             $0.edges.equalToSuperview()
         }
         
         stackView.snp.makeConstraints {
-            $0.leading.trailing.top.bottom.equalTo(scrollView)
+            $0.edges.equalTo(scrollView)
             $0.width.equalTo(scrollView)
         }
-    
+        
         productImageCV.snp.makeConstraints {
-            $0.size.equalTo(self.view.snp.width)
+            $0.height.equalTo(self.view.snp.width)
+            $0.width.equalTo(self.view.snp.width)
+        }
+        
+        titleStackView.snp.makeConstraints {
+            $0.horizontalEdges.equalToSuperview().inset(15)
+        }
+        
+        descriptionStackView.snp.makeConstraints {
+            $0.horizontalEdges.equalToSuperview().inset(15)
+        }
+        
+        productBadgeDemo.snp.makeConstraints {
+            $0.horizontalEdges.equalToSuperview().inset(15)
         }
     }
 }
@@ -242,17 +272,17 @@ extension SingleProductVC: UICollectionViewDelegateFlowLayout {
     }
 }
 
-extension SingleProductVC: UIScrollViewDelegate {
-    // MARK: - UIScrollViewDelegate
-    func scrollViewDidScroll(_ scrollView: UIScrollView) {
-        let yOffset = scrollView.contentOffset.y
-        if yOffset > 50 {
-            navigationController?.setNavigationBarHidden(false, animated: true) // 네비게이션바 표시
-        } else {
-            navigationController?.setNavigationBarHidden(true, animated: true) // 네비게이션바 숨기기
-        }
-    }
-}
+//extension SingleProductVC: UIScrollViewDelegate {
+//    // MARK: - UIScrollViewDelegate
+//    func scrollViewDidScroll(_ scrollView: UIScrollView) {
+//        let yOffset = scrollView.contentOffset.y
+//        if yOffset > 50 {
+//            navigationController?.setNavigationBarHidden(false, animated: true) // 네비게이션바 표시
+//        } else {
+//            navigationController?.setNavigationBarHidden(true, animated: true) // 네비게이션바 숨기기
+//        }
+//    }
+//}
 
 #if DEBUG && canImport(SwiftUI)
 import SwiftUI

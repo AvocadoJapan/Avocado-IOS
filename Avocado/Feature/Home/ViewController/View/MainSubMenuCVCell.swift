@@ -25,7 +25,7 @@ final class MainSubMenuCVCell: UICollectionViewCell {
     
     private lazy var iconImageView = UIImageView().then {
         $0.tintColor = .darkText
-        $0.image = UIImage(systemName: "\(imageName)")
+        $0.image = UIImage(named: "\(imageName)")
         $0.contentMode = .scaleAspectFit
     }
     
@@ -44,17 +44,6 @@ final class MainSubMenuCVCell: UICollectionViewCell {
         $0.distribution = .equalSpacing
         $0.spacing = 5
     }
-    
-//    init(imageName: String, title: String, navigateTo: String, frame: CGRect = .zero) {
-//        self.imageName = imageName
-//        self.title = title
-//        self.navigateTo = navigateTo
-//        
-//        super.init(frame: frame)
-//        
-//        // 셀 설정
-//        setupCell()
-//    }
     
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -80,7 +69,7 @@ final class MainSubMenuCVCell: UICollectionViewCell {
         }
         
         iconImageView.snp.makeConstraints {
-            $0.left.right.equalToSuperview().inset(7)
+            $0.left.right.equalToSuperview().inset(10)
             $0.height.equalTo(iconImageView.snp.width) // 높이를 너비와 같게 설정
         }
     }
@@ -91,7 +80,7 @@ final class MainSubMenuCVCell: UICollectionViewCell {
            self.navigateTo = navigateTo
            
            // 이미지와 라벨을 업데이트
-           self.iconImageView.image = UIImage(systemName: imageName)
+           self.iconImageView.image = UIImage(named: imageName)
            self.nameLabel.text = title
        }
 }

@@ -115,32 +115,29 @@ enum MainSubMenuType: CaseCountable {
     case favorite
     case recent
     case nearCurrentLocation
-    case event
     case community
     case bargain
     case customerCenter
     
     var imageName: String {
         switch self {
-        case .favorite: return "heart.fill"
-        case .recent: return "clock.fill"
-        case .nearCurrentLocation: return "location.fill"
-        case .event: return "party.popper.fill"
-        case .community: return "person.2.fill"
-        case .bargain: return "bolt.badge.clock.fill"
-        case .customerCenter: return "person.icloud.fill"
+        case .favorite: return "heart_solid"
+        case .recent: return "clock_solid"
+        case .nearCurrentLocation: return "location_solid"
+        case .community: return "users_solid"
+        case .bargain: return "bolt_solid"
+        case .customerCenter: return "support_solid"
         }
     }
     
     var title: String {
         switch self {
-        case .favorite: return "찜목록" //いいね
-        case .recent: return "최근본상품" //閲覧履歴
-        case .nearCurrentLocation: return "근처상품" //近くの商品
-        case .event: return "이벤트" //キャンペーン
-        case .community: return "동네고수" //達人
-        case .bargain: return "급처상품" //注目商品
-        case .customerCenter: return "고객센터" //事務局
+        case .favorite: return "いいね" //찜목록
+        case .recent: return "閲覧履歴" //최근본상품
+        case .nearCurrentLocation: return "近くの商品" //근처상품
+        case .community: return "達人" //동네고수
+        case .bargain: return "注目商品" //급처상품
+        case .customerCenter: return "事務局" //고객센터
         }
     }
     
@@ -149,10 +146,61 @@ enum MainSubMenuType: CaseCountable {
         case .favorite: return "./"
         case .recent: return "./"
         case .nearCurrentLocation: return "./"
-        case .event: return "./"
         case .community: return "./"
         case .bargain: return "./"
         case .customerCenter: return "./"
+        }
+    }
+}
+
+/**
+ - Description: 상품 설명 요약 배지 enum
+ */
+enum ProductBadge {
+    case unused
+    case verified
+    case fastShipping
+    case freeShipping
+    case premiumSeller
+    case business
+    case avocadoPay
+    case refundable
+    case handmade
+    
+    var title: String {
+        switch self {
+        case .unused: return "새 상품"
+        case .verified: return "인증된 상품"
+        case .fastShipping: return "빠른 배송"
+        case .freeShipping: return "무료 배송"
+        case .premiumSeller: return "프리미엄 판매자"
+        case .business: return "개인사업자"
+        case .avocadoPay: return "안전한 거래"
+        case .refundable: return "환불 가능"
+        case .handmade: return "핸드메이드 상품"
+        }
+    }
+    
+    var description: String {
+        switch self {
+        case .unused:
+            return "이 상품은 한 번도 사용되지 않은 새 상품이에요."
+        case .verified:
+            return "아보카도가 직접 검수한 상품이에요. 아보카도 보증이 적용되는 상품이에요."
+        case .fastShipping:
+            return "판매자님이 당일또는 익일배송을 약속한 상품이에요."
+        case .freeShipping:
+            return "이 상품은 배송비 걱정 없이 무료로 배송돼요."
+        case .premiumSeller:
+            return "많은 구매자들이 만족한 판매자에요. 판매자의 매너, 후기 등을 종합적으로 고려해 선정된 프리미엄 판매자입니다."
+        case .business:
+            return "공식적으로 사업자등록을 한 판매자에요."
+        case .avocadoPay:
+            return "안전하고 간편한 아보카도페이로 구매 가능한 상품이에요."
+        case .refundable:
+            return "상품에 문제가 있을 때는 걱정없이 환불받으실 수 있어요."
+        case .handmade:
+            return "이 상품은 정성스럽게 손으로 만들어진 제품에요. 특별한 감성을 느껴보세요."
         }
     }
 }

@@ -53,31 +53,31 @@ extension MainAPI: BaseTarget {
                         "productSection": [
                           {
                             "id": "05c6501c-7ff6-4c95-9ecd-28834b2a1279",
-                            "name": "최근 본 상품과 비슷해요",
+                            "name": "閲覧履歴に基づいたおすすめ",
                             "products": [
                               {
                                 "productId": "random-uuid-1",
                                 "mainImageId": "random-uuid-2",
                                 "imageIds": ["sample1", "sample2"],
-                                "name": "맥북 프로 M2Pro 14인치 기본형",
-                                "price": "1,700,000원",
-                                "location": "종로구 혜화동"
+                                "name": "Macbook pro M2 14インチ",
+                                "price": "180,000円",
+                                "location": "東京都 港区"
                               },
                               {
                                 "productId": "random-uuid-3",
                                 "mainImageId": "random-uuid-4",
                                 "imageIds": ["sample3", "sample4"],
-                                "name": "에어팟 맥스",
-                                "price": "550,000원",
-                                "location": "중구 중림동"
+                                "name": "Airpods Max　未使用",
+                                "price": "50,000円",
+                                "location": "東京都 足立区"
                               },
                               {
                                 "productId": "random-uuid-5",
                                 "mainImageId": "random-uuid-6",
                                 "imageIds": ["sample5", "sample6"],
-                                "name": "아이폰 12프로 기본형",
-                                "price": "800,000원",
-                                "location": "동대문구 용산동"
+                                "name": "Iphone 14pro",
+                                "price": "50,000円",
+                                "location": "東京都 練馬区"
                               },
                               {
                                 "productId": "random-uuid-7",

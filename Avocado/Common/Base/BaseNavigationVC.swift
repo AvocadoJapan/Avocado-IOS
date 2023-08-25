@@ -19,8 +19,8 @@ final class BaseNavigationVC: UINavigationController {
         modalPresentationStyle = .fullScreen
         
         let appearance = UINavigationBarAppearance()
-//        appearance.configureWithOpaqueBackground()
-//        appearance.backgroundColor = .white
+        appearance.configureWithOpaqueBackground()
+        appearance.backgroundColor = .clear
         appearance.shadowColor = .clear
         
         //navigation backButton

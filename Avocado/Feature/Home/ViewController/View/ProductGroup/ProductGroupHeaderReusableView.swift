@@ -28,7 +28,7 @@ final class ProductGroupHeaderReusableView: UICollectionReusableView {
         $0.contentMode = .center
     }
     
-    private lazy var moreButton: SubButton = SubButton(text: "더보기".localized(), fontSize: 14, weight: .bold)
+    private lazy var moreButton: SubButton = SubButton(text: "MORE".localized(), fontSize: 14, weight: .bold)
     
     private let disposeBag = DisposeBag()
     

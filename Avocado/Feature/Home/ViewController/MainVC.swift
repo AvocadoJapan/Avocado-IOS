@@ -82,7 +82,6 @@ final class MainVC: BaseVC {
     
     override func setProperty() {
         view.backgroundColor = .white
-        navigationController?.setNavigationBarHidden(true, animated: true)
         
         navigationController?.setupNavbar(with: "Avocado Beta", logoImage: UIImage(systemName: "apple.logo"))
         
