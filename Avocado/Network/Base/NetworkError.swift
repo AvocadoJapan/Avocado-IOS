@@ -60,6 +60,7 @@ enum UserAuthError: AvocadoError {
     case userNotFound // 유저가 존재하지 않을 경우
     case userLoginFailed // 로그인에 실패한 경우
     case userLogoutFailed // 로그아웃에 실패한 경우
+    case userSocialLoginFailed // 소셜 로그인에 실패한 경우
     case emailNotConfirmed // 이메일 인증이 되지 않은 계정으로 접근 시도 할 경우
     case emailConfirmCodeMisMatch // 인증번호가 올바르지 않은 경우
     case emailConfirmCodeExpired // 만료된 인증번호로 접근 시도 할 경우
@@ -78,6 +79,7 @@ enum UserAuthError: AvocadoError {
         case .userNotFound: return "유저가 존재하지 않습니다"
         case .userLoginFailed: return "로그인에 실패 하였습니다"
         case .userLogoutFailed: return "로그아웃에 실패 하였습니다"
+        case .userSocialLoginFailed: return "소셜 로그인에 실패하였습니다"
         case .emailNotConfirmed: return "이메일 인증이 되지 않은 계정입니다"
         case .emailConfirmCodeMisMatch: return "이메일 인증번호가 올바르지 않습니다"
         case .emailConfirmCodeExpired: return "만료된 인증번호 입니다"
