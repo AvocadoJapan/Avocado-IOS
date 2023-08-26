@@ -5,11 +5,11 @@
       "scale" : "1x"
     },
     {
-      "filename" : "gift-solid.svg",
       "idiom" : "universal",
       "scale" : "2x"
     },
     {
+      "filename" : "gift-solid.svg",
       "idiom" : "universal",
       "scale" : "3x"
     }

@@ -26,7 +26,7 @@ final class SingleProductVC: BaseVC {
     }
     private lazy var stackView = UIStackView().then {
         $0.axis = .vertical
-        $0.spacing = 20
+        $0.spacing = 30
     }
     
     private lazy var productImageCVLayout = UICollectionViewFlowLayout().then {
@@ -87,25 +87,66 @@ final class SingleProductVC: BaseVC {
         $0.textColor = .darkText
     }
     
-    private lazy var uploaderView = UIView().then {
-        $0.backgroundColor = .clear
+    private lazy var uploaderStackView = UIStackView().then {
+        $0.axis = .horizontal
+        $0.alignment = .leading
+        $0.distribution = .fill
+        $0.spacing = 20
     }
     
+    private lazy var uploaderNameStackView = UIStackView().then {
+        $0.axis = .vertical
+        $0.alignment = .leading
+        $0.distribution = .equalSpacing
+        $0.spacing = 5
+    }
+    
+    private lazy var uploaderInfoStackView = UIStackView().then {
+        $0.axis = .vertical
+        $0.alignment = .leading
+        $0.distribution = .fillEqually
+        $0.spacing = 5
+    }
+    
+    private lazy var userSingupDateLabel = UILabel().then {
+        $0.text = "2023년 3월 10일 가입"
+        $0.numberOfLines = 1
+        $0.font = .systemFont(ofSize: 12, weight: .regular)
+        $0.textColor = .gray
+    }
+    
+    
     private lazy var starRateLabel = UILabel().then {
-        $0.text = "⭐️4.5"
+        $0.text = "⭐️ 프리미엄 판매자"
+        $0.numberOfLines = 1
+        $0.font = .systemFont(ofSize: 12, weight: .regular)
+        $0.textColor = .gray
     }
     
     private lazy var reviewLabel = UILabel().then {
-        $0.text = "이 유저의 거래후기 345"
+        $0.text = "💬 거래후기 345"
+        $0.numberOfLines = 1
+        $0.font = .systemFont(ofSize: 12, weight: .regular)
+        $0.textColor = .gray
+    }
+    
+    private lazy var userCertificateLabel = UILabel().then {
+        $0.text = "⚠️ 본인 인증 미완료"
+        $0.numberOfLines = 1
+        $0.font = .systemFont(ofSize: 12, weight: .regular)
+        $0.textColor = .systemRed
     }
     
     private lazy var uploaderNameLabel = UILabel().then {
-        $0.text = "Amanda"
+        $0.text = "번개장터 킬러"
+        $0.numberOfLines = 1
+        $0.font = .systemFont(ofSize: 15, weight: .semibold)
+        $0.textColor = .darkText
     }
     
     private lazy var profileImageView = UIImageView().then {
         $0.contentMode = .scaleAspectFill
-        $0.layer.cornerRadius = 50
+        $0.layer.cornerRadius = 60/2
         $0.clipsToBounds = true
         $0.backgroundColor = .systemGray5
     }
@@ -140,30 +181,47 @@ final class SingleProductVC: BaseVC {
     private lazy var productBadgeDemo = ProductBadgeView(type: .avocadoPay)
     private lazy var productBadgeDemo2 = ProductBadgeView(type: .business)
     private lazy var productBadgeDemo3 = ProductBadgeView(type: .fastShipping)
-    private lazy var productBadgeDemo4 = ProductBadgeView(type: .freeShipping)
-    private lazy var productBadgeDemo5 = ProductBadgeView(type: .handmade)
-    private lazy var productBadgeDemo6 = ProductBadgeView(type: .premiumSeller)
-    private lazy var productBadgeDemo7 = ProductBadgeView(type: .refundable)
-    private lazy var productBadgeDemo8 = ProductBadgeView(type: .unused)
-    private lazy var productBadgeDemo9 = ProductBadgeView(type: .verified)
+//    private lazy var productBadgeDemo4 = ProductBadgeView(type: .freeShipping)
+//    private lazy var productBadgeDemo5 = ProductBadgeView(type: .handmade)
+//    private lazy var productBadgeDemo6 = ProductBadgeView(type: .premiumSeller)
+//    private lazy var productBadgeDemo7 = ProductBadgeView(type: .refundable)
+//    private lazy var productBadgeDemo8 = ProductBadgeView(type: .unused)
+//    private lazy var productBadgeDemo9 = ProductBadgeView(type: .verified)
     
     private lazy var descriptionLabel = UILabel().then {
         $0.numberOfLines = 0
         $0.font = .systemFont(ofSize: 14.5, weight: .regular)
-        $0.textColor = .darkText
+        $0.textColor = .darkGray
         $0.text =
         """
-        국회의원의 수는 법률로 정하되, 200인 이상으로 한다. 법률은 특별한 규정이 없는 한 공포한 날로부터 20일을 경과함으로써 효력을 발생한다. 대통령이 임시회의 집회를 요구할 때에는 기간과 집회요구의 이유를 명시하여야 한다.
-        
-        공개하지 아니한 회의내용의 공표에 관하여는 법률이 정하는 바에 의한다. 사면·감형 및 복권에 관한 사항은 법률로 정한다. 대통령은 법률에서 구체적으로 범위를 정하여 위임받은 사항과 법률을 집행하기 위하여 필요한 사항에 관하여 대통령령을 발할 수 있다.
-        
-        국가는 국민 모두의 생산 및 생활의 기반이 되는 국토의 효율적이고 균형있는 이용·개발과 보전을 위하여 법률이 정하는 바에 의하여 그에 관한 필요한 제한과 의무를 과할 수 있다.
-        
-        국회의원의 수는 법률로 정하되, 200인 이상으로 한다. 법률은 특별한 규정이 없는 한 공포한 날로부터 20일을 경과함으로써 효력을 발생한다. 대통령이 임시회의 집회를 요구할 때에는 기간과 집회요구의 이유를 명시하여야 한다.
-        
-        공개하지 아니한 회의내용의 공표에 관하여는 법률이 정하는 바에 의한다. 사면·감형 및 복권에 관한 사항은 법률로 정한다. 대통령은 법률에서 구체적으로 범위를 정하여 위임받은 사항과 법률을 집행하기 위하여 필요한 사항에 관하여 대통령령을 발할 수 있다.
-        
-        국가는 국민 모두의 생산 및 생활의 기반이 되는 국토의 효율적이고 균형있는 이용·개발과 보전을 위하여 법률이 정하는 바에 의하여 그에 관한 필요한 제한과 의무를 과할 수 있다.
+        【状態】使用感なく非常に綺麗です。
+
+        出品する理由
+        最新のPro12.9インチを購入したため
+        11インチの方を使用していなかったので！
+        出品させて頂きました。
+
+        2023/04末に購入
+
+        【商品説明】
+        ・定価：148,800円
+        ・ストレージ：128GB
+        ・ネットワーク：Wi-Fi＋セルラー
+        ・色：スペースグレー
+
+        【同梱物】
+        ・11インチiPad Pro
+        ・USB-C充電ケーブル(未使用)
+        ・USB-C電源アダプタ(未使用)
+
+
+        すり替え防止のため、返品・交換・返金不可
+        よろしくお願いします。
+
+        購入後に即フィルムとケースを着用し2ヶ月程の使用ですがキズ等なく非常に良い状態です。
+
+        フィルムは着けたまま発送させて頂きます。
+        ケースは多少の使用感ございますがご希望でしたらお付け致します。
         """
     }
     
@@ -203,16 +261,30 @@ final class SingleProductVC: BaseVC {
             buttomButtonStackView.addArrangedSubview($0)
         }
         
-        [productImageCV, titleStackView, productBadgeStackView, descriptionStackView, legalView].forEach {
+        [productImageCV, titleStackView, uploaderStackView, productBadgeStackView, descriptionStackView, legalView].forEach {
             stackView.addArrangedSubview($0)
         }
         
-        [productBadgeDemo, productBadgeDemo2, productBadgeDemo3, productBadgeDemo4, productBadgeDemo5, productBadgeDemo6, productBadgeDemo7, productBadgeDemo8, productBadgeDemo9].forEach {
+        [productBadgeDemo, productBadgeDemo2, productBadgeDemo3
+        // , productBadgeDemo4, productBadgeDemo5, productBadgeDemo6, productBadgeDemo7, productBadgeDemo8, productBadgeDemo9
+        ].forEach {
             productBadgeStackView.addArrangedSubview($0)
         }
         
         [titleLabel, titleSubInfoStackView, priceLabel].forEach {
             titleStackView.addArrangedSubview($0)
+        }
+        
+        [profileImageView, uploaderNameStackView, uploaderInfoStackView].forEach {
+            uploaderStackView.addArrangedSubview($0)
+        }
+        
+        [uploaderNameLabel, userSingupDateLabel].forEach {
+            uploaderNameStackView.addArrangedSubview($0)
+        }
+        
+        [starRateLabel, reviewLabel, userCertificateLabel].forEach {
+            uploaderInfoStackView.addArrangedSubview($0)
         }
         
         [locationLabel, dotLabel, updateAtLabel].forEach {
@@ -244,12 +316,28 @@ final class SingleProductVC: BaseVC {
             $0.horizontalEdges.equalToSuperview().inset(15)
         }
         
+        uploaderStackView.snp.makeConstraints {
+            $0.horizontalEdges.equalToSuperview().inset(15)
+        }
+        
+//        uploaderNameStackView.snp.makeConstraints {
+//            $0.centerY.equalToSuperview()
+//        }
+        
+        uploaderInfoStackView.snp.makeConstraints {
+            $0.centerY.equalToSuperview()
+        }
+        
         descriptionStackView.snp.makeConstraints {
             $0.horizontalEdges.equalToSuperview().inset(15)
         }
         
         productBadgeDemo.snp.makeConstraints {
             $0.horizontalEdges.equalToSuperview().inset(15)
+        }
+        
+        profileImageView.snp.makeConstraints {
+            $0.size.equalTo(60)
         }
     }
 }

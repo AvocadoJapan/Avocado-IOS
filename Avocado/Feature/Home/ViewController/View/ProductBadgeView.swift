@@ -27,7 +27,7 @@ final class ProductBadgeView: UIView {
     
     private lazy var titleLabel = UILabel().then{
         $0.numberOfLines = 1
-        $0.font = .systemFont(ofSize: 14, weight: .semibold)
+        $0.font = .systemFont(ofSize: 15, weight: .semibold)
         $0.text = "알 수 없는 오류"
         $0.textColor = .darkText
     }
@@ -62,7 +62,7 @@ final class ProductBadgeView: UIView {
         }
         
         imageView.snp.makeConstraints {
-            $0.size.equalTo(self.snp.height).dividedBy(1.5)
+            $0.size.equalTo(self.snp.height).dividedBy(1.7)
         }
         
         mainStackView.snp.makeConstraints {
@@ -80,6 +80,7 @@ final class ProductBadgeView: UIView {
         
         titleLabel.text = type.title
         descriptionLabel.text = type.description
+        imageView.image = UIImage(named: "\(type.image)")
     }
 }
 

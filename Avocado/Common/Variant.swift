@@ -203,6 +203,20 @@ enum ProductBadge {
             return "이 상품은 정성스럽게 손으로 만들어진 제품에요. 특별한 감성을 느껴보세요."
         }
     }
+    
+    var image: String {
+        switch self {
+        case .unused: return "hands-holding-circle-solid"
+        case .verified: return "certificate-solid"
+        case .fastShipping: return "truck-fast-solid"
+        case .freeShipping: return "dollar-sign-solid"
+        case .premiumSeller: return "star-solid"
+        case .business: return "passport-solid"
+        case .avocadoPay: return "shield-solid"
+        case .refundable: return "rotate-left-solid"
+        case .handmade: return "hand-holding-heart-solid"
+        }
+    }
 }
 
 /**
