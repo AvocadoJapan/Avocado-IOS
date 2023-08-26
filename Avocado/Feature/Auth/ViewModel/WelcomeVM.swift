@@ -44,31 +44,35 @@ final class WelcomeVM:ViewModelType, Stepper {
     func transform(input: Input) -> Output {
         let output = Output()
         
-        // FIXME: subscribe 구문 추후 개선 필요
         // googleLogin
-        input.actionWithGoogleLoginPublish.subscribe(onNext: { [weak self] _ in
-            guard let self = self else { return }
-            self.service.socialLogin(view: input.targetViewRelay.value, socialType: .google).subscribe(onNext: {
-                output.successEventPublish.accept($0)
-            }, onError: { error in
-                output.errEventPublish.accept(error as! NetworkError)
-            })
+        input.actionWithGoogleLoginPublish
+            .flatMap { [weak self] _ -> Observable<User> in
+                return self?.service.socialLogin(
+                    view: input.targetViewRelay.value,
+                    socialType: .google
+                )
+                .catch { error in
+                    if let error = error as? NetworkError { output.errEventPublish.accept(error)}
+                    return .empty()
+                } ?? .empty()
+            }
+            .subscribe { output.successEventPublish.accept($0) }
             .disposed(by: disposeBag)
-        })
-        .disposed(by: disposeBag)
         
-        // FIXME: subscribe 구문 추후 개선 필요
         // appleLogin
-        input.actionWithAppleLoginPublish.subscribe { [weak self] _ in
-            guard let self = self else { return }
-            self.service.socialLogin(view: input.targetViewRelay.value, socialType: .apple).subscribe(onNext: {
-                    output.successEventPublish.accept($0)
-            }, onError: { error in
-                output.errEventPublish.accept(error as! NetworkError)
-            })
+        input.actionWithAppleLoginPublish
+            .flatMap { [weak self] _ -> Observable<User> in
+                return self?.service.socialLogin(
+                    view: input.targetViewRelay.value,
+                    socialType: .apple
+                )
+                .catch { error in
+                    if let error = error as? NetworkError { output.errEventPublish.accept(error)}
+                    return .empty()
+                } ?? .empty()
+            }
+            .subscribe { output.successEventPublish.accept($0) }
             .disposed(by: disposeBag)
-        }
-        .disposed(by: disposeBag)
         
         return output
     }

@@ -21,7 +21,7 @@ final class InputView: UIView, UITextFieldDelegate {
     
     var rightLabelString = BehaviorRelay<String>(value: "")
     
-    var userInput = BehaviorRelay<String>(value: "")
+    var userInput = PublishRelay<String>()
     // 정규식 유효성 여부 Observable (기본적으로 false)
     var isVaild = BehaviorRelay<Bool>(value: false)
     

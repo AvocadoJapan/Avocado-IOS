@@ -44,7 +44,7 @@ final class SignUpVM: ViewModelType, Stepper {
     
     struct Output {
         // 에러 이벤트를 전달하는 인스턴스
-        let errEventPublish = PublishRelay<UserAuthError>()
+        let errEventPublish = PublishRelay<AvocadoError>()
         // 회원가입 성공 이벤트를 전달하는 인스턴스
         let successEventPublish = PublishRelay<Bool>()
         // 입력된 이메일, 비밀번호, 비밀번호 확인 값의 유효성을 확인하는 인스턴스 { 초기에는 비활성화 되어야하기 때문에 BehaviorRelay로 선언 }
@@ -64,27 +64,33 @@ final class SignUpVM: ViewModelType, Stepper {
 
         // 회원가입 클릭
         input.actionSignUpRelay
-            .subscribe(onNext: { [weak self] _ in
-                guard let self = self else { return }
-                
-                service.signUp(email: input.emailBehavior.value, password: input.passwordBehavior.value)
-                    .subscribe(onNext: {
-                        output.successEventPublish.accept($0)
-                    }, onError: { err in
-                        let userAuthError = err as! UserAuthError
-                        output.errEventPublish.accept(userAuthError)
-                    })
-                    .disposed(by: self.disposeBag)
-            })
+            .flatMap { [weak self] _ -> Observable<Bool> in
+                return self?.service.signUp(
+                    email: input.emailBehavior.value,
+                    password: input.passwordBehavior.value
+                )
+                .catch { error in
+                    if let error = error as? AvocadoError { output.errEventPublish.accept(error) }
+                    return .empty()
+                    
+                } ?? .empty()
+            }
+            .subscribe { output.successEventPublish.accept($0) }
             .disposed(by: disposeBag)
         
         // 패스워드 값이 같은지 확인
-        let passwordMatchVaild = PublishRelay<Bool>.combineLatest(input.passwordBehavior, input.passwordCheckPublish) { password, passwordCheck in
+        let passwordMatchVaild = PublishRelay<Bool>.combineLatest(
+            input.passwordBehavior,
+            input.passwordCheckPublish
+        ) { password, passwordCheck in
             return !password.isEmpty && !passwordCheck.isEmpty && password == passwordCheck
         }
         
         // 이메일, 비밀번호, 비밀번호 확인값 유효성 확인
-        let userInputVaild = PublishRelay<Bool>.combineLatest(input.emailVaildPublish, input.passwordVaildPublish, passwordMatchVaild) { emailVaild, passwordVaild, passwordcheckVaild in
+        let userInputVaild = PublishRelay<Bool>.combineLatest(
+            input.emailVaildPublish,
+            input.passwordVaildPublish,
+            passwordMatchVaild) { emailVaild, passwordVaild, passwordcheckVaild in
             return emailVaild && passwordVaild && passwordcheckVaild
         }
         
@@ -94,17 +100,6 @@ final class SignUpVM: ViewModelType, Stepper {
         
         passwordMatchVaild
             .bind(to: output.isVaildPasswordMatch)
-            .disposed(by: disposeBag)
-        
-        // 화면 이동
-        output.successEventPublish
-            .observe(on: MainScheduler.instance)
-            .subscribe(onNext: { [weak self] isSuccess in
-                Logger.trace("SignUpVM successEventPublish : \(isSuccess)")
-                Logger.trace("SignUpVM email : \(input.emailBehavior.value)")
-                Logger.trace("SignUpVM password : \(input.passwordBehavior.value)")
-                self?.steps.accept(AuthStep.emailCheckIsRequired(email: input.emailBehavior.value, password: input.passwordBehavior.value))
-            })
             .disposed(by: disposeBag)
         
         return output

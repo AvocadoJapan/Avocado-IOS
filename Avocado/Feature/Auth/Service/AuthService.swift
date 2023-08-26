@@ -74,20 +74,29 @@ final class AuthService: BaseAPIService<AuthAPI> {
      * - Returns 이메일 인증 성공여부 Observable
      */
     func confirmSignUp(for email: String, with confirmationCode: String) -> Observable<Bool> {
-        return Observable.create { observer in
+        return Observable.create { [weak self] observer in
+            
+            guard let self = self else {
+                return Disposables.create()
+            }
+            
             Task {
                 do {
-                    // 사용자가 인증을 진행했으므로 인증이메일 키 삭제
-                    UserDefaults.standard.removeObject(forKey: UserDefaultsKey.Auth.notConfirmedUserID)
-                    
                     let confirmSignUpResult = try await Amplify.Auth.confirmSignUp(for: email, confirmationCode: confirmationCode)
                     Logger.d("Confirm signUp result Complted \(confirmSignUpResult.isSignUpComplete)")
+                    // 사용자가 인증에 성공한 경우 인증이메일 키 삭제
+                    if (confirmSignUpResult.isSignUpComplete) {
+                        
+                        UserDefaults.standard.removeObject(forKey: UserDefaultsKey.Auth.notConfirmedUserID)
+                    }
+                    
                     observer.onNext(confirmSignUpResult.isSignUpComplete)
                     observer.onCompleted()
                 }
                 catch let error as AuthError {
                     Logger.e("An error occurred while confirming sign up \(error)")
-                    observer.onError(error)
+                    let convertError = self.cognitoAuthErrorHandling(error: error)
+                    observer.onError(convertError)
                 }
                 catch {
                     Logger.e("Unexpected error \(error)")
@@ -212,7 +221,8 @@ final class AuthService: BaseAPIService<AuthAPI> {
                 }
                 catch let error as AuthError {
                     Logger.e("Delete account faild with error \(error)")
-                    observer.onError(error)
+                    let convertError = self.cognitoAuthErrorHandling(error: error)
+                    observer.onError(convertError)
                 }
                 catch {
                     Logger.e("Unexpected error \(error)")
@@ -251,7 +261,8 @@ final class AuthService: BaseAPIService<AuthAPI> {
                 }
                 catch let error as AuthError {
                     Logger.e("Reset password failed \(error)")
-                    observer.onError(error)
+                    let convertError = self.cognitoAuthErrorHandling(error: error)
+                    observer.onError(convertError)
                 }
                 catch {
                     Logger.e("Unexpected error \(error)")
@@ -281,7 +292,8 @@ final class AuthService: BaseAPIService<AuthAPI> {
                 }
                 catch let error as AuthError {
                     Logger.e("Reset password failed \(error)")
-                    observer.onError(error)
+                    let convertError = self.cognitoAuthErrorHandling(error: error)
+                    observer.onError(convertError)
                 }
                 catch {
                     Logger.e("Unexpected error \(error)")
@@ -310,7 +322,8 @@ final class AuthService: BaseAPIService<AuthAPI> {
                 }
                 catch let error as AuthError {
                     Logger.e("Change password failed with error \(error)")
-                    observer.onError(error)
+                    let convertError = self.cognitoAuthErrorHandling(error: error)
+                    observer.onError(convertError)
                 }
                 catch {
                     Logger.e("Unexpected error \(error)")
@@ -342,7 +355,8 @@ final class AuthService: BaseAPIService<AuthAPI> {
                         
                     case let .failure(error):
                         Logger.e("token retry failed with error \(error)")
-                        observer.onError(error)
+                        let convertError = self.cognitoAuthErrorHandling(error: error)
+                        observer.onError(convertError)
                     }
                 }
             }
@@ -436,7 +450,8 @@ final class AuthService: BaseAPIService<AuthAPI> {
                 }
                 catch let error as AuthError {
                     Logger.e("resend Email Confirm Code with error \(error)")
-                    observer.onError(error)
+                    let convertError = self.cognitoAuthErrorHandling(error: error)
+                    observer.onError(convertError)
                 }
                 catch {
                     Logger.e("Unexpected error \(error)")
@@ -470,7 +485,7 @@ final class AuthService: BaseAPIService<AuthAPI> {
                     
                     //토큰 생성에 실패한 경우
                     guard isSuccessToken else {
-                        observable.onError(NetworkError.unknown(-1, "액세스 토큰 생성 또는 갱신에 실패하였습니다"))
+                        observable.onError(UserAuthError.createTokenFailed)
                         return
                     }
                     
@@ -532,9 +547,8 @@ final class AuthService: BaseAPIService<AuthAPI> {
      * - Parameter with: 활동지역ID
      * - Returns 유저 정보
      */
-    func avocadoSignUp(to nickName: String, with regionId: String) -> Observable<User> /*Observable<UserDTO>*/ {
-//        return singleRequest(.signUp(name: nickName, regionId: regionId), responseType: User.self).asObservable()
-        return singleRequest(.signUp(name: nickName, regionId: regionId)).asObservable()
+    func avocadoSignUp(to nickName: String, with regionId: String) -> Observable<UserDTO> {
+        return singleRequest(.signUp(name: nickName, regionId: regionId), responseType: User.self).asObservable()
     }
     
     /**
@@ -669,10 +683,13 @@ final class AuthService: BaseAPIService<AuthAPI> {
                     let client = self.cognitoIdentityProviderClient()
                     let _ = try await client.adminDeleteUser(input: AdminDeleteUserInput(userPoolId: "ap-northeast-2_k1tD9KrYe",
                                                                                username: userId))
+                    Logger.d("SUCCESS USER DELETE")
                     observer.onNext(())
                     observer.onCompleted()
                 }
                 catch let error as SdkError<AdminDeleteUserOutputError> {
+                    
+                    Logger.e(error)
                     
                     if case let .client(clientError, _) = error,
                        case let .retryError(serviceError) = clientError,

@@ -51,42 +51,32 @@ final class LoginVM: ViewModelType {
     func transform(input: Input) -> Output {
         let output = Output()
         
-        input.actionLoginPublish.flatMap { [weak self] _ -> Observable<Bool> in
-            guard let self = self else {
-                output.errEventPublish.accept(NetworkError.unknown(-1, "유효하지 않은 화면입니다"))
-                return Observable.empty()
-            }
-            
-            return self.service.login(email: input.emailBehavior.value, password: input.passwordBehavior.value)
+        input.actionLoginPublish
+            .flatMap { [weak self] _ -> Observable<Bool> in
+                return self?.service.login(
+                    email: input.emailBehavior.value,
+                    password: input.passwordBehavior.value
+                )
                 .catch { err in
-                    if let avocadoErr = err as? AvocadoError {
-                        output.errEventPublish.accept(avocadoErr)
-                    }
-                    return Observable.empty()
-                }
-        }
-        .flatMap { [weak self] _ -> Observable<User> in
-            guard let self = self else {
-                output.errEventPublish.accept(NetworkError.unknown(-1, "유효하지 않은 화면입니다"))
-                return Observable.empty()
+                    if let avocadoErr = err as? AvocadoError { output.errEventPublish.accept(avocadoErr) }
+                    return .empty()
+                } ?? .empty()
             }
-            
-            return self.service.getProfile()
-                .catch { err in
-                    if let avocadoErr = err as? AvocadoError {
-                        output.errEventPublish.accept(avocadoErr)
-                    }
-                    
-                    return Observable.empty()
-                }
-        }
-        .subscribe { user in
-            output.successEventPublish.accept(user)
-        }
-        .disposed(by: disposeBag)
+            .flatMap { [weak self] _ -> Observable<User> in
+                return self?.service.getProfile()
+                    .catch { err in
+                        if let avocadoErr = err as? AvocadoError { output.errEventPublish.accept(avocadoErr) }
+                        return .empty()
+                    } ?? .empty()
+            }
+            .subscribe { user in output.successEventPublish.accept(user) }
+            .disposed(by: disposeBag)
         
         // 이메일, 비밀번호 유효성 확인
-        let buttonEnabled = PublishRelay<Bool>.combineLatest(input.emailVaildBehavior, input.passwordVaildBehavior) { emailVaild, passwordVaild in
+        let buttonEnabled = PublishRelay<Bool>.combineLatest(
+            input.emailVaildBehavior,
+            input.passwordVaildBehavior
+        ) { emailVaild, passwordVaild in
             return emailVaild && passwordVaild
         }
         

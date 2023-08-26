@@ -9,7 +9,7 @@ import UIKit
 
 final class SearchVC: BaseVC {
     
-    lazy var searchBarV = SearchBarV()
+    lazy var searchBarV = SearchBarView()
 
     override func viewDidLoad() {
         super.viewDidLoad()

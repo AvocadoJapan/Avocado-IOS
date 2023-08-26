@@ -31,8 +31,8 @@ final class ProfileSettingVM: ViewModelType, Stepper {
     
     // 사용자 인풋을 통한 아웃풋
     struct Output {
-        let successSignUpeRelay = PublishRelay<User>() // 회원가입 성공 데이터
-        let errEventPublish = PublishRelay<UserAuthError>() // 오류 데이터
+        let successSignUpeRelay = PublishRelay<UserDTO>() // 회원가입 성공 데이터
+        let errEventPublish = PublishRelay<AvocadoError>() // 오류 데이터
     }
     
     // regionID가 필요 없는 경우
@@ -55,42 +55,59 @@ final class ProfileSettingVM: ViewModelType, Stepper {
         let output = Output()
         
         // avocado 회원가입
-        input.actionProfileSetUpRelay.flatMap { [weak self] _ in
-            // 순환 참조가 일어날 경우를 대비한 guard문, 만약 순환참조가 일어났을 경우 에러 리턴
-            guard let self = self else { throw NetworkError.unknown(-1, "유효하지 않은 화면") }
-            
+        input.actionProfileSetUpRelay.flatMap { [weak self] _ -> Observable<UserDTO> in
             // Avocado 회원가입 진행
-            return self.service.avocadoSignUp(to: input.nickNameInputRelay.value, with: self.regionId)
+            return self?.service.avocadoSignUp(
+                to: input.nickNameInputRelay.value,
+                with: self?.regionId ?? ""
+            )
+            .catch { error in
+                if let error = error as? AvocadoError { output.errEventPublish.accept(error) }
+                return .empty()
+            } ?? .empty()
         }
-        .flatMap { [weak self] user -> Observable<User> in
-            guard let self = self else { throw NetworkError.unknown(-1, "유효하지 않은 화면") }
-            
+        .flatMap { [weak self] user -> Observable<UserDTO> in
             // presignedURL 요청
             guard input.selectedImageDataRelay.value.count <= 0 else {
-                return self.service.uploadAvatar(type: "image/jpeg",
-                                                 size: Int64(input.selectedImageDataRelay.value.count)).flatMap { data in
+                return self?.service.uploadAvatar(
+                    type: "image/jpeg",
+                    size: Int64(input.selectedImageDataRelay.value.count)
+                )
+                .flatMap { data in
                     // S3 업로드
-                    return self.s3Service.uploadS3(requestURL: data.url,
-                                                   uploadData: input.selectedImageDataRelay.value,
-                                                   parameter: data.fields).asObservable().flatMap { _ in
-                        
+                    return self?.s3Service.uploadS3(
+                        requestURL: data.url,
+                        uploadData: input.selectedImageDataRelay.value,
+                        parameter: data.fields
+                    )
+                    .asObservable()
+                    .flatMap { _ in
                         // Avocado 서버에 사용자 프로필 이미지 업데이트
-                        return self.service.changeAvatar(to: data.id).flatMap { _ -> Observable<User> in
-                            // 정상적으로 업로드 한 경우 처음에 받았던 사용자 정보 리턴
-                            return Observable.just(user)
-                        }
+                        return self?.service.changeAvatar(to: data.id)
+                            .flatMap { _ -> Observable<UserDTO> in
+                                // 정상적으로 업로드 한 경우 처음에 받았던 사용자 정보 리턴
+                                return .just(user)
+                            }
+                            .catch { error in
+                                if let error = error as? AvocadoError { output.errEventPublish.accept(error) }
+                                return .empty()
+                            } ?? .empty()
                     }
+                    .catch { error in
+                        if let error = error as? AvocadoError { output.errEventPublish.accept(error) }
+                        return .empty()
+                    } ?? .empty()
                 }
+                .catch { error in
+                    if let error = error as? AvocadoError { output.errEventPublish.accept(error) }
+                    return .empty()
+                } ?? .empty()
             }
             
             // 이미지가 없을 경우 처음에 받았던 사용자 정보 리턴
-            return Observable.just(user)
+            return .just(user)
         }
-        .subscribe {
-            output.successSignUpeRelay.accept($0)
-        } onError: { err in
-            output.errEventPublish.accept(.unknown(message: err.localizedDescription))
-        }
+        .subscribe { output.successSignUpeRelay.accept($0) }
         .disposed(by: disposeBag)
         
         return output

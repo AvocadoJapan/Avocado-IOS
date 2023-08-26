@@ -520,8 +520,8 @@
 				B2D276502A6C4DB700441719 /* OtherEmailVM.swift */,
 				B1D23D382A4C6245006A2848 /* WelcomeVM.swift */,
 				B18DFEDE2A51B53B00CF27FE /* EmailCheckVM.swift */,
-				B26F8A4C2A544AC300F4BEA3 /* ProfileSettingVM.swift */,
 				B29342122A58810E00F5CF30 /* RegionSettingVM.swift */,
+				B26F8A4C2A544AC300F4BEA3 /* ProfileSettingVM.swift */,
 			);
 			path = ViewModel;
 			sourceTree = "<group>";

@@ -26,7 +26,7 @@ final class OtherEmailVM: ViewModelType, Stepper {
     
     struct Output {
         let successOtherEmailCodePublish = PublishRelay<Bool>()
-        let errorEventPublish = PublishRelay<UserAuthError>()
+        let errorEventPublish = PublishRelay<AvocadoError>()
     }
     
     init(service: AuthService, oldEmail: String) {
@@ -39,22 +39,26 @@ final class OtherEmailVM: ViewModelType, Stepper {
         let output = Output()
         
         input.actionOtherEmailCodePublish
-            .flatMap { [weak self] userOtherEmail in
-                guard let self = self else  { throw NetworkError.unknown(-1, "유효하지 않은 화면입니다") }
+            .flatMap { [weak self] userOtherEmail -> Observable<Bool> in
                 // 사용자 이메일 변경
-                return self.service.changeUserEmail(oldEmail: input.userOldEmailBehavior.value,
-                                                    newEmail: input.userNewEmailBehavior.value)
+                return self?.service.changeUserEmail(
+                    oldEmail: input.userOldEmailBehavior.value,
+                    newEmail: input.userNewEmailBehavior.value
+                )
+                .catch { error in
+                    if let error = error as? AvocadoError { output.errorEventPublish.accept(error) }
+                    return .empty()
+                } ?? .empty()
             }
-            .flatMap { [weak self] _ in
-                guard let self = self else  { throw NetworkError.unknown(-1, "유효하지 않은 화면입니다") }
+            .flatMap { [weak self] _ -> Observable<Bool> in
                 // 사용자 인증번호 전송
-                return self.service.resendSignUpCode(to: input.userNewEmailBehavior.value)
+                return self?.service.resendSignUpCode(to: input.userNewEmailBehavior.value)
+                    .catch { error in
+                        if let error = error as? AvocadoError { output.errorEventPublish.accept(error) }
+                        return .empty()
+                    } ?? .empty()
             }
-            .subscribe { isSuccess in
-                output.successOtherEmailCodePublish.accept(isSuccess)
-            } onError: { error in
-                output.errorEventPublish.accept(error as! UserAuthError)
-            }
+            .subscribe { output.successOtherEmailCodePublish.accept($0) }
             .disposed(by: disposeBag)
         
         return output
