@@ -96,6 +96,7 @@
 		B2382C6D2A6FD56400A24AE3 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = B2382C6B2A6FD56400A24AE3 /* Localizable.strings */; };
 		B23B24ED2A8C528800F179A7 /* LegalView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B23B24EC2A8C528800F179A7 /* LegalView.swift */; };
 		B240FB352A994C8E00F365BB /* ProductBadgeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B240FB342A994C8E00F365BB /* ProductBadgeView.swift */; };
+		B240FB372A9A7FFC00F365BB /* ContourView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B240FB362A9A7FFC00F365BB /* ContourView.swift */; };
 		B248C6A82A86A153006AE008 /* ProductGroupCVCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B248C6A72A86A153006AE008 /* ProductGroupCVCell.swift */; };
 		B248C6AB2A86C918006AE008 /* MainService.swift in Sources */ = {isa = PBXBuildFile; fileRef = B248C6AA2A86C918006AE008 /* MainService.swift */; };
 		B26A3B612A60A79800AD61A5 /* AuthFlow.swift in Sources */ = {isa = PBXBuildFile; fileRef = B26A3B602A60A79800AD61A5 /* AuthFlow.swift */; };
@@ -226,6 +227,7 @@
 		B2382C6C2A6FD56400A24AE3 /* ko */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ko; path = Localizable.strings; sourceTree = "<group>"; };
 		B23B24EC2A8C528800F179A7 /* LegalView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LegalView.swift; sourceTree = "<group>"; };
 		B240FB342A994C8E00F365BB /* ProductBadgeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProductBadgeView.swift; sourceTree = "<group>"; };
+		B240FB362A9A7FFC00F365BB /* ContourView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContourView.swift; sourceTree = "<group>"; };
 		B248C6A72A86A153006AE008 /* ProductGroupCVCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProductGroupCVCell.swift; sourceTree = "<group>"; };
 		B248C6AA2A86C918006AE008 /* MainService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainService.swift; sourceTree = "<group>"; };
 		B26A3B602A60A79800AD61A5 /* AuthFlow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthFlow.swift; sourceTree = "<group>"; };
@@ -570,6 +572,7 @@
 				B22222662A55F83300A2B7CB /* PrivacyElementView.swift */,
 				B23B24EC2A8C528800F179A7 /* LegalView.swift */,
 				B2D1309D2A4B4C5800538EFB /* BottomButton.swift */,
+				B240FB362A9A7FFC00F365BB /* ContourView.swift */,
 				B2F3D3632A511F2700FB05E1 /* SubButton.swift */,
 				B212D58A2A45F1740008DAD1 /* InputView.swift */,
 			);
@@ -1055,6 +1058,7 @@
 				98AD10FF2A4BF2E7001C4734 /* AuthAPI.swift in Sources */,
 				B26A3B662A60AB8400AD61A5 /* AuthStep.swift in Sources */,
 				98AD11032A4BF8B4001C4734 /* RegionsModel.swift in Sources */,
+				B240FB372A9A7FFC00F365BB /* ContourView.swift in Sources */,
 				B2E186CE2A474B4C00ABE98F /* SignupVC.swift in Sources */,
 				9848A8B32A5D853B008D43F5 /* UIColor+Extension.swift in Sources */,
 				B1BFDD672A49CF8100DB4955 /* LoginVM.swift in Sources */,

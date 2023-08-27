@@ -50,18 +50,19 @@ enum ButtonColorType {
     var tintColor: UIColor {
         switch self {
         case .primary: return .white
-        case .warning, .info: return .black
+        case .warning: return .black
         case .success, .danger: return .white
         case .secondary: return .white
+        case .info: return .black
         }
     }
 
     var bgColor: UIColor {
         switch self {
         case .primary, .danger, .warning: return .black
-        case .secondary: return .darkGray
+        case .secondary: return .systemGray
         case .success: return .systemBlue
-        case .info: return .systemCyan
+        case .info: return .clear
         }
     }
 }
@@ -215,6 +216,37 @@ enum ProductBadge {
         case .avocadoPay: return "shield-solid"
         case .refundable: return "rotate-left-solid"
         case .handmade: return "hand-holding-heart-solid"
+        }
+    }
+}
+
+/**
+ - Description: 유저 요약 배지 enum
+ */
+enum UserBadge {
+    case premiumSeller
+    case premiumBuyer
+    case verified
+    case unverified
+    case comment(number: Int)
+    
+    var description: String {
+        switch self {
+        case .premiumSeller: return "프리미엄 판매자"
+        case .premiumBuyer: return "프리미엄 구매자"
+        case .verified: return "인증된 상품"
+        case .unverified: return "빠른 배송"
+        case .comment(let number): return "거래후기 \(number)"
+        }
+    }
+    
+    var image: String {
+        switch self {
+        case .premiumSeller: return "certificate-solid"
+        case .premiumBuyer: return "face-smile-solid"
+        case .verified: return "check-solid"
+        case .unverified: return "triangle-exclamation-solid"
+        case .comment: return "comment-dots-solid"
         }
     }
 }

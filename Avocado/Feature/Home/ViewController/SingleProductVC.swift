@@ -26,7 +26,7 @@ final class SingleProductVC: BaseVC {
     }
     private lazy var stackView = UIStackView().then {
         $0.axis = .vertical
-        $0.spacing = 30
+        $0.spacing = 20
     }
     
     private lazy var productImageCVLayout = UICollectionViewFlowLayout().then {
@@ -97,8 +97,10 @@ final class SingleProductVC: BaseVC {
     private lazy var uploaderNameStackView = UIStackView().then {
         $0.axis = .vertical
         $0.alignment = .leading
-        $0.distribution = .equalSpacing
+        $0.distribution = .fillEqually
         $0.spacing = 5
+        
+//        $0.backgroundColor = .systemCyan
     }
     
     private lazy var uploaderInfoStackView = UIStackView().then {
@@ -138,9 +140,9 @@ final class SingleProductVC: BaseVC {
     }
     
     private lazy var uploaderNameLabel = UILabel().then {
-        $0.text = "번개장터 킬러"
+        $0.text = "최애의 카르마"
         $0.numberOfLines = 1
-        $0.font = .systemFont(ofSize: 15, weight: .semibold)
+        $0.font = .systemFont(ofSize: 17, weight: .semibold)
         $0.textColor = .darkText
     }
     
@@ -155,15 +157,21 @@ final class SingleProductVC: BaseVC {
         $0.backgroundColor = .white
     }
     
+    private lazy var contourView = ContourView()
+    private lazy var contourView2 = ContourView()
+    private lazy var contourView3 = ContourView()
+    private lazy var contourView4 = ContourView()
     
     private lazy var buttomButtonStackView = UIStackView().then {
         $0.axis = .horizontal
         $0.spacing = 10
         $0.alignment = .center
         $0.distribution = .fillProportionally
+        $0.backgroundColor = .white
     }
+    private lazy var favButton = BottomButton(text: "좋아요", buttonType: .info)
     private lazy var purchaseButton = BottomButton(text: "결제하기", buttonType: .primary)
-    private lazy var dmButton = BottomButton(text: "DM보내기", buttonType: .secondary)
+    private lazy var dmButton = BottomButton(text: "채팅하기", buttonType: .secondary)
     
     private lazy var descriptionStackView = UIStackView().then {
         $0.axis = .vertical
@@ -194,34 +202,30 @@ final class SingleProductVC: BaseVC {
         $0.textColor = .darkGray
         $0.text =
         """
-        【状態】使用感なく非常に綺麗です。
+        2023년 4월 말에 구입
+        
+        - 아이패드 프로 5세대 M1 128기가 스페이스그레이입니다.
+        - 외관 S급입니다. 기능 이상 없습니다.
+        - 배터리효율 85퍼센트입니다.
+        - 구성은 풀박스에 펜슬수납 가능 케이스 함께 드립니다.
+        - 일산 직거래, 그 외 지역 택배거래합니다.
+        - 편하게 문의주세요.
+        
+        
+        오늘(27일) 구입한 아이패드 미니6 와이파이버전 64기가 모델을 팝니다..
+        오늘 쿠팡에서 새걸로 구입한 겁니다..
 
-        出品する理由
-        最新のPro12.9インチを購入したため
-        11インチの方を使用していなかったので！
-        出品させて頂きました。
+        게임용도로만 쓰려고 구입한건데, 문제는 제가 아이패드류는 처음써보는 거라는 겁니다..
+        안드로이드만 써 오다가 애플제품 한번 질러본건데
+        뒤로가기도 모르겠고 게임을 실행해도 그래서 게임종료도 못하겠고
+        짜증만 나고 화딱지만 나네요..
 
-        2023/04末に購入
+        그래서 바로 방출하렵니다..
 
-        【商品説明】
-        ・定価：148,800円
-        ・ストレージ：128GB
-        ・ネットワーク：Wi-Fi＋セルラー
-        ・色：スペースグレー
+        상태는 당연히 100프로 수준이고 강화유리 바로 붙였습니다..
 
-        【同梱物】
-        ・11インチiPad Pro
-        ・USB-C充電ケーブル(未使用)
-        ・USB-C電源アダプタ(未使用)
-
-
-        すり替え防止のため、返品・交換・返金不可
-        よろしくお願いします。
-
-        購入後に即フィルムとケースを着用し2ヶ月程の使用ですがキズ等なく非常に良い状態です。
-
-        フィルムは着けたまま発送させて頂きます。
-        ケースは多少の使用感ございますがご希望でしたらお付け致します。
+        박스 내용물 다 있습니다..
+        바로 가져가실분 연락주세요..
         """
     }
     
@@ -246,6 +250,7 @@ final class SingleProductVC: BaseVC {
         view.backgroundColor = .white
         
         navigationController?.setNavigationBarHidden(false, animated: true)
+        view.backgroundColor = .white
         
         // Configure productImageCV
         productImageCV.delegate = self
@@ -255,13 +260,17 @@ final class SingleProductVC: BaseVC {
     
     override func setLayout() {
         view.addSubview(scrollView)
+        view.addSubview(bottomView)
         scrollView.addSubview(stackView)
         
-        [dmButton, purchaseButton].forEach {
+        bottomView.addSubview(buttomButtonStackView)
+        bottomView.addSubview(contourView)
+        
+        [favButton, dmButton, purchaseButton].forEach {
             buttomButtonStackView.addArrangedSubview($0)
         }
         
-        [productImageCV, titleStackView, uploaderStackView, productBadgeStackView, descriptionStackView, legalView].forEach {
+        [productImageCV, titleStackView, contourView2, uploaderStackView, contourView4, productBadgeStackView, contourView3, descriptionStackView, legalView].forEach {
             stackView.addArrangedSubview($0)
         }
         
@@ -299,7 +308,8 @@ final class SingleProductVC: BaseVC {
     override func setConstraint() {
         
         scrollView.snp.makeConstraints {
-            $0.edges.equalToSuperview()
+            $0.top.left.right.equalToSuperview()
+            $0.bottom.equalTo(self.view.safeAreaLayoutGuide.snp.bottom)
         }
         
         stackView.snp.makeConstraints {
@@ -320,9 +330,9 @@ final class SingleProductVC: BaseVC {
             $0.horizontalEdges.equalToSuperview().inset(15)
         }
         
-//        uploaderNameStackView.snp.makeConstraints {
-//            $0.centerY.equalToSuperview()
-//        }
+        uploaderNameStackView.snp.makeConstraints {
+            $0.centerY.equalToSuperview()
+        }
         
         uploaderInfoStackView.snp.makeConstraints {
             $0.centerY.equalToSuperview()
@@ -338,6 +348,34 @@ final class SingleProductVC: BaseVC {
         
         profileImageView.snp.makeConstraints {
             $0.size.equalTo(60)
+        }
+        
+        bottomView.snp.makeConstraints {
+            $0.height.equalTo(80)
+            $0.horizontalEdges.equalToSuperview()
+            $0.bottom.equalTo(self.view.safeAreaLayoutGuide.snp.bottom)
+        }
+        
+        buttomButtonStackView.snp.makeConstraints {
+            $0.horizontalEdges.equalToSuperview().inset(10)
+            $0.centerY.equalToSuperview()
+        }
+        
+        contourView.snp.makeConstraints {
+            $0.horizontalEdges.equalToSuperview()
+            $0.top.equalToSuperview()
+        }
+        
+        contourView2.snp.makeConstraints {
+            $0.horizontalEdges.equalToSuperview().inset(40)
+        }
+        
+        contourView3.snp.makeConstraints {
+            $0.horizontalEdges.equalToSuperview().inset(40)
+        }
+        
+        contourView4.snp.makeConstraints {
+            $0.horizontalEdges.equalToSuperview().inset(40)
         }
     }
 }
@@ -360,17 +398,34 @@ extension SingleProductVC: UICollectionViewDelegateFlowLayout {
     }
 }
 
-//extension SingleProductVC: UIScrollViewDelegate {
-//    // MARK: - UIScrollViewDelegate
-//    func scrollViewDidScroll(_ scrollView: UIScrollView) {
-//        let yOffset = scrollView.contentOffset.y
-//        if yOffset > 50 {
-//            navigationController?.setNavigationBarHidden(false, animated: true) // 네비게이션바 표시
-//        } else {
-//            navigationController?.setNavigationBarHidden(true, animated: true) // 네비게이션바 숨기기
-//        }
-//    }
-//}
+extension SingleProductVC: UIScrollViewDelegate {
+    // MARK: - UIScrollViewDelegate
+    func scrollViewDidScroll(_ scrollView: UIScrollView) {
+        
+        UIView.animate(withDuration: 0.3) { [weak self] in
+            let yOffset = scrollView.contentOffset.y
+            if yOffset > 50 {
+                //            navigationController?.setNavigationBarHidden(false, animated: true) // 네비게이션바 표시
+                let appearance = UINavigationBarAppearance()
+                appearance.configureWithOpaqueBackground()
+                appearance.backgroundColor = .white
+                appearance.shadowColor = .white
+                
+                self?.navigationController?.navigationBar.standardAppearance = appearance
+                self?.navigationController?.navigationBar.scrollEdgeAppearance = appearance
+            } else {
+                //            navigationController?.setNavigationBarHidden(true, animated: true) // 네비게이션바 숨기기
+                let appearance = UINavigationBarAppearance()
+                appearance.configureWithOpaqueBackground()
+                appearance.backgroundColor = .clear
+                appearance.shadowColor = .clear
+                
+                self?.navigationController?.navigationBar.standardAppearance = appearance
+                self?.navigationController?.navigationBar.scrollEdgeAppearance = appearance
+            }
+        }
+    }
+}
 
 #if DEBUG && canImport(SwiftUI)
 import SwiftUI

@@ -23,7 +23,7 @@ extension UINavigationController {
         let label = UILabel().then {
             $0.text = title
             $0.textColor = .black
-            $0.font = .systemFont(ofSize: 14, weight: .bold)
+            $0.font = .systemFont(ofSize: 15, weight: .bold)
         }
         
         [logoImageView, label].forEach {

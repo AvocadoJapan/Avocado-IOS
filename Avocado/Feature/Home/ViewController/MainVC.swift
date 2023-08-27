@@ -188,11 +188,28 @@ final class MainVC: BaseVC {
 extension MainVC: UIScrollViewDelegate {
     // MARK: - UIScrollViewDelegate
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
-        let yOffset = scrollView.contentOffset.y
-        if yOffset > 50 {
-            navigationController?.setNavigationBarHidden(false, animated: true) // 네비게이션바 표시
-        } else {
-            navigationController?.setNavigationBarHidden(true, animated: true) // 네비게이션바 숨기기
+        
+        UIView.animate(withDuration: 0.3) { [weak self] in
+            let yOffset = scrollView.contentOffset.y
+            if yOffset > 50 {
+                //            navigationController?.setNavigationBarHidden(false, animated: true) // 네비게이션바 표시
+                let appearance = UINavigationBarAppearance()
+                appearance.configureWithOpaqueBackground()
+                appearance.backgroundColor = .white
+                appearance.shadowColor = .white
+                
+                self?.navigationController?.navigationBar.standardAppearance = appearance
+                self?.navigationController?.navigationBar.scrollEdgeAppearance = appearance
+            } else {
+                //            navigationController?.setNavigationBarHidden(true, animated: true) // 네비게이션바 숨기기
+                let appearance = UINavigationBarAppearance()
+                appearance.configureWithOpaqueBackground()
+                appearance.backgroundColor = .clear
+                appearance.shadowColor = .clear
+                
+                self?.navigationController?.navigationBar.standardAppearance = appearance
+                self?.navigationController?.navigationBar.scrollEdgeAppearance = appearance
+            }
         }
     }
 }
