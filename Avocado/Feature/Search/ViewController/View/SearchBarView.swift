@@ -12,7 +12,7 @@ import RxSwift
 import RxCocoa
 import RxRelay
 
-final class SearchBarV: UIView {
+final class SearchBarView: UIView {
     
     private lazy var searchView = UIView().then {
         $0.backgroundColor = .systemGray6
@@ -25,17 +25,19 @@ final class SearchBarV: UIView {
         UIImageView.appearance().tintColor = .darkGray
     }
     
-    var searchBarTextFiled = UITextField().then {
+    private var searchBarTextField = UITextField().then {
         $0.font = .systemFont(ofSize: 13)
         UITextField.appearance().tintColor = .black
     }
+    
+    public var userInput = PublishRelay<String>()
     
     private let disposeBag = DisposeBag()
     
     override init(frame: CGRect) {
         super.init(frame: .zero)
         
-        [searchImageView, searchBarTextFiled].forEach {
+        [searchImageView, searchBarTextField].forEach {
             searchView.addSubview($0)
         }
         addSubview(searchView)
@@ -51,7 +53,7 @@ final class SearchBarV: UIView {
             $0.centerY.equalToSuperview()
         }
         
-        searchBarTextFiled.snp.makeConstraints {
+        searchBarTextField.snp.makeConstraints {
             $0.left.equalTo(searchImageView.snp.right).offset(10)
             $0.top.bottom.equalToSuperview()
             $0.right.equalToSuperview()
@@ -65,19 +67,37 @@ final class SearchBarV: UIView {
     convenience init(placeholder : String) {
         self.init(frame: .zero)
         
-        self.searchBarTextFiled.placeholder = placeholder
+        self.searchBarTextField.placeholder = placeholder
         
-        searchBarTextFiled.rx.controlEvent(.editingDidEndOnExit)
+        // userInputBinding
+        searchBarTextField
+            .rx
+            .text
+            .orEmpty
+            .filter { !$0.isEmpty }
+            .bind(to: userInput)
+            .disposed(by: disposeBag)
+        
+        searchBarTextField
+            .rx
+            .controlEvent(.editingDidEndOnExit)
             .subscribe(onNext: { [weak self] _ in
-                self?.searchBarTextFiled.resignFirstResponder()
+                self?.searchBarTextField.resignFirstResponder()
             })
             .disposed(by: disposeBag)
         
     }
     
+    /**
+     * - Description 키보드 hidden 메서드
+     */
+    public func keyboardHidden() {
+        searchBarTextField.resignFirstResponder()
+    }
+    
     // override touchesBegan (키보드 내리기)
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
-        self.searchBarTextFiled.resignFirstResponder()
+        self.searchBarTextField.resignFirstResponder()
     }
 }
 
@@ -86,7 +106,7 @@ final class SearchBarV: UIView {
 import SwiftUI
 struct SearchBarVPreview:PreviewProvider {
     static var previews: some View {
-        return SearchBarV().toPreview().previewLayout(.fixed(width: 400, height: 50))
+        return SearchBarView().toPreview().previewLayout(.fixed(width: 400, height: 50))
     }
 }
 #endif

@@ -26,15 +26,15 @@ final class RegionSettingVM: ViewModelType, Stepper {
     }
     
     struct Input {
-        var searchTextRelay = PublishRelay<String>()
-        let regionIdRelay = BehaviorRelay<String>(value: "")
-        let actionViewDidLoad = PublishRelay<Void>()
+        var searchTextPublish = PublishRelay<String>()
+        let regionIdBehavior = BehaviorRelay<String>(value: "")
+        let actionViewDidLoadPublish = PublishRelay<Void>()
     }
     
     struct Output {
-        let regionsRelay = BehaviorRelay<[Region]>(value: [])
-        let locationRelay = BehaviorRelay<CLLocation?>(value: nil)
-        let errorRelay = PublishRelay<NetworkError>()
+        let regionsBehavior = BehaviorRelay<[Region]>(value: [])
+        let locationBehavior = BehaviorRelay<CLLocation?>(value: nil)
+        let errorEventPublish = PublishRelay<AvocadoError>()
     }
     
     init(service: AuthService) {
@@ -45,40 +45,35 @@ final class RegionSettingVM: ViewModelType, Stepper {
     func transform(input: Input) -> Output {
         let output = Output()
         
-        input.actionViewDidLoad.flatMap { [weak self] _ in
-            guard let self = self else { throw NetworkError.unknown(-1, "유효하지 않은 화면입니다") }
-            return self.service.getRegions(keyword: "", depth: 3)
+        input.actionViewDidLoadPublish
+            .flatMap { [weak self] _ -> Observable<Regions> in
+                return self?.service.getRegions(
+                    keyword: "",
+                    depth: 3
+                )
+                .catch { error in
+                    Logger.e("::: viewDidLoad asdasdasdasd")
+                    if let error = error as? AvocadoError { output.errorEventPublish.accept(error) }
+                    return .empty()
+                } ?? .empty()
         }
-        .subscribe { regions in
-            output.regionsRelay.accept(regions)
-        } onError: { error in
-            if let error = error as? NetworkError {
-                output.errorRelay.accept(error)
-            }
-            else {
-                output.errorRelay.accept(NetworkError.unknown(-1, error.localizedDescription))
-            }
-        }
+        .subscribe { output.regionsBehavior.accept($0) }
         .disposed(by: disposeBag)
-
         
-        input.searchTextRelay
+        input.searchTextPublish
             .debounce(RxTimeInterval.milliseconds(200), scheduler: MainScheduler.instance)
             .distinctUntilChanged()
-            .flatMap({ [weak self] keyword in
-                guard let self = self else { throw NetworkError.unknown(-1, "유효하지 않은 화면입니다") }
-                return self.service.getRegions(keyword: keyword, depth: 3)
-            })
-            .subscribe(onNext: { regions in
-                output.regionsRelay.accept(regions)
-            }, onError: { error in
-                if let error = error as? NetworkError {
-                    output.errorRelay.accept(error)
-                }
-                else {
-                    output.errorRelay.accept(NetworkError.unknown(-1, error.localizedDescription))
-                }
-            })
+            .flatMap { [weak self] keyword -> Observable<Regions> in
+                return self?.service.getRegions(
+                    keyword: keyword,
+                    depth: 3
+                )
+                .catch { error in
+                    if let error = error as? AvocadoError { output.errorEventPublish.accept(error) }
+                    return .empty()
+                } ?? .empty()
+            }
+            .subscribe { output.regionsBehavior.accept($0) }
             .disposed(by: disposeBag)
         
         return output

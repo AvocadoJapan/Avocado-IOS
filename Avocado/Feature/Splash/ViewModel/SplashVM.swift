@@ -60,7 +60,11 @@ final class SplashVM: Stepper {
                             throw NetworkError.tokenIsRequired
                         }
                         
-                        return self.authService.login(email: testAccountEmail, password: testAccountPassword).flatMap { _ -> Observable<User> in
+                        return self.authService.login(
+                            email: testAccountEmail,
+                            password: testAccountPassword
+                        )
+                        .flatMap { _ -> Observable<User> in
                             return self.authService.getProfile()
                         }
                     }

@@ -22,7 +22,7 @@ final class RegionSettingVC: BaseVC {
         $0.font = UIFont.systemFont(ofSize: 25, weight: .heavy)
     }
 
-    private lazy var searchBar = SearchBarV(placeholder: "서울, 서초구, 강남 등")
+    private lazy var searchBar = SearchBarView(placeholder: "서울, 서초구, 강남 등")
 
     private lazy var confirmButton = BottomButton(text: "확인")
     
@@ -56,7 +56,7 @@ final class RegionSettingVC: BaseVC {
     override func viewDidLoad() {
         super.viewDidLoad()
         // 지역 정보 조회 API call
-        viewModel.input.actionViewDidLoad.accept(())
+        viewModel.input.actionViewDidLoadPublish.accept(())
     }
     
     override func setProperty() {
@@ -99,19 +99,16 @@ final class RegionSettingVC: BaseVC {
     override func bindUI() {
         let output = viewModel.transform(input: viewModel.input)
         
-        searchBar.searchBarTextFiled
-            .rx
-            .text
-            .orEmpty
-            .distinctUntilChanged()
-            .bind(to: viewModel.input.searchTextRelay)
+        searchBar
+            .userInput
+            .bind(to: viewModel.input.searchTextPublish)
             .disposed(by: disposeBag)
         
         tableView
             .rx
             .modelSelected(Region.self)
             .subscribe(onNext: { [weak self] data in
-                self?.viewModel.input.regionIdRelay.accept(data.id)
+                self?.viewModel.input.regionIdBehavior.accept(data.id)
             })
             .disposed(by: disposeBag)
         
@@ -119,6 +116,7 @@ final class RegionSettingVC: BaseVC {
             .rx
             .tap
             .asDriver()
+            .do(onNext: { [weak self] _ in self?.searchBar.keyboardHidden() })
             .drive(onNext: { [weak self] _ in
                 self?.viewModel.steps.accept(AuthStep.profileIsRequired)
             })
@@ -133,13 +131,13 @@ final class RegionSettingVC: BaseVC {
             .disposed(by: disposeBag)
         
         //MARK: OUTPUT BINDING
-        output.regionsRelay
+        output.regionsBehavior
             .bind(to: tableView.rx.items(cellIdentifier: RegionTVCell.identifier, cellType: RegionTVCell.self)) { _, region, cell in
                 cell.configure(with: region)
             }
             .disposed(by: disposeBag)
         
-        output.errorRelay
+        output.errorEventPublish
             .subscribe(onNext: { error in
                 Logger.e(error.errorDescription)
             })

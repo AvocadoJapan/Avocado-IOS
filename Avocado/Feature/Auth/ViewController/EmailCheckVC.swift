@@ -44,10 +44,8 @@ final class EmailCheckVC: BaseVC {
         $0.font = UIFont.systemFont(ofSize: 14, weight: .semibold)
     }
     
-    // FIXME: 다시보내기 구현
     private lazy var reqNewCodeButton: SubButton = SubButton(text: "인증번호 다시 보내기")
     
-    // FIXME: 이 버튼을 누를 경우 인증번호를 보낸 계정이 미인증 계정일때 그 미인증계정을 삭제해야함
     private lazy var otherEmailButton: SubButton = SubButton(text: "다른 이메일로 인증하기")
     
     private lazy var accountCenterButton: SubButton = SubButton(text: "계정 센터")
@@ -131,9 +129,7 @@ final class EmailCheckVC: BaseVC {
         
         confirmCodeInput
             .userInput
-            .subscribe(onNext: { [weak self] text in
-                self?.viewModel.input.confirmCodeRelay.accept(text)
-            })
+            .bind(to: viewModel.input.confirmCodeRelay)
             .disposed(by: disposeBag)
         
         // 이메일 재 전송
@@ -158,6 +154,15 @@ final class EmailCheckVC: BaseVC {
             })
             .disposed(by: disposeBag)
         
+        // 이메일 인증 성공
+        output
+            .successEmailCheckPublish
+            .asSignal()
+            .emit(onNext: { [weak self] _ in
+                self?.viewModel.steps.accept(AuthStep.regionIsRequired)
+            })
+            .disposed(by: disposeBag)
+        
         output
             .errEventPublish
             .asSignal()
@@ -174,9 +179,6 @@ final class EmailCheckVC: BaseVC {
             .tap
             .asDriver()
             .throttle(.seconds(3), latest: false)
-            .do(onNext: { [weak self] _ in
-                self?.confirmButton.isEnabled = false
-            })
             .drive(onNext: { [weak self] void in
                 self?.viewModel.input.actionConfirmSignUpCodeRelay.accept(void)
                 /* Mocking
@@ -206,7 +208,8 @@ final class EmailCheckVC: BaseVC {
             .disposed(by: disposeBag)
         
         //키보드 버튼 애니메이션
-        RxKeyboard.instance.visibleHeight
+        RxKeyboard.instance
+                .visibleHeight
                 .skip(1)
                 .drive(onNext: { [weak self] height in
                     guard let self = self else { return }
@@ -215,7 +218,9 @@ final class EmailCheckVC: BaseVC {
                 .disposed(by: disposeBag)
                 
         // Notification
-        NotificationCenter.default.rx
+        NotificationCenter
+                .default
+                .rx
                 .notification(Notification.Name("reloadEmailCheck"))
                 .withUnretained(self)
                 .bind { [weak self] (_, notification) in

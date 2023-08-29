@@ -179,6 +179,17 @@ final class SignupVC: BaseVC {
             .disposed(by: disposeBag)
         
         //MARK: - OUTPUT BINDING
+        output.successEventPublish
+        .asSignal()
+        .emit(onNext: { [weak self] isSuccess in
+            guard let self = self else { return }
+            self.viewModel.steps.accept(AuthStep.emailCheckIsRequired(
+                email: self.viewModel.input.emailBehavior.value,
+                password: self.viewModel.input.passwordBehavior.value)
+            )
+        })
+        .disposed(by: disposeBag)
+        
         output.errEventPublish
             .asSignal()
             .emit(onNext: { [weak self] err in
@@ -188,7 +199,6 @@ final class SignupVC: BaseVC {
                 self?.present(alert, animated: true)
             })
             .disposed(by: disposeBag)
-        
         
         output
             .isVaildBehavior

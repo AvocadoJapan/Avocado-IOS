@@ -134,9 +134,7 @@ final class ProfileSettingVC: BaseVC {
             .rx
             .tap
             .asDriver()
-            .do(onNext: { [weak self] _ in
-                self?.confirmButton.isEnabled = true
-            })
+            .throttle(.seconds(3), latest: false)
             .drive(onNext: { [weak self] void in
                 self?.viewModel.input.actionProfileSetUpRelay.accept(void)
                 /* mocking
@@ -148,9 +146,6 @@ final class ProfileSettingVC: BaseVC {
         //MARK: - OUTPUT BINDING
         output.successSignUpeRelay
             .asSignal()
-            .do(onNext: {[weak self] _ in
-                self?.confirmButton.isEnabled = true
-            })
             .emit(onNext: { [weak self] _ in
                 self?.viewModel.steps.accept(AuthStep.loginIsComplete)
             })
@@ -158,9 +153,6 @@ final class ProfileSettingVC: BaseVC {
             
         output.errEventPublish
             .asSignal()
-            .do(onNext: { [weak self] _ in
-                self?.confirmButton.isEnabled = true
-            })
             .emit(onNext: { [weak self] err in
                 let alert = UIAlertController(title: "", message: err.errorDescription , preferredStyle: .alert)
                 alert.addAction(UIAlertAction(title: "확인", style: .default))
