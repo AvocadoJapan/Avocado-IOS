@@ -66,6 +66,15 @@
 		B1B1EA132A5973C7007B1894 /* SettingTVCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1B1EA122A5973C7007B1894 /* SettingTVCell.swift */; };
 		B1B1EA162A599904007B1894 /* SettingSectionModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1B1EA152A599904007B1894 /* SettingSectionModel.swift */; };
 		B1BFDD672A49CF8100DB4955 /* LoginVM.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1BFDD662A49CF8100DB4955 /* LoginVM.swift */; };
+		B1C35AED2A9DCA1800C97A3D /* ProfileVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1C35AEC2A9DCA1800C97A3D /* ProfileVC.swift */; };
+		B1C35AEF2A9DCA2900C97A3D /* ProfileVM.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1C35AEE2A9DCA2900C97A3D /* ProfileVM.swift */; };
+		B1C35AF12A9DCAA800C97A3D /* ProfileAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1C35AF02A9DCAA800C97A3D /* ProfileAPI.swift */; };
+		B1C35AF32A9DCAB200C97A3D /* ProfileService.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1C35AF22A9DCAB200C97A3D /* ProfileService.swift */; };
+		B1C35AF62A9DCEFB00C97A3D /* ProfileHeaderReusableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1C35AF52A9DCEFB00C97A3D /* ProfileHeaderReusableView.swift */; };
+		B1C35AFA2A9DEA1F00C97A3D /* PopOverVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1C35AF92A9DEA1F00C97A3D /* PopOverVC.swift */; };
+		B1C35AFC2A9DEF1C00C97A3D /* OptionSilderCVCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1C35AFB2A9DEF1C00C97A3D /* OptionSilderCVCell.swift */; };
+		B1C35AFE2A9DF45700C97A3D /* ProfileDataSectionModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1C35AFD2A9DF45700C97A3D /* ProfileDataSectionModel.swift */; };
+		B1C35B002A9DF4A800C97A3D /* ProfileDataModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1C35AFF2A9DF4A800C97A3D /* ProfileDataModel.swift */; };
 		B1C8B7C32A7CD99A005B1D3D /* S3Service.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1C8B7C22A7CD99A005B1D3D /* S3Service.swift */; };
 		B1D23D392A4C6245006A2848 /* WelcomeVM.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1D23D382A4C6245006A2848 /* WelcomeVM.swift */; };
 		B1D23D3F2A4C74F6006A2848 /* AvatarModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1D23D3E2A4C74F6006A2848 /* AvatarModel.swift */; };
@@ -192,6 +201,15 @@
 		B1B1EA122A5973C7007B1894 /* SettingTVCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingTVCell.swift; sourceTree = "<group>"; };
 		B1B1EA152A599904007B1894 /* SettingSectionModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingSectionModel.swift; sourceTree = "<group>"; };
 		B1BFDD662A49CF8100DB4955 /* LoginVM.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginVM.swift; sourceTree = "<group>"; };
+		B1C35AEC2A9DCA1800C97A3D /* ProfileVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileVC.swift; sourceTree = "<group>"; };
+		B1C35AEE2A9DCA2900C97A3D /* ProfileVM.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileVM.swift; sourceTree = "<group>"; };
+		B1C35AF02A9DCAA800C97A3D /* ProfileAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileAPI.swift; sourceTree = "<group>"; };
+		B1C35AF22A9DCAB200C97A3D /* ProfileService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileService.swift; sourceTree = "<group>"; };
+		B1C35AF52A9DCEFB00C97A3D /* ProfileHeaderReusableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileHeaderReusableView.swift; sourceTree = "<group>"; };
+		B1C35AF92A9DEA1F00C97A3D /* PopOverVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PopOverVC.swift; sourceTree = "<group>"; };
+		B1C35AFB2A9DEF1C00C97A3D /* OptionSilderCVCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OptionSilderCVCell.swift; sourceTree = "<group>"; };
+		B1C35AFD2A9DF45700C97A3D /* ProfileDataSectionModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileDataSectionModel.swift; sourceTree = "<group>"; };
+		B1C35AFF2A9DF4A800C97A3D /* ProfileDataModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileDataModel.swift; sourceTree = "<group>"; };
 		B1C8B7C22A7CD99A005B1D3D /* S3Service.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = S3Service.swift; sourceTree = "<group>"; };
 		B1D23D382A4C6245006A2848 /* WelcomeVM.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WelcomeVM.swift; sourceTree = "<group>"; };
 		B1D23D3E2A4C74F6006A2848 /* AvatarModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AvatarModel.swift; sourceTree = "<group>"; };
@@ -455,10 +473,11 @@
 			isa = PBXGroup;
 			children = (
 				B22ECA2A2A75974B00CCA794 /* AppFlow.swift */,
-				B22ECA2C2A75975C00CCA794 /* AppStepper.swift */,
 				B22ECA2E2A75976500CCA794 /* AppStep.swift */,
+				B22ECA2C2A75975C00CCA794 /* AppStepper.swift */,
 				B19E83252A6025A2004C5DE2 /* Auth */,
 				04BA131F2A2AD9FB0004E2FB /* Home */,
+				B1C35AE62A9DC9C600C97A3D /* Profile */,
 				B19E83262A6025A6004C5DE2 /* Search */,
 				98FD1C212A56AD0F0031D7C1 /* Setting */,
 				9848A8B42A5D86E0008D43F5 /* Splash */,
@@ -663,6 +682,70 @@
 				B1B1EA152A599904007B1894 /* SettingSectionModel.swift */,
 			);
 			path = Model;
+			sourceTree = "<group>";
+		};
+		B1C35AE62A9DC9C600C97A3D /* Profile */ = {
+			isa = PBXGroup;
+			children = (
+				B1C35AEB2A9DC9F300C97A3D /* Flow */,
+				B1C35AE72A9DC9D000C97A3D /* Model */,
+				B1C35AEA2A9DC9EC00C97A3D /* ViewModel */,
+				B1C35AE82A9DC9D800C97A3D /* ViewController */,
+				B1C35AE92A9DC9E000C97A3D /* Service */,
+			);
+			path = Profile;
+			sourceTree = "<group>";
+		};
+		B1C35AE72A9DC9D000C97A3D /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				B1C35AFD2A9DF45700C97A3D /* ProfileDataSectionModel.swift */,
+				B1C35AFF2A9DF4A800C97A3D /* ProfileDataModel.swift */,
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
+		B1C35AE82A9DC9D800C97A3D /* ViewController */ = {
+			isa = PBXGroup;
+			children = (
+				B1C35AF42A9DCEC000C97A3D /* View */,
+				B1C35AEC2A9DCA1800C97A3D /* ProfileVC.swift */,
+				B1C35AF92A9DEA1F00C97A3D /* PopOverVC.swift */,
+			);
+			path = ViewController;
+			sourceTree = "<group>";
+		};
+		B1C35AE92A9DC9E000C97A3D /* Service */ = {
+			isa = PBXGroup;
+			children = (
+				B1C35AF02A9DCAA800C97A3D /* ProfileAPI.swift */,
+				B1C35AF22A9DCAB200C97A3D /* ProfileService.swift */,
+			);
+			path = Service;
+			sourceTree = "<group>";
+		};
+		B1C35AEA2A9DC9EC00C97A3D /* ViewModel */ = {
+			isa = PBXGroup;
+			children = (
+				B1C35AEE2A9DCA2900C97A3D /* ProfileVM.swift */,
+			);
+			path = ViewModel;
+			sourceTree = "<group>";
+		};
+		B1C35AEB2A9DC9F300C97A3D /* Flow */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Flow;
+			sourceTree = "<group>";
+		};
+		B1C35AF42A9DCEC000C97A3D /* View */ = {
+			isa = PBXGroup;
+			children = (
+				B1C35AF52A9DCEFB00C97A3D /* ProfileHeaderReusableView.swift */,
+				B1C35AFB2A9DEF1C00C97A3D /* OptionSilderCVCell.swift */,
+			);
+			path = View;
 			sourceTree = "<group>";
 		};
 		B2198B8B2A2A36EA0019032D = {
@@ -979,6 +1062,7 @@
 			files = (
 				B22222652A55F40100A2B7CB /* PrivacyAccessVC.swift in Sources */,
 				98FD1C232A56AD230031D7C1 /* SettingVC.swift in Sources */,
+				B1C35AEF2A9DCA2900C97A3D /* ProfileVM.swift in Sources */,
 				98FD1C252A56AE860031D7C1 /* SettingVM.swift in Sources */,
 				B26A3B6B2A60BB6100AD61A5 /* SplashStep.swift in Sources */,
 				981A598A2A494F5C0031A917 /* SignUpVM.swift in Sources */,
@@ -1002,6 +1086,7 @@
 				B2827C2D2A9712AF00AC3D4B /* ProductGroupHeaderReusableView.swift in Sources */,
 				B1A301BF2A543A2F003834E6 /* BaseNavigationVC.swift in Sources */,
 				9848A8B82A5D870A008D43F5 /* SplashVM.swift in Sources */,
+				B1C35AFA2A9DEA1F00C97A3D /* PopOverVC.swift in Sources */,
 				04C835F12A2B2CFA00731E3E /* MainDataModel.swift in Sources */,
 				B212D5872A45E8F40008DAD1 /* LoginVC.swift in Sources */,
 				B1A301AF2A5439F0003834E6 /* CollectionView+Protocol.swift in Sources */,
@@ -1041,12 +1126,14 @@
 				B2E2AC802A4772D3003DAE88 /* WelcomeVC.swift in Sources */,
 				B2198B9A2A2A36EA0019032D /* SceneDelegate.swift in Sources */,
 				B22ECA322A7789D900CCA794 /* MainFlow.swift in Sources */,
+				B1C35AF32A9DCAB200C97A3D /* ProfileService.swift in Sources */,
 				04BA13212A2ADA160004E2FB /* MainVC.swift in Sources */,
 				04BA13262A2ADAEE0004E2FB /* MainVM.swift in Sources */,
 				B21E58F42A574A46007CCAA0 /* RegionSettingVC.swift in Sources */,
 				B29D78932A2B6FCF008B6945 /* SearchVM.swift in Sources */,
 				B26A3B692A60BB5100AD61A5 /* SplashFlow.swift in Sources */,
 				B2F3F47A2A4B6570007994DC /* EmailCheckVC.swift in Sources */,
+				B1C35AFE2A9DF45700C97A3D /* ProfileDataSectionModel.swift in Sources */,
 				B20AFE682A2BAE73004A646B /* SearchBarView.swift in Sources */,
 				98AD10FF2A4BF2E7001C4734 /* AuthAPI.swift in Sources */,
 				B26A3B662A60AB8400AD61A5 /* AuthStep.swift in Sources */,
@@ -1058,17 +1145,22 @@
 				B29EC4742A9338BE001D1E6C /* MainAPI.swift in Sources */,
 				B1B1EA162A599904007B1894 /* SettingSectionModel.swift in Sources */,
 				B28892072A6E569800952A10 /* FadeAnimation.swift in Sources */,
+				B1C35AF12A9DCAA800C97A3D /* ProfileAPI.swift in Sources */,
 				B29EC4762A934991001D1E6C /* EnumCountable+Protocol.swift in Sources */,
 				B248C6AB2A86C918006AE008 /* MainService.swift in Sources */,
 				9816F6EB2A494AF400A7A284 /* DTOResponseable.swift in Sources */,
+				B1C35AED2A9DCA1800C97A3D /* ProfileVC.swift in Sources */,
 				98FD1C282A56B3860031D7C1 /* SettingService.swift in Sources */,
 				9816F6EF2A494B1B00A7A284 /* NetworkError.swift in Sources */,
 				9816F6E22A494A5900A7A284 /* BaseAPIService.swift in Sources */,
+				B1C35B002A9DF4A800C97A3D /* ProfileDataModel.swift in Sources */,
 				B293420E2A58579C00F5CF30 /* RegionTVCell.swift in Sources */,
 				B22ECA382A778E8000CCA794 /* SettingFlow.swift in Sources */,
 				B1A301A62A5439E7003834E6 /* UIViewController+Extension.swift in Sources */,
+				B1C35AF62A9DCEFB00C97A3D /* ProfileHeaderReusableView.swift in Sources */,
 				98AD11012A4BF713001C4734 /* UserModel.swift in Sources */,
 				B18F1A002A5ED730003440B6 /* Util.swift in Sources */,
+				B1C35AFC2A9DEF1C00C97A3D /* OptionSilderCVCell.swift in Sources */,
 				B1A301A72A5439E7003834E6 /* UIView+Extension.swift in Sources */,
 				B2D2764E2A6C4D6A00441719 /* OtherEmailVC.swift in Sources */,
 				B1A301AB2A5439EC003834E6 /* KeychainUtil.swift in Sources */,
