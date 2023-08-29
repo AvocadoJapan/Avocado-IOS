@@ -94,49 +94,20 @@ final class SingleProductVC: BaseVC {
         $0.spacing = 20
     }
     
+    // 유저이름, 가입년월 스택뷰
     private lazy var uploaderNameStackView = UIStackView().then {
         $0.axis = .vertical
         $0.alignment = .leading
-        $0.distribution = .fillEqually
+        $0.distribution = .fillProportionally
         $0.spacing = 5
-        
-//        $0.backgroundColor = .systemCyan
     }
     
-    private lazy var uploaderInfoStackView = UIStackView().then {
+    // 유저 배지 스택뷰
+    private lazy var uploaderBadgeStackView = UIStackView().then {
         $0.axis = .vertical
         $0.alignment = .leading
         $0.distribution = .fillEqually
-        $0.spacing = 5
-    }
-    
-    private lazy var userSingupDateLabel = UILabel().then {
-        $0.text = "2023년 3월 10일 가입"
-        $0.numberOfLines = 1
-        $0.font = .systemFont(ofSize: 12, weight: .regular)
-        $0.textColor = .gray
-    }
-    
-    
-    private lazy var starRateLabel = UILabel().then {
-        $0.text = "⭐️ 프리미엄 판매자"
-        $0.numberOfLines = 1
-        $0.font = .systemFont(ofSize: 12, weight: .regular)
-        $0.textColor = .gray
-    }
-    
-    private lazy var reviewLabel = UILabel().then {
-        $0.text = "💬 거래후기 345"
-        $0.numberOfLines = 1
-        $0.font = .systemFont(ofSize: 12, weight: .regular)
-        $0.textColor = .gray
-    }
-    
-    private lazy var userCertificateLabel = UILabel().then {
-        $0.text = "⚠️ 본인 인증 미완료"
-        $0.numberOfLines = 1
-        $0.font = .systemFont(ofSize: 12, weight: .regular)
-        $0.textColor = .systemRed
+        $0.spacing = 10
     }
     
     private lazy var uploaderNameLabel = UILabel().then {
@@ -146,6 +117,20 @@ final class SingleProductVC: BaseVC {
         $0.textColor = .darkText
     }
     
+    private lazy var userSingupDateLabel = UILabel().then {
+        $0.text = "2023년 3월 10일 가입"
+        $0.numberOfLines = 1
+        $0.font = .systemFont(ofSize: 12, weight: .regular)
+        $0.textColor = .gray
+    }
+    
+    // 유저 배지
+    private lazy var userBadge = UserBadgeView(type: .comment(number: 239))
+    private lazy var userBadge1 = UserBadgeView(type: .premiumBuyer)
+    private lazy var userBadge2 = UserBadgeView(type: .premiumSeller)
+    private lazy var userBadge3 = UserBadgeView(type: .unverified)
+    private lazy var userBadge4 = UserBadgeView(type: .verified)
+    
     private lazy var profileImageView = UIImageView().then {
         $0.contentMode = .scaleAspectFill
         $0.layer.cornerRadius = 60/2
@@ -153,6 +138,7 @@ final class SingleProductVC: BaseVC {
         $0.backgroundColor = .systemGray5
     }
     
+    // 하단 고정뷰 (좋아요 채팅, 결제 등)
     private lazy var bottomView = UIView().then {
         $0.backgroundColor = .white
     }
@@ -284,7 +270,7 @@ final class SingleProductVC: BaseVC {
             titleStackView.addArrangedSubview($0)
         }
         
-        [profileImageView, uploaderNameStackView, uploaderInfoStackView].forEach {
+        [profileImageView, uploaderNameStackView, uploaderBadgeStackView].forEach {
             uploaderStackView.addArrangedSubview($0)
         }
         
@@ -292,8 +278,8 @@ final class SingleProductVC: BaseVC {
             uploaderNameStackView.addArrangedSubview($0)
         }
         
-        [starRateLabel, reviewLabel, userCertificateLabel].forEach {
-            uploaderInfoStackView.addArrangedSubview($0)
+        [userBadge, userBadge1, userBadge2, userBadge3, userBadge4].forEach {
+            uploaderBadgeStackView.addArrangedSubview($0)
         }
         
         [locationLabel, dotLabel, updateAtLabel].forEach {
@@ -334,7 +320,7 @@ final class SingleProductVC: BaseVC {
             $0.centerY.equalToSuperview()
         }
         
-        uploaderInfoStackView.snp.makeConstraints {
+        uploaderBadgeStackView.snp.makeConstraints {
             $0.centerY.equalToSuperview()
         }
         
@@ -398,32 +384,52 @@ extension SingleProductVC: UICollectionViewDelegateFlowLayout {
     }
 }
 
+extension SingleProductVC {
+    override func viewWillAppear(_ animated: Bool) {
+        let yOffset = scrollView.contentOffset.y
+        let threshold: CGFloat = 100
+        var alpha: CGFloat = yOffset / threshold
+        
+        alpha = min(1.0, max(0.0, alpha))
+        
+        let appearance = UINavigationBarAppearance()
+        appearance.configureWithOpaqueBackground()
+        
+        if alpha >= 1.0 {
+            appearance.backgroundColor = .white
+            appearance.shadowColor = .systemGray6
+        } else {
+            appearance.backgroundColor = UIColor(white: 1.0, alpha: alpha)
+            appearance.shadowColor = .clear
+        }
+
+        navigationController?.navigationBar.standardAppearance = appearance
+        navigationController?.navigationBar.scrollEdgeAppearance = appearance
+    }
+}
+
 extension SingleProductVC: UIScrollViewDelegate {
     // MARK: - UIScrollViewDelegate
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
+        let yOffset = scrollView.contentOffset.y
+        let threshold: CGFloat = 100
+        var alpha: CGFloat = yOffset / threshold
         
-        UIView.animate(withDuration: 0.3) { [weak self] in
-            let yOffset = scrollView.contentOffset.y
-            if yOffset > 50 {
-                //            navigationController?.setNavigationBarHidden(false, animated: true) // 네비게이션바 표시
-                let appearance = UINavigationBarAppearance()
-                appearance.configureWithOpaqueBackground()
-                appearance.backgroundColor = .white
-                appearance.shadowColor = .white
-                
-                self?.navigationController?.navigationBar.standardAppearance = appearance
-                self?.navigationController?.navigationBar.scrollEdgeAppearance = appearance
-            } else {
-                //            navigationController?.setNavigationBarHidden(true, animated: true) // 네비게이션바 숨기기
-                let appearance = UINavigationBarAppearance()
-                appearance.configureWithOpaqueBackground()
-                appearance.backgroundColor = .clear
-                appearance.shadowColor = .clear
-                
-                self?.navigationController?.navigationBar.standardAppearance = appearance
-                self?.navigationController?.navigationBar.scrollEdgeAppearance = appearance
-            }
+        alpha = min(1.0, max(0.0, alpha))
+        
+        let appearance = UINavigationBarAppearance()
+        appearance.configureWithOpaqueBackground()
+        
+        if alpha >= 1.0 {
+            appearance.backgroundColor = .white
+            appearance.shadowColor = .systemGray6
+        } else {
+            appearance.backgroundColor = UIColor(white: 1.0, alpha: alpha)
+            appearance.shadowColor = .clear
         }
+
+        navigationController?.navigationBar.standardAppearance = appearance
+        navigationController?.navigationBar.scrollEdgeAppearance = appearance
     }
 }
 

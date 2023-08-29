@@ -223,7 +223,7 @@ enum ProductBadge {
 /**
  - Description: 유저 요약 배지 enum
  */
-enum UserBadge {
+enum UserBadge: Equatable {
     case premiumSeller
     case premiumBuyer
     case verified
@@ -234,8 +234,8 @@ enum UserBadge {
         switch self {
         case .premiumSeller: return "프리미엄 판매자"
         case .premiumBuyer: return "프리미엄 구매자"
-        case .verified: return "인증된 상품"
-        case .unverified: return "빠른 배송"
+        case .verified: return "본인인증 완료"
+        case .unverified: return "본인인증 미완료"
         case .comment(let number): return "거래후기 \(number)"
         }
     }
