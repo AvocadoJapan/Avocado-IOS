@@ -266,7 +266,7 @@ struct MainVCPreview: PreviewProvider {
                     service: MainService()
                 )
             )
-        ).toPreview()
+        ).toPreview().ignoresSafeArea()
     }
 }
 #endif
