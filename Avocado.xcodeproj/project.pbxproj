@@ -96,6 +96,12 @@
 		B2382C6A2A6FD55D00A24AE3 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = B2382C682A6FD55D00A24AE3 /* Localizable.strings */; };
 		B2382C6D2A6FD56400A24AE3 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = B2382C6B2A6FD56400A24AE3 /* Localizable.strings */; };
 		B23B24ED2A8C528800F179A7 /* LegalView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B23B24EC2A8C528800F179A7 /* LegalView.swift */; };
+		B240D71E2A9F107600DF171D /* UploadVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = B240D71D2A9F107600DF171D /* UploadVC.swift */; };
+		B240D7202A9F108400DF171D /* UploadVM.swift in Sources */ = {isa = PBXBuildFile; fileRef = B240D71F2A9F108400DF171D /* UploadVM.swift */; };
+		B240D7222A9F109200DF171D /* UploadService.swift in Sources */ = {isa = PBXBuildFile; fileRef = B240D7212A9F109200DF171D /* UploadService.swift */; };
+		B240D7242A9F10AD00DF171D /* UploadAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = B240D7232A9F10AD00DF171D /* UploadAPI.swift */; };
+		B240D7262A9F10D400DF171D /* UploadFlow.swift in Sources */ = {isa = PBXBuildFile; fileRef = B240D7252A9F10D400DF171D /* UploadFlow.swift */; };
+		B240D7282A9F10E300DF171D /* UploadStep.swift in Sources */ = {isa = PBXBuildFile; fileRef = B240D7272A9F10E300DF171D /* UploadStep.swift */; };
 		B240FB352A994C8E00F365BB /* ProductBadgeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B240FB342A994C8E00F365BB /* ProductBadgeView.swift */; };
 		B240FB372A9A7FFC00F365BB /* ContourView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B240FB362A9A7FFC00F365BB /* ContourView.swift */; };
 		B247C7C32A9E25C900303147 /* UserInfoStackView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B247C7C22A9E25C900303147 /* UserInfoStackView.swift */; };
@@ -115,6 +121,7 @@
 		B29342132A58810E00F5CF30 /* RegionSettingVM.swift in Sources */ = {isa = PBXBuildFile; fileRef = B29342122A58810E00F5CF30 /* RegionSettingVM.swift */; };
 		B29D78912A2B6FB1008B6945 /* SearchVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = B29D78902A2B6FB1008B6945 /* SearchVC.swift */; };
 		B29D78932A2B6FCF008B6945 /* SearchVM.swift in Sources */ = {isa = PBXBuildFile; fileRef = B29D78922A2B6FCF008B6945 /* SearchVM.swift */; };
+		B29EA3F02A9F591500146F38 /* ImageCVCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B29EA3EF2A9F591500146F38 /* ImageCVCell.swift */; };
 		B29EC4742A9338BE001D1E6C /* MainAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = B29EC4732A9338BE001D1E6C /* MainAPI.swift */; };
 		B29EC4762A934991001D1E6C /* EnumCountable+Protocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = B29EC4752A934991001D1E6C /* EnumCountable+Protocol.swift */; };
 		B29EC4792A94432E001D1E6C /* ProductImageCVCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B29EC4782A94432E001D1E6C /* ProductImageCVCell.swift */; };
@@ -229,6 +236,12 @@
 		B2382C692A6FD55D00A24AE3 /* ja */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ja; path = Localizable.strings; sourceTree = "<group>"; };
 		B2382C6C2A6FD56400A24AE3 /* ko */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ko; path = Localizable.strings; sourceTree = "<group>"; };
 		B23B24EC2A8C528800F179A7 /* LegalView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LegalView.swift; sourceTree = "<group>"; };
+		B240D71D2A9F107600DF171D /* UploadVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UploadVC.swift; sourceTree = "<group>"; };
+		B240D71F2A9F108400DF171D /* UploadVM.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UploadVM.swift; sourceTree = "<group>"; };
+		B240D7212A9F109200DF171D /* UploadService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UploadService.swift; sourceTree = "<group>"; };
+		B240D7232A9F10AD00DF171D /* UploadAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UploadAPI.swift; sourceTree = "<group>"; };
+		B240D7252A9F10D400DF171D /* UploadFlow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UploadFlow.swift; sourceTree = "<group>"; };
+		B240D7272A9F10E300DF171D /* UploadStep.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UploadStep.swift; sourceTree = "<group>"; };
 		B240FB342A994C8E00F365BB /* ProductBadgeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProductBadgeView.swift; sourceTree = "<group>"; };
 		B240FB362A9A7FFC00F365BB /* ContourView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContourView.swift; sourceTree = "<group>"; };
 		B247C7C22A9E25C900303147 /* UserInfoStackView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserInfoStackView.swift; sourceTree = "<group>"; };
@@ -247,6 +260,7 @@
 		B29342122A58810E00F5CF30 /* RegionSettingVM.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegionSettingVM.swift; sourceTree = "<group>"; };
 		B29D78902A2B6FB1008B6945 /* SearchVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchVC.swift; sourceTree = "<group>"; };
 		B29D78922A2B6FCF008B6945 /* SearchVM.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchVM.swift; sourceTree = "<group>"; };
+		B29EA3EF2A9F591500146F38 /* ImageCVCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageCVCell.swift; sourceTree = "<group>"; };
 		B29EC4732A9338BE001D1E6C /* MainAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainAPI.swift; sourceTree = "<group>"; };
 		B29EC4752A934991001D1E6C /* EnumCountable+Protocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "EnumCountable+Protocol.swift"; sourceTree = "<group>"; };
 		B29EC4782A94432E001D1E6C /* ProductImageCVCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProductImageCVCell.swift; sourceTree = "<group>"; };
@@ -468,6 +482,7 @@
 				B22ECA2A2A75974B00CCA794 /* AppFlow.swift */,
 				B22ECA2C2A75975C00CCA794 /* AppStepper.swift */,
 				B22ECA2E2A75976500CCA794 /* AppStep.swift */,
+				B240D7172A9F102100DF171D /* Upload */,
 				B19E83252A6025A2004C5DE2 /* Auth */,
 				04BA131F2A2AD9FB0004E2FB /* Home */,
 				B19E83262A6025A6004C5DE2 /* Search */,
@@ -780,6 +795,60 @@
 			path = ko.lproj;
 			sourceTree = "<group>";
 		};
+		B240D7172A9F102100DF171D /* Upload */ = {
+			isa = PBXGroup;
+			children = (
+				B240D7182A9F103B00DF171D /* Flow */,
+				B240D71C2A9F105E00DF171D /* Model */,
+				B240D71B2A9F105700DF171D /* ViewModel */,
+				B240D71A2A9F104B00DF171D /* ViewController */,
+				B240D7192A9F104000DF171D /* Service */,
+			);
+			path = Upload;
+			sourceTree = "<group>";
+		};
+		B240D7182A9F103B00DF171D /* Flow */ = {
+			isa = PBXGroup;
+			children = (
+				B240D7252A9F10D400DF171D /* UploadFlow.swift */,
+				B240D7272A9F10E300DF171D /* UploadStep.swift */,
+			);
+			path = Flow;
+			sourceTree = "<group>";
+		};
+		B240D7192A9F104000DF171D /* Service */ = {
+			isa = PBXGroup;
+			children = (
+				B240D7212A9F109200DF171D /* UploadService.swift */,
+				B240D7232A9F10AD00DF171D /* UploadAPI.swift */,
+			);
+			path = Service;
+			sourceTree = "<group>";
+		};
+		B240D71A2A9F104B00DF171D /* ViewController */ = {
+			isa = PBXGroup;
+			children = (
+				B240D71D2A9F107600DF171D /* UploadVC.swift */,
+				B29EA3EE2A9F590300146F38 /* View */,
+			);
+			path = ViewController;
+			sourceTree = "<group>";
+		};
+		B240D71B2A9F105700DF171D /* ViewModel */ = {
+			isa = PBXGroup;
+			children = (
+				B240D71F2A9F108400DF171D /* UploadVM.swift */,
+			);
+			path = ViewModel;
+			sourceTree = "<group>";
+		};
+		B240D71C2A9F105E00DF171D /* Model */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
 		B248C6A92A86C8D4006AE008 /* Service */ = {
 			isa = PBXGroup;
 			children = (
@@ -816,6 +885,14 @@
 				B2827C2C2A9712AF00AC3D4B /* ProductGroupHeaderReusableView.swift */,
 			);
 			path = ProductGroup;
+			sourceTree = "<group>";
+		};
+		B29EA3EE2A9F590300146F38 /* View */ = {
+			isa = PBXGroup;
+			children = (
+				B29EA3EF2A9F591500146F38 /* ImageCVCell.swift */,
+			);
+			path = View;
 			sourceTree = "<group>";
 		};
 		B29EC4772A944305001D1E6C /* SingleProduct */ = {
@@ -1001,6 +1078,7 @@
 				B2827C2B2A97126D00AC3D4B /* ProductGroupFooterReusableView.swift in Sources */,
 				9816F6ED2A494B0900A7A284 /* BasePagenationResponse.swift in Sources */,
 				B22ECA362A7789F100CCA794 /* MainStep.swift in Sources */,
+				B29EA3F02A9F591500146F38 /* ImageCVCell.swift in Sources */,
 				04C835EB2A2B280A00731E3E /* MainSectionModel.swift in Sources */,
 				B22ECA2D2A75975C00CCA794 /* AppStepper.swift in Sources */,
 				B22222672A55F83300A2B7CB /* PrivacyElementView.swift in Sources */,
@@ -1021,6 +1099,7 @@
 				B1AB44DF2A7E52F9004EC75D /* UIImage+Extension.swift in Sources */,
 				B29EC4792A94432E001D1E6C /* ProductImageCVCell.swift in Sources */,
 				B2198BA22A2A36EA0019032D /* Avocado.xcdatamodeld in Sources */,
+				B240D7262A9F10D400DF171D /* UploadFlow.swift in Sources */,
 				B29342132A58810E00F5CF30 /* RegionSettingVM.swift in Sources */,
 				B1D23D392A4C6245006A2848 /* WelcomeVM.swift in Sources */,
 				04C835F72A2B46B600731E3E /* BannerCVCell.swift in Sources */,
@@ -1032,6 +1111,7 @@
 				98FD1C2A2A56B3900031D7C1 /* SettingAPI.swift in Sources */,
 				B212D58B2A45F1740008DAD1 /* InputView.swift in Sources */,
 				B1B1EA132A5973C7007B1894 /* SettingTVCell.swift in Sources */,
+				B240D71E2A9F107600DF171D /* UploadVC.swift in Sources */,
 				04C835FF2A2B5FEF00731E3E /* BannerFooterReusableView.swift in Sources */,
 				B1A301972A5437DB003834E6 /* ProfileSettingVC.swift in Sources */,
 				B18DFEDF2A51B53B00CF27FE /* EmailCheckVM.swift in Sources */,
@@ -1053,8 +1133,10 @@
 				B26A3B612A60A79800AD61A5 /* AuthFlow.swift in Sources */,
 				B1A301AE2A5439F0003834E6 /* Variant.swift in Sources */,
 				9816F6F22A494B3C00A7A284 /* NetworkLoggerPlugin.swift in Sources */,
+				B240D7202A9F108400DF171D /* UploadVM.swift in Sources */,
 				B2E2AC802A4772D3003DAE88 /* WelcomeVC.swift in Sources */,
 				B2198B9A2A2A36EA0019032D /* SceneDelegate.swift in Sources */,
+				B240D7222A9F109200DF171D /* UploadService.swift in Sources */,
 				B22ECA322A7789D900CCA794 /* MainFlow.swift in Sources */,
 				04BA13212A2ADA160004E2FB /* MainVC.swift in Sources */,
 				04BA13262A2ADAEE0004E2FB /* MainVM.swift in Sources */,
@@ -1069,6 +1151,8 @@
 				B240FB372A9A7FFC00F365BB /* ContourView.swift in Sources */,
 				B2E186CE2A474B4C00ABE98F /* SignupVC.swift in Sources */,
 				9848A8B32A5D853B008D43F5 /* UIColor+Extension.swift in Sources */,
+				B240D7242A9F10AD00DF171D /* UploadAPI.swift in Sources */,
+				B240D7282A9F10E300DF171D /* UploadStep.swift in Sources */,
 				B1BFDD672A49CF8100DB4955 /* LoginVM.swift in Sources */,
 				B248C6A82A86A153006AE008 /* ProductGroupCVCell.swift in Sources */,
 				B29EC4742A9338BE001D1E6C /* MainAPI.swift in Sources */,
