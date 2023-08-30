@@ -9,15 +9,11 @@ import UIKit
 import RxDataSources
 
 final class ProfileVC: BaseVC {
-    
-    private lazy var collectionFlowLayout = UICollectionViewFlowLayout().then {
-        $0.scrollDirection = .vertical
-        $0.minimumLineSpacing = 0
-        $0.minimumInteritemSpacing = 0
-        $0.sectionInset = UIEdgeInsets(top: 10, left: 10, bottom: 10, right: 10)
-    }
-    
-    private lazy var collectionView = UICollectionView(frame: .zero, collectionViewLayout: self.collectionFlowLayout).then {
+
+    private lazy var collectionView = UICollectionView(
+        frame: .zero,
+        collectionViewLayout: self.getCompositionalLayout()
+    ).then {
         $0.showsVerticalScrollIndicator = false
         $0.register(
             ProfileHeaderReusableView.self,
@@ -50,6 +46,10 @@ final class ProfileVC: BaseVC {
         viewModel.input.actionViewDidLoad.accept(())
     }
     
+    override func setProperty() {
+        title = "마이페이지"
+    }
+    
     override func setLayout() {
         view.addSubview(collectionView)
     }
@@ -62,22 +62,33 @@ final class ProfileVC: BaseVC {
     
     override func bindUI() {
         let output = viewModel.transform(input: viewModel.input)
-        collectionView.delegate = self
         
         let dataSource = RxCollectionViewSectionedReloadDataSource<UserProfileDataSection> { dataSource, collectionView, indexPath, item in
             switch item {
             case .slider(let title):
-                let cell = collectionView.dequeueReusableCell(withReuseIdentifier: OptionSilderCVCell.identifier, for: indexPath) as! OptionSilderCVCell
+                let cell = collectionView.dequeueReusableCell(
+                    withReuseIdentifier: OptionSilderCVCell.identifier,
+                    for: indexPath
+                ) as! OptionSilderCVCell
+                
                 cell.configure(title: title)
                 return cell
 
             case .buyed(let product):
-                let cell = collectionView.dequeueReusableCell(withReuseIdentifier: ProductCVCell.identifier, for: indexPath) as! ProductCVCell
+                let cell = collectionView.dequeueReusableCell(
+                    withReuseIdentifier: ProductCVCell.identifier,
+                    for: indexPath
+                ) as! ProductCVCell
+                
                 cell.config(product: product)
                 return cell
 
             case .selled(let product):
-                let cell = collectionView.dequeueReusableCell(withReuseIdentifier: ProductCVCell.identifier, for: indexPath) as! ProductCVCell
+                let cell = collectionView.dequeueReusableCell(
+                    withReuseIdentifier: ProductCVCell.identifier,
+                    for: indexPath
+                ) as! ProductCVCell
+                
                 cell.config(product: product)
                 return cell
             }
@@ -85,13 +96,21 @@ final class ProfileVC: BaseVC {
 
             switch indexPath.section {
             case 0:
-                let headerView = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: ProfileHeaderReusableView.identifier, for: indexPath) as! ProfileHeaderReusableView
+                let headerView = collectionView.dequeueReusableSupplementaryView(
+                    ofKind: kind,
+                    withReuseIdentifier: ProfileHeaderReusableView.identifier,
+                    for: indexPath
+                ) as! ProfileHeaderReusableView
+                
                 let data = dataSource[indexPath.section]
 
-                headerView.configure(userName: data.userName ?? "",
-                                     grade: data.userGrade ?? "",
-                                     verified: data.userVerified ?? "",
-                                     creationDate: data.creationDate ?? "")
+                headerView.configure(
+                    userName: data.userName ?? "",
+                    grade: data.userGrade ?? "",
+                    verified: data.userVerified ?? "",
+                    creationDate: data.creationDate ?? ""
+                )
+                
                 return headerView
 
             default:
@@ -106,24 +125,99 @@ final class ProfileVC: BaseVC {
     
 }
 
-extension ProfileVC: UICollectionViewDelegateFlowLayout {
-    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        switch indexPath.section {
-        case 0:
-            return CGSize(width: 70, height: 35)
-        default:
-            let width = view.safeAreaLayoutGuide.layoutFrame.width / 3 - 10
-            return CGSize(width: width, height: 220)
+extension ProfileVC: CollectionViewLayoutable {
+    func getCompositionalLayout() -> UICollectionViewCompositionalLayout {
+        return UICollectionViewCompositionalLayout { section, env in
+            
+            switch section {
+            case 0:
+                let itemSize = NSCollectionLayoutSize(
+                    widthDimension: .fractionalWidth(1.0/5.0),
+                    heightDimension: .absolute(35)
+                )
+                
+                let item = NSCollectionLayoutItem(layoutSize: itemSize)
+                item.contentInsets = NSDirectionalEdgeInsets(
+                    top: 0,
+                    leading: 10,
+                    bottom: 0,
+                    trailing: 10
+                )
+                
+                let groupSize = NSCollectionLayoutSize(
+                    widthDimension: .fractionalWidth(1.0),
+                    heightDimension: .absolute(35)
+                )
+                
+                let group = NSCollectionLayoutGroup.horizontal(
+                    layoutSize: groupSize,
+                    subitems: [item]
+                )
+                
+                let headerSize = NSCollectionLayoutSize(
+                    widthDimension: .fractionalWidth(1.0),
+                    heightDimension: .absolute(100)
+                )
+                
+                let header = NSCollectionLayoutBoundarySupplementaryItem(
+                    layoutSize: headerSize,
+                    elementKind: UICollectionView.elementKindSectionHeader,
+                    alignment: .top
+                )
+                
+                let section = NSCollectionLayoutSection(group: group)
+                section.orthogonalScrollingBehavior = .continuous
+                section.boundarySupplementaryItems = [header]
+                section.contentInsets = NSDirectionalEdgeInsets(
+                    top: 10,
+                    leading: 0,
+                    bottom: 0,
+                    trailing: 0
+                )
+                
+                return section
+                
+            default:
+                // 셀 사이즈 설정
+                let itemSize = NSCollectionLayoutSize(
+                    widthDimension: .fractionalWidth(1.0/3.0),
+                    heightDimension: .fractionalHeight(1.0)
+                )
+                
+                let item = NSCollectionLayoutItem(layoutSize: itemSize)
+                
+                // 셀간 간격 설정
+                item.contentInsets = NSDirectionalEdgeInsets(
+                    top: 10,
+                    leading: 10,
+                    bottom: 0,
+                    trailing: 0
+                )
+                
+                // 셀을 담을 gruop size 설정
+                let groupSize = NSCollectionLayoutSize(
+                    widthDimension: .fractionalWidth(1.0),
+                    heightDimension: .fractionalHeight(1.0/3.0)
+                )
+                
+                let group = NSCollectionLayoutGroup.horizontal(
+                    layoutSize: groupSize,
+                    subitems: [item]
+                )
+                //
+                group.contentInsets = NSDirectionalEdgeInsets(
+                    top: 0,
+                    leading: 0,
+                    bottom: 10,
+                    trailing: 10
+                )
+                
+                let section = NSCollectionLayoutSection(group: group)
+                
+                return section
+            }
+            
         }
-    }
-    
-    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, referenceSizeForHeaderInSection section: Int) -> CGSize {
-        
-        if case 0 = section {
-            return CGSize(width: collectionView.frame.width, height: 100)
-        }
-        
-        return .zero
     }
 }
 

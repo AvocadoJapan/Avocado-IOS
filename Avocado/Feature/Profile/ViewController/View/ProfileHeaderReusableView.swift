@@ -51,6 +51,8 @@ final class ProfileHeaderReusableView: UICollectionReusableView {
         $0.tintColor = .lightGray
     }
     
+    private lazy var counterView = ContourView()
+    
     override init(frame: CGRect) {
         super.init(frame: frame)
         setLayout()
@@ -66,7 +68,7 @@ final class ProfileHeaderReusableView: UICollectionReusableView {
             descriptionContainerStackView.addArrangedSubview($0)
         }
         
-        [profileImageView, userNameLabel, creationDateLabel, descriptionContainerStackView, questionButton].forEach {
+        [profileImageView, userNameLabel, creationDateLabel, descriptionContainerStackView, questionButton, counterView].forEach {
             addSubview($0)
         }
         
@@ -97,6 +99,10 @@ final class ProfileHeaderReusableView: UICollectionReusableView {
         
         questionButton.snp.makeConstraints {
             $0.top.right.equalToSuperview().inset(8)
+        }
+        
+        counterView.snp.makeConstraints {
+            $0.left.right.bottom.equalToSuperview()
         }
     }
     

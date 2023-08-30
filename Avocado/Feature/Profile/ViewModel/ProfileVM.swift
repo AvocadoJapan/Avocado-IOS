@@ -57,10 +57,9 @@ final class ProfileVM: ViewModelType {
                                        creationDate: $0.creationDate,
                                        items: [
                                         .slider(title: "구매 \($0.buyProductCount)"),
-                                        .slider(title: "판매 \($0.sellProductCount)")
+                                        .slider(title: "판매 \($0.buyProductCount)"),
                                        ]),
-                UserProfileDataSection(items: buyedDataSections),
-                UserProfileDataSection(items: selledDataSections),
+                UserProfileDataSection(items: buyedDataSections)
                ]
                 
                 output.successProfileEventDateSourcePublish.accept(userDataSections)
