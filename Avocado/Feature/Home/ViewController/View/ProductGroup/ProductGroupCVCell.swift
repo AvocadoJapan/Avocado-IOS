@@ -38,7 +38,7 @@ final class ProductGroupCVCell: UICollectionViewCell, CollectionCellIdentifierab
     }
 
     lazy var moreButton = UIButton().then {
-        $0.setTitle("더보기", for: .normal)
+        $0.setTitle("More", for: .normal)
         $0.titleLabel?.font = UIFont.boldSystemFont(ofSize: 14)
         $0.setTitleColor(UIColor.white, for: .normal)
         $0.backgroundColor = .black
