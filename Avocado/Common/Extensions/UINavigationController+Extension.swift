@@ -9,7 +9,8 @@ import UIKit
 
 extension UINavigationController {
 
-    func setupNavbar(with title: String, logoImage: UIImage?) {
+    func setupNavbar(with title: String,
+                     logoImage: UIImage?) {
         navigationBar.shadowImage = UIImage()
         
         let logoContainer = UIView(frame: CGRect(x: 0, y: 0, width: 100, height: 20))
@@ -23,7 +24,7 @@ extension UINavigationController {
         let label = UILabel().then {
             $0.text = title
             $0.textColor = .black
-            $0.font = .systemFont(ofSize: 14, weight: .bold)
+            $0.font = .systemFont(ofSize: 15, weight: .bold)
         }
         
         [logoImageView, label].forEach {
@@ -44,6 +45,30 @@ extension UINavigationController {
         
         let leftItem = UIBarButtonItem(customView: logoContainer)
         topViewController?.navigationItem.leftBarButtonItem = leftItem
+    }
+    
+    func setTransitAlpha(yOffset: Double,
+                         threshold: CGFloat = 100,
+                         color: UIColor = .white) {
+        let yOffset = yOffset
+        let threshold: CGFloat = threshold
+        var alpha: CGFloat = yOffset / threshold
+        
+        alpha = min(1.0, max(0.0, alpha))
+        
+        let appearance = UINavigationBarAppearance()
+        appearance.configureWithOpaqueBackground()
+        
+        if alpha >= 1.0 {
+            appearance.backgroundColor = .white
+            appearance.shadowColor = .systemGray6
+        } else {
+            appearance.backgroundColor = UIColor(white: 1.0, alpha: alpha)
+            appearance.shadowColor = .clear
+        }
+        
+        navigationBar.standardAppearance = appearance
+        navigationBar.scrollEdgeAppearance = appearance
     }
 }
 

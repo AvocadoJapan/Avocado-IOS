@@ -50,7 +50,7 @@ final class SingleProductVC: BaseVC {
         $0.text = "아이패드 프로 6세대 11인치 128기가 셀룰러 미개봉"
         $0.lineBreakMode = .byCharWrapping
         $0.numberOfLines = 2
-        $0.font = .systemFont(ofSize: 20, weight: .semibold)
+        $0.font = .systemFont(ofSize: 19, weight: .bold)
         $0.textColor = .darkText
     }
     
@@ -60,69 +60,104 @@ final class SingleProductVC: BaseVC {
     }
     
     private lazy var locationLabel = UILabel().then {
-        $0.text = "경기도 화성시 진안동"
+        $0.text = "서울특별시 성북구 안암동"
         $0.numberOfLines = 1
-        $0.font = .systemFont(ofSize: 13, weight: .regular)
-        $0.textColor = .darkGray
+        $0.font = .systemFont(ofSize: 12, weight: .regular)
+        $0.textColor = .gray
     }
     
     private lazy var dotLabel = UILabel().then {
         $0.text = " ・ "
         $0.numberOfLines = 1
-        $0.font = .systemFont(ofSize: 13, weight: .regular)
+        $0.font = .systemFont(ofSize: 12, weight: .regular)
         $0.textColor = .darkGray
     }
     
     private lazy var updateAtLabel = UILabel().then {
         $0.text = "20시간 전"
         $0.numberOfLines = 1
-        $0.font = .systemFont(ofSize: 13, weight: .regular)
-        $0.textColor = .darkGray
+        $0.font = .systemFont(ofSize: 12, weight: .regular)
+        $0.textColor = .gray
     }
     
     private lazy var priceLabel = UILabel().then {
         $0.text = "1,298,000원"
         $0.numberOfLines = 1
-        $0.font = .systemFont(ofSize: 20, weight: .semibold)
+        $0.font = .systemFont(ofSize: 22, weight: .bold)
         $0.textColor = .darkText
     }
     
-    private lazy var uploaderView = UIView().then {
-        $0.backgroundColor = .clear
+    private lazy var uploaderStackView = UIStackView().then {
+        $0.axis = .horizontal
+        $0.alignment = .leading
+        $0.distribution = .fill
+        $0.spacing = 20
     }
     
-    private lazy var starRateLabel = UILabel().then {
-        $0.text = "⭐️4.5"
+    // 유저이름, 가입년월 스택뷰
+    private lazy var uploaderNameStackView = UIStackView().then {
+        $0.axis = .vertical
+        $0.alignment = .leading
+        $0.distribution = .fillProportionally
+        $0.spacing = 5
     }
     
-    private lazy var reviewLabel = UILabel().then {
-        $0.text = "이 유저의 거래후기 345"
+    // 유저 배지 스택뷰
+    private lazy var uploaderBadgeStackView = UIStackView().then {
+        $0.axis = .vertical
+        $0.alignment = .leading
+        $0.distribution = .fillEqually
+        $0.spacing = 10
     }
     
     private lazy var uploaderNameLabel = UILabel().then {
-        $0.text = "Amanda"
+        $0.text = "최애의 카르마"
+        $0.numberOfLines = 1
+        $0.font = .systemFont(ofSize: 17, weight: .semibold)
+        $0.textColor = .darkText
     }
+    
+    private lazy var userSingupDateLabel = UILabel().then {
+        $0.text = "2023년 3월 10일 가입"
+        $0.numberOfLines = 1
+        $0.font = .systemFont(ofSize: 12, weight: .regular)
+        $0.textColor = .gray
+    }
+    
+    // 유저 배지
+    private lazy var userBadge = UserBadgeView(type: .comment(number: 239))
+    private lazy var userBadge1 = UserBadgeView(type: .premiumBuyer)
+    private lazy var userBadge2 = UserBadgeView(type: .premiumSeller)
+    private lazy var userBadge3 = UserBadgeView(type: .unverified)
+    private lazy var userBadge4 = UserBadgeView(type: .verified)
     
     private lazy var profileImageView = UIImageView().then {
         $0.contentMode = .scaleAspectFill
-        $0.layer.cornerRadius = 50
+        $0.layer.cornerRadius = 60/2
         $0.clipsToBounds = true
         $0.backgroundColor = .systemGray5
     }
     
+    // 하단 고정뷰 (좋아요 채팅, 결제 등)
     private lazy var bottomView = UIView().then {
         $0.backgroundColor = .white
     }
     
+    private lazy var contourView = ContourView()
+    private lazy var contourView2 = ContourView()
+    private lazy var contourView3 = ContourView()
+    private lazy var contourView4 = ContourView()
     
     private lazy var buttomButtonStackView = UIStackView().then {
         $0.axis = .horizontal
         $0.spacing = 10
         $0.alignment = .center
         $0.distribution = .fillProportionally
+        $0.backgroundColor = .white
     }
+    private lazy var favButton = BottomButton(text: "좋아요", buttonType: .info)
     private lazy var purchaseButton = BottomButton(text: "결제하기", buttonType: .primary)
-    private lazy var dmButton = BottomButton(text: "DM보내기", buttonType: .secondary)
+    private lazy var dmButton = BottomButton(text: "채팅하기", buttonType: .secondary)
     
     private lazy var descriptionStackView = UIStackView().then {
         $0.axis = .vertical
@@ -130,23 +165,53 @@ final class SingleProductVC: BaseVC {
         $0.alignment = .leading
     }
     
+    private lazy var productBadgeStackView = UIStackView().then {
+        $0.axis = .vertical
+        $0.alignment = .leading
+        $0.spacing = 15
+        $0.distribution = .fillEqually
+    }
+    
+    private lazy var productBadgeDemo = ProductBadgeView(type: .avocadoPay)
+    private lazy var productBadgeDemo2 = ProductBadgeView(type: .business)
+    private lazy var productBadgeDemo3 = ProductBadgeView(type: .fastShipping)
+//    private lazy var productBadgeDemo4 = ProductBadgeView(type: .freeShipping)
+//    private lazy var productBadgeDemo5 = ProductBadgeView(type: .handmade)
+//    private lazy var productBadgeDemo6 = ProductBadgeView(type: .premiumSeller)
+//    private lazy var productBadgeDemo7 = ProductBadgeView(type: .refundable)
+//    private lazy var productBadgeDemo8 = ProductBadgeView(type: .unused)
+//    private lazy var productBadgeDemo9 = ProductBadgeView(type: .verified)
+    
     private lazy var descriptionLabel = UILabel().then {
         $0.numberOfLines = 0
-        $0.font = .systemFont(ofSize: 14, weight: .regular)
-        $0.textColor = .darkText
+        $0.font = .systemFont(ofSize: 14.5, weight: .regular)
+        $0.textColor = .darkGray
         $0.text =
         """
-        국회의원의 수는 법률로 정하되, 200인 이상으로 한다. 법률은 특별한 규정이 없는 한 공포한 날로부터 20일을 경과함으로써 효력을 발생한다. 대통령이 임시회의 집회를 요구할 때에는 기간과 집회요구의 이유를 명시하여야 한다.
+        2023년 4월 말에 구입
         
-        공개하지 아니한 회의내용의 공표에 관하여는 법률이 정하는 바에 의한다. 사면·감형 및 복권에 관한 사항은 법률로 정한다. 대통령은 법률에서 구체적으로 범위를 정하여 위임받은 사항과 법률을 집행하기 위하여 필요한 사항에 관하여 대통령령을 발할 수 있다.
+        - 아이패드 프로 5세대 M1 128기가 스페이스그레이입니다.
+        - 외관 S급입니다. 기능 이상 없습니다.
+        - 배터리효율 85퍼센트입니다.
+        - 구성은 풀박스에 펜슬수납 가능 케이스 함께 드립니다.
+        - 일산 직거래, 그 외 지역 택배거래합니다.
+        - 편하게 문의주세요.
         
-        국가는 국민 모두의 생산 및 생활의 기반이 되는 국토의 효율적이고 균형있는 이용·개발과 보전을 위하여 법률이 정하는 바에 의하여 그에 관한 필요한 제한과 의무를 과할 수 있다.
         
-        국회의원의 수는 법률로 정하되, 200인 이상으로 한다. 법률은 특별한 규정이 없는 한 공포한 날로부터 20일을 경과함으로써 효력을 발생한다. 대통령이 임시회의 집회를 요구할 때에는 기간과 집회요구의 이유를 명시하여야 한다.
-        
-        공개하지 아니한 회의내용의 공표에 관하여는 법률이 정하는 바에 의한다. 사면·감형 및 복권에 관한 사항은 법률로 정한다. 대통령은 법률에서 구체적으로 범위를 정하여 위임받은 사항과 법률을 집행하기 위하여 필요한 사항에 관하여 대통령령을 발할 수 있다.
-        
-        국가는 국민 모두의 생산 및 생활의 기반이 되는 국토의 효율적이고 균형있는 이용·개발과 보전을 위하여 법률이 정하는 바에 의하여 그에 관한 필요한 제한과 의무를 과할 수 있다.
+        오늘(27일) 구입한 아이패드 미니6 와이파이버전 64기가 모델을 팝니다..
+        오늘 쿠팡에서 새걸로 구입한 겁니다..
+
+        게임용도로만 쓰려고 구입한건데, 문제는 제가 아이패드류는 처음써보는 거라는 겁니다..
+        안드로이드만 써 오다가 애플제품 한번 질러본건데
+        뒤로가기도 모르겠고 게임을 실행해도 그래서 게임종료도 못하겠고
+        짜증만 나고 화딱지만 나네요..
+
+        그래서 바로 방출하렵니다..
+
+        상태는 당연히 100프로 수준이고 강화유리 바로 붙였습니다..
+
+        박스 내용물 다 있습니다..
+        바로 가져가실분 연락주세요..
         """
     }
     
@@ -155,8 +220,6 @@ final class SingleProductVC: BaseVC {
     init(viewModel: SingleProductVM) {
         self.viewModel = viewModel
         super.init(nibName: nil, bundle: nil)
-        
-//        self.navigationController?.isNavigationBarHidden = false
     }
     
     required init?(coder: NSCoder) {
@@ -166,10 +229,13 @@ final class SingleProductVC: BaseVC {
     override func setViewDidLoad() {
         // 초기 메인데이터 API call]
         viewModel.input.actionViewDidLoad.accept(())
-//        scrollView.refreshControl = refreshControl
+        //        scrollView.refreshControl = refreshControl
     }
     
     override func setProperty() {
+        view.backgroundColor = .white
+        
+        navigationController?.setNavigationBarHidden(false, animated: true)
         view.backgroundColor = .white
         
         // Configure productImageCV
@@ -180,22 +246,40 @@ final class SingleProductVC: BaseVC {
     
     override func setLayout() {
         view.addSubview(scrollView)
+        view.addSubview(bottomView)
         scrollView.addSubview(stackView)
         
-        [dmButton, purchaseButton].forEach {
+        bottomView.addSubview(buttomButtonStackView)
+        bottomView.addSubview(contourView)
+        
+        [favButton, dmButton, purchaseButton].forEach {
             buttomButtonStackView.addArrangedSubview($0)
         }
         
-        [productImageCV, titleStackView, descriptionStackView, legalView].forEach {
+        [productImageCV, titleStackView, contourView2, uploaderStackView, contourView4, productBadgeStackView, contourView3, descriptionStackView, legalView].forEach {
             stackView.addArrangedSubview($0)
+        }
+        
+        [productBadgeDemo, productBadgeDemo2, productBadgeDemo3
+        // , productBadgeDemo4, productBadgeDemo5, productBadgeDemo6, productBadgeDemo7, productBadgeDemo8, productBadgeDemo9
+        ].forEach {
+            productBadgeStackView.addArrangedSubview($0)
         }
         
         [titleLabel, titleSubInfoStackView, priceLabel].forEach {
             titleStackView.addArrangedSubview($0)
         }
         
-        [locationLabel, dotLabel, updateAtLabel].forEach {
-            titleSubInfoStackView.addArrangedSubview($0)
+        [profileImageView, uploaderNameStackView, uploaderBadgeStackView].forEach {
+            uploaderStackView.addArrangedSubview($0)
+        }
+        
+        [uploaderNameLabel, userSingupDateLabel].forEach {
+            uploaderNameStackView.addArrangedSubview($0)
+        }
+        
+        [userBadge, userBadge1, userBadge2, userBadge3, userBadge4].forEach {
+            uploaderBadgeStackView.addArrangedSubview($0)
         }
         
         [locationLabel, dotLabel, updateAtLabel].forEach {
@@ -208,18 +292,76 @@ final class SingleProductVC: BaseVC {
     }
     
     override func setConstraint() {
-
+        
         scrollView.snp.makeConstraints {
-            $0.edges.equalToSuperview()
+            $0.top.left.right.equalToSuperview()
+            $0.bottom.equalTo(self.view.safeAreaLayoutGuide.snp.bottom)
         }
         
         stackView.snp.makeConstraints {
-            $0.leading.trailing.top.bottom.equalTo(scrollView)
+            $0.edges.equalTo(scrollView)
             $0.width.equalTo(scrollView)
         }
-    
+        
         productImageCV.snp.makeConstraints {
-            $0.size.equalTo(self.view.snp.width)
+            $0.height.equalTo(self.view.snp.width)
+            $0.width.equalTo(self.view.snp.width)
+        }
+        
+        titleStackView.snp.makeConstraints {
+            $0.horizontalEdges.equalToSuperview().inset(15)
+        }
+        
+        uploaderStackView.snp.makeConstraints {
+            $0.horizontalEdges.equalToSuperview().inset(15)
+        }
+        
+        uploaderNameStackView.snp.makeConstraints {
+            $0.centerY.equalToSuperview()
+        }
+        
+        uploaderBadgeStackView.snp.makeConstraints {
+            $0.centerY.equalToSuperview()
+        }
+        
+        descriptionStackView.snp.makeConstraints {
+            $0.horizontalEdges.equalToSuperview().inset(15)
+        }
+        
+        productBadgeDemo.snp.makeConstraints {
+            $0.horizontalEdges.equalToSuperview().inset(15)
+        }
+        
+        profileImageView.snp.makeConstraints {
+            $0.size.equalTo(60)
+        }
+        
+        bottomView.snp.makeConstraints {
+            $0.height.equalTo(80)
+            $0.horizontalEdges.equalToSuperview()
+            $0.bottom.equalTo(self.view.safeAreaLayoutGuide.snp.bottom)
+        }
+        
+        buttomButtonStackView.snp.makeConstraints {
+            $0.horizontalEdges.equalToSuperview().inset(10)
+            $0.centerY.equalToSuperview()
+        }
+        
+        contourView.snp.makeConstraints {
+            $0.horizontalEdges.equalToSuperview()
+            $0.top.equalToSuperview()
+        }
+        
+        contourView2.snp.makeConstraints {
+            $0.horizontalEdges.equalToSuperview().inset(40)
+        }
+        
+        contourView3.snp.makeConstraints {
+            $0.horizontalEdges.equalToSuperview().inset(40)
+        }
+        
+        contourView4.snp.makeConstraints {
+            $0.horizontalEdges.equalToSuperview().inset(40)
         }
     }
 }
@@ -242,15 +384,52 @@ extension SingleProductVC: UICollectionViewDelegateFlowLayout {
     }
 }
 
+extension SingleProductVC {
+    override func viewWillAppear(_ animated: Bool) {
+        let yOffset = scrollView.contentOffset.y
+        let threshold: CGFloat = 100
+        var alpha: CGFloat = yOffset / threshold
+        
+        alpha = min(1.0, max(0.0, alpha))
+        
+        let appearance = UINavigationBarAppearance()
+        appearance.configureWithOpaqueBackground()
+        
+        if alpha >= 1.0 {
+            appearance.backgroundColor = .white
+            appearance.shadowColor = .systemGray6
+        } else {
+            appearance.backgroundColor = UIColor(white: 1.0, alpha: alpha)
+            appearance.shadowColor = .clear
+        }
+
+        navigationController?.navigationBar.standardAppearance = appearance
+        navigationController?.navigationBar.scrollEdgeAppearance = appearance
+    }
+}
+
 extension SingleProductVC: UIScrollViewDelegate {
     // MARK: - UIScrollViewDelegate
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
         let yOffset = scrollView.contentOffset.y
-        if yOffset > 50 {
-            navigationController?.setNavigationBarHidden(false, animated: true) // 네비게이션바 표시
+        let threshold: CGFloat = 100
+        var alpha: CGFloat = yOffset / threshold
+        
+        alpha = min(1.0, max(0.0, alpha))
+        
+        let appearance = UINavigationBarAppearance()
+        appearance.configureWithOpaqueBackground()
+        
+        if alpha >= 1.0 {
+            appearance.backgroundColor = .white
+            appearance.shadowColor = .systemGray6
         } else {
-            navigationController?.setNavigationBarHidden(true, animated: true) // 네비게이션바 숨기기
+            appearance.backgroundColor = UIColor(white: 1.0, alpha: alpha)
+            appearance.shadowColor = .clear
         }
+
+        navigationController?.navigationBar.standardAppearance = appearance
+        navigationController?.navigationBar.scrollEdgeAppearance = appearance
     }
 }
 

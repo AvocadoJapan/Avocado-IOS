@@ -82,7 +82,6 @@ final class MainVC: BaseVC {
     
     override func setProperty() {
         view.backgroundColor = .white
-        navigationController?.setNavigationBarHidden(true, animated: true)
         
         navigationController?.setupNavbar(with: "Avocado Beta", logoImage: UIImage(systemName: "apple.logo"))
         
@@ -186,15 +185,16 @@ final class MainVC: BaseVC {
     }
 }
 
+extension MainVC {
+    override func viewWillAppear(_ animated: Bool) {
+        navigationController?.setTransitAlpha(yOffset: scrollView.contentOffset.y)
+    }
+}
+
 extension MainVC: UIScrollViewDelegate {
     // MARK: - UIScrollViewDelegate
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
-        let yOffset = scrollView.contentOffset.y
-        if yOffset > 50 {
-            navigationController?.setNavigationBarHidden(false, animated: true) // 네비게이션바 표시
-        } else {
-            navigationController?.setNavigationBarHidden(true, animated: true) // 네비게이션바 숨기기
-        }
+        navigationController?.setTransitAlpha(yOffset: scrollView.contentOffset.y)
     }
 }
 
