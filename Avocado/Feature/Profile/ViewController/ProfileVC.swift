@@ -50,6 +50,7 @@ final class ProfileVC: BaseVC {
     
     override func setProperty() {
         title = "마이페이지"
+        navigationController?.navigationBar.prefersLargeTitles = true
     }
     
     override func setLayout() {
