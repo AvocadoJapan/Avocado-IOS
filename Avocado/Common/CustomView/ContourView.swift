@@ -41,7 +41,6 @@ final class ContourView: UIView {
             $0.edges.equalToSuperview().inset(inset)
             $0.height.equalTo(1)
         }
-        
     }
     
     required init?(coder: NSCoder) {
