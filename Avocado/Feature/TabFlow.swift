@@ -70,6 +70,8 @@ final class TabFlow: Flow {
             upload.title = TabType.upload.title
             myPage.tabBarItem = TabType.myPage.tabBarItem
             myPage.title = TabType.myPage.title
+            
+
 
             self.rootViewController.setViewControllers([home, upload, myPage], animated: false)
             self.rootViewController.selectedIndex = focusedTab.rawValue

@@ -53,31 +53,31 @@ extension MainAPI: BaseTarget {
                         "productSection": [
                           {
                             "id": "05c6501c-7ff6-4c95-9ecd-28834b2a1279",
-                            "name": "閲覧履歴に基づいたおすすめ",
+                            "name": "최근 본 상품",
                             "products": [
                               {
                                 "productId": "random-uuid-1",
                                 "mainImageId": "random-uuid-2",
                                 "imageIds": ["sample1", "sample2"],
-                                "name": "Macbook pro M2 14インチ",
-                                "price": "180,000円",
-                                "location": "東京都 港区"
+                                "name": "Macbook pro M2",
+                                "price": "180,000원",
+                                "location": "지역정보 없음"
                               },
                               {
                                 "productId": "random-uuid-3",
                                 "mainImageId": "random-uuid-4",
                                 "imageIds": ["sample3", "sample4"],
-                                "name": "Airpods Max　未使用",
-                                "price": "50,000円",
-                                "location": "東京都 足立区"
+                                "name": "Airpods Max",
+                                "price": "50,000원",
+                                "location": "지역정보 없음"
                               },
                               {
                                 "productId": "random-uuid-5",
                                 "mainImageId": "random-uuid-6",
                                 "imageIds": ["sample5", "sample6"],
-                                "name": "Iphone 14pro",
-                                "price": "50,000円",
-                                "location": "東京都 練馬区"
+                                "name": "아이폰 14pro",
+                                "price": "50,000원",
+                                "location": "강북구 미아동"
                               },
                               {
                                 "productId": "random-uuid-7",
