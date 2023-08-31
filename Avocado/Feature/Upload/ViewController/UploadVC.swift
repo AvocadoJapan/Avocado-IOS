@@ -54,6 +54,8 @@ final class UploadVC: BaseVC {
     private lazy var titleInput = InputView(label: "상품명 (필수)")
     private lazy var priceInput = InputView(label: "가격 (필수)")
     private lazy var descriptionInput = InputView(label: "상품설명 (임의)")
+    private lazy var locationInput = InputView(label: "지역 (임의)")
+    private lazy var shippingTimeInput = InputView(label: "발송까지 걸리는 시간 (임의)")
     
     private lazy var uploadButton = BottomButton(text: "업로드 하기", buttonType: .primary)
     
@@ -78,7 +80,7 @@ final class UploadVC: BaseVC {
             stackView.addArrangedSubview($0)
         }
         
-        [titleInput, priceInput, descriptionInput].forEach {
+        [titleInput, priceInput, descriptionInput, locationInput, shippingTimeInput].forEach {
             inputStackView.addArrangedSubview($0)
         }
     }
@@ -88,12 +90,16 @@ final class UploadVC: BaseVC {
         imageCV.delegate = self
         imageCV.dataSource = self
         imageCV.register(ImageCVCell.self, forCellWithReuseIdentifier: ImageCVCell.identifier)
+        
+        view.backgroundColor = .white
+        
+        navigationController?.setNavigationBarHidden(true, animated: false)
     }
     
     override func setConstraint() {
         scrollView.snp.makeConstraints {
+            $0.top.equalTo(self.view.safeAreaLayoutGuide.snp.top)
             $0.horizontalEdges.equalToSuperview()
-            $0.top.equalToSuperview()
             $0.bottom.equalTo(uploadButton.snp.top)
         }
         

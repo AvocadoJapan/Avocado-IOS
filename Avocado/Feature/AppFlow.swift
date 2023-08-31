@@ -78,7 +78,7 @@ final class AppFlow: Flow {
      */
     private func navigateToMainFlow() -> FlowContributors {
 //        let mainFlow = MainFlow(root: BaseNavigationVC())
-        let tabFlow = TabFlow(window: UIWindow())
+        let tabFlow = TabFlow()
         
         Flows.use(tabFlow, when: .created, block: { [unowned self] root in
             self.window.rootViewController = root

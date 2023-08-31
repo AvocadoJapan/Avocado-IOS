@@ -47,7 +47,7 @@ enum TabType : Int{
     // case someScreenIsRequired
     
     // 에러처리
-    case errorOccurred(error: NetworkError)
+//    case errorOccurred(error: NetworkError)
 }
 
 

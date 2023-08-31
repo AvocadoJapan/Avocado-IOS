@@ -20,8 +20,10 @@ final class TabFlow: Flow {
     
     var rootViewController = BaseTabBarController()
     
-    init(window: UIWindow) {
+    init() {
+        
         Logger.i("TabFlow init")
+//        self.rootViewController.delegate = self
     }
     
     deinit {
@@ -35,11 +37,22 @@ final class TabFlow: Flow {
         switch step {
             
         case .mainTabIsRequired:
-            return navigateToMain() //스플래시 화면이동
-        case .errorOccurred(error: let error):
-            return errorTrigger(error: error)
+            return navigateToMain()
         }
     }
+    
+//    // UITabBarControllerDelegate 메서드
+//    func tabBarController(_ tabBarController: UITabBarController, shouldSelect viewController: UIViewController) -> Bool {
+//        if viewController.title == TabType.upload.title {
+//            // Upload 화면을 present합니다.
+//            presentToUploadScreen()
+//            return false  // 실제로 탭을 전환하지 않습니다.
+//        }
+//        return true  // 그 외의 탭은 정상적으로 전환합니다.
+//    }
+//    
+//    private func presentToUploadScreen() {
+//    }
     
     /**
      * - description 메인탭으로 이동
@@ -49,7 +62,7 @@ final class TabFlow: Flow {
         let uploadFlow = UploadFlow(root: BaseNavigationVC())
         let settingFlow = SettingFlow(root: BaseNavigationVC())
 
-        Flows.use(mainFlow, uploadFlow, settingFlow, when: .ready) { [unowned self] (home: UINavigationController, upload: UINavigationController, myPage: UINavigationController) in
+        Flows.use(mainFlow, uploadFlow, settingFlow, when: .created) { [unowned self] (home: UINavigationController, upload: UINavigationController, myPage: UINavigationController) in
             
             home.tabBarItem = TabType.home.tabBarItem
             home.title = TabType.home.title
@@ -66,7 +79,7 @@ final class TabFlow: Flow {
         return .multiple(flowContributors: [
             .contribute(withNextPresentable: mainFlow, withNextStepper: OneStepper(withSingleStep: MainStep.mainIsRequired)),
             .contribute(withNextPresentable: uploadFlow, withNextStepper: OneStepper(withSingleStep: UploadStep.uploadIsRequired)),
-            .contribute(withNextPresentable: settingFlow, withNextStepper: OneStepper(withSingleStep: SettingStep.errorOccurred(error: .pageNotFound))),
+            .contribute(withNextPresentable: settingFlow, withNextStepper: OneStepper(withSingleStep: SettingStep.settingIsComplete)),
         ])
     }
     
