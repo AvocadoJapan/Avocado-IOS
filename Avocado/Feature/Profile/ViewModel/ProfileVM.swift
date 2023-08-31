@@ -52,10 +52,6 @@ final class ProfileVM: ViewModelType {
                     UserProfileDataSection(
                         userName: $0.name,
                         creationDate: $0.creationDate,
-                        items:[]
-                    ),
-                    
-                    UserProfileDataSection(
                         productTitle: "현재 판매중인 상품",
                         items: sellProduct
                     ),

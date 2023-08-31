@@ -22,12 +22,6 @@ final class ProfileVC: BaseVC {
         )
         
         $0.register(
-            ProductGroupHeaderReusableView.self,
-            forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader,
-            withReuseIdentifier: ProductGroupHeaderReusableView.identifier
-        )
-        
-        $0.register(
             ProductGroupFooterReusableView.self,
             forSupplementaryViewOfKind: UICollectionView.elementKindSectionFooter,
             withReuseIdentifier: ProductGroupFooterReusableView.identifier
@@ -88,9 +82,8 @@ final class ProfileVC: BaseVC {
             return cell
             
         } configureSupplementaryView: { [weak self] dataSource, collectionView, kind, indexPath in
-
-            switch indexPath.section {
-            case 0:
+            
+            if (kind == UICollectionView.elementKindSectionHeader) {
                 let headerView = collectionView.dequeueReusableSupplementaryView(
                     ofKind: kind,
                     withReuseIdentifier: ProfileHeaderReusableView.identifier,
@@ -99,42 +92,28 @@ final class ProfileVC: BaseVC {
                 
                 let data = dataSource[indexPath.section]
                 
+                // 2번째 섹션일 경우 프로필 화면을 보여주지 않도록 모드 변경
+                if indexPath.section == 1 { headerView.changedMode(isProfile: false)}
+                
                 headerView.configure(
                     userName: data.userName ?? "",
-                    creationDate: data.creationDate ?? ""
+                    creationDate: data.creationDate ?? "",
+                    productTitle: data.productTitle ?? ""
                 )
                 
                 return headerView
+            }
+            else {
+                let footerView = collectionView.dequeueReusableSupplementaryView(
+                    ofKind: kind,
+                    withReuseIdentifier: ProductGroupFooterReusableView.identifier,
+                    for: indexPath
+                ) as! ProductGroupFooterReusableView
                 
-            case 1, 2:
-                if (kind == UICollectionView.elementKindSectionHeader) {
-                    let headerView = collectionView.dequeueReusableSupplementaryView(
-                        ofKind: kind,
-                        withReuseIdentifier: ProductGroupHeaderReusableView.identifier,
-                        for: indexPath
-                    ) as! ProductGroupHeaderReusableView
-                    
-                    let data = dataSource[indexPath.section]
-                    
-                    headerView.setProperty(title: data.productTitle ?? "")
-                    
-                    return headerView
-                }
-                else {
-                    let footerView = collectionView.dequeueReusableSupplementaryView(
-                        ofKind: kind,
-                        withReuseIdentifier: ProductGroupFooterReusableView.identifier,
-                        for: indexPath
-                    ) as! ProductGroupFooterReusableView
-                    
-                    let data = dataSource[indexPath.section]
-                    
-                    footerView.configure(currentPage: self?.viewModel.input.currentPageBehavior.value ?? 0, totalPage: data.items.count/6)
-                    return footerView
-                }
+                let data = dataSource[indexPath.section]
                 
-            default:
-                return UICollectionReusableView()
+                footerView.configure(currentPage: self?.viewModel.input.currentPageBehavior.value ?? 0, totalPage: data.items.count/6)
+                return footerView
             }
         }
         
@@ -147,152 +126,106 @@ final class ProfileVC: BaseVC {
 
 extension ProfileVC: CollectionViewLayoutable {
     
-    private func productLayout() -> NSCollectionLayoutSection {
-        // 셀 사이즈 설정
-        let itemSize = NSCollectionLayoutSize(
-            widthDimension: .fractionalWidth(1.0),
-            heightDimension: .fractionalWidth(1.0)
-        )
-        
-        let item = NSCollectionLayoutItem(layoutSize: itemSize)
-        
-        // 셀간 간격 설정
-        item.contentInsets = NSDirectionalEdgeInsets(
-            top: 10,
-            leading: 10,
-            bottom: 0,
-            trailing: 0
-        )
-        
-        // 셀을 담을 gruop size 설정
-        let groupSize = NSCollectionLayoutSize(
-            widthDimension: .fractionalWidth(1.0),
-            heightDimension: .absolute(220)
-        )
-        
-        let group = NSCollectionLayoutGroup.horizontal(
-            layoutSize: groupSize,
-            subitem: item,
-            count: 3
-        )
-        //
-        group.contentInsets = NSDirectionalEdgeInsets(
-            top: 0,
-            leading: 0,
-            bottom: 10,
-            trailing: 10
-        )
-        
-        let group1 = NSCollectionLayoutGroup.horizontal(
-            layoutSize: groupSize,
-            subitem: item,
-            count: 3
-        )
-        //
-        group1.contentInsets = NSDirectionalEdgeInsets(
-            top: 0,
-            leading: 0,
-            bottom: 10,
-            trailing: 10
-        )
-        
-        let headerSize = NSCollectionLayoutSize(
-            widthDimension: .fractionalWidth(1.0),
-            heightDimension: .estimated(60)
-        )
-        
-        let header = NSCollectionLayoutBoundarySupplementaryItem(
-            layoutSize: headerSize,
-            elementKind: UICollectionView.elementKindSectionHeader,
-            alignment: .top
-        )
-        
-        let footerSize = NSCollectionLayoutSize(
-            widthDimension: .fractionalWidth(1.0),
-            heightDimension: .absolute(30)
-        )
-        
-        let footer = NSCollectionLayoutBoundarySupplementaryItem(
-            layoutSize: footerSize,
-            elementKind: UICollectionView.elementKindSectionFooter,
-            alignment: .bottom
-        )
-        
-        let containerGroup = NSCollectionLayoutGroup.vertical(layoutSize: .init(widthDimension: .fractionalWidth(1.0), heightDimension: .absolute(440)), subitems: [group, group1])
-        
-        let section = NSCollectionLayoutSection(group: containerGroup)
-        section.orthogonalScrollingBehavior = .groupPagingCentered
-        section.boundarySupplementaryItems = [header, footer]
-        section.contentInsets = NSDirectionalEdgeInsets(
-            top: 0,
-            leading: 0,
-            bottom: 0,
-            trailing: 0
-        )
-        
-        section.visibleItemsInvalidationHandler = { [weak self] _, contentOffset, environment in
-            let bannerIndex = Int(max(0, round(contentOffset.x/environment.container.contentSize.width)))
-            
-            if (environment.container.contentSize.height < environment.container.contentSize.width) {
-                self?.viewModel.input.currentPageBehavior.accept(bannerIndex)
-            }
-        }
-        
-        return section
-    }
-    
-    private func profileLayout() -> NSCollectionLayoutSection {
-        // 셀 사이즈 설정
-        let itemSize = NSCollectionLayoutSize(
-            widthDimension: .fractionalWidth(1),
-            heightDimension: .fractionalWidth(1)
-        )
-        
-        let item = NSCollectionLayoutItem(layoutSize: itemSize)
-        
-        // 셀을 담을 gruop size 설정
-        let groupSize = NSCollectionLayoutSize(
-            widthDimension: .fractionalWidth(1.0),
-            heightDimension: .absolute(220)
-        )
-        
-        let group = NSCollectionLayoutGroup.horizontal(
-            layoutSize: groupSize,
-            subitem: item,
-            count: 1
-        )
-        //
-        group.contentInsets = NSDirectionalEdgeInsets(
-            top: 0,
-            leading: 0,
-            bottom: 10,
-            trailing: 10
-        )
-        
-        let headerSize = NSCollectionLayoutSize(
-            widthDimension: .fractionalWidth(1.0),
-            heightDimension: .absolute(270)
-        )
-        
-        let header = NSCollectionLayoutBoundarySupplementaryItem(
-            layoutSize: headerSize,
-            elementKind: UICollectionView.elementKindSectionHeader,
-            alignment: .top
-        )
-        
-        let section = NSCollectionLayoutSection(group: group)
-        section.boundarySupplementaryItems = [header]
-        
-        return section
-    }
-    
     func getCompositionalLayout() -> UICollectionViewCompositionalLayout {
-    
         return UICollectionViewCompositionalLayout { [weak self] section, env in
-            switch section {
-            case 0: return self?.profileLayout()
-            default: return self?.productLayout()
+            // 셀 사이즈 설정
+            let itemSize = NSCollectionLayoutSize(
+                widthDimension: .fractionalWidth(1.0),
+                heightDimension: .fractionalWidth(1.0)
+            )
+            
+            let item = NSCollectionLayoutItem(layoutSize: itemSize)
+            
+            // 셀간 간격 설정
+            item.contentInsets = NSDirectionalEdgeInsets(
+                top: 10,
+                leading: 10,
+                bottom: 0,
+                trailing: 0
+            )
+            
+            // 셀을 담을 gruop size 설정
+            let groupSize = NSCollectionLayoutSize(
+                widthDimension: .fractionalWidth(1.0),
+                heightDimension: .absolute(220)
+            )
+            
+            let firstGroup = NSCollectionLayoutGroup.horizontal(
+                layoutSize: groupSize,
+                subitem: item,
+                count: 3
+            )
+            //
+            firstGroup.contentInsets = NSDirectionalEdgeInsets(
+                top: 0,
+                leading: 0,
+                bottom: 10,
+                trailing: 10
+            )
+            
+            let secondGroup = NSCollectionLayoutGroup.horizontal(
+                layoutSize: groupSize,
+                subitem: item,
+                count: 3
+            )
+            //
+            secondGroup.contentInsets = NSDirectionalEdgeInsets(
+                top: 0,
+                leading: 0,
+                bottom: 10,
+                trailing: 10
+            )
+            
+            let headerSize = NSCollectionLayoutSize(
+                widthDimension: .fractionalWidth(1.0),
+                heightDimension: .estimated(60)
+            )
+            
+            let header = NSCollectionLayoutBoundarySupplementaryItem(
+                layoutSize: headerSize,
+                elementKind: UICollectionView.elementKindSectionHeader,
+                alignment: .top
+            )
+            
+            let footerSize = NSCollectionLayoutSize(
+                widthDimension: .fractionalWidth(1.0),
+                heightDimension: .absolute(30)
+            )
+            
+            let footer = NSCollectionLayoutBoundarySupplementaryItem(
+                layoutSize: footerSize,
+                elementKind: UICollectionView.elementKindSectionFooter,
+                alignment: .bottom
+            )
+            let containerSize =  NSCollectionLayoutSize(
+                widthDimension: .fractionalWidth(1.0),
+                heightDimension: .absolute(440)
+            )
+            
+            let containerGroup = NSCollectionLayoutGroup.vertical(
+                layoutSize:containerSize,
+                subitems: [firstGroup, secondGroup]
+            )
+            
+            let section = NSCollectionLayoutSection(group: containerGroup)
+            section.orthogonalScrollingBehavior = .groupPagingCentered
+            section.boundarySupplementaryItems = [header, footer]
+            section.contentInsets = NSDirectionalEdgeInsets(
+                top: 0,
+                leading: 0,
+                bottom: 0,
+                trailing: 0
+            )
+            
+            section.visibleItemsInvalidationHandler = { [weak self] _, contentOffset, environment in
+                let bannerIndex = Int(max(0, round(contentOffset.x/environment.container.contentSize.width)))
+                
+                if (environment.container.contentSize.height < environment.container.contentSize.width) {
+                    self?.viewModel.input.currentPageBehavior.accept(bannerIndex)
+                }
             }
+            
+            return section
         }
     }
 }
