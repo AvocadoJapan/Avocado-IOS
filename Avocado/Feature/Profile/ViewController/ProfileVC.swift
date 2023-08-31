@@ -117,6 +117,20 @@ final class ProfileVC: BaseVC {
             }
         }
         
+        collectionView
+            .rx
+            .modelSelected(UserProfileDataSection.Item.self)
+            .asDriver()
+            .drive(onNext: { [weak self] item in
+                switch item {
+                case .buyed(let product):
+                    self?.viewModel.steps.accept(ProfileStep.productDetailIsRequired(product: product))
+                    
+                case .selled(let product):
+                    self?.viewModel.steps.accept(ProfileStep.productDetailIsRequired(product: product))
+                }
+            })
+        
         output.successProfileEventDateSourcePublish
             .bind(to: collectionView.rx.items(dataSource: dataSource))
             .disposed(by: disposeBag)
@@ -131,7 +145,7 @@ extension ProfileVC: CollectionViewLayoutable {
             // 셀 사이즈 설정
             let itemSize = NSCollectionLayoutSize(
                 widthDimension: .fractionalWidth(1.0),
-                heightDimension: .fractionalWidth(1.0)
+                heightDimension: .fractionalHeight(1.0)
             )
             
             let item = NSCollectionLayoutItem(layoutSize: itemSize)
@@ -147,7 +161,7 @@ extension ProfileVC: CollectionViewLayoutable {
             // 셀을 담을 gruop size 설정
             let groupSize = NSCollectionLayoutSize(
                 widthDimension: .fractionalWidth(1.0),
-                heightDimension: .absolute(220)
+                heightDimension: .estimated(220)
             )
             
             let firstGroup = NSCollectionLayoutGroup.horizontal(
