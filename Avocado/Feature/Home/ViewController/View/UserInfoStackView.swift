@@ -136,6 +136,12 @@ final class UserInfoStackView: UIStackView {
     @objc private func moreButtonTapped() {
         
     }
+    
+    public func configure(name: String,
+                          creationDate: String) {
+        userNameLabel.text = name
+        userSingupDateLabel.text = creationDate
+    }
 }
 
 #if DEBUG && canImport(SwiftUI)
