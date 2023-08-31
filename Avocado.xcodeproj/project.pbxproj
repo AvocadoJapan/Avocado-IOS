@@ -107,6 +107,9 @@
 		B247C7C32A9E25C900303147 /* UserInfoStackView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B247C7C22A9E25C900303147 /* UserInfoStackView.swift */; };
 		B248C6A82A86A153006AE008 /* ProductGroupCVCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B248C6A72A86A153006AE008 /* ProductGroupCVCell.swift */; };
 		B248C6AB2A86C918006AE008 /* MainService.swift in Sources */ = {isa = PBXBuildFile; fileRef = B248C6AA2A86C918006AE008 /* MainService.swift */; };
+		B2689E822AA0641E00151D1D /* TabFlow.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2689E812AA0641E00151D1D /* TabFlow.swift */; };
+		B2689E862AA0643800151D1D /* TabStep.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2689E852AA0643800151D1D /* TabStep.swift */; };
+		B2689E882AA0740200151D1D /* BaseTabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2689E872AA0740200151D1D /* BaseTabBarController.swift */; };
 		B26A3B612A60A79800AD61A5 /* AuthFlow.swift in Sources */ = {isa = PBXBuildFile; fileRef = B26A3B602A60A79800AD61A5 /* AuthFlow.swift */; };
 		B26A3B642A60A7D600AD61A5 /* RxFlow in Frameworks */ = {isa = PBXBuildFile; productRef = B26A3B632A60A7D600AD61A5 /* RxFlow */; };
 		B26A3B662A60AB8400AD61A5 /* AuthStep.swift in Sources */ = {isa = PBXBuildFile; fileRef = B26A3B652A60AB8400AD61A5 /* AuthStep.swift */; };
@@ -247,6 +250,9 @@
 		B247C7C22A9E25C900303147 /* UserInfoStackView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserInfoStackView.swift; sourceTree = "<group>"; };
 		B248C6A72A86A153006AE008 /* ProductGroupCVCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProductGroupCVCell.swift; sourceTree = "<group>"; };
 		B248C6AA2A86C918006AE008 /* MainService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainService.swift; sourceTree = "<group>"; };
+		B2689E812AA0641E00151D1D /* TabFlow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabFlow.swift; sourceTree = "<group>"; };
+		B2689E852AA0643800151D1D /* TabStep.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabStep.swift; sourceTree = "<group>"; };
+		B2689E872AA0740200151D1D /* BaseTabBarController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseTabBarController.swift; sourceTree = "<group>"; };
 		B26A3B602A60A79800AD61A5 /* AuthFlow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthFlow.swift; sourceTree = "<group>"; };
 		B26A3B652A60AB8400AD61A5 /* AuthStep.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthStep.swift; sourceTree = "<group>"; };
 		B26A3B682A60BB5100AD61A5 /* SplashFlow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SplashFlow.swift; sourceTree = "<group>"; };
@@ -482,6 +488,8 @@
 				B22ECA2A2A75974B00CCA794 /* AppFlow.swift */,
 				B22ECA2C2A75975C00CCA794 /* AppStepper.swift */,
 				B22ECA2E2A75976500CCA794 /* AppStep.swift */,
+				B2689E812AA0641E00151D1D /* TabFlow.swift */,
+				B2689E852AA0643800151D1D /* TabStep.swift */,
 				B240D7172A9F102100DF171D /* Upload */,
 				B19E83252A6025A2004C5DE2 /* Auth */,
 				04BA131F2A2AD9FB0004E2FB /* Home */,
@@ -624,6 +632,7 @@
 			isa = PBXGroup;
 			children = (
 				B1A301BB2A543A2F003834E6 /* BaseNavigationVC.swift */,
+				B2689E872AA0740200151D1D /* BaseTabBarController.swift */,
 				B1A301B82A543A2F003834E6 /* BaseModalVC.swift */,
 				B1A301B92A543A2F003834E6 /* BaseVC.swift */,
 			);
@@ -1075,6 +1084,7 @@
 				B2CA311B2A8FD50900E7700C /* UINavigationController+Extension.swift in Sources */,
 				B26F8A4D2A544AC300F4BEA3 /* ProfileSettingVM.swift in Sources */,
 				B1D23D3F2A4C74F6006A2848 /* AvatarModel.swift in Sources */,
+				B2689E822AA0641E00151D1D /* TabFlow.swift in Sources */,
 				B2827C2B2A97126D00AC3D4B /* ProductGroupFooterReusableView.swift in Sources */,
 				9816F6ED2A494B0900A7A284 /* BasePagenationResponse.swift in Sources */,
 				B22ECA362A7789F100CCA794 /* MainStep.swift in Sources */,
@@ -1142,6 +1152,7 @@
 				04BA13262A2ADAEE0004E2FB /* MainVM.swift in Sources */,
 				B21E58F42A574A46007CCAA0 /* RegionSettingVC.swift in Sources */,
 				B29D78932A2B6FCF008B6945 /* SearchVM.swift in Sources */,
+				B2689E882AA0740200151D1D /* BaseTabBarController.swift in Sources */,
 				B26A3B692A60BB5100AD61A5 /* SplashFlow.swift in Sources */,
 				B2F3F47A2A4B6570007994DC /* EmailCheckVC.swift in Sources */,
 				B20AFE682A2BAE73004A646B /* SearchBarView.swift in Sources */,
@@ -1170,6 +1181,7 @@
 				98AD11012A4BF713001C4734 /* UserModel.swift in Sources */,
 				B18F1A002A5ED730003440B6 /* Util.swift in Sources */,
 				B1A301A72A5439E7003834E6 /* UIView+Extension.swift in Sources */,
+				B2689E862AA0643800151D1D /* TabStep.swift in Sources */,
 				B2D2764E2A6C4D6A00441719 /* OtherEmailVC.swift in Sources */,
 				B1A301AB2A5439EC003834E6 /* KeychainUtil.swift in Sources */,
 			);

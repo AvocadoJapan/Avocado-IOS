@@ -77,15 +77,17 @@ final class AppFlow: Flow {
      * - description 메인화면 이동 플로우 함수
      */
     private func navigateToMainFlow() -> FlowContributors {
-        let mainFlow = MainFlow(root: BaseNavigationVC())
+//        let mainFlow = MainFlow(root: BaseNavigationVC())
+        let tabFlow = TabFlow(window: UIWindow())
         
-        Flows.use(mainFlow, when: .created) { [unowned self] root in
+        Flows.use(tabFlow, when: .created, block: { [unowned self] root in
             self.window.rootViewController = root
             UIView.transition(with: self.window, duration: 0.2, options: [.transitionCrossDissolve], animations: nil)
-        }
+        })
         
-        return .one(flowContributor: .contribute(withNextPresentable: mainFlow, withNextStepper: OneStepper(withSingleStep: MainStep.mainIsRequired)))
+        return .one(flowContributor: .contribute(withNextPresentable: tabFlow, withNextStepper: OneStepper(withSingleStep: TabStep.mainTabIsRequired)))
     }
+    
     
     /**
      * - description 에러화면 이동 플로우 함수

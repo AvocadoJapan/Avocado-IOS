@@ -81,6 +81,9 @@ final class MainFlow: Flow {
         let viewModel = SingleProductVM(service: service, product: product)
         let viewController = SingleProductVC(viewModel: viewModel)
         
+        // 탭바 숨기기
+        viewController.hidesBottomBarWhenPushed = true
+        
         rootViewController.pushViewController(viewController, animated: true)
         return .one(flowContributor: .contribute(withNextPresentable: viewController, withNextStepper: viewModel))
     }

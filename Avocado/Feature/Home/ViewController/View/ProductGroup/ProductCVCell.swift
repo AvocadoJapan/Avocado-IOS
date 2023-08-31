@@ -103,11 +103,7 @@ final class ProductCVCell: UICollectionViewCell, CollectionCellIdentifierable {
     }
     
     @objc private func handleTap() {
-       productSelectedRelay.accept(())
-        
-        let sendData : [String: Any] = ["productId": self.product?.productId ?? ""]
-        
-        NotificationCenter.default.post(name: .productItemClickEvent, object: nil, userInfo: sendData)
+        productSelectedRelay.accept(())
    }
     
     override func prepareForReuse() {
@@ -123,8 +119,3 @@ struct ProductCCPreview: PreviewProvider {
     }
 }
 #endif
-
-extension Notification.Name {
-    /// 상품아이템 클릭 이벤트
-    static let productItemClickEvent = Notification.Name("AvocadoProductItemClickEvent")
-}

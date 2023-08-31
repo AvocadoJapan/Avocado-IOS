@@ -55,6 +55,8 @@ final class UploadVC: BaseVC {
     private lazy var priceInput = InputView(label: "가격 (필수)")
     private lazy var descriptionInput = InputView(label: "상품설명 (임의)")
     
+    private lazy var uploadButton = BottomButton(text: "업로드 하기", buttonType: .primary)
+    
     
     //    let photos: [UIImage] = [UIImage(named: "demo_product_ipad")!]
     
@@ -69,6 +71,7 @@ final class UploadVC: BaseVC {
     
     override func setLayout() {
         view.addSubview(scrollView)
+        view.addSubview(uploadButton)
         scrollView.addSubview(stackView)
         
         [titleLabel, imageCV, inputStackView].forEach {
@@ -89,7 +92,9 @@ final class UploadVC: BaseVC {
     
     override func setConstraint() {
         scrollView.snp.makeConstraints {
-            $0.edges.equalToSuperview()
+            $0.horizontalEdges.equalToSuperview()
+            $0.top.equalToSuperview()
+            $0.bottom.equalTo(uploadButton.snp.top)
         }
         
         stackView.snp.makeConstraints {
@@ -109,6 +114,12 @@ final class UploadVC: BaseVC {
         
         titleLabel.snp.makeConstraints {
             $0.horizontalEdges.equalToSuperview().inset(20)
+        }
+        
+        uploadButton.snp.makeConstraints {
+            $0.centerX.equalToSuperview()
+            $0.bottom.equalTo(view.safeAreaLayoutGuide).inset(20)
+            $0.leading.equalToSuperview().inset(20)
         }
     }
 }

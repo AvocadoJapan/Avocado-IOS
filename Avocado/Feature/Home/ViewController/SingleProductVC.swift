@@ -187,6 +187,9 @@ final class SingleProductVC: BaseVC {
         // 초기 메인데이터 API call]
         viewModel.input.actionViewDidLoad.accept(())
         //        scrollView.refreshControl = refreshControl
+        
+        // 탭바 숨기기
+        hidesBottomBarWhenPushed = true
     }
     
     override func setProperty() {

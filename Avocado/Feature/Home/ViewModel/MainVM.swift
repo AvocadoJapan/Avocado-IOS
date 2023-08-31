@@ -51,21 +51,6 @@ final class MainVM: ViewModelType, Stepper {
 //        self.service = service
         
         input = Input()
-        
-        NotificationCenter.default
-            .rx.notification(.productItemClickEvent)
-            .debug("productItemClickEvent 1")
-            .compactMap { noti -> String? in
-                return noti.userInfo?["productId"] as? String
-            }
-//            .flatMapLatest{
-//                
-//            }
-            .map{ MainStep.singleProductIsRequired(product: Product(productId: $0, mainImageId: "", imageIds: [], name: "", price: "", location: "")) }
-            .debug("productItemClickEvent 2")
-            .bind(to: self.steps)
-            .disposed(by: disposeBag)
-        
     }
     
     func transform(input: Input) -> Output {
@@ -105,6 +90,7 @@ final class MainVM: ViewModelType, Stepper {
         
         input.actionSingleProductRelay
             .subscribe { [weak self] product in
+                Logger.d("\(product)")
                 self?.steps.accept(MainStep.singleProductIsRequired(product: Product(productId: "smaple", mainImageId: "smaple", imageIds: ["smaple"], name: "smaple", price: "smaple", location: "smaple")))
             }
             .disposed(by: disposeBag)
