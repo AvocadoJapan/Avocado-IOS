@@ -131,6 +131,7 @@ final class ProfileVC: BaseVC {
                     self?.viewModel.steps.accept(ProfileStep.productDetailIsRequired(product: product))
                 }
             })
+            .disposed(by: disposeBag)
         
         output.successProfileEventDateSourcePublish
             .bind(to: collectionView.rx.items(dataSource: dataSource))
