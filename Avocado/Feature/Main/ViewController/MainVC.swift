@@ -11,7 +11,6 @@ import SnapKit
 import RxSwift
 import RxRelay
 import RxCocoa
-import RxDataSources
 
 /**
  *##화면 명: Avocado 메인화면 (배너, 카테고리 별 상품 정보를 확인가능)
@@ -56,7 +55,8 @@ final class MainVC: BaseVC {
     
     private lazy var productGroupCVLayout = UICollectionViewFlowLayout().then {
         $0.scrollDirection = .vertical
-        $0.sectionInset = UIEdgeInsets(top: 0, left: 10, bottom: 0, right: 10)
+        $0.minimumLineSpacing = 10
+        $0.sectionInset = UIEdgeInsets(top: 0, left: 7, bottom: 0, right: 7)
     }
     private lazy var productGroupCV = UICollectionView(frame: .zero, collectionViewLayout: self.productGroupCVLayout).then {
         $0.showsVerticalScrollIndicator = false
@@ -82,23 +82,20 @@ final class MainVC: BaseVC {
     
     override func setProperty() {
         view.backgroundColor = .white
+        navigationController?.setNavigationBarHidden(true, animated: true)
         
         navigationController?.setupNavbar(with: "Avocado Beta", logoImage: UIImage(systemName: "apple.logo"))
         
 
         
-        // mainCategoryCV delegate설정, 셀등록
+        // Configure Main Category Collection View
         mainCategoryCV.delegate = self
         mainCategoryCV.dataSource = self
         mainCategoryCV.register(MainSubMenuCVCell.self, forCellWithReuseIdentifier: MainSubMenuCVCell.identifier)
-
-        // bannerCV 셀등록
-        bannerCV.register(BannerCVCell.self, forCellWithReuseIdentifier: BannerCVCell.identifier)
         
-        // productGroupCV 셀등록 및 푸터 헤더 등록
-        productGroupCV.register(ProductCVCell.self, forCellWithReuseIdentifier: ProductCVCell.identifier)
-        productGroupCV.register(ProductGroupFooterReusableView.self, forSupplementaryViewOfKind: UICollectionView.elementKindSectionFooter, withReuseIdentifier: ProductGroupFooterReusableView.identifier)
-        productGroupCV.register(ProductGroupHeaderReusableView.self, forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier: ProductGroupHeaderReusableView.identifier)
+
+        bannerCV.register(BannerCVCell.self, forCellWithReuseIdentifier: BannerCVCell.identifier)
+        productGroupCV.register(ProductGroupCVCell.self, forCellWithReuseIdentifier: ProductGroupCVCell.identifier)
     }
     
     override func setLayout() {
@@ -121,7 +118,7 @@ final class MainVC: BaseVC {
         }
         
         productGroupCV.snp.makeConstraints {
-            $0.height.equalTo(productGroupCV.snp.width).multipliedBy(5.4)
+             $0.height.equalTo(540 * 4 + 30)
          }
         
         bannerCV.snp.makeConstraints {
@@ -131,6 +128,11 @@ final class MainVC: BaseVC {
         mainCategoryCV.snp.makeConstraints {
             $0.height.equalTo(75)
         }
+        
+        legalView.snp.makeConstraints {
+            $0.horizontalEdges.equalToSuperview()
+            $0.height.equalTo(250)
+        }
     }
     
     override func bindUI() {
@@ -139,41 +141,13 @@ final class MainVC: BaseVC {
         productGroupCV.rx.setDelegate(self).disposed(by: disposeBag)
         bannerCV.rx.setDelegate(self).disposed(by: disposeBag)
         
-        
-        
-        
-        let dataSource = RxCollectionViewSectionedReloadDataSource<ProductDataSection>(
-            configureCell: { dataSource, collectionView, indexPath, item in
-                let cell = collectionView.dequeueReusableCell(withReuseIdentifier: ProductCVCell.identifier, for: indexPath) as! ProductCVCell
-    
-                cell.config(product: item)
-                return cell
-            },
-            configureSupplementaryView: { dataSource, collectionView, kind, indexPath in
-                if kind == UICollectionView.elementKindSectionHeader {
-                    
-                    let headerView = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: ProductGroupHeaderReusableView.identifier, for: indexPath) as! ProductGroupHeaderReusableView
-                    
-                    let item = dataSource[indexPath.section].header
-                    headerView.setProperty(title: item ?? "알수없는 오류")
-                    
-                    return headerView
-                } else if kind == UICollectionView.elementKindSectionFooter {
-                    let footerView = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: ProductGroupFooterReusableView.identifier, for: indexPath) as! ProductGroupFooterReusableView
-                    
-                    let item = dataSource[indexPath.section].productSectionId
-//                    footerView.setProperty(id: item)
-                    
-                    return footerView
-                }
-                return UICollectionReusableView()  // 기본적인 reusable view를 반환합니다. 필요하다면 다른 view를 반환할 수도 있습니다.
-            }
-        )
-        
         output.productSectionDataPublish
-            .bind(to: productGroupCV.rx.items(dataSource: dataSource))
+            .bind(to: productGroupCV.rx.items(cellIdentifier: ProductGroupCVCell.identifier, cellType: ProductGroupCVCell.self)) { index, model, cell in
+                cell.config(productSection: model)
+                
+                Logger.d(model)
+            }
             .disposed(by: disposeBag)
-    
 
         
         output.bannerSectionDataPublish
@@ -185,37 +159,36 @@ final class MainVC: BaseVC {
     }
 }
 
-extension MainVC {
-    override func viewWillAppear(_ animated: Bool) {
-        navigationController?.setTransitAlpha(yOffset: scrollView.contentOffset.y)
-    }
-}
-
 extension MainVC: UIScrollViewDelegate {
     // MARK: - UIScrollViewDelegate
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
-        navigationController?.setTransitAlpha(yOffset: scrollView.contentOffset.y)
+        let yOffset = scrollView.contentOffset.y
+        if yOffset > 50 {
+            navigationController?.setNavigationBarHidden(false, animated: true) // 네비게이션바 표시
+        } else {
+            navigationController?.setNavigationBarHidden(true, animated: true) // 네비게이션바 숨기기
+        }
     }
 }
 
 extension MainVC: UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         if collectionView == bannerCV {
-            return collectionView.frame.size //bannerCV의 사이즈
+            return collectionView.frame.size
         }
          else if collectionView == mainCategoryCV {
-             return CGSize(width: 60, height: 75) //mainCategoryCV의 사이즈
+             return CGSize(width: 60, height: 75)
          }
         else {
-            let width = collectionView.frame.width/3 - 14
-            return CGSize(width: width , height: width * 1.8) // ProductCVCell의 사이즈
+            return CGSize(width: collectionView.frame.width, height: 540)
         }
     }
 }
 
 extension MainVC: UICollectionViewDelegate, UICollectionViewDataSource{
     
-    // MainSubMenuCVCell 이외 collectionView는 RX를 이용하여 처리
+    // 아래는 MainSubMenuCVCell만 관할
+    // 이외 collectionView는 RX를 이용하여 처리
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return MainSubMenuType.count
     }
@@ -223,36 +196,15 @@ extension MainVC: UICollectionViewDelegate, UICollectionViewDataSource{
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: MainSubMenuCVCell.identifier, for: indexPath) as! MainSubMenuCVCell
         
-        // MainSubMenuType 열거형에서 해당 indexPath에 맞는 케이스를 가져옴
+        // MainSubMenuType 열거형에서 해당 indexPath에 맞는 케이스를 가져옵니다.
         let menuType = MainSubMenuType.allCases[indexPath.item]
         
-        // 셀을 해당 데이터로 구성함
+        // 셀을 해당 데이터로 구성합니다.
         cell.configure(imageName: menuType.imageName, title: menuType.title, navigateTo: menuType.navigateTo)
         
         return cell
     }
-    
-    // productGroupCV의 헤더 크기 정의
-    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, referenceSizeForHeaderInSection section: Int) -> CGSize {
-        if collectionView == productGroupCV {
-            return CGSize(width: collectionView.frame.width, height: 60)
-        }
-        
-        return CGSize(width: 0, height: 0)
-    }
-    
-    // productGroupCV의 푸터 크기 정의
-    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, referenceSizeForFooterInSection section: Int) -> CGSize {
-        if collectionView == productGroupCV {
-            return CGSize(width: collectionView.frame.width, height: 30)
-        }
-        
-        return CGSize(width: 0, height: 0)
-    }
 }
-
-
-
 
 
 #if DEBUG && canImport(SwiftUI)
@@ -266,7 +218,7 @@ struct MainVCPreview: PreviewProvider {
                     service: MainService()
                 )
             )
-        ).toPreview().ignoresSafeArea()
+        ).toPreview()
     }
 }
 #endif

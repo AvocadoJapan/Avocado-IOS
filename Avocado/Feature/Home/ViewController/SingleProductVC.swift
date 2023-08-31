@@ -44,6 +44,8 @@ final class SingleProductVC: BaseVC {
     private lazy var titleStackView = UIStackView().then {
         $0.axis = .vertical
         $0.spacing = 10
+        $0.layoutMargins = UIEdgeInsets(top: 0, left: 15, bottom: 0, right: 15)
+        $0.isLayoutMarginsRelativeArrangement = true
     }
     
     private lazy var titleLabel = UILabel().then {
@@ -86,57 +88,8 @@ final class SingleProductVC: BaseVC {
         $0.font = .systemFont(ofSize: 22, weight: .bold)
         $0.textColor = .darkText
     }
-    
-    private lazy var uploaderStackView = UIStackView().then {
-        $0.axis = .horizontal
-        $0.alignment = .leading
-        $0.distribution = .fill
-        $0.spacing = 20
-    }
-    
-    // 유저이름, 가입년월 스택뷰
-    private lazy var uploaderNameStackView = UIStackView().then {
-        $0.axis = .vertical
-        $0.alignment = .leading
-        $0.distribution = .fillProportionally
-        $0.spacing = 5
-    }
-    
-    // 유저 배지 스택뷰
-    private lazy var uploaderBadgeStackView = UIStackView().then {
-        $0.axis = .vertical
-        $0.alignment = .leading
-        $0.distribution = .fillEqually
-        $0.spacing = 10
-    }
-    
-    private lazy var uploaderNameLabel = UILabel().then {
-        $0.text = "최애의 카르마"
-        $0.numberOfLines = 1
-        $0.font = .systemFont(ofSize: 17, weight: .semibold)
-        $0.textColor = .darkText
-    }
-    
-    private lazy var userSingupDateLabel = UILabel().then {
-        $0.text = "2023년 3월 10일 가입"
-        $0.numberOfLines = 1
-        $0.font = .systemFont(ofSize: 12, weight: .regular)
-        $0.textColor = .gray
-    }
-    
-    // 유저 배지
-    private lazy var userBadge = UserBadgeView(type: .comment(number: 239))
-    private lazy var userBadge1 = UserBadgeView(type: .premiumBuyer)
-    private lazy var userBadge2 = UserBadgeView(type: .premiumSeller)
-    private lazy var userBadge3 = UserBadgeView(type: .unverified)
-    private lazy var userBadge4 = UserBadgeView(type: .verified)
-    
-    private lazy var profileImageView = UIImageView().then {
-        $0.contentMode = .scaleAspectFill
-        $0.layer.cornerRadius = 60/2
-        $0.clipsToBounds = true
-        $0.backgroundColor = .systemGray5
-    }
+
+    private lazy var uploaderStackView = UserInfoStackView(inset: UIEdgeInsets(top: 0, left: 10, bottom: 0, right: 10))
     
     // 하단 고정뷰 (좋아요 채팅, 결제 등)
     private lazy var bottomView = UIView().then {
@@ -144,9 +97,9 @@ final class SingleProductVC: BaseVC {
     }
     
     private lazy var contourView = ContourView()
-    private lazy var contourView2 = ContourView()
-    private lazy var contourView3 = ContourView()
-    private lazy var contourView4 = ContourView()
+    private lazy var contourView2 = ContourView(inset: UIEdgeInsets(top: 0, left: 40, bottom: 0, right: 40))
+    private lazy var contourView3 = ContourView(inset: UIEdgeInsets(top: 0, left: 40, bottom: 0, right: 40))
+    private lazy var contourView4 = ContourView(inset: UIEdgeInsets(top: 0, left: 40, bottom: 0, right: 40))
     
     private lazy var buttomButtonStackView = UIStackView().then {
         $0.axis = .horizontal
@@ -163,6 +116,8 @@ final class SingleProductVC: BaseVC {
         $0.axis = .vertical
         $0.spacing = 10
         $0.alignment = .leading
+        $0.layoutMargins = UIEdgeInsets(top: 0, left: 15, bottom: 0, right: 15)
+        $0.isLayoutMarginsRelativeArrangement = true
     }
     
     private lazy var productBadgeStackView = UIStackView().then {
@@ -170,6 +125,8 @@ final class SingleProductVC: BaseVC {
         $0.alignment = .leading
         $0.spacing = 15
         $0.distribution = .fillEqually
+        $0.layoutMargins = UIEdgeInsets(top: 0, left: 15, bottom: 0, right: 15)
+        $0.isLayoutMarginsRelativeArrangement = true
     }
     
     private lazy var productBadgeDemo = ProductBadgeView(type: .avocadoPay)
@@ -270,18 +227,6 @@ final class SingleProductVC: BaseVC {
             titleStackView.addArrangedSubview($0)
         }
         
-        [profileImageView, uploaderNameStackView, uploaderBadgeStackView].forEach {
-            uploaderStackView.addArrangedSubview($0)
-        }
-        
-        [uploaderNameLabel, userSingupDateLabel].forEach {
-            uploaderNameStackView.addArrangedSubview($0)
-        }
-        
-        [userBadge, userBadge1, userBadge2, userBadge3, userBadge4].forEach {
-            uploaderBadgeStackView.addArrangedSubview($0)
-        }
-        
         [locationLabel, dotLabel, updateAtLabel].forEach {
             titleSubInfoStackView.addArrangedSubview($0)
         }
@@ -308,34 +253,6 @@ final class SingleProductVC: BaseVC {
             $0.width.equalTo(self.view.snp.width)
         }
         
-        titleStackView.snp.makeConstraints {
-            $0.horizontalEdges.equalToSuperview().inset(15)
-        }
-        
-        uploaderStackView.snp.makeConstraints {
-            $0.horizontalEdges.equalToSuperview().inset(15)
-        }
-        
-        uploaderNameStackView.snp.makeConstraints {
-            $0.centerY.equalToSuperview()
-        }
-        
-        uploaderBadgeStackView.snp.makeConstraints {
-            $0.centerY.equalToSuperview()
-        }
-        
-        descriptionStackView.snp.makeConstraints {
-            $0.horizontalEdges.equalToSuperview().inset(15)
-        }
-        
-        productBadgeDemo.snp.makeConstraints {
-            $0.horizontalEdges.equalToSuperview().inset(15)
-        }
-        
-        profileImageView.snp.makeConstraints {
-            $0.size.equalTo(60)
-        }
-        
         bottomView.snp.makeConstraints {
             $0.height.equalTo(80)
             $0.horizontalEdges.equalToSuperview()
@@ -350,18 +267,6 @@ final class SingleProductVC: BaseVC {
         contourView.snp.makeConstraints {
             $0.horizontalEdges.equalToSuperview()
             $0.top.equalToSuperview()
-        }
-        
-        contourView2.snp.makeConstraints {
-            $0.horizontalEdges.equalToSuperview().inset(40)
-        }
-        
-        contourView3.snp.makeConstraints {
-            $0.horizontalEdges.equalToSuperview().inset(40)
-        }
-        
-        contourView4.snp.makeConstraints {
-            $0.horizontalEdges.equalToSuperview().inset(40)
         }
     }
 }
