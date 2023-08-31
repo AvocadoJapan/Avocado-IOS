@@ -21,8 +21,6 @@ struct UserProfile: DTOResponseable {
         let dateString = fomatter.string(from: date)
         
         return UserProfileDTO(name: user.nickName,
-                              sellProductCount: sellProduct.count,
-                              buyProductCount: buyProduct.count,
                               creationDate: dateString,
                               sellProduct: sellProduct,
                               buyProduct: buyProduct)
@@ -31,8 +29,6 @@ struct UserProfile: DTOResponseable {
 
 struct UserProfileDTO: Decodable {
     let name: String
-    let sellProductCount: Int
-    let buyProductCount: Int
     let creationDate: String
     let sellProduct: [Product]
     let buyProduct: [Product]

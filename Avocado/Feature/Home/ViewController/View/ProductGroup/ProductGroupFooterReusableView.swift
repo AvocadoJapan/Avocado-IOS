@@ -43,4 +43,10 @@ final class ProductGroupFooterReusableView: UICollectionReusableView {
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
+    
+    public func configure(currentPage: Int,
+                          totalPage: Int) {
+        pageControl.currentPage = currentPage
+        pageControl.numberOfPages = totalPage
+    }
 }

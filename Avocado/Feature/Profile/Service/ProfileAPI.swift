@@ -183,6 +183,72 @@ extension ProfileAPI: BaseTarget {
                         "name":"오메가 씨마스터 새제품급",
                         "price":"7,300,500원",
                         "location":"동작구 대방동"
+                    },
+                    {
+                        "productId":"random-uuid-25",
+                        "mainImageId":"random-uuid-26",
+                        "imageIds":[
+                            "sample21",
+                            "sample22"
+                        ],
+                        "name":"태그호이어 칼레라 오토매틱 시계",
+                        "price":"770,000원",
+                        "location":"서울시 중량구"
+                    },
+                    {
+                        "productId":"random-uuid-27",
+                        "mainImageId":"random-uuid-28",
+                        "imageIds":[
+                            "sample23",
+                            "sample24"
+                        ],
+                        "name":"까르띠에 파샤 오토매틱 시계",
+                        "price":"2,300,000원",
+                        "location":"지역정보 없음"
+                    },
+                    {
+                        "productId":"random-uuid-29",
+                        "mainImageId":"random-uuid-30",
+                        "imageIds":[
+                            "sample25",
+                            "sample26"
+                        ],
+                        "name":"까르띠에 발롱블루 42미리 자동시계",
+                        "price":"4,020,000원",
+                        "location":"송파구 마천2동"
+                    },
+                    {
+                        "productId":"random-uuid-31",
+                        "mainImageId":"random-uuid-32",
+                        "imageIds":[
+                            "sample27",
+                            "sample28"
+                        ],
+                        "name":"카시오 커스텀 시계",
+                        "price":"195,000원",
+                        "location":"인천시 미추홀구"
+                    },
+                    {
+                        "productId":"random-uuid-33",
+                        "mainImageId":"random-uuid-34",
+                        "imageIds":[
+                            "sample1",
+                            "sample2"
+                        ],
+                        "name":"국정원 절대시계",
+                        "price":"102,000원",
+                        "location":"강동구 상일동"
+                    },
+                    {
+                        "productId":"random-uuid-35",
+                        "mainImageId":"random-uuid-36",
+                        "imageIds":[
+                            "sample29",
+                            "sample30"
+                        ],
+                        "name":"오메가 씨마스터 새제품급",
+                        "price":"7,300,500원",
+                        "location":"동작구 대방동"
                     }
                 ]
             }

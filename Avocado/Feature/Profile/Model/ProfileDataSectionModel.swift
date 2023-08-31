@@ -13,10 +13,10 @@ struct UserProfileDataSection {
     var userGrade: String?
     var userVerified: String?
     var creationDate: String?
+    var productTitle: String?
     var items: [Item]
     
     enum ProductSectionItem {
-        case slider(title: String)
         case buyed(data: Product)
         case selled(data: Product)
     }

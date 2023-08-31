@@ -18,6 +18,7 @@ final class ProfileVM: ViewModelType {
     
     struct Input {
         let actionViewDidLoad = PublishRelay<Void>()
+        let currentPageBehavior = BehaviorRelay<Int>(value: 0)
     }
     
     struct Output {
@@ -44,25 +45,26 @@ final class ProfileVM: ViewModelType {
             }
             .subscribe(onNext: {
                 
-                let buyedDataSections = $0.buyProduct.map {
-                    return UserProfileDataSection.ProductSectionItem.buyed(data: $0)
-                }
+                let buyProduct = $0.buyProduct.map { UserProfileDataSection.ProductSectionItem.buyed(data: $0) }
+                let sellProduct = $0.sellProduct.map { UserProfileDataSection.ProductSectionItem.selled(data: $0) }
                 
-                let selledDataSections = $0.sellProduct.map { UserProfileDataSection.ProductSectionItem.selled(data: $0) }
-                
-               let userDataSections = [
-                UserProfileDataSection(userName: $0.name,
-                                       userGrade: "⭐ 프리미엄 판매자",
-                                       userVerified: "⚠️ 본인인증 미완료",
-                                       creationDate: $0.creationDate,
-                                       items: [
-                                        .slider(title: "구매 \($0.buyProductCount)"),
-                                        .slider(title: "판매 \($0.buyProductCount)"),
-                                       ]),
-                UserProfileDataSection(items: buyedDataSections)
-               ]
-                
-                output.successProfileEventDateSourcePublish.accept(userDataSections)
+                output.successProfileEventDateSourcePublish.accept([
+                    UserProfileDataSection(
+                        userName: $0.name,
+                        creationDate: $0.creationDate,
+                        items:[]
+                    ),
+                    
+                    UserProfileDataSection(
+                        productTitle: "현재 판매중인 상품",
+                        items: sellProduct
+                    ),
+                    
+                    UserProfileDataSection(
+                        productTitle: "현재 판매완료 된 상품",
+                        items: buyProduct
+                    )
+                ])
             })
             .disposed(by: disposeBag)
         
