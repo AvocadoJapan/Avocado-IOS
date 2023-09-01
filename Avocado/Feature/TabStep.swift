@@ -43,6 +43,12 @@ enum TabType : Int{
     // 메인탭
     case mainTabIsRequired
     
+    // 검색 탭
+    case searchTabIsRequired
+    
+    // 프로필 화면 탭
+    case profileTabIsRequired
+    
     // 딥링크처리 추후 처리
     // case someScreenIsRequired
     

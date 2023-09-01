@@ -25,6 +25,7 @@ final class ProductGroupFooterReusableView: UICollectionReusableView {
         $0.pageIndicatorTintColor = .lightGray
         $0.backgroundStyle = .prominent
     }
+    
     private let disposeBag = DisposeBag()
     
     override init(frame: CGRect) {
@@ -44,9 +45,12 @@ final class ProductGroupFooterReusableView: UICollectionReusableView {
         fatalError("init(coder:) has not been implemented")
     }
     
-    public func configure(currentPage: Int,
+    public func configure(data: Observable<Int>,
                           totalPage: Int) {
-        pageControl.currentPage = currentPage
         pageControl.numberOfPages = totalPage
+        data
+            .observe(on: MainScheduler.instance)
+            .bind(to: pageControl.rx.currentPage)
+            .disposed(by: disposeBag)
     }
 }

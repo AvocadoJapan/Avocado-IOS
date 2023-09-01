@@ -49,7 +49,7 @@ final class ProfileVC: BaseVC {
     }
     
     override func setProperty() {
-        title = "마이페이지"
+        title = "프로필"
         navigationController?.navigationBar.prefersLargeTitles = true
     }
     
@@ -113,7 +113,11 @@ final class ProfileVC: BaseVC {
                 
                 let data = dataSource[indexPath.section]
                 
-                footerView.configure(currentPage: self?.viewModel.input.currentPageBehavior.value ?? 0, totalPage: data.items.count/6)
+                footerView.configure(
+                    data:self?.viewModel.input.currentPageBehavior.asObservable() ?? .just(0),
+                    totalPage: data.items.count/6
+                )
+                
                 return footerView
             }
         }
@@ -154,7 +158,7 @@ extension ProfileVC: CollectionViewLayoutable {
             
             // 셀간 간격 설정
             item.contentInsets = NSDirectionalEdgeInsets(
-                top: 10,
+                top: 0,
                 leading: 10,
                 bottom: 0,
                 trailing: 0
@@ -171,25 +175,11 @@ extension ProfileVC: CollectionViewLayoutable {
                 subitem: item,
                 count: 3
             )
-            //
-            firstGroup.contentInsets = NSDirectionalEdgeInsets(
-                top: 0,
-                leading: 0,
-                bottom: 10,
-                trailing: 10
-            )
             
             let secondGroup = NSCollectionLayoutGroup.horizontal(
                 layoutSize: groupSize,
                 subitem: item,
                 count: 3
-            )
-            //
-            secondGroup.contentInsets = NSDirectionalEdgeInsets(
-                top: 0,
-                leading: 0,
-                bottom: 10,
-                trailing: 10
             )
             
             let headerSize = NSCollectionLayoutSize(
@@ -213,9 +203,10 @@ extension ProfileVC: CollectionViewLayoutable {
                 elementKind: UICollectionView.elementKindSectionFooter,
                 alignment: .bottom
             )
+            
             let containerSize =  NSCollectionLayoutSize(
                 widthDimension: .fractionalWidth(1.0),
-                heightDimension: .absolute(440)
+                heightDimension: .estimated(440)
             )
             
             let containerGroup = NSCollectionLayoutGroup.vertical(
@@ -230,13 +221,14 @@ extension ProfileVC: CollectionViewLayoutable {
                 top: 0,
                 leading: 0,
                 bottom: 0,
-                trailing: 0
+                trailing: 10
             )
             
             section.visibleItemsInvalidationHandler = { [weak self] _, contentOffset, environment in
                 let bannerIndex = Int(max(0, round(contentOffset.x/environment.container.contentSize.width)))
                 
-                if (environment.container.contentSize.height < environment.container.contentSize.width) {
+                // 가로 스크롤일 경우에만 뷰모델에 현재 페이지 정보 값 전달
+                if (environment.container.contentSize.height == containerSize.heightDimension.dimension) {
                     self?.viewModel.input.currentPageBehavior.accept(bannerIndex)
                 }
             }

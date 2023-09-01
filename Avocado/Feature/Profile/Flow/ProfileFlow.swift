@@ -17,8 +17,7 @@ final class ProfileFlow: Flow {
     
     private var rootViewController = BaseNavigationVC()
     
-    init(root: BaseNavigationVC) {
-        self.rootViewController = root
+    init() {
         Logger.d("ProfileFlow init")
     }
     
@@ -32,8 +31,7 @@ final class ProfileFlow: Flow {
         
         switch step {
         case .profileIsRequired: return navigateProfile()
-        case .profileIsComplete:
-            return .none
+        case .profileIsComplete: return .none
         case .productDetailIsRequired(let product): return navigateProductDetail(product: product)
         }
     }
