@@ -232,10 +232,6 @@ final class UploadVC: BaseVC {
             $0.height.equalTo(120)
         }
         
-        uploadButton.snp.makeConstraints {
-            $0.width.equalTo(50)
-        }
-        
         [unusedBadgeView,avocadoPayBadgeView, fastShippingBadgeView, freeShippingBadgeView, refundableBadgeView].forEach {
             $0.snp.makeConstraints {
                 $0.height.equalTo(50)
