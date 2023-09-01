@@ -31,12 +31,21 @@ final class SettingFlow: Flow {
         guard let step = step as? SettingStep else { return .none }
         
         switch step {
-        
-        case .settingIsComplete:
-            return .end(forwardToParentFlowWithStep: AppStep.mainIsRequired)
-        case .errorOccurred(let error):
-            return .end(forwardToParentFlowWithStep: AppStep.errorOccurred(error: error))
+        case .settingIsRequired: return navigateSetting()
+        case .settingIsComplete: return .end(forwardToParentFlowWithStep: AppStep.mainIsRequired)
+        case .errorOccurred(let error): return .end(forwardToParentFlowWithStep: AppStep.errorOccurred(error: error))
         }
+    }
+    
+    private func navigateSetting() -> FlowContributors {
+        let service = SettingService()
+        let settingVM = SettingVM(service: service)
+        let settingVC = SettingVC(vm: settingVM)
+        
+        rootViewController.view.fadeOut()
+        rootViewController.setViewControllers([settingVC], animated: false)
+        
+        return .one(flowContributor: .contribute(withNextPresentable: settingVC, withNextStepper: settingVM))
     }
 }
 

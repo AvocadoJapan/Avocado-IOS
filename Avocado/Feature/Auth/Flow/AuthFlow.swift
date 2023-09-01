@@ -62,11 +62,7 @@ final class AuthFlow: Flow {
         let viewController = WelcomeVC(viewModel: viewModel)
         
         // 스무스 애니메이션 적용
-        let transition = CATransition()
-        transition.duration = 0.2
-        transition.type = CATransitionType.fade
-        rootViewController.view.layer.add(transition, forKey: kCATransition)
-        
+        rootViewController.view.fadeOut()
         // 커스텀 애니메이션 적용시 animated: false 로 설정
         rootViewController.setViewControllers([viewController], animated: false)
         

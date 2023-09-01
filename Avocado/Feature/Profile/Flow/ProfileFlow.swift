@@ -53,7 +53,9 @@ final class ProfileFlow: Flow {
         let viewModel = ProfileVM(service: service)
         let viewController = ProfileVC(viewModel: viewModel)
         
-        rootViewController.pushViewController(viewController, animated: true)
+        // 스무스 애니메이션 적용
+        rootViewController.view.fadeOut()
+        rootViewController.setViewControllers([viewController], animated: false)
         
         return .one(flowContributor: .contribute(withNextPresentable: viewController, withNextStepper: viewModel))
     }

@@ -58,11 +58,7 @@ final class SplashFlow: Flow {
         let viewController = FailVC(error: error)
         
         // 스무스 애니메이션 적용
-        let transition = CATransition()
-        transition.duration = 0.2
-        transition.type = CATransitionType.fade
-        rootViewController.view.layer.add(transition, forKey: kCATransition)
-        
+        rootViewController.view.fadeOut()
         rootViewController.setViewControllers([viewController], animated: false)
         
         return .one(flowContributor: .contribute(withNext: viewController))
