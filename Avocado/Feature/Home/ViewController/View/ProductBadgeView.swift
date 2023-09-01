@@ -79,7 +79,7 @@ final class ProductBadgeView: UIView {
         self.init(frame: .zero)
         
         titleLabel.text = type.title
-        descriptionLabel.text = type.description
+        descriptionLabel.text = type.buyerDescription
         imageView.image = UIImage(named: "\(type.image)")
     }
 }

@@ -20,7 +20,7 @@ final class ImageCVCell: UICollectionViewCell, CollectionCellIdentifierable {
     var disposeBag = DisposeBag()
     
     private lazy var productImageView = UIImageView().then {
-        $0.backgroundColor = .systemGray
+        $0.backgroundColor = .systemGray6
         $0.layer.cornerRadius = 10
         $0.layer.masksToBounds = true
         $0.contentMode = .scaleAspectFill

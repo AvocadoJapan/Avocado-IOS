@@ -143,6 +143,7 @@
 		B2D1309E2A4B4C5800538EFB /* BottomButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2D1309D2A4B4C5800538EFB /* BottomButton.swift */; };
 		B2D2764E2A6C4D6A00441719 /* OtherEmailVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2D2764D2A6C4D6A00441719 /* OtherEmailVC.swift */; };
 		B2D276512A6C4DB700441719 /* OtherEmailVM.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2D276502A6C4DB700441719 /* OtherEmailVM.swift */; };
+		B2DAFD392AA2035400F015B5 /* UploadBadgeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2DAFD382AA2035400F015B5 /* UploadBadgeView.swift */; };
 		B2E186CE2A474B4C00ABE98F /* SignupVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2E186CD2A474B4C00ABE98F /* SignupVC.swift */; };
 		B2E2AC802A4772D3003DAE88 /* WelcomeVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2E2AC7F2A4772D3003DAE88 /* WelcomeVC.swift */; };
 		B2F3D3642A511F2700FB05E1 /* SubButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2F3D3632A511F2700FB05E1 /* SubButton.swift */; };
@@ -294,6 +295,7 @@
 		B2D1309D2A4B4C5800538EFB /* BottomButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BottomButton.swift; sourceTree = "<group>"; };
 		B2D2764D2A6C4D6A00441719 /* OtherEmailVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OtherEmailVC.swift; sourceTree = "<group>"; };
 		B2D276502A6C4DB700441719 /* OtherEmailVM.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OtherEmailVM.swift; sourceTree = "<group>"; };
+		B2DAFD382AA2035400F015B5 /* UploadBadgeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UploadBadgeView.swift; sourceTree = "<group>"; };
 		B2E186CD2A474B4C00ABE98F /* SignupVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignupVC.swift; sourceTree = "<group>"; };
 		B2E2AC7F2A4772D3003DAE88 /* WelcomeVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WelcomeVC.swift; sourceTree = "<group>"; };
 		B2F3D3632A511F2700FB05E1 /* SubButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SubButton.swift; sourceTree = "<group>"; };
@@ -504,11 +506,11 @@
 			isa = PBXGroup;
 			children = (
 				B22ECA2A2A75974B00CCA794 /* AppFlow.swift */,
+				B22ECA2C2A75975C00CCA794 /* AppStepper.swift */,
 				B22ECA2E2A75976500CCA794 /* AppStep.swift */,
 				B2689E812AA0641E00151D1D /* TabFlow.swift */,
 				B2689E852AA0643800151D1D /* TabStep.swift */,
 				B240D7172A9F102100DF171D /* Upload */,
-				B22ECA2C2A75975C00CCA794 /* AppStepper.swift */,
 				B19E83252A6025A2004C5DE2 /* Auth */,
 				04BA131F2A2AD9FB0004E2FB /* Home */,
 				B1C35AE62A9DC9C600C97A3D /* Profile */,
@@ -983,6 +985,7 @@
 			isa = PBXGroup;
 			children = (
 				B29EA3EF2A9F591500146F38 /* ImageCVCell.swift */,
+				B2DAFD382AA2035400F015B5 /* UploadBadgeView.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -1204,6 +1207,7 @@
 				B2F3D3642A511F2700FB05E1 /* SubButton.swift in Sources */,
 				B20A176D2A9DB36D000FD85B /* UserBadgeView.swift in Sources */,
 				98FD1C2A2A56B3900031D7C1 /* SettingAPI.swift in Sources */,
+				B2DAFD392AA2035400F015B5 /* UploadBadgeView.swift in Sources */,
 				B212D58B2A45F1740008DAD1 /* InputView.swift in Sources */,
 				B1B1EA132A5973C7007B1894 /* SettingTVCell.swift in Sources */,
 				B240D71E2A9F107600DF171D /* UploadVC.swift in Sources */,
