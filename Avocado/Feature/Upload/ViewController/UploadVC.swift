@@ -11,7 +11,7 @@ import RxCocoa
 import RxRelay
 import RxSwift
 import Then
-//import PhotosUI
+import PhotosUI
 
 final class UploadVC: BaseVC {
     
@@ -39,6 +39,8 @@ final class UploadVC: BaseVC {
         $0.backgroundColor = .black
         $0.layer.cornerRadius = 14
         $0.titleLabel?.font = .systemFont(ofSize: 13, weight: .medium)
+        
+        $0.addTarget(self, action: #selector(handlePhotoUploadButton), for: .touchUpInside)
     }
     
     private lazy var photoLabel: UILabel = UILabel().then {
@@ -143,7 +145,7 @@ final class UploadVC: BaseVC {
     }
     
     override func bindUI() {
-        let _ = viewModel.transform(input: viewModel.input)
+        let output = viewModel.transform(input: viewModel.input)
     }
     
     
@@ -245,6 +247,22 @@ final class UploadVC: BaseVC {
         descriptionTextView.snp.makeConstraints {
             $0.edges.equalToSuperview().inset(10)
         }
+    }
+}
+
+extension UploadVC: PHPickerViewControllerDelegate {
+    func picker(_ picker: PHPickerViewController, didFinishPicking results: [PHPickerResult]) {
+        picker.dismiss(animated: true)
+    }
+    
+    @objc func handlePhotoUploadButton() {
+        var configuration = PHPickerConfiguration()
+        configuration.selectionLimit = 8
+        configuration.filter = .images
+        
+        let pickerViewController = PHPickerViewController(configuration: configuration)
+        pickerViewController.delegate = self
+        self.present(pickerViewController, animated: true)
     }
 }
 

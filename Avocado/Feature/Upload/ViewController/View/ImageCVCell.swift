@@ -24,14 +24,14 @@ final class ImageCVCell: UICollectionViewCell, CollectionCellIdentifierable {
         $0.layer.cornerRadius = 10
         $0.layer.masksToBounds = true
         $0.contentMode = .scaleAspectFill
-        
-        $0.image = UIImage(named: "demo_product_ipad")
     }
     
     private lazy var xButton = UIButton().then {
         let xSymbol = UIImage(systemName: "xmark.circle.fill")
         $0.setImage(xSymbol, for: .normal)
         $0.tintColor = .black
+        
+        $0.isHidden = true
     }
     
     override init(frame: CGRect) {
@@ -64,17 +64,24 @@ final class ImageCVCell: UICollectionViewCell, CollectionCellIdentifierable {
         }
     }
     
+    private func updateXButtonVisibility() {
+        xButton.isHidden = (productImageView.image == nil)
+    }
+
     func config(image: UIImage) {
         productImageView.image = image
+        updateXButtonVisibility()
     }
     
     override func prepareForReuse() {
         productImageView.image = nil
+        updateXButtonVisibility()
     }
     
     @objc func xButtonTapped() {
         productImageView.image = nil
-   }
+        updateXButtonVisibility()
+    }
 }
 
 #if DEBUG && canImport(SwiftUI)
