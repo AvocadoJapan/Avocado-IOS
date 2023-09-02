@@ -19,4 +19,14 @@ extension UIView {
         animation.isAdditive = true
         self.layer.add(animation, forKey: nil)
     }
+    
+    /**
+     * - description 화면 fadeOut 애니메이션
+     */
+    func fadeOut() {
+        let transition = CATransition()
+        transition.duration = 0.2
+        transition.type = CATransitionType.fade
+        layer.add(transition, forKey: kCATransition)
+    }
 }

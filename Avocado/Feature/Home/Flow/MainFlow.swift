@@ -50,11 +50,7 @@ final class MainFlow: Flow {
         let viewController = FailVC(error: error)
         
         // 스무스 애니메이션 적용
-        let transition = CATransition()
-        transition.duration = 0.2
-        transition.type = CATransitionType.fade
-        rootViewController.view.layer.add(transition, forKey: kCATransition)
-        
+        rootViewController.view.fadeOut()
         rootViewController.setViewControllers([viewController], animated: false)
         
         return .one(flowContributor: .contribute(withNext: viewController))
@@ -66,11 +62,7 @@ final class MainFlow: Flow {
         let viewController = MainVC(viewModel: viewModel)
         
         // 스무스 애니메이션 적용
-        let transition = CATransition()
-        transition.duration = 0.2
-        transition.type = CATransitionType.fade
-        rootViewController.view.layer.add(transition, forKey: kCATransition)
-        
+        rootViewController.view.fadeOut()
         rootViewController.setViewControllers([viewController], animated: false)
         
         return .one(flowContributor: .contribute(withNextPresentable: viewController, withNextStepper: viewModel))

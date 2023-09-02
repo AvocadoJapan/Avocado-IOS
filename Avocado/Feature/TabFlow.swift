@@ -36,8 +36,10 @@ final class TabFlow: Flow {
         
         switch step {
             
-        case .mainTabIsRequired:
-            return navigateToMain()
+        case .mainTabIsRequired: return navigateToTab(focusedTab: .home)
+        case .searchTabIsRequired: return navigateToTab(focusedTab: .search)
+        case .profileTabIsRequired: return navigateToTab(focusedTab: .myPage)
+        case .settingTabIsRequired: return navigateToTab(focusedTab: .setting)
         }
     }
     
@@ -57,23 +59,27 @@ final class TabFlow: Flow {
     /**
      * - description 메인탭으로 이동
      */
-    private func navigateToMain(focusedTab: TabType = .home) -> FlowContributors {
+    private func navigateToTab(focusedTab: TabType = .home) -> FlowContributors {
         let mainFlow = MainFlow(root: BaseNavigationVC())
         let uploadFlow = UploadFlow(root: BaseNavigationVC())
+        let profileFlow = ProfileFlow()
         let settingFlow = SettingFlow(root: BaseNavigationVC())
 
-        Flows.use(mainFlow, uploadFlow, settingFlow, when: .created) { [unowned self] (home: UINavigationController, upload: UINavigationController, myPage: UINavigationController) in
+        Flows.use(mainFlow, uploadFlow, profileFlow, settingFlow,  when: .created) { [unowned self] (home: UINavigationController, upload: UINavigationController, myPage: UINavigationController, setting: UINavigationController)  in
             
             home.tabBarItem = TabType.home.tabBarItem
             home.title = TabType.home.title
+            
             upload.tabBarItem = TabType.upload.tabBarItem
             upload.title = TabType.upload.title
+            
             myPage.tabBarItem = TabType.myPage.tabBarItem
             myPage.title = TabType.myPage.title
             
-
-
-            self.rootViewController.setViewControllers([home, upload, myPage], animated: false)
+            setting.tabBarItem = TabType.setting.tabBarItem
+            setting.title = TabType.setting.title
+            
+            self.rootViewController.setViewControllers([home, upload, myPage, setting], animated: false)
             self.rootViewController.selectedIndex = focusedTab.rawValue
             
         }
@@ -81,7 +87,8 @@ final class TabFlow: Flow {
         return .multiple(flowContributors: [
             .contribute(withNextPresentable: mainFlow, withNextStepper: OneStepper(withSingleStep: MainStep.mainIsRequired)),
             .contribute(withNextPresentable: uploadFlow, withNextStepper: OneStepper(withSingleStep: UploadStep.uploadIsRequired)),
-            .contribute(withNextPresentable: settingFlow, withNextStepper: OneStepper(withSingleStep: SettingStep.settingIsComplete)),
+            .contribute(withNextPresentable: profileFlow, withNextStepper: OneStepper(withSingleStep: ProfileStep.profileIsRequired)),
+            .contribute(withNextPresentable: settingFlow, withNextStepper: OneStepper(withSingleStep: SettingStep.settingIsRequired))
         ])
     }
     
