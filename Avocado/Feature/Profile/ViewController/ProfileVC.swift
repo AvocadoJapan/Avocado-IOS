@@ -184,7 +184,7 @@ extension ProfileVC: CollectionViewLayoutable {
             
             let headerSize = NSCollectionLayoutSize(
                 widthDimension: .fractionalWidth(1.0),
-                heightDimension: .estimated(60)
+                heightDimension: .estimated(190)
             )
             
             let header = NSCollectionLayoutBoundarySupplementaryItem(

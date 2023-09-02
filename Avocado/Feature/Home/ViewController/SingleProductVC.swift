@@ -88,8 +88,8 @@ final class SingleProductVC: BaseVC {
         $0.font = .systemFont(ofSize: 22, weight: .bold)
         $0.textColor = .darkText
     }
-
-    private lazy var uploaderStackView = UserInfoStackView(inset: UIEdgeInsets(top: 0, left: 10, bottom: 0, right: 10))
+    
+    private lazy var uploaderProfileView = UserProfileView()
     
     // 하단 고정뷰 (좋아요 채팅, 결제 등)
     private lazy var bottomView = UIView().then {
@@ -216,7 +216,7 @@ final class SingleProductVC: BaseVC {
             buttomButtonStackView.addArrangedSubview($0)
         }
         
-        [productImageCV, titleStackView, contourView2, uploaderStackView, contourView4, productBadgeStackView, contourView3, descriptionStackView, legalView].forEach {
+        [productImageCV, titleStackView, contourView2, uploaderProfileView, contourView4, productBadgeStackView, contourView3, descriptionStackView, legalView].forEach {
             stackView.addArrangedSubview($0)
         }
         
@@ -240,6 +240,10 @@ final class SingleProductVC: BaseVC {
     }
     
     override func setConstraint() {
+        
+        locationLabel.setContentHuggingPriority(UILayoutPriority(751), for: .horizontal)
+        dotLabel.setContentHuggingPriority(UILayoutPriority(750), for: .horizontal)
+        updateAtLabel.setContentHuggingPriority(UILayoutPriority(750), for: .horizontal)
         
         scrollView.snp.makeConstraints {
             $0.top.left.right.equalToSuperview()
@@ -270,6 +274,10 @@ final class SingleProductVC: BaseVC {
         contourView.snp.makeConstraints {
             $0.horizontalEdges.equalToSuperview()
             $0.top.equalToSuperview()
+        }
+        
+        uploaderProfileView.snp.makeConstraints {
+            $0.height.equalTo(60)
         }
     }
 }

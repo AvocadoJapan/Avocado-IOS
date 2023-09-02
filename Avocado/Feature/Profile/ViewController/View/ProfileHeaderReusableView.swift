@@ -52,12 +52,7 @@ final class ProfileHeaderReusableView: UICollectionReusableView {
         $0.backgroundColor = .systemGray6
     }
     
-    private lazy var userProfileView = UserInfoStackView(inset: UIEdgeInsets(
-        top: 0,
-        left: 10,
-        bottom: 0,
-        right: 10)
-    )
+    private lazy var userProfileView = UserProfileView()
     
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -110,7 +105,7 @@ final class ProfileHeaderReusableView: UICollectionReusableView {
         
         userProfileView.configure(
             name: userName,
-            creationDate: creationDate
+            verified: true
         )
         
         productTitleLabel.text = productTitle
@@ -128,7 +123,7 @@ import SwiftUI
 import RxSwift
 struct ProfileHeaderReusableViewPreview: PreviewProvider {
     static var previews: some View {
-        return ProfileHeaderReusableView().toPreview().previewLayout(.fixed(width: 375, height: 300))
+        return ProfileHeaderReusableView().toPreview().previewLayout(.fixed(width: 375, height: 200))
     }
 }
 #endif
