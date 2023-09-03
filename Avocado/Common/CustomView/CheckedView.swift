@@ -22,11 +22,28 @@ final class CheckedView: UIView {
     
     override init(frame: CGRect) {
         super.init(frame: frame)
-        
+        setLayout()
+        setConstraint()
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
+    init(title: String) {
+        super.init(frame: .zero)
+        verifiedTitleLabel.text = title
+        setLayout()
+        setConstraint()
+    }
+    
+    private func setLayout() {
         [checkImageView, verifiedTitleLabel].forEach {
             addSubview($0)
         }
-        
+    }
+    
+    private func setConstraint() {
         checkImageView.snp.makeConstraints {
             $0.left.equalToSuperview().offset(0)
             $0.centerY.equalToSuperview()
@@ -37,15 +54,6 @@ final class CheckedView: UIView {
             $0.right.top.bottom.equalToSuperview()
             $0.left.equalTo(checkImageView.snp.right).offset(20)
         }
-    }
-    
-    required init?(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
-    }
-    
-    init(title: String) {
-        super.init(frame: .zero)
-        verifiedTitleLabel.text = title
     }
     
 }
