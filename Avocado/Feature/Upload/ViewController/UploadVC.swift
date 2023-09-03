@@ -12,6 +12,10 @@ import RxRelay
 import RxSwift
 import Then
 import PhotosUI
+import RxDataSources
+import RxSwift
+import RxCocoa
+import RxDataSources
 
 final class UploadVC: BaseVC {
     
@@ -19,8 +23,8 @@ final class UploadVC: BaseVC {
     
     private lazy var scrollView = UIScrollView().then {
         $0.showsVerticalScrollIndicator = false
-//        $0.contentInsetAdjustmentBehavior = .never
-//        $0.delegate = self
+        //        $0.contentInsetAdjustmentBehavior = .never
+        //        $0.delegate = self
     }
     private lazy var stackView = UIStackView().then {
         $0.axis = .vertical
@@ -52,6 +56,17 @@ final class UploadVC: BaseVC {
         $0.textColor = .darkGray
     }
     
+    private lazy var photoDescriptionLabel: UILabel = UILabel().then {
+        $0.text = "사진을 업로드 해주세요"
+        $0.numberOfLines = 1
+        $0.textAlignment = .left
+        $0.font = UIFont.systemFont(ofSize: 12, weight: .medium)
+        
+        $0.textColor = .lightGray
+        $0.isHidden = false
+    }
+    
+    
     private lazy var imageCVLayout = UICollectionViewFlowLayout().then {
         $0.scrollDirection = .horizontal
         $0.minimumLineSpacing = 10
@@ -61,7 +76,7 @@ final class UploadVC: BaseVC {
     private lazy var imageCV = UICollectionView(frame: .zero, collectionViewLayout: self.imageCVLayout).then {
         $0.showsHorizontalScrollIndicator = false
         
-        $0.dataSource = self
+        //        $0.dataSource = self
         $0.delegate = self
     }
     
@@ -95,9 +110,9 @@ final class UploadVC: BaseVC {
     private lazy var fastShippingBadgeView = UploadBadgeView(type: .fastShipping)
     private lazy var freeShippingBadgeView = UploadBadgeView(type: .freeShipping)
     private lazy var refundableBadgeView = UploadBadgeView(type: .refundable)
-
-    private lazy var titleInput = InputView(label: "상품명 (필수)")
-    private lazy var priceInput = InputView(label: "가격 (필수)")
+    
+    private lazy var titleInput = InputView(label: "상품명 (필수)", placeholder: "모자, 신발 등")
+    private lazy var priceInput = InputView(label: "가격 (필수)", placeholder: "3,000원 이상")
     
     private lazy var descriptionStackView = UIStackView().then {
         $0.axis = .vertical
@@ -130,7 +145,7 @@ final class UploadVC: BaseVC {
         
         $0.backgroundColor = .clear
     }
- 
+    
     private lazy var uploadButton = BottomButton(text: "업로드 하기", buttonType: .primary)
     
     private lazy var legalView = LegalView()
@@ -146,10 +161,50 @@ final class UploadVC: BaseVC {
     
     override func bindUI() {
         let output = viewModel.transform(input: viewModel.input)
+        
+        let dataSource = RxCollectionViewSectionedReloadDataSource<ImageDataSection>(
+            configureCell: { dataSource, collectionView, indexPath, item in
+                
+                let cell = collectionView.dequeueReusableCell(withReuseIdentifier: ImageCVCell.identifier, for: indexPath) as! ImageCVCell
+                
+                cell.delegate = self
+                cell.config(image: item, indexPath: indexPath.row)
+                
+//                Logger.d("\(indexPath.row)")
+//                
+//                cell.xButton
+//                    .rx
+//                    .tap
+//                    .map {
+//                        Logger.d("map \($0) : \(indexPath.row)")
+//                        return  indexPath.row }
+//                    .bind(to: self.viewModel.input.removeImageAtIndex)
+//                    .disposed(by: self.disposeBag)
+            
+                
+                return cell
+            }
+        )
+        
+//        output.imageRelay.bind(to: [ImageDataSection])
+//            .observe(on: MainScheduler.instance)
+//            .subscribe(onNext: { _ in
+//                imageCV.rx.items(dataSource: dataSource)
+//            })
+//            .disposed(by: disposeBag)
+        
+        output.imageRelay
+            .observe(on: MainScheduler.instance)
+            .do(onNext: { [weak self] image in
+                self?.photoDescriptionLabel.isHidden = !(image.first?.items == [])
+            })
+            .bind(to: imageCV.rx.items(dataSource: dataSource))
+            .disposed(by: disposeBag)
+        
     }
     
-    
     override func setProperty() {
+        
         view.backgroundColor = .white
         
         navigationController?.navigationBar.topItem?.title = "상품업로드"
@@ -173,6 +228,7 @@ final class UploadVC: BaseVC {
     override func setLayout() {
         view.addSubview(scrollView)
         scrollView.addSubview(stackView)
+        scrollView.addSubview(photoDescriptionLabel)
         
         photoDescriptionView.addSubview(photoLabel)
         photoDescriptionView.addSubview(photoUploadButton)
@@ -190,7 +246,7 @@ final class UploadVC: BaseVC {
         [descriptionLabel, descriptionView, uploadButton].forEach {
             descriptionStackView.addArrangedSubview($0)
         }
-
+        
         [titleInput, priceInput].forEach {
             inputStackView.addArrangedSubview($0)
         }
@@ -199,7 +255,7 @@ final class UploadVC: BaseVC {
             badgeStackView.addArrangedSubview($0)
         }
     }
-
+    
     override func setConstraint() {
         // 스크롤뷰 제약 조건 설정
         scrollView.snp.makeConstraints {
@@ -241,11 +297,15 @@ final class UploadVC: BaseVC {
         }
         
         descriptionView.snp.makeConstraints {
-            $0.height.equalTo(300)
+            $0.height.equalTo(200)
         }
         
         descriptionTextView.snp.makeConstraints {
             $0.edges.equalToSuperview().inset(10)
+        }
+        
+        photoDescriptionLabel.snp.makeConstraints {
+            $0.center.equalTo(imageCV)
         }
     }
 }
@@ -253,6 +313,8 @@ final class UploadVC: BaseVC {
 extension UploadVC: PHPickerViewControllerDelegate {
     func picker(_ picker: PHPickerViewController, didFinishPicking results: [PHPickerResult]) {
         picker.dismiss(animated: true)
+        
+        viewModel.input.imageRelay.accept(results)
     }
     
     @objc func handlePhotoUploadButton() {
@@ -266,20 +328,27 @@ extension UploadVC: PHPickerViewControllerDelegate {
     }
 }
 
-extension UploadVC: UICollectionViewDelegate, UICollectionViewDataSource {
-    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: ImageCVCell.identifier, for: indexPath) as! ImageCVCell
-        
-        return cell
-    }
-    
-    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return 8
-    }
-}
+//extension UploadVC: UICollectionViewDelegate, UICollectionViewDataSource {
+//    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+//        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: ImageCVCell.identifier, for: indexPath) as! ImageCVCell
+//
+//        return cell
+//    }
+//
+//    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+//        return 8
+//    }
+//}
+
 extension UploadVC: UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         return CGSize(width: 100, height: 100)
+    }
+}
+
+extension UploadVC: CellClickEvent {
+    func touchEvent(indexPath: Int) {
+        self.viewModel.input.removeImageAtIndex.accept(indexPath)
     }
 }
 

@@ -10,6 +10,12 @@ import RxSwift
 import RxRelay
 import RxCocoa
 
+protocol CellClickEvent: AnyObject {
+    
+    
+    func touchEvent(indexPath: Int)
+}
+
 /**
  * ##화면 명: 상품 셀
  */
@@ -19,6 +25,10 @@ final class ImageCVCell: UICollectionViewCell, CollectionCellIdentifierable {
 
     var disposeBag = DisposeBag()
     
+    var indexPath: Int?
+    
+    weak var delegate: CellClickEvent?
+    
     private lazy var productImageView = UIImageView().then {
         $0.backgroundColor = .systemGray6
         $0.layer.cornerRadius = 10
@@ -26,11 +36,10 @@ final class ImageCVCell: UICollectionViewCell, CollectionCellIdentifierable {
         $0.contentMode = .scaleAspectFill
     }
     
-    private lazy var xButton = UIButton().then {
-        let xSymbol = UIImage(systemName: "xmark.circle.fill")
+    public lazy var xButton = UIButton().then {
+        let xSymbol = UIImage(systemName: "xmark.circle.fill")?.withRenderingMode(.alwaysTemplate)
         $0.setImage(xSymbol, for: .normal)
-        $0.tintColor = .black
-        
+        $0.tintColor = .white
         $0.isHidden = true
     }
     
@@ -68,19 +77,25 @@ final class ImageCVCell: UICollectionViewCell, CollectionCellIdentifierable {
         xButton.isHidden = (productImageView.image == nil)
     }
 
-    func config(image: UIImage) {
+    func config(image: UIImage, indexPath: Int) {
         productImageView.image = image
+        self.indexPath = indexPath
+        xButton.tag = indexPath
         updateXButtonVisibility()
     }
     
     override func prepareForReuse() {
         productImageView.image = nil
+        self.indexPath = nil
         updateXButtonVisibility()
     }
     
     @objc func xButtonTapped() {
-        productImageView.image = nil
-        updateXButtonVisibility()
+//        productImageView.image = nil
+//        self.indexPath = nil
+//        updateXButtonVisibility()
+        
+        delegate?.touchEvent(indexPath: xButton.tag)
     }
 }
 
