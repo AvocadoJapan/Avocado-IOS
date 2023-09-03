@@ -44,20 +44,26 @@ final class ProfileVM: ViewModelType {
                     } ?? .empty()
             }
             .subscribe(onNext: {
-                
+                Logger.d($0)
                 let buyProduct = $0.buyProduct.map { UserProfileDataSection.ProductSectionItem.buyed(data: $0) }
                 let sellProduct = $0.sellProduct.map { UserProfileDataSection.ProductSectionItem.selled(data: $0) }
+                let comment = $0.comments.map { UserProfileDataSection.ProductSectionItem.comment(data: $0) }
                 
                 output.successProfileEventDateSourcePublish.accept([
                     UserProfileDataSection(
                         userName: $0.name,
                         creationDate: $0.creationDate,
-                        productTitle: "현재 판매중인 상품",
+                        header: "\($0.name)와 거래 후기",
+                        items: comment
+                    ),
+                    
+                    UserProfileDataSection(
+                        header: "현재 판매중인 상품",
                         items: sellProduct
                     ),
                     
                     UserProfileDataSection(
-                        productTitle: "현재 판매완료 된 상품",
+                        header: "현재 판매완료 된 상품",
                         items: buyProduct
                     )
                 ])

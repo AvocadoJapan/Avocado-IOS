@@ -38,7 +38,7 @@ extension ProfileAPI: BaseTarget {
             {
                 "user":{
                     "id":"UUID",
-                    "name":"AvocadoDemo",
+                    "name":"호두마루",
                     "accounts":{
                         "cognito":"string"
                     },
@@ -49,6 +49,98 @@ extension ProfileAPI: BaseTarget {
                         "changedAt":12345678
                     }
                 },
+                "comments": [
+                    {
+                        "commentId":"random-uuid-13",
+                        "createdAt":1693302608,
+                        "updatedAt":12345678,
+                        "comment": "생각보다 되게 친절하시고 포장도 깔끔하게하셔서 주셨어요, 다음에도 필요한게 있다면 판매자님 제품을 꼭 사고 싶네요, 번창하세요",
+                        "product": {
+                            "productId":"random-uuid-15",
+                            "mainImageId":"random-uuid-16",
+                            "imageIds":[
+                                "sample11",
+                                "sample12"
+                            ],
+                            "name":"아이폰 13프로",
+                            "price":"680,000원",
+                            "location":"양천구 목2동"
+                        },
+                        "user":{
+                            "id":"UUID",
+                            "name":"호두마루",
+                            "accounts":{
+                                "cognito":"string"
+                            },
+                            "createdAt":1693302608,
+                            "updatedAt":12345678,
+                            "avatar":{
+                                "imageId":"ImageID",
+                                "changedAt":12345678
+                            }
+                        }
+                    },
+                    {
+                        "commentId":"random-uuid-13",
+                        "createdAt":1693302608,
+                        "updatedAt":12345678,
+                        "comment": "친절해요",
+                        "product": {
+                            "productId":"random-uuid-15",
+                            "mainImageId":"random-uuid-16",
+                            "imageIds":[
+                                "sample11",
+                                "sample12"
+                            ],
+                            "name":"아이패드 2세대",
+                            "price":"680,000원",
+                            "location":"양천구 목2동"
+                        },
+                        "user":{
+                            "id":"UUID",
+                            "name":"커피마루",
+                            "accounts":{
+                                "cognito":"string"
+                            },
+                            "createdAt":1693302608,
+                            "updatedAt":12345678,
+                            "avatar":{
+                                "imageId":"ImageID",
+                                "changedAt":12345678
+                            }
+                        }
+                    },
+                    {
+                        "commentId":"random-uuid-13",
+                        "createdAt":1693302608,
+                        "updatedAt":12345678,
+                        "comment": "좋아요",
+                        "product": {
+                            "productId":"random-uuid-15",
+                            "mainImageId":"random-uuid-16",
+                            "imageIds":[
+                                "sample11",
+                                "sample12"
+                            ],
+                            "name":"아이패드 1세대",
+                            "price":"680,000원",
+                            "location":"양천구 목2동"
+                        },
+                        "user":{
+                            "id":"UUID",
+                            "name":"녹차마루",
+                            "accounts":{
+                                "cognito":"string"
+                            },
+                            "createdAt":1693302608,
+                            "updatedAt":12345678,
+                            "avatar":{
+                                "imageId":"ImageID",
+                                "changedAt":12345678
+                            }
+                        }
+                    }
+                ],
                 "sellProduct":[
                     {
                         "productId":"random-uuid-13",

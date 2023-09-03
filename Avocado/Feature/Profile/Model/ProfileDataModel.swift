@@ -6,24 +6,25 @@
 //
 
 import Foundation
-
+/**
+ * - description 프로필 화면 정보 엔티티
+ */
 struct UserProfile: DTOResponseable {
     typealias DTO = UserProfileDTO
     
     let user: User
     let sellProduct: [Product]
     let buyProduct: [Product]
+    let comments: [Comment]
     
     func toDTO() -> UserProfileDTO {
-        let fomatter = DateFormatter()
-        fomatter.dateFormat = "YYYY년 MM월 DD일 가입"
-        let date = Date(timeIntervalSince1970: TimeInterval(user.createdAt))
-        let dateString = fomatter.string(from: date)
-        
-        return UserProfileDTO(name: user.nickName,
-                              creationDate: dateString,
-                              sellProduct: sellProduct,
-                              buyProduct: buyProduct)
+        return UserProfileDTO(
+            name: user.nickName,
+            creationDate: user.createdAt.dateFormatForUNIX(format: "YYYY년 MM월 DD일 가입"),
+            sellProduct: sellProduct,
+            buyProduct: buyProduct,
+            comments: comments.map { $0.toDTO() }
+        )
     }
 }
 
@@ -32,4 +33,5 @@ struct UserProfileDTO: Decodable {
     let creationDate: String
     let sellProduct: [Product]
     let buyProduct: [Product]
+    let comments: [CommentDTO]
 }

@@ -1,12 +1,14 @@
 //
-//  ProfileView.swift
+//  UserProfileView.swift
 //  Avocado
 //
 //  Created by NUNU:D on 2023/09/02.
 //
 
 import Foundation
-
+/**
+ * - description 유저 정보가 간략하게 보여지는 프로필 화면
+ */
 final class UserProfileView: UIControl {
     
     private lazy var profileImageView = UIImageView().then {
@@ -41,9 +43,22 @@ final class UserProfileView: UIControl {
     private lazy var verifiedImageView = UIImageView().then {
         $0.image = UIImage(systemName: "checkmark.shield.fill")
         $0.tintColor = UIColor(hexCode: "00CC66", alpha: 1.0)
-        
+        $0.layer.cornerRadius = 40/2
+        $0.backgroundColor = .white
 //        $0.image = UIImage(systemName: "exclamationmark.shield.fill")
 //        $0.tintColor = UIColor(hexCode: "FF3333", alpha: 1.0)
+    }
+    
+    /**
+     * - description 화살표 화면을 showing 여부 함수
+     * - parameters isShowArrow: 화살표 화면 showing 여부
+     */
+    init(isShowArrow: Bool = true) {
+        super.init(frame: .zero)
+        arrowButton.isHidden = !isShowArrow
+        
+        setLayout()
+        setContraint()
     }
     
     override init(frame: CGRect) {
@@ -90,6 +105,9 @@ final class UserProfileView: UIControl {
         }
     }
     
+    /**
+     * - description 화면 업데이트 함수
+     */
     func configure(name: String,
                    verified: Bool = false) {
         nameLabel.text = name
@@ -110,7 +128,7 @@ import SwiftUI
 import RxSwift
 struct ProileViewPreview: PreviewProvider {
     static var previews: some View {
-        return UserProfileView().toPreview().previewLayout(.fixed(width: 414, height: 100))
+        return UserProfileView(isShowArrow: false).toPreview().previewLayout(.fixed(width: 414, height: 100))
     }
 }
 #endif
