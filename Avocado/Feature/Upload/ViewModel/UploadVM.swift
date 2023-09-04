@@ -26,7 +26,7 @@ final class UploadVM: ViewModelType {
         // 사진을 입력받는 인스턴스
         let imageRelay = BehaviorRelay<[PHPickerResult]>(value: [])
         // 특정 번째 사진을 삭제할때 사용하는 인스턴스
-        let removeImageAtIndex = PublishRelay<Int>()
+        let removeImageAtIndexRelay = PublishRelay<Int>()
         // 업로드 버튼 액션
         let actionOtherEmailSignUpRelay = PublishRelay<Void>()
     }
@@ -67,7 +67,7 @@ final class UploadVM: ViewModelType {
             })
             .disposed(by: disposeBag)
         
-        input.removeImageAtIndex
+        input.removeImageAtIndexRelay
             .subscribe(onNext: { index in
                 
                 Logger.d("removeImageAtIndex \(index)")

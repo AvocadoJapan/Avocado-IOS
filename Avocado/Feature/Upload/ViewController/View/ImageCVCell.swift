@@ -10,9 +10,7 @@ import RxSwift
 import RxRelay
 import RxCocoa
 
-protocol CellClickEvent: AnyObject {
-    
-    
+protocol AvocadoCellTapDelegate: AnyObject {
     func touchEvent(indexPath: Int)
 }
 
@@ -27,7 +25,7 @@ final class ImageCVCell: UICollectionViewCell, CollectionCellIdentifierable {
     
     var indexPath: Int?
     
-    weak var delegate: CellClickEvent?
+    weak var delegate: AvocadoCellTapDelegate?
     
     private lazy var productImageView = UIImageView().then {
         $0.backgroundColor = .systemGray6

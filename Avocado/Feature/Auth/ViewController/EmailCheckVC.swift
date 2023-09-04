@@ -44,6 +44,12 @@ final class EmailCheckVC: BaseVC {
         $0.font = UIFont.systemFont(ofSize: 14, weight: .semibold)
     }
     
+    private lazy var subButtonStackView = UIStackView().then {
+        $0.axis = .vertical
+        $0.spacing = 15
+        $0.alignment = .trailing
+    }
+    
     private lazy var reqNewCodeButton: SubButton = SubButton(text: "인증번호 다시 보내기")
     
     private lazy var otherEmailButton: SubButton = SubButton(text: "다른 이메일로 인증하기")
@@ -68,8 +74,12 @@ final class EmailCheckVC: BaseVC {
     }
     
     override func setLayout() {
-        [titleLabel, emailLabel, descriptionLabel, reqNewCodeButton, confirmCodeInput, otherEmailButton, accountCenterButton, confirmButton].forEach {
+        [titleLabel, emailLabel, descriptionLabel, confirmCodeInput, subButtonStackView, confirmButton].forEach {
             view.addSubview($0)
+        }
+        
+        [reqNewCodeButton, otherEmailButton, accountCenterButton].forEach {
+            subButtonStackView.addArrangedSubview($0)
         }
     }
     
@@ -97,26 +107,16 @@ final class EmailCheckVC: BaseVC {
             $0.top.equalTo(descriptionLabel.snp.bottom).offset(30)
             $0.leading.equalToSuperview().offset(20)
         }
-        
-        reqNewCodeButton.snp.makeConstraints {
-            $0.trailing.equalToSuperview().offset(-30)
-            $0.top.equalTo(confirmCodeInput.snp.bottom).offset(20)
-        }
-        
-        otherEmailButton.snp.makeConstraints {
-            $0.trailing.equalToSuperview().offset(-30)
-            $0.top.equalTo(reqNewCodeButton.snp.bottom)
-        }
-        
-        accountCenterButton.snp.makeConstraints {
-            $0.trailing.equalToSuperview().offset(-30)
-            $0.top.equalTo(otherEmailButton.snp.bottom)
-        }
 
         confirmButton.snp.makeConstraints {
             $0.centerX.equalToSuperview()
             $0.bottom.equalTo(view.safeAreaLayoutGuide).inset(20)
             $0.leading.equalToSuperview().inset(20)
+        }
+        
+        subButtonStackView.snp.makeConstraints {
+            $0.top.equalTo(confirmCodeInput.snp.bottom).offset(10)
+            $0.right.equalToSuperview().inset(15)
         }
     }
     
@@ -136,11 +136,13 @@ final class EmailCheckVC: BaseVC {
         output
             .successEmailResendPublish
             .asSignal()
-            .emit(onNext: { [weak self] _ in
-                let alertController = UIAlertController(title: "", message: "인증번호를 다시 보냈습니다!", preferredStyle: .alert)
-                alertController.addAction(UIAlertAction(title: "확인", style: .default))
+            .emit(onNext: { _ in
+//                let alertController = UIAlertController(title: "", message: "인증번호를 다시 보냈습니다!", preferredStyle: .alert)
+//                alertController.addAction(UIAlertAction(title: "확인", style: .default))
+//                
+//                self?.present(alertController, animated: true)
                 
-                self?.present(alertController, animated: true)
+                SPIndicator.present(title: "성공", message: "인증번호를 다시 보냈습니다", preset: .done, haptic: .success)
             })
             .disposed(by: disposeBag)
         
@@ -166,11 +168,12 @@ final class EmailCheckVC: BaseVC {
         output
             .errEventPublish
             .asSignal()
-            .emit(onNext: { [weak self] err in
-                let alertController = UIAlertController(title: "", message: err.errorDescription, preferredStyle: .alert)
-                alertController.addAction(UIAlertAction(title: "확인", style: .default))
-                
-                self?.present(alertController, animated: true)
+            .emit(onNext: { err in
+//                let alertController = UIAlertController(title: "", message: err.errorDescription, preferredStyle: .alert)
+//                alertController.addAction(UIAlertAction(title: "확인", style: .default))
+//                
+//                self?.present(alertController, animated: true)
+                SPIndicator.present(title: "알 수 없는 에러", message: err.errorDescription, preset: .error, haptic: .error)
             })
             .disposed(by: disposeBag)
         
@@ -238,6 +241,7 @@ final class EmailCheckVC: BaseVC {
 #if DEBUG && canImport(SwiftUI)
 import SwiftUI
 import RxSwift
+import SPIndicator
 struct EmailCheckVCPreview: PreviewProvider {
     static var previews: some View {
         return EmailCheckVC(viewModel: EmailCheckVM(service: AuthService(), email: "", password: "")).toPreview()

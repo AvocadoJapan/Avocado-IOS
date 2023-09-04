@@ -13,9 +13,7 @@ import RxSwift
 import Then
 import PhotosUI
 import RxDataSources
-import RxSwift
-import RxCocoa
-import RxDataSources
+import RxKeyboard
 
 final class UploadVC: BaseVC {
     
@@ -162,6 +160,15 @@ final class UploadVC: BaseVC {
     override func bindUI() {
         let output = viewModel.transform(input: viewModel.input)
         
+        uploadButton
+            .rx
+            .tap
+            .subscribe { [weak self] _ in
+                self?.descriptionTextView.resignFirstResponder()
+                SPIndicator.present(title: "시스템 에러", message: "지원하지 않는 기능", preset: .error, haptic: .error)
+            }
+            .disposed(by: disposeBag)
+        
         let dataSource = RxCollectionViewSectionedReloadDataSource<ImageDataSection>(
             configureCell: { dataSource, collectionView, indexPath, item in
                 
@@ -171,36 +178,38 @@ final class UploadVC: BaseVC {
                 cell.config(image: item, indexPath: indexPath.row)
                 
 //                Logger.d("\(indexPath.row)")
-//                
+//
 //                cell.xButton
 //                    .rx
 //                    .tap
 //                    .map {
-//                        Logger.d("map \($0) : \(indexPath.row)")
 //                        return  indexPath.row }
-//                    .bind(to: self.viewModel.input.removeImageAtIndex)
-//                    .disposed(by: self.disposeBag)
-            
-                
+//                    .debug("map")
+//                    .bind(to: self.viewModel.input.removeImageAtIndexRelay)
+//                    .disposed(by: DisposeBag())
+    
                 return cell
             }
         )
         
-//        output.imageRelay.bind(to: [ImageDataSection])
-//            .observe(on: MainScheduler.instance)
-//            .subscribe(onNext: { _ in
-//                imageCV.rx.items(dataSource: dataSource)
-//            })
-//            .disposed(by: disposeBag)
-        
         output.imageRelay
             .observe(on: MainScheduler.instance)
             .do(onNext: { [weak self] image in
+                // 이미지 배열이 비어있으면 photoDescriptionLabel 을 표시합니다
                 self?.photoDescriptionLabel.isHidden = !(image.first?.items == [])
             })
             .bind(to: imageCV.rx.items(dataSource: dataSource))
             .disposed(by: disposeBag)
         
+        // scrollView에 탭이 감지되면 키보드를 내립니다
+        let tapGesture = UITapGestureRecognizer()
+        scrollView.addGestureRecognizer(tapGesture)
+
+        tapGesture.rx.event
+            .bind { [weak self] _ in
+                self?.view.endEditing(true)
+            }
+            .disposed(by: disposeBag)
     }
     
     override func setProperty() {
@@ -328,27 +337,15 @@ extension UploadVC: PHPickerViewControllerDelegate {
     }
 }
 
-//extension UploadVC: UICollectionViewDelegate, UICollectionViewDataSource {
-//    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-//        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: ImageCVCell.identifier, for: indexPath) as! ImageCVCell
-//
-//        return cell
-//    }
-//
-//    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-//        return 8
-//    }
-//}
-
 extension UploadVC: UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         return CGSize(width: 100, height: 100)
     }
 }
 
-extension UploadVC: CellClickEvent {
+extension UploadVC: AvocadoCellTapDelegate {
     func touchEvent(indexPath: Int) {
-        self.viewModel.input.removeImageAtIndex.accept(indexPath)
+        self.viewModel.input.removeImageAtIndexRelay.accept(indexPath)
     }
 }
 
@@ -356,6 +353,7 @@ extension UploadVC: CellClickEvent {
 #if DEBUG && canImport(SwiftUI)
 import SwiftUI
 import RxSwift
+import SPIndicator
 struct UploadVCPreview: PreviewProvider {
     static var previews: some View {
         return UploadVC(viewModel: UploadVM(service: UploadService())).toPreview()

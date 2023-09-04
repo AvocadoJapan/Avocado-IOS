@@ -145,6 +145,7 @@
 		B2D276512A6C4DB700441719 /* OtherEmailVM.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2D276502A6C4DB700441719 /* OtherEmailVM.swift */; };
 		B2DAFD392AA2035400F015B5 /* UploadBadgeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2DAFD382AA2035400F015B5 /* UploadBadgeView.swift */; };
 		B2DAFD3D2AA47D7500F015B5 /* ImageDataSection.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2DAFD3C2AA47D7500F015B5 /* ImageDataSection.swift */; };
+		B2DAFD402AA4E47C00F015B5 /* SPIndicator in Frameworks */ = {isa = PBXBuildFile; productRef = B2DAFD3F2AA4E47C00F015B5 /* SPIndicator */; };
 		B2E186CE2A474B4C00ABE98F /* SignupVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2E186CD2A474B4C00ABE98F /* SignupVC.swift */; };
 		B2E2AC802A4772D3003DAE88 /* WelcomeVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2E2AC7F2A4772D3003DAE88 /* WelcomeVC.swift */; };
 		B2F3D3642A511F2700FB05E1 /* SubButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2F3D3632A511F2700FB05E1 /* SubButton.swift */; };
@@ -318,6 +319,7 @@
 				04C835F42A2B315300731E3E /* RxDataSources in Frameworks */,
 				04D2FCFA2A2A51F100253028 /* RxRelay in Frameworks */,
 				9816F6DE2A494A1B00A7A284 /* AWSCognitoAuthPlugin in Frameworks */,
+				B2DAFD402AA4E47C00F015B5 /* SPIndicator in Frameworks */,
 				9816F6D92A49495500A7A284 /* Moya in Frameworks */,
 				9816F6DB2A49495500A7A284 /* RxMoya in Frameworks */,
 				B2382C602A6F9A4300A24AE3 /* Localize_Swift in Frameworks */,
@@ -1031,6 +1033,7 @@
 				98C711072A53B48300C99393 /* RxKeyboard */,
 				B26A3B632A60A7D600AD61A5 /* RxFlow */,
 				B2382C5F2A6F9A4300A24AE3 /* Localize_Swift */,
+				B2DAFD3F2AA4E47C00F015B5 /* SPIndicator */,
 			);
 			productName = Avocado;
 			productReference = B2198B942A2A36EA0019032D /* Avocado.app */;
@@ -1117,6 +1120,7 @@
 				98C711062A53B48300C99393 /* XCRemoteSwiftPackageReference "RxKeyboard" */,
 				B26A3B622A60A7D600AD61A5 /* XCRemoteSwiftPackageReference "RxFlow" */,
 				B2382C5E2A6F9A4300A24AE3 /* XCRemoteSwiftPackageReference "Localize-Swift" */,
+				B2DAFD3E2AA4E47C00F015B5 /* XCRemoteSwiftPackageReference "SPIndicator" */,
 			);
 			productRefGroup = B2198B952A2A36EA0019032D /* Products */;
 			projectDirPath = "";
@@ -1736,6 +1740,14 @@
 				minimumVersion = 2.13.0;
 			};
 		};
+		B2DAFD3E2AA4E47C00F015B5 /* XCRemoteSwiftPackageReference "SPIndicator" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/ivanvorobei/SPIndicator";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 1.6.5;
+			};
+		};
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
@@ -1803,6 +1815,11 @@
 			isa = XCSwiftPackageProductDependency;
 			package = B26A3B622A60A7D600AD61A5 /* XCRemoteSwiftPackageReference "RxFlow" */;
 			productName = RxFlow;
+		};
+		B2DAFD3F2AA4E47C00F015B5 /* SPIndicator */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = B2DAFD3E2AA4E47C00F015B5 /* XCRemoteSwiftPackageReference "SPIndicator" */;
+			productName = SPIndicator;
 		};
 /* End XCSwiftPackageProductDependency section */
 
