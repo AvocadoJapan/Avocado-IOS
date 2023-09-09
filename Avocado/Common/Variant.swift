@@ -182,26 +182,49 @@ enum ProductBadge {
         }
     }
     
-    var description: String {
+    var buyerDescription: String {
         switch self {
         case .unused:
-            return "이 상품은 한 번도 사용되지 않은 새 상품이에요."
+            return "한 번도 사용되지 않은 새 상품이에요."
         case .verified:
             return "아보카도가 직접 검수한 상품이에요. 아보카도 보증이 적용되는 상품이에요."
         case .fastShipping:
-            return "판매자님이 당일또는 익일배송을 약속한 상품이에요."
+            return "당일또는 익일배송을 약속한 상품이에요."
         case .freeShipping:
-            return "이 상품은 배송비 걱정 없이 무료로 배송돼요."
+            return "배송비 걱정 없이 무료로 배송돼요."
         case .premiumSeller:
             return "많은 구매자들이 만족한 판매자에요. 판매자의 매너, 후기 등을 종합적으로 고려해 선정된 프리미엄 판매자입니다."
         case .business:
-            return "공식적으로 사업자등록을 한 판매자에요."
+            return "사업자등록을 한 판매자에요."
         case .avocadoPay:
             return "안전하고 간편한 아보카도페이로 구매 가능한 상품이에요."
         case .refundable:
             return "상품에 문제가 있을 때는 걱정없이 환불받으실 수 있어요."
         case .handmade:
-            return "이 상품은 정성스럽게 손으로 만들어진 제품에요. 특별한 감성을 느껴보세요."
+            return "정성스럽게 손으로 만들어진 제품에요. 특별한 감성을 느껴보세요."
+        }
+    }
+    
+    var sellerDescription: String {
+        switch self {
+        case .unused:
+            return "새상품이에요"
+        case .verified:
+            return "아보카도 검수를 이용해요."
+        case .fastShipping:
+            return "당일또는 익일배송일 가능해요."
+        case .freeShipping:
+            return "무료배송이 가능해요"
+        case .premiumSeller:
+            return "알 수 없음"
+        case .business:
+            return "알 수 없음"
+        case .avocadoPay:
+            return "아보카도페이를 이용해요"
+        case .refundable:
+            return "환불가능 상품이에요"
+        case .handmade:
+            return "핸드메이드 상풍이에요"
         }
     }
     

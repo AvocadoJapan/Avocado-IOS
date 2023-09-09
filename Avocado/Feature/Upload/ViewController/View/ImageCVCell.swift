@@ -10,6 +10,10 @@ import RxSwift
 import RxRelay
 import RxCocoa
 
+protocol AvocadoCellTapDelegate: AnyObject {
+    func touchEvent(indexPath: Int)
+}
+
 /**
  * ##화면 명: 상품 셀
  */
@@ -19,19 +23,22 @@ final class ImageCVCell: UICollectionViewCell, CollectionCellIdentifierable {
 
     var disposeBag = DisposeBag()
     
+    var indexPath: Int?
+    
+    weak var delegate: AvocadoCellTapDelegate?
+    
     private lazy var productImageView = UIImageView().then {
-        $0.backgroundColor = .systemGray
+        $0.backgroundColor = .systemGray6
         $0.layer.cornerRadius = 10
         $0.layer.masksToBounds = true
         $0.contentMode = .scaleAspectFill
-        
-        $0.image = UIImage(named: "demo_product_ipad")
     }
     
-    private lazy var xButton = UIButton().then {
-        let xSymbol = UIImage(systemName: "xmark.circle.fill")
+    public lazy var xButton = UIButton().then {
+        let xSymbol = UIImage(systemName: "xmark.circle.fill")?.withRenderingMode(.alwaysTemplate)
         $0.setImage(xSymbol, for: .normal)
-        $0.tintColor = .black
+        $0.tintColor = .white
+        $0.isHidden = true
     }
     
     override init(frame: CGRect) {
@@ -64,17 +71,30 @@ final class ImageCVCell: UICollectionViewCell, CollectionCellIdentifierable {
         }
     }
     
-    func config(image: UIImage) {
+    private func updateXButtonVisibility() {
+        xButton.isHidden = (productImageView.image == nil)
+    }
+
+    func config(image: UIImage, indexPath: Int) {
         productImageView.image = image
+        self.indexPath = indexPath
+        xButton.tag = indexPath
+        updateXButtonVisibility()
     }
     
     override func prepareForReuse() {
         productImageView.image = nil
+        self.indexPath = nil
+        updateXButtonVisibility()
     }
     
     @objc func xButtonTapped() {
-        productImageView.image = nil
-   }
+//        productImageView.image = nil
+//        self.indexPath = nil
+//        updateXButtonVisibility()
+        
+        delegate?.touchEvent(indexPath: xButton.tag)
+    }
 }
 
 #if DEBUG && canImport(SwiftUI)

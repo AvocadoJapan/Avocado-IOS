@@ -11,98 +11,142 @@ import RxCocoa
 import RxRelay
 import RxSwift
 import Then
-//import PhotosUI
+import PhotosUI
+import RxDataSources
+import RxKeyboard
 
 final class UploadVC: BaseVC {
     
     private let viewModel: UploadVM
     
-//    private lazy var scrollView = UIScrollView().then {
-//        $0.showsVerticalScrollIndicator = false
-//        $0.contentInsetAdjustmentBehavior = .never
-////        $0.delegate = self
-//    }
-//    private lazy var stackView = UIStackView().then {
-//        $0.axis = .vertical
-//        $0.spacing = 10
-//    }
-//    
-//    private lazy var imageCVLayout = UICollectionViewFlowLayout().then {
-//        $0.scrollDirection = .horizontal
-//        $0.minimumLineSpacing = 10
-//        $0.minimumInteritemSpacing = 0
-//        $0.sectionInset = UIEdgeInsets(top: 0, left: 20, bottom: 0, right: 20)
-//    }
-//    private lazy var imageCV = UICollectionView(frame: .zero, collectionViewLayout: self.imageCVLayout).then {
-//        $0.showsHorizontalScrollIndicator = false
-//        $0.isPagingEnabled = true
-////        $0.backgroundColor = .systemCyan
-//    }
-//    
-//    private lazy var inputStackView = UIStackView().then {
-//        $0.axis = .vertical
-//        $0.spacing = 20
-//        
-//        $0.layoutMargins = UIEdgeInsets(top: 0, left: 15, bottom: 0, right: 15)
-//        $0.isLayoutMarginsRelativeArrangement = true
-//    }
-//    
-//    private lazy var titleInput = InputView(label: "상품명 (필수)")
-//    private lazy var priceInput = InputView(label: "가격 (필수)")
-//    private lazy var descriptionInput = InputView(label: "상품설명 (임의)")
-//    private lazy var locationInput = InputView(label: "지역 (임의)")
-//    private lazy var shippingTimeInput = InputView(label: "발송까지 걸리는 시간 (임의)")
-//    
-//    private lazy var uploadButton = BottomButton(text: "업로드 하기", buttonType: .primary)
-//    
-//    private lazy var demoLabel = UILabel().then {
-//        $0.numberOfLines = 0
-//        $0.text =
-//            """
-//            모든 국민은 근로의 권리를 가진다. 국가는 사회적·경제적 방법으로 근로자의 고용의 증진과 적정임금의 보장에 노력하여야 하며, 법률이 정하는 바에 의하여 최저임금제를 시행하여야 한다.
-//
-//            국회는 법률에 저촉되지 아니하는 범위안에서 의사와 내부규율에 관한 규칙을 제정할 수 있다.
-//
-//            헌법개정은 국회재적의원 과반수 또는 대통령의 발의로 제안된다.
-//
-//            모든 국민은 인간다운 생활을 할 권리를 가진다. 의원을 제명하려면 국회재적의원 3분의 2 이상의 찬성이 있어야 한다.
-//
-//            국가원로자문회의의 조직·직무범위 기타 필요한 사항은 법률로 정한다.
-//
-//            군인·군무원·경찰공무원 기타 법률이 정하는 자가 전투·훈련등 직무집행과 관련하여 받은 손해에 대하여는 법률이 정하는 보상외에 국가 또는 공공단체에 공무원의 직무상 불법행위로 인한 배상은 청구할 수 없다.
-//
-//            국회는 국가의 예산안을 심의·확정한다. 지방자치단체는 주민의 복리에 관한 사무를 처리하고 재산을 관리하며, 법령의 범위안에서 자치에 관한 규정을 제정할 수 있다.
-//
-//            이 헌법시행 당시에 이 헌법에 의하여 새로 설치될 기관의 권한에 속하는 직무를 행하고 있는 기관은 이 헌법에 의하여 새로운 기관이 설치될 때까지 존속하며 그 직무를 행한다.
-//
-//            모든 국민은 건강하고 쾌적한 환경에서 생활할 권리를 가지며, 국가와 국민은 환경보전을 위하여 노력하여야 한다.
-//
-//            대통령의 임기연장 또는 중임변경을 위한 헌법개정은 그 헌법개정 제안 당시의 대통령에 대하여는 효력이 없다.
-//
-//            각급 선거관리위원회의 조직·직무범위 기타 필요한 사항은 법률로 정한다.
-//
-//            체포·구속·압수 또는 수색을 할 때에는 적법한 절차에 따라 검사의 신청에 의하여 법관이 발부한 영장을 제시하여야 한다. 다만, 현행범인인 경우와 장기 3년 이상의 형에 해당하는 죄를 범하고 도피 또는 증거인멸의 염려가 있을 때에는 사후에 영장을 청구할 수 있다.
-//
-//            대법원장의 임기는 6년으로 하며, 중임할 수 없다. 국회나 그 위원회의 요구가 있을 때에는 국무총리·국무위원 또는 정부위원은 출석·답변하여야 하며, 국무총리 또는 국무위원이 출석요구를 받은 때에는 국무위원 또는 정부위원으로 하여금 출석·답변하게 할 수 있다.
-//
-//            환경권의 내용과 행사에 관하여는 법률로 정한다. 국회는 의장 1인과 부의장 2인을 선출한다.
-//
-//            국무총리는 국무위원의 해임을 대통령에게 건의할 수 있다. 군사법원의 조직·권한 및 재판관의 자격은 법률로 정한다.
-//
-//            국회의원은 현행범인인 경우를 제외하고는 회기중 국회의 동의없이 체포 또는 구금되지 아니한다.
-//
-//            누구든지 체포 또는 구속의 이유와 변호인의 조력을 받을 권리가 있음을 고지받지 아니하고는 체포 또는 구속을 당하지 아니한다. 체포 또는 구속을 당한 자의 가족등 법률이 정하는 자에게는 그 이유와 일시·장소가 지체없이 통지되어야 한다.
-//
-//            모든 국민은 법률이 정하는 바에 의하여 공무담임권을 가진다.
-//
-//            위원은 정당에 가입하거나 정치에 관여할 수 없다. 법률이 헌법에 위반되는 여부가 재판의 전제가 된 경우에는 법원은 헌법재판소에 제청하여 그 심판에 의하여 재판한다.
-//
-//            국정의 중요한 사항에 관한 대통령의 자문에 응하기 위하여 국가원로로 구성되는 국가원로자문회의를 둘 수 있다.
-//            """
-//    }
-//    
-//    
-//    //    let photos: [UIImage] = [UIImage(named: "demo_product_ipad")!]
+    private lazy var scrollView = UIScrollView().then {
+        $0.showsVerticalScrollIndicator = false
+        //        $0.contentInsetAdjustmentBehavior = .never
+        //        $0.delegate = self
+    }
+    private lazy var stackView = UIStackView().then {
+        $0.axis = .vertical
+        $0.spacing = 20
+    }
+    
+    private lazy var imageStackView = UIStackView().then {
+        $0.axis = .vertical
+    }
+    
+    private lazy var photoDescriptionView = UIView()
+    
+    private lazy var photoUploadButton = UIButton().then {
+        $0.setTitle("사진 업로드", for: .normal)
+        $0.setTitleColor(.white, for: .normal)
+        $0.backgroundColor = .black
+        $0.layer.cornerRadius = 14
+        $0.titleLabel?.font = .systemFont(ofSize: 13, weight: .medium)
+        
+        $0.addTarget(self, action: #selector(handlePhotoUploadButton), for: .touchUpInside)
+    }
+    
+    private lazy var photoLabel: UILabel = UILabel().then {
+        $0.text = "사진 (필수)"
+        $0.numberOfLines = 1
+        $0.textAlignment = .left
+        $0.font = UIFont.systemFont(ofSize: 13, weight: .medium)
+        
+        $0.textColor = .darkGray
+    }
+    
+    private lazy var photoDescriptionLabel: UILabel = UILabel().then {
+        $0.text = "사진을 업로드 해주세요"
+        $0.numberOfLines = 1
+        $0.textAlignment = .left
+        $0.font = UIFont.systemFont(ofSize: 12, weight: .medium)
+        
+        $0.textColor = .lightGray
+        $0.isHidden = false
+    }
+    
+    
+    private lazy var imageCVLayout = UICollectionViewFlowLayout().then {
+        $0.scrollDirection = .horizontal
+        $0.minimumLineSpacing = 10
+        $0.minimumInteritemSpacing = 0
+        $0.sectionInset = UIEdgeInsets(top: 0, left: 20, bottom: 0, right: 20)
+    }
+    private lazy var imageCV = UICollectionView(frame: .zero, collectionViewLayout: self.imageCVLayout).then {
+        $0.showsHorizontalScrollIndicator = false
+        
+        //        $0.dataSource = self
+        $0.delegate = self
+    }
+    
+    private lazy var inputStackView = UIStackView().then {
+        $0.axis = .vertical
+        $0.spacing = 20
+        
+        $0.layoutMargins = UIEdgeInsets(top: 0, left: 15, bottom: 0, right: 15)
+        $0.isLayoutMarginsRelativeArrangement = true
+    }
+    
+    private lazy var badgeStackView = UIStackView().then {
+        $0.axis = .vertical
+        $0.spacing = 20
+        
+        $0.layoutMargins = UIEdgeInsets(top: 0, left: 20, bottom: 0, right: 20)
+        $0.isLayoutMarginsRelativeArrangement = true
+    }
+    
+    private lazy var badgeLabel: UILabel = UILabel().then {
+        $0.text = "배지 (선택)"
+        $0.numberOfLines = 1
+        $0.textAlignment = .left
+        $0.font = UIFont.systemFont(ofSize: 13, weight: .medium)
+        
+        $0.textColor = .darkGray
+    }
+    
+    private lazy var unusedBadgeView = UploadBadgeView(type: .unused)
+    private lazy var avocadoPayBadgeView = UploadBadgeView(type: .avocadoPay)
+    private lazy var fastShippingBadgeView = UploadBadgeView(type: .fastShipping)
+    private lazy var freeShippingBadgeView = UploadBadgeView(type: .freeShipping)
+    private lazy var refundableBadgeView = UploadBadgeView(type: .refundable)
+    
+    private lazy var titleInput = InputView(label: "상품명 (필수)", placeholder: "모자, 신발 등")
+    private lazy var priceInput = InputView(label: "가격 (필수)", placeholder: "3,000원 이상")
+    
+    private lazy var descriptionStackView = UIStackView().then {
+        $0.axis = .vertical
+        $0.spacing = 10
+        
+        $0.layoutMargins = UIEdgeInsets(top: 0, left: 20, bottom: 0, right: 20)
+        $0.isLayoutMarginsRelativeArrangement = true
+    }
+    
+    private lazy var descriptionLabel: UILabel = UILabel().then {
+        $0.text = "설명 (선택)"
+        $0.numberOfLines = 1
+        $0.textAlignment = .left
+        $0.font = UIFont.systemFont(ofSize: 13, weight: .medium)
+        
+        $0.textColor = .darkGray
+    }
+    
+    private lazy var descriptionView = UIView().then {
+        $0.layer.cornerRadius = 10
+        $0.backgroundColor = .systemGray6
+    }
+    
+    private lazy var descriptionTextView = UITextView().then {
+        $0.font = UIFont.systemFont(ofSize: 13)
+        $0.tintColor = .black
+        $0.textAlignment = .left
+        $0.isScrollEnabled = true
+        $0.autocorrectionType = .no
+        
+        $0.backgroundColor = .clear
+    }
+    
+    private lazy var uploadButton = BottomButton(text: "업로드 하기", buttonType: .primary)
+    
+    private lazy var legalView = LegalView()
     
     init(viewModel: UploadVM) {
         self.viewModel = viewModel
@@ -113,9 +157,63 @@ final class UploadVC: BaseVC {
         fatalError("init(coder:) has not been implemented")
     }
     
+    override func bindUI() {
+        let output = viewModel.transform(input: viewModel.input)
+        
+        uploadButton
+            .rx
+            .tap
+            .subscribe { [weak self] _ in
+                self?.descriptionTextView.resignFirstResponder()
+                SPIndicator.present(title: "시스템 에러", message: "지원하지 않는 기능", preset: .error, haptic: .error)
+            }
+            .disposed(by: disposeBag)
+        
+        let dataSource = RxCollectionViewSectionedReloadDataSource<ImageDataSection>(
+            configureCell: { dataSource, collectionView, indexPath, item in
+                
+                let cell = collectionView.dequeueReusableCell(withReuseIdentifier: ImageCVCell.identifier, for: indexPath) as! ImageCVCell
+                
+                cell.delegate = self
+                cell.config(image: item, indexPath: indexPath.row)
+                
+//                Logger.d("\(indexPath.row)")
+//
+//                cell.xButton
+//                    .rx
+//                    .tap
+//                    .map {
+//                        return  indexPath.row }
+//                    .debug("map")
+//                    .bind(to: self.viewModel.input.removeImageAtIndexRelay)
+//                    .disposed(by: DisposeBag())
+    
+                return cell
+            }
+        )
+        
+        output.imageRelay
+            .observe(on: MainScheduler.instance)
+            .do(onNext: { [weak self] image in
+                // 이미지 배열이 비어있으면 photoDescriptionLabel 을 표시합니다
+                self?.photoDescriptionLabel.isHidden = !(image.first?.items == [])
+            })
+            .bind(to: imageCV.rx.items(dataSource: dataSource))
+            .disposed(by: disposeBag)
+        
+        // scrollView에 탭이 감지되면 키보드를 내립니다
+        let tapGesture = UITapGestureRecognizer()
+        scrollView.addGestureRecognizer(tapGesture)
 
+        tapGesture.rx.event
+            .bind { [weak self] _ in
+                self?.view.endEditing(true)
+            }
+            .disposed(by: disposeBag)
+    }
     
     override func setProperty() {
+        
         view.backgroundColor = .white
         
         navigationController?.navigationBar.topItem?.title = "상품업로드"
@@ -131,6 +229,123 @@ final class UploadVC: BaseVC {
             navigationController?.navigationBar.standardAppearance = navBarAppearance
             navigationController?.navigationBar.scrollEdgeAppearance = navBarAppearance
         }
+        
+        // imageCV셀등록
+        imageCV.register(ImageCVCell.self, forCellWithReuseIdentifier: ImageCVCell.identifier)
+    }
+    
+    override func setLayout() {
+        view.addSubview(scrollView)
+        scrollView.addSubview(stackView)
+        scrollView.addSubview(photoDescriptionLabel)
+        
+        photoDescriptionView.addSubview(photoLabel)
+        photoDescriptionView.addSubview(photoUploadButton)
+        
+        descriptionView.addSubview(descriptionTextView)
+        
+        [photoDescriptionView, imageStackView, inputStackView, badgeStackView, descriptionStackView, legalView].forEach {
+            stackView.addArrangedSubview($0)
+        }
+        
+        [photoDescriptionView, imageCV].forEach {
+            imageStackView.addArrangedSubview($0)
+        }
+        
+        [descriptionLabel, descriptionView, uploadButton].forEach {
+            descriptionStackView.addArrangedSubview($0)
+        }
+        
+        [titleInput, priceInput].forEach {
+            inputStackView.addArrangedSubview($0)
+        }
+        
+        [badgeLabel, unusedBadgeView, avocadoPayBadgeView, fastShippingBadgeView, freeShippingBadgeView, refundableBadgeView].forEach {
+            badgeStackView.addArrangedSubview($0)
+        }
+    }
+    
+    override func setConstraint() {
+        // 스크롤뷰 제약 조건 설정
+        scrollView.snp.makeConstraints {
+            $0.top.equalTo(view.safeAreaLayoutGuide.snp.top)
+            $0.horizontalEdges.equalToSuperview()
+            $0.bottom.equalTo(view.safeAreaLayoutGuide.snp.bottom)
+        }
+        
+        // 스택뷰 제약 조건 설정
+        stackView.snp.makeConstraints {
+            $0.edges.equalToSuperview()
+            $0.width.equalTo(scrollView.snp.width) // 스택뷰의 너비는 스크롤뷰와 같게
+        }
+        
+        photoDescriptionView.snp.makeConstraints {
+            $0.height.equalTo(30)
+            $0.horizontalEdges.equalToSuperview()
+        }
+        
+        photoLabel.snp.makeConstraints {
+            $0.centerY.equalToSuperview()
+            $0.left.equalToSuperview().inset(20)
+        }
+        
+        photoUploadButton.snp.makeConstraints {
+            $0.centerY.equalToSuperview()
+            $0.right.equalToSuperview().inset(20)
+            $0.width.equalTo(100)
+        }
+        
+        imageCV.snp.makeConstraints {
+            $0.height.equalTo(120)
+        }
+        
+        [unusedBadgeView,avocadoPayBadgeView, fastShippingBadgeView, freeShippingBadgeView, refundableBadgeView].forEach {
+            $0.snp.makeConstraints {
+                $0.height.equalTo(50)
+            }
+        }
+        
+        descriptionView.snp.makeConstraints {
+            $0.height.equalTo(200)
+        }
+        
+        descriptionTextView.snp.makeConstraints {
+            $0.edges.equalToSuperview().inset(10)
+        }
+        
+        photoDescriptionLabel.snp.makeConstraints {
+            $0.center.equalTo(imageCV)
+        }
+    }
+}
+
+extension UploadVC: PHPickerViewControllerDelegate {
+    func picker(_ picker: PHPickerViewController, didFinishPicking results: [PHPickerResult]) {
+        picker.dismiss(animated: true)
+        
+        viewModel.input.imageRelay.accept(results)
+    }
+    
+    @objc func handlePhotoUploadButton() {
+        var configuration = PHPickerConfiguration()
+        configuration.selectionLimit = 8
+        configuration.filter = .images
+        
+        let pickerViewController = PHPickerViewController(configuration: configuration)
+        pickerViewController.delegate = self
+        self.present(pickerViewController, animated: true)
+    }
+}
+
+extension UploadVC: UICollectionViewDelegateFlowLayout {
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+        return CGSize(width: 100, height: 100)
+    }
+}
+
+extension UploadVC: AvocadoCellTapDelegate {
+    func touchEvent(indexPath: Int) {
+        self.viewModel.input.removeImageAtIndexRelay.accept(indexPath)
     }
 }
 
@@ -138,6 +353,7 @@ final class UploadVC: BaseVC {
 #if DEBUG && canImport(SwiftUI)
 import SwiftUI
 import RxSwift
+import SPIndicator
 struct UploadVCPreview: PreviewProvider {
     static var previews: some View {
         return UploadVC(viewModel: UploadVM(service: UploadService())).toPreview()

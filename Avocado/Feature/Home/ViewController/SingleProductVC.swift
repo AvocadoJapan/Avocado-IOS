@@ -192,6 +192,32 @@ final class SingleProductVC: BaseVC {
         hidesBottomBarWhenPushed = true
     }
     
+    override func bindUI() {
+        favButton
+            .rx
+            .tap
+            .subscribe { _ in
+                SPIndicator.present(title: "시스템 에러", message: "지원하지 않는 기능", preset: .error, haptic: .error)
+            }
+            .disposed(by: disposeBag)
+        
+        dmButton
+            .rx
+            .tap
+            .subscribe { _ in
+                SPIndicator.present(title: "시스템 에러", message: "지원하지 않는 기능", preset: .error, haptic: .error)
+            }
+            .disposed(by: disposeBag)
+        
+        purchaseButton
+            .rx
+            .tap
+            .subscribe { _ in
+                SPIndicator.present(title: "시스템 에러", message: "지원하지 않는 기능", preset: .error, haptic: .error)
+            }
+            .disposed(by: disposeBag)
+    }
+    
     override func setProperty() {
         view.backgroundColor = .white
         
@@ -352,6 +378,7 @@ extension SingleProductVC: UIScrollViewDelegate {
 #if DEBUG && canImport(SwiftUI)
 import SwiftUI
 import RxSwift
+import SPIndicator
 
 struct SingleProductVCPreview: PreviewProvider {
     static var previews: some View {

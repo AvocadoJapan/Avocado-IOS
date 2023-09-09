@@ -202,6 +202,8 @@ final class WelcomeVC: BaseVC {
                 switch err {
                 case .pageNotFound:
                     
+                    SPIndicator.present(title: "시스템 에러", message: "사용자가 존재하지 않습니다", preset: .error, haptic: .error)
+                    
                     let alert = UIAlertController(title: "", message: "사용자가 존재하지 않습니다\n 아보카도 회원가입 먼저 부탁드립니다", preferredStyle: .alert)
                     
                     alert.addAction(UIAlertAction(title: "확인", style: .default,handler: { _ in
@@ -211,10 +213,8 @@ final class WelcomeVC: BaseVC {
                     self?.present(alert, animated: true)
                     
                 case .unknown(_, let message):
-                    let alert = UIAlertController(title: "", message: message, preferredStyle: .alert)
-                    alert.addAction(UIAlertAction(title: "확인", style: .default))
                     
-                    self?.present(alert, animated: true)
+                    SPIndicator.present(title: "알 수 없는 에러", message: message, preset: .error, haptic: .error)
                     
                 default:
                     break
@@ -230,6 +230,7 @@ final class WelcomeVC: BaseVC {
 #if DEBUG && canImport(SwiftUI)
 import SwiftUI
 import RxSwift
+import SPIndicator
 struct WelcomeVCPreview: PreviewProvider {
     static var previews: some View {
         return WelcomeVC(viewModel: WelcomeVM(service: AuthService())).toPreview()

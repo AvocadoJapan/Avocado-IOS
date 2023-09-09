@@ -150,6 +150,9 @@
 		B2D1309E2A4B4C5800538EFB /* BottomButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2D1309D2A4B4C5800538EFB /* BottomButton.swift */; };
 		B2D2764E2A6C4D6A00441719 /* OtherEmailVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2D2764D2A6C4D6A00441719 /* OtherEmailVC.swift */; };
 		B2D276512A6C4DB700441719 /* OtherEmailVM.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2D276502A6C4DB700441719 /* OtherEmailVM.swift */; };
+		B2DAFD392AA2035400F015B5 /* UploadBadgeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2DAFD382AA2035400F015B5 /* UploadBadgeView.swift */; };
+		B2DAFD3D2AA47D7500F015B5 /* ImageDataSection.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2DAFD3C2AA47D7500F015B5 /* ImageDataSection.swift */; };
+		B2DAFD402AA4E47C00F015B5 /* SPIndicator in Frameworks */ = {isa = PBXBuildFile; productRef = B2DAFD3F2AA4E47C00F015B5 /* SPIndicator */; };
 		B2E186CE2A474B4C00ABE98F /* SignupVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2E186CD2A474B4C00ABE98F /* SignupVC.swift */; };
 		B2E2AC802A4772D3003DAE88 /* WelcomeVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2E2AC7F2A4772D3003DAE88 /* WelcomeVC.swift */; };
 		B2F3D3642A511F2700FB05E1 /* SubButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2F3D3632A511F2700FB05E1 /* SubButton.swift */; };
@@ -308,6 +311,8 @@
 		B2D1309D2A4B4C5800538EFB /* BottomButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BottomButton.swift; sourceTree = "<group>"; };
 		B2D2764D2A6C4D6A00441719 /* OtherEmailVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OtherEmailVC.swift; sourceTree = "<group>"; };
 		B2D276502A6C4DB700441719 /* OtherEmailVM.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OtherEmailVM.swift; sourceTree = "<group>"; };
+		B2DAFD382AA2035400F015B5 /* UploadBadgeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UploadBadgeView.swift; sourceTree = "<group>"; };
+		B2DAFD3C2AA47D7500F015B5 /* ImageDataSection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageDataSection.swift; sourceTree = "<group>"; };
 		B2E186CD2A474B4C00ABE98F /* SignupVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignupVC.swift; sourceTree = "<group>"; };
 		B2E2AC7F2A4772D3003DAE88 /* WelcomeVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WelcomeVC.swift; sourceTree = "<group>"; };
 		B2F3D3632A511F2700FB05E1 /* SubButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SubButton.swift; sourceTree = "<group>"; };
@@ -328,6 +333,7 @@
 				04C835F42A2B315300731E3E /* RxDataSources in Frameworks */,
 				04D2FCFA2A2A51F100253028 /* RxRelay in Frameworks */,
 				9816F6DE2A494A1B00A7A284 /* AWSCognitoAuthPlugin in Frameworks */,
+				B2DAFD402AA4E47C00F015B5 /* SPIndicator in Frameworks */,
 				9816F6D92A49495500A7A284 /* Moya in Frameworks */,
 				9816F6DB2A49495500A7A284 /* RxMoya in Frameworks */,
 				B2382C602A6F9A4300A24AE3 /* Localize_Swift in Frameworks */,
@@ -518,11 +524,11 @@
 			isa = PBXGroup;
 			children = (
 				B22ECA2A2A75974B00CCA794 /* AppFlow.swift */,
+				B22ECA2C2A75975C00CCA794 /* AppStepper.swift */,
 				B22ECA2E2A75976500CCA794 /* AppStep.swift */,
 				B2689E812AA0641E00151D1D /* TabFlow.swift */,
 				B2689E852AA0643800151D1D /* TabStep.swift */,
 				B240D7172A9F102100DF171D /* Upload */,
-				B22ECA2C2A75975C00CCA794 /* AppStepper.swift */,
 				B19E83252A6025A2004C5DE2 /* Auth */,
 				04BA131F2A2AD9FB0004E2FB /* Home */,
 				B1C35AE62A9DC9C600C97A3D /* Profile */,
@@ -958,6 +964,7 @@
 		B240D71C2A9F105E00DF171D /* Model */ = {
 			isa = PBXGroup;
 			children = (
+				B2DAFD3C2AA47D7500F015B5 /* ImageDataSection.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -1004,6 +1011,7 @@
 			isa = PBXGroup;
 			children = (
 				B29EA3EF2A9F591500146F38 /* ImageCVCell.swift */,
+				B2DAFD382AA2035400F015B5 /* UploadBadgeView.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -1046,6 +1054,7 @@
 				98C711072A53B48300C99393 /* RxKeyboard */,
 				B26A3B632A60A7D600AD61A5 /* RxFlow */,
 				B2382C5F2A6F9A4300A24AE3 /* Localize_Swift */,
+				B2DAFD3F2AA4E47C00F015B5 /* SPIndicator */,
 			);
 			productName = Avocado;
 			productReference = B2198B942A2A36EA0019032D /* Avocado.app */;
@@ -1132,6 +1141,7 @@
 				98C711062A53B48300C99393 /* XCRemoteSwiftPackageReference "RxKeyboard" */,
 				B26A3B622A60A7D600AD61A5 /* XCRemoteSwiftPackageReference "RxFlow" */,
 				B2382C5E2A6F9A4300A24AE3 /* XCRemoteSwiftPackageReference "Localize-Swift" */,
+				B2DAFD3E2AA4E47C00F015B5 /* XCRemoteSwiftPackageReference "SPIndicator" */,
 			);
 			productRefGroup = B2198B952A2A36EA0019032D /* Products */;
 			projectDirPath = "";
@@ -1282,6 +1292,7 @@
 				B248C6A82A86A153006AE008 /* ProductGroupCVCell.swift in Sources */,
 				B29EC4742A9338BE001D1E6C /* MainAPI.swift in Sources */,
 				B1B1EA162A599904007B1894 /* SettingSectionModel.swift in Sources */,
+				B2DAFD3D2AA47D7500F015B5 /* ImageDataSection.swift in Sources */,
 				B28892072A6E569800952A10 /* FadeAnimation.swift in Sources */,
 				B1C35AF12A9DCAA800C97A3D /* ProfileAPI.swift in Sources */,
 				B29EC4762A934991001D1E6C /* EnumCountable+Protocol.swift in Sources */,
@@ -1756,6 +1767,14 @@
 				minimumVersion = 2.13.0;
 			};
 		};
+		B2DAFD3E2AA4E47C00F015B5 /* XCRemoteSwiftPackageReference "SPIndicator" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/ivanvorobei/SPIndicator";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 1.6.5;
+			};
+		};
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
@@ -1823,6 +1842,11 @@
 			isa = XCSwiftPackageProductDependency;
 			package = B26A3B622A60A7D600AD61A5 /* XCRemoteSwiftPackageReference "RxFlow" */;
 			productName = RxFlow;
+		};
+		B2DAFD3F2AA4E47C00F015B5 /* SPIndicator */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = B2DAFD3E2AA4E47C00F015B5 /* XCRemoteSwiftPackageReference "SPIndicator" */;
+			productName = SPIndicator;
 		};
 /* End XCSwiftPackageProductDependency section */
 

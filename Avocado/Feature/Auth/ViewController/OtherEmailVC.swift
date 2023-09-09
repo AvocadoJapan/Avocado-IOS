@@ -157,11 +157,13 @@ final class OtherEmailVC: BaseVC {
         
         output.errorEventPublish
             .asSignal()
-            .emit(onNext: { [weak self] error in
-                let alertController = UIAlertController(title: "", message: error.errorDescription, preferredStyle: .alert)
-                alertController.addAction(UIAlertAction(title: "확인", style: .default))
+            .emit(onNext: { err in
+//                let alertController = UIAlertController(title: "", message: error.errorDescription, preferredStyle: .alert)
+//                alertController.addAction(UIAlertAction(title: "확인", style: .default))
+//                
+//                self?.present(alertController, animated: true)
+                SPIndicator.present(title: "알 수 없는 에러", message: err.errorDescription, preset: .error, haptic: .error)
                 
-                self?.present(alertController, animated: true)
             })
             .disposed(by: disposeBag)
         
@@ -181,6 +183,7 @@ final class OtherEmailVC: BaseVC {
 #if DEBUG && canImport(SwiftUI)
 import SwiftUI
 import RxSwift
+import SPIndicator
 struct OtherEmailVCPreview: PreviewProvider {
     static var previews: some View {
         return OtherEmailVC(viewModel: OtherEmailVM(service: AuthService(), oldEmail: "sample@avocadojp.com")).toPreview()

@@ -153,11 +153,12 @@ final class ProfileSettingVC: BaseVC {
             
         output.errEventPublish
             .asSignal()
-            .emit(onNext: { [weak self] err in
-                let alert = UIAlertController(title: "", message: err.errorDescription , preferredStyle: .alert)
-                alert.addAction(UIAlertAction(title: "확인", style: .default))
-                
-                self?.present(alert, animated: true)
+            .emit(onNext: { err in
+//                let alert = UIAlertController(title: "", message: err.errorDescription , preferredStyle: .alert)
+//                alert.addAction(UIAlertAction(title: "확인", style: .default))
+//                
+//                self?.present(alert, animated: true)
+                SPIndicator.present(title: "알 수 없는 에러", message: err.errorDescription, preset: .error, haptic: .error)
             })
             .disposed(by: disposeBag)
         
@@ -211,6 +212,7 @@ extension ProfileSettingVC: PHPickerViewControllerDelegate {
 #if DEBUG && canImport(SwiftUI)
 import SwiftUI
 import RxSwift
+import SPIndicator
 struct ProfileSettingVCPreview: PreviewProvider {
     static var previews: some View {
         return ProfileSettingVC(vm: ProfileSettingVM(service: AuthService(), regionid: "", s3Service: S3Service())).toPreview()

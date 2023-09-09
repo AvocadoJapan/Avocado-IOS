@@ -1,18 +1,11 @@
 //
-//  ProductBadgeView.swift
+//  UploadBadgeView.swift
 //  Avocado
 //
-//  Created by Jayden Jang on 2023/08/26.
+//  Created by Jayden Jang on 2023/09/01.
 //
 
-import Foundation
-import UIKit
-import SnapKit
-import Then
-import RxSwift
-import RxCocoa
-
-final class ProductBadgeView: UIView {
+final class UploadBadgeView: UIView {
     
     private lazy var imageView = UIImageView().then {
         $0.image = UIImage(named: "bolt_solid")
@@ -39,35 +32,42 @@ final class ProductBadgeView: UIView {
         $0.textColor = .gray
     }
     
-    private lazy var mainStackView = UIStackView().then {
+    private lazy var descriptionStackView = UIStackView().then {
         $0.axis = .horizontal
         $0.spacing = 15
         $0.alignment = .center
         $0.distribution = .fill
     }
     
+    private lazy var toggle = UISwitch().then {
+        $0.onTintColor = .black
+        $0.preferredStyle = .checkbox
+    }
+    
     override init(frame: CGRect) {
         super.init(frame: frame)
         
-        addSubview(mainStackView)
+        addSubview(descriptionStackView)
+        addSubview(toggle)
         
         labelStackView.addArrangedSubview(titleLabel)
         labelStackView.addArrangedSubview(descriptionLabel)
         
-        mainStackView.addArrangedSubview(imageView)
-        mainStackView.addArrangedSubview(labelStackView)
-        
-        self.snp.makeConstraints {
-            $0.height.equalTo(50)
-        }
+        descriptionStackView.addArrangedSubview(imageView)
+        descriptionStackView.addArrangedSubview(labelStackView)
         
         imageView.snp.makeConstraints {
             $0.size.equalTo(self.snp.height).dividedBy(1.7)
         }
         
-        mainStackView.snp.makeConstraints {
-            $0.horizontalEdges.equalToSuperview()
+        descriptionStackView.snp.makeConstraints {
+            $0.centerY.left.equalToSuperview()
+        }
+        
+        toggle.snp.makeConstraints {
             $0.centerY.equalToSuperview()
+            $0.left.greaterThanOrEqualTo(descriptionStackView.snp.right)
+            $0.right.equalToSuperview().inset(10)
         }
     }
     
@@ -79,17 +79,18 @@ final class ProductBadgeView: UIView {
         self.init(frame: .zero)
         
         titleLabel.text = type.title
-        descriptionLabel.text = type.buyerDescription
+        descriptionLabel.text = type.sellerDescription
         imageView.image = UIImage(named: "\(type.image)")
     }
 }
 
 #if DEBUG && canImport(SwiftUI)
 import SwiftUI
-struct ProductBadgeViewPreview: PreviewProvider {
+struct UploadBadgeViewPreview: PreviewProvider {
     static var previews: some View {
-        return ProductBadgeView().toPreview().previewLayout(.fixed(width: 300, height: 50))
+        return UploadBadgeView().toPreview().previewLayout(.fixed(width: 300, height: 50))
     }
 }
 #endif
+
 
