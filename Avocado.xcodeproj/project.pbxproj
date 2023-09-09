@@ -87,6 +87,7 @@
 		B1D5350F2AA0D16F001ACE09 /* ProfileStep.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1D5350E2AA0D16F001ACE09 /* ProfileStep.swift */; };
 		B20A176D2A9DB36D000FD85B /* UserBadgeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B20A176C2A9DB36D000FD85B /* UserBadgeView.swift */; };
 		B20AFE682A2BAE73004A646B /* SearchBarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B20AFE672A2BAE73004A646B /* SearchBarView.swift */; };
+		B2118D0E2AACC78100871A40 /* UploadBadge.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2118D0D2AACC78100871A40 /* UploadBadge.swift */; };
 		B212D5872A45E8F40008DAD1 /* LoginVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = B212D5862A45E8F40008DAD1 /* LoginVC.swift */; };
 		B212D58B2A45F1740008DAD1 /* InputView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B212D58A2A45F1740008DAD1 /* InputView.swift */; };
 		B2198B982A2A36EA0019032D /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2198B972A2A36EA0019032D /* AppDelegate.swift */; };
@@ -150,7 +151,6 @@
 		B2D1309E2A4B4C5800538EFB /* BottomButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2D1309D2A4B4C5800538EFB /* BottomButton.swift */; };
 		B2D2764E2A6C4D6A00441719 /* OtherEmailVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2D2764D2A6C4D6A00441719 /* OtherEmailVC.swift */; };
 		B2D276512A6C4DB700441719 /* OtherEmailVM.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2D276502A6C4DB700441719 /* OtherEmailVM.swift */; };
-		B2DAFD392AA2035400F015B5 /* UploadBadgeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2DAFD382AA2035400F015B5 /* UploadBadgeView.swift */; };
 		B2DAFD3D2AA47D7500F015B5 /* ImageDataSection.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2DAFD3C2AA47D7500F015B5 /* ImageDataSection.swift */; };
 		B2DAFD402AA4E47C00F015B5 /* SPIndicator in Frameworks */ = {isa = PBXBuildFile; productRef = B2DAFD3F2AA4E47C00F015B5 /* SPIndicator */; };
 		B2E186CE2A474B4C00ABE98F /* SignupVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2E186CD2A474B4C00ABE98F /* SignupVC.swift */; };
@@ -246,6 +246,7 @@
 		B1D5350E2AA0D16F001ACE09 /* ProfileStep.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileStep.swift; sourceTree = "<group>"; };
 		B20A176C2A9DB36D000FD85B /* UserBadgeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserBadgeView.swift; sourceTree = "<group>"; };
 		B20AFE672A2BAE73004A646B /* SearchBarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchBarView.swift; sourceTree = "<group>"; };
+		B2118D0D2AACC78100871A40 /* UploadBadge.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UploadBadge.swift; sourceTree = "<group>"; };
 		B212D5862A45E8F40008DAD1 /* LoginVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginVC.swift; sourceTree = "<group>"; };
 		B212D58A2A45F1740008DAD1 /* InputView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InputView.swift; sourceTree = "<group>"; };
 		B2198B942A2A36EA0019032D /* Avocado.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Avocado.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -311,7 +312,6 @@
 		B2D1309D2A4B4C5800538EFB /* BottomButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BottomButton.swift; sourceTree = "<group>"; };
 		B2D2764D2A6C4D6A00441719 /* OtherEmailVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OtherEmailVC.swift; sourceTree = "<group>"; };
 		B2D276502A6C4DB700441719 /* OtherEmailVM.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OtherEmailVM.swift; sourceTree = "<group>"; };
-		B2DAFD382AA2035400F015B5 /* UploadBadgeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UploadBadgeView.swift; sourceTree = "<group>"; };
 		B2DAFD3C2AA47D7500F015B5 /* ImageDataSection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageDataSection.swift; sourceTree = "<group>"; };
 		B2E186CD2A474B4C00ABE98F /* SignupVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignupVC.swift; sourceTree = "<group>"; };
 		B2E2AC7F2A4772D3003DAE88 /* WelcomeVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WelcomeVC.swift; sourceTree = "<group>"; };
@@ -1011,7 +1011,7 @@
 			isa = PBXGroup;
 			children = (
 				B29EA3EF2A9F591500146F38 /* ImageCVCell.swift */,
-				B2DAFD382AA2035400F015B5 /* UploadBadgeView.swift */,
+				B2118D0D2AACC78100871A40 /* UploadBadge.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -1189,6 +1189,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				B2118D0E2AACC78100871A40 /* UploadBadge.swift in Sources */,
 				B240FB352A994C8E00F365BB /* ProductBadgeView.swift in Sources */,
 				B22222652A55F40100A2B7CB /* PrivacyAccessVC.swift in Sources */,
 				98FD1C232A56AD230031D7C1 /* SettingVC.swift in Sources */,
