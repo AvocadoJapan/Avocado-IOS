@@ -61,14 +61,31 @@ final class TabFlow: Flow {
      */
     private func navigateToTab(focusedTab: TabType = .home) -> FlowContributors {
         let mainFlow = MainFlow(root: BaseNavigationVC())
+        let searchFlow = SearchFlow()
         let uploadFlow = UploadFlow(root: BaseNavigationVC())
         let profileFlow = ProfileFlow()
         let settingFlow = SettingFlow(root: BaseNavigationVC())
 
-        Flows.use(mainFlow, uploadFlow, profileFlow, settingFlow,  when: .created) { [unowned self] (home: UINavigationController, upload: UINavigationController, myPage: UINavigationController, setting: UINavigationController)  in
+        Flows.use(
+            mainFlow,
+            searchFlow,
+            uploadFlow,
+            profileFlow,
+            settingFlow,
+            when: .created)
+        { [unowned self] (
+            home: UINavigationController,
+            search: UINavigationController,
+            upload: UINavigationController,
+            myPage: UINavigationController,
+            setting: UINavigationController
+        )  in
             
             home.tabBarItem = TabType.home.tabBarItem
             home.title = TabType.home.title
+            
+            search.tabBarItem = TabType.search.tabBarItem
+            search.title = TabType.search.title
             
             upload.tabBarItem = TabType.upload.tabBarItem
             upload.title = TabType.upload.title
@@ -79,13 +96,14 @@ final class TabFlow: Flow {
             setting.tabBarItem = TabType.setting.tabBarItem
             setting.title = TabType.setting.title
             
-            self.rootViewController.setViewControllers([home, upload, myPage, setting], animated: false)
+            self.rootViewController.setViewControllers([home, search, upload, myPage, setting], animated: false)
             self.rootViewController.selectedIndex = focusedTab.rawValue
             
         }
         
         return .multiple(flowContributors: [
             .contribute(withNextPresentable: mainFlow, withNextStepper: OneStepper(withSingleStep: MainStep.mainIsRequired)),
+            .contribute(withNextPresentable: searchFlow, withNextStepper: OneStepper(withSingleStep: SearchStep.searchIsRequired)),
             .contribute(withNextPresentable: uploadFlow, withNextStepper: OneStepper(withSingleStep: UploadStep.uploadIsRequired)),
             .contribute(withNextPresentable: profileFlow, withNextStepper: OneStepper(withSingleStep: ProfileStep.profileIsRequired)),
             .contribute(withNextPresentable: settingFlow, withNextStepper: OneStepper(withSingleStep: SettingStep.settingIsRequired))
