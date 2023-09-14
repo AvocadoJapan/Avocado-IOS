@@ -35,8 +35,6 @@ final class RxSearchBar: UISearchBar {
         // 실제로 키보드가 내려갔거나, 유저가 검색버튼을 클릭했을때
         shouldLoadResultObservable = searchButtonTappedPublish
             .withLatestFrom(self.rx.text) { $1 ?? "" } //유저가 마지막에 입력한 내용만 보냄
-            .filter {!$0.isEmpty} // 값이 없을 경우는 제외
-            .distinctUntilChanged() // 값이 중복이면 보내지 않음
     }
     
     required init?(coder: NSCoder) {

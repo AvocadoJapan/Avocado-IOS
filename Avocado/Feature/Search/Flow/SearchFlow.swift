@@ -32,6 +32,7 @@ final class SearchFlow: Flow {
         switch step {
         case .searchIsRequired: return navigateSearch()
         case .searchIsComplete: return .none
+        case .searchResultIsRequired(let content): return navigateSearchResult(content: content)
         }
     }
     
@@ -43,6 +44,17 @@ final class SearchFlow: Flow {
         // 스무스 애니메이션 적용
         rootViewController.view.fadeOut()
         rootViewController.setViewControllers([viewController], animated: false)
+        
+        return .one(flowContributor: .contribute(withNextPresentable: viewController, withNextStepper: viewModel))
+    }
+    
+    private func navigateSearchResult(content: String) -> FlowContributors {
+//        let service = SearchService()
+        let service = SearchService(isStub: true, sampleStatusCode: 200)
+        let viewModel = SearchResultVM(service: service, keyword: content)
+        let viewController = SearchResultVC(viewModel: viewModel)
+        
+        rootViewController.pushViewController(viewController, animated: true)
         
         return .one(flowContributor: .contribute(withNextPresentable: viewController, withNextStepper: viewModel))
     }

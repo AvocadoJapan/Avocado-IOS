@@ -122,6 +122,15 @@ final class SearchVC: BaseVC {
             return headerView
         }
         
+        searchCollectionView
+            .rx
+            .modelSelected(RecentSearchSection.Item.self)
+            .asDriver()
+            .drive(onNext: { [weak self] item in
+                self?.viewModel.steps.accept(SearchStep.searchResultIsRequired(content: item.content))
+            })
+            .disposed(by: disposeBag)
+        
         output.recentSearchListPublish
             .bind(to: searchCollectionView
                 .rx
@@ -130,13 +139,12 @@ final class SearchVC: BaseVC {
             .disposed(by: disposeBag)
         
         output.successSearchEventPublish
-            .do { [weak self] in self?.searchBar.text = "" }
-            .subscribe(onNext: {
-                
+            .asSignal()
+            .emit(onNext: { [weak self] void in
+                self?.viewModel.steps.accept(SearchStep.searchResultIsRequired(content: self?.searchBar.text ?? ""))
+                self?.searchBar.text = ""
             })
             .disposed(by: disposeBag)
-        
-        
     }
 
     

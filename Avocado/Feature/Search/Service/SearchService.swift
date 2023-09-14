@@ -93,4 +93,10 @@ final class SearchService:BaseAPIService<SearchAPI> {
             return Disposables.create()
         }
     }
+    /**
+     * - description 검색결과를 가져오는 API 함수
+     */
+    func searchResultList(keyword: String) -> Observable<SearchResult> {
+        return singleRequest(.searchResult(keyword: keyword)).asObservable()
+    }
 }

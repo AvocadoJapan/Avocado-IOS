@@ -85,6 +85,11 @@
 		B1B8C20E2AAC74DD00B9E1C3 /* SearchStep.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1B8C20D2AAC74DD00B9E1C3 /* SearchStep.swift */; };
 		B1BD333B2AB2AA81003E660D /* RecentSearchTitleReusableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1BD333A2AB2AA81003E660D /* RecentSearchTitleReusableView.swift */; };
 		B1BD333D2AB2D4C1003E660D /* SearchResultVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1BD333C2AB2D4C1003E660D /* SearchResultVC.swift */; };
+		B1BD333F2AB2D98A003E660D /* SearchResultVM.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1BD333E2AB2D98A003E660D /* SearchResultVM.swift */; };
+		B1BD33412AB2DE30003E660D /* SearchResultCVCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1BD33402AB2DE30003E660D /* SearchResultCVCell.swift */; };
+		B1BD33432AB2EA1D003E660D /* SearchResultSectionModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1BD33422AB2EA1D003E660D /* SearchResultSectionModel.swift */; };
+		B1BD33452AB2EB5D003E660D /* SearchResultModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1BD33442AB2EB5D003E660D /* SearchResultModel.swift */; };
+		B1BD33472AB2F7BD003E660D /* CatecogyCVCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1BD33462AB2F7BD003E660D /* CatecogyCVCell.swift */; };
 		B1BFDD672A49CF8100DB4955 /* LoginVM.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1BFDD662A49CF8100DB4955 /* LoginVM.swift */; };
 		B1C35AED2A9DCA1800C97A3D /* ProfileVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1C35AEC2A9DCA1800C97A3D /* ProfileVC.swift */; };
 		B1C35AEF2A9DCA2900C97A3D /* ProfileVM.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1C35AEE2A9DCA2900C97A3D /* ProfileVM.swift */; };
@@ -252,6 +257,11 @@
 		B1B8C20D2AAC74DD00B9E1C3 /* SearchStep.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchStep.swift; sourceTree = "<group>"; };
 		B1BD333A2AB2AA81003E660D /* RecentSearchTitleReusableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecentSearchTitleReusableView.swift; sourceTree = "<group>"; };
 		B1BD333C2AB2D4C1003E660D /* SearchResultVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchResultVC.swift; sourceTree = "<group>"; };
+		B1BD333E2AB2D98A003E660D /* SearchResultVM.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchResultVM.swift; sourceTree = "<group>"; };
+		B1BD33402AB2DE30003E660D /* SearchResultCVCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchResultCVCell.swift; sourceTree = "<group>"; };
+		B1BD33422AB2EA1D003E660D /* SearchResultSectionModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchResultSectionModel.swift; sourceTree = "<group>"; };
+		B1BD33442AB2EB5D003E660D /* SearchResultModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchResultModel.swift; sourceTree = "<group>"; };
+		B1BD33462AB2F7BD003E660D /* CatecogyCVCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CatecogyCVCell.swift; sourceTree = "<group>"; };
 		B1BFDD662A49CF8100DB4955 /* LoginVM.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginVM.swift; sourceTree = "<group>"; };
 		B1C35AEC2A9DCA1800C97A3D /* ProfileVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileVC.swift; sourceTree = "<group>"; };
 		B1C35AEE2A9DCA2900C97A3D /* ProfileVM.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileVM.swift; sourceTree = "<group>"; };
@@ -656,6 +666,8 @@
 				B20AFE672A2BAE73004A646B /* SearchBarView.swift */,
 				B1B8C1FD2AAC533500B9E1C3 /* RecentSearchCVCell.swift */,
 				B1BD333A2AB2AA81003E660D /* RecentSearchTitleReusableView.swift */,
+				B1BD33402AB2DE30003E660D /* SearchResultCVCell.swift */,
+				B1BD33462AB2F7BD003E660D /* CatecogyCVCell.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -682,6 +694,7 @@
 			isa = PBXGroup;
 			children = (
 				B29D78922A2B6FCF008B6945 /* SearchVM.swift */,
+				B1BD333E2AB2D98A003E660D /* SearchResultVM.swift */,
 			);
 			path = ViewModel;
 			sourceTree = "<group>";
@@ -778,6 +791,8 @@
 			children = (
 				B1B8C1FA2AAC4E3A00B9E1C3 /* RecentSearchModel.swift */,
 				B1B8C2062AAC666F00B9E1C3 /* RecentSearchSectionModel.swift */,
+				B1BD33422AB2EA1D003E660D /* SearchResultSectionModel.swift */,
+				B1BD33442AB2EB5D003E660D /* SearchResultModel.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -1260,12 +1275,14 @@
 				B1B8C1FE2AAC533500B9E1C3 /* RecentSearchCVCell.swift in Sources */,
 				B22ECA362A7789F100CCA794 /* MainStep.swift in Sources */,
 				B29EA3F02A9F591500146F38 /* ImageCVCell.swift in Sources */,
+				B1BD33432AB2EA1D003E660D /* SearchResultSectionModel.swift in Sources */,
 				04C835EB2A2B280A00731E3E /* MainSectionModel.swift in Sources */,
 				B19563562AA47E520032FE25 /* PaddingLabel.swift in Sources */,
 				B22ECA2D2A75975C00CCA794 /* AppStepper.swift in Sources */,
 				B22222672A55F83300A2B7CB /* PrivacyElementView.swift in Sources */,
 				B22ECA2B2A75974B00CCA794 /* AppFlow.swift in Sources */,
 				B1B8C2012AAC57B500B9E1C3 /* SearchService.swift in Sources */,
+				B1BD33452AB2EB5D003E660D /* SearchResultModel.swift in Sources */,
 				B2CA311F2A91177D00E7700C /* SingleProductVM.swift in Sources */,
 				B1A301BE2A543A2F003834E6 /* Constant.swift in Sources */,
 				B19563582AA4A3540032FE25 /* CommentModel.swift in Sources */,
@@ -1290,6 +1307,7 @@
 				B1D23D392A4C6245006A2848 /* WelcomeVM.swift in Sources */,
 				04C835F72A2B46B600731E3E /* BannerCVCell.swift in Sources */,
 				B22ECA2F2A75976500CCA794 /* AppStep.swift in Sources */,
+				B1BD33412AB2DE30003E660D /* SearchResultCVCell.swift in Sources */,
 				B1A301BD2A543A2F003834E6 /* BaseVC.swift in Sources */,
 				04BA13292A2AE0990004E2FB /* ProductCVCell.swift in Sources */,
 				B2F3D3642A511F2700FB05E1 /* SubButton.swift in Sources */,
@@ -1327,10 +1345,12 @@
 				B240D7202A9F108400DF171D /* UploadVM.swift in Sources */,
 				B2E2AC802A4772D3003DAE88 /* WelcomeVC.swift in Sources */,
 				B2198B9A2A2A36EA0019032D /* SceneDelegate.swift in Sources */,
+				B1BD333F2AB2D98A003E660D /* SearchResultVM.swift in Sources */,
 				B19563542AA47B0C0032FE25 /* ProductCommentCVCell.swift in Sources */,
 				B1BD333D2AB2D4C1003E660D /* SearchResultVC.swift in Sources */,
 				B240D7222A9F109200DF171D /* UploadService.swift in Sources */,
 				B22ECA322A7789D900CCA794 /* MainFlow.swift in Sources */,
+				B1BD33472AB2F7BD003E660D /* CatecogyCVCell.swift in Sources */,
 				B1C35AF32A9DCAB200C97A3D /* ProfileService.swift in Sources */,
 				04BA13212A2ADA160004E2FB /* MainVC.swift in Sources */,
 				04BA13262A2ADAEE0004E2FB /* MainVM.swift in Sources */,
