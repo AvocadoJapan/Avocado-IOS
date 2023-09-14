@@ -59,7 +59,7 @@ final class SearchResultCVCell: UICollectionViewCell {
         
         productImageView.snp.makeConstraints {
             $0.top.bottom.left.equalToSuperview().inset(10)
-            $0.width.equalTo(self.snp.height)
+            $0.width.equalTo(self.snp.height).offset(-20)
         }
         
         containerStackView.snp.makeConstraints {

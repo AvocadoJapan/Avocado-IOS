@@ -165,7 +165,7 @@ extension SearchResultVC: CollectionViewLayoutable {
             top: 10,
             leading: 20,
             bottom: 10,
-            trailing: 0
+            trailing: 20
         )
         return section
     }
@@ -180,7 +180,7 @@ extension SearchResultVC: CollectionViewLayoutable {
         
         let groupSize = NSCollectionLayoutSize(
             widthDimension: .fractionalWidth(1.0),
-            heightDimension: .estimated(110)
+            heightDimension: .estimated(120)
         )
         
         let group = NSCollectionLayoutGroup.horizontal(layoutSize: groupSize, subitems: [item])
