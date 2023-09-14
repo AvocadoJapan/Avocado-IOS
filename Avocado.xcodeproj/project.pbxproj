@@ -83,6 +83,8 @@
 		B1B8C2092AAC6D1A00B9E1C3 /* RxSearchBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1B8C2082AAC6D1A00B9E1C3 /* RxSearchBar.swift */; };
 		B1B8C20C2AAC74D700B9E1C3 /* SearchFlow.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1B8C20B2AAC74D700B9E1C3 /* SearchFlow.swift */; };
 		B1B8C20E2AAC74DD00B9E1C3 /* SearchStep.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1B8C20D2AAC74DD00B9E1C3 /* SearchStep.swift */; };
+		B1BD333B2AB2AA81003E660D /* RecentSearchTitleReusableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1BD333A2AB2AA81003E660D /* RecentSearchTitleReusableView.swift */; };
+		B1BD333D2AB2D4C1003E660D /* SearchResultVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1BD333C2AB2D4C1003E660D /* SearchResultVC.swift */; };
 		B1BFDD672A49CF8100DB4955 /* LoginVM.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1BFDD662A49CF8100DB4955 /* LoginVM.swift */; };
 		B1C35AED2A9DCA1800C97A3D /* ProfileVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1C35AEC2A9DCA1800C97A3D /* ProfileVC.swift */; };
 		B1C35AEF2A9DCA2900C97A3D /* ProfileVM.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1C35AEE2A9DCA2900C97A3D /* ProfileVM.swift */; };
@@ -248,6 +250,8 @@
 		B1B8C2082AAC6D1A00B9E1C3 /* RxSearchBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RxSearchBar.swift; sourceTree = "<group>"; };
 		B1B8C20B2AAC74D700B9E1C3 /* SearchFlow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchFlow.swift; sourceTree = "<group>"; };
 		B1B8C20D2AAC74DD00B9E1C3 /* SearchStep.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchStep.swift; sourceTree = "<group>"; };
+		B1BD333A2AB2AA81003E660D /* RecentSearchTitleReusableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecentSearchTitleReusableView.swift; sourceTree = "<group>"; };
+		B1BD333C2AB2D4C1003E660D /* SearchResultVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchResultVC.swift; sourceTree = "<group>"; };
 		B1BFDD662A49CF8100DB4955 /* LoginVM.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginVM.swift; sourceTree = "<group>"; };
 		B1C35AEC2A9DCA1800C97A3D /* ProfileVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileVC.swift; sourceTree = "<group>"; };
 		B1C35AEE2A9DCA2900C97A3D /* ProfileVM.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileVM.swift; sourceTree = "<group>"; };
@@ -641,6 +645,7 @@
 			children = (
 				B19E832D2A60265D004C5DE2 /* View */,
 				B29D78902A2B6FB1008B6945 /* SearchVC.swift */,
+				B1BD333C2AB2D4C1003E660D /* SearchResultVC.swift */,
 			);
 			path = ViewController;
 			sourceTree = "<group>";
@@ -650,6 +655,7 @@
 			children = (
 				B20AFE672A2BAE73004A646B /* SearchBarView.swift */,
 				B1B8C1FD2AAC533500B9E1C3 /* RecentSearchCVCell.swift */,
+				B1BD333A2AB2AA81003E660D /* RecentSearchTitleReusableView.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -1322,6 +1328,7 @@
 				B2E2AC802A4772D3003DAE88 /* WelcomeVC.swift in Sources */,
 				B2198B9A2A2A36EA0019032D /* SceneDelegate.swift in Sources */,
 				B19563542AA47B0C0032FE25 /* ProductCommentCVCell.swift in Sources */,
+				B1BD333D2AB2D4C1003E660D /* SearchResultVC.swift in Sources */,
 				B240D7222A9F109200DF171D /* UploadService.swift in Sources */,
 				B22ECA322A7789D900CCA794 /* MainFlow.swift in Sources */,
 				B1C35AF32A9DCAB200C97A3D /* ProfileService.swift in Sources */,
@@ -1346,6 +1353,7 @@
 				B248C6A82A86A153006AE008 /* ProductGroupCVCell.swift in Sources */,
 				B29EC4742A9338BE001D1E6C /* MainAPI.swift in Sources */,
 				B1B1EA162A599904007B1894 /* SettingSectionModel.swift in Sources */,
+				B1BD333B2AB2AA81003E660D /* RecentSearchTitleReusableView.swift in Sources */,
 				B28892072A6E569800952A10 /* FadeAnimation.swift in Sources */,
 				B1C35AF12A9DCAA800C97A3D /* ProfileAPI.swift in Sources */,
 				B29EC4762A934991001D1E6C /* EnumCountable+Protocol.swift in Sources */,

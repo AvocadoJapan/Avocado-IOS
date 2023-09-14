@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import RxSwift
 
 final class RecentSearchCVCell: UICollectionViewCell {
 
@@ -40,6 +41,12 @@ final class RecentSearchCVCell: UICollectionViewCell {
         $0.tintColor = .gray
     }
     
+    public var disposeBag = DisposeBag()
+    
+    public var deleteButtonTapObservable: Observable<Void> {
+        return deleteButton.rx.tap.asObservable()
+    }
+    
     override init(frame: CGRect) {
         super.init(frame: frame)
         [searchContentLabel, deleteButton].forEach {
@@ -63,6 +70,11 @@ final class RecentSearchCVCell: UICollectionViewCell {
     
     func configure(content: String) {
         searchContentLabel.text = content
+    }
+    
+    override func prepareForReuse() {
+        super.prepareForReuse()
+        disposeBag = DisposeBag()
     }
 }
 

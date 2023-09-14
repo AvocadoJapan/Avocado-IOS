@@ -19,6 +19,10 @@ final class SearchVM: ViewModelType {
     struct Input {
         // 화면이 보여질 경우의 데이터
         let actionViewWillAppearPublish = PublishRelay<Void>()
+        // 검색기록 삭제 버튼 클릭 시
+        let actionRemoveButtonIndexPublish = PublishRelay<String>()
+        // 검색기록 삭제 버튼 클릭 시
+        let actionRemoveAllButtonIndexPublish = PublishRelay<Void>()
         // 유저가 텍스트를 입력했을때의 데이터
         let searchTextPublish = PublishRelay<String>()
     }
@@ -28,7 +32,8 @@ final class SearchVM: ViewModelType {
         let recentSearchListPublish = PublishRelay<[RecentSearchSection]>()
         // 유저가 검색을 끝냈을 때 화면을 넘어가기 위한 데이터
         let successSearchEventPublish = PublishRelay<Void>()
-        
+        // 유저가 검색기록을 삭제했을때 데이터
+        let successRemoveSearchEventPublish = PublishRelay<Void>()
         // 에러일 경우 데이터
         let errEventPublish = PublishRelay<AvocadoError>()
     }
@@ -41,6 +46,23 @@ final class SearchVM: ViewModelType {
     func transform(input: Input) -> Output {
         let output = Output()
         
+        input.actionRemoveAllButtonIndexPublish
+            .flatMap { [weak self] in
+                return self?.service.deleteAllRecentSearch() ?? .empty()
+            }
+            .bind(to: input.actionViewWillAppearPublish)
+            .disposed(by: disposeBag)
+        
+        
+        // 삭제 버튼 클릭 시
+        input.actionRemoveButtonIndexPublish
+            .flatMap { [weak self] content in
+                return self?.service.deleteRecentSearch(content: content) ?? .empty()
+            }
+            .bind(to: input.actionViewWillAppearPublish)
+            .disposed(by: disposeBag)
+        
+        // 사용자 검색 시
         input.searchTextPublish
             .flatMap { [weak self] keyword in
                 return self?.service.addRecentSearch(content: keyword) ?? .empty()
@@ -48,6 +70,7 @@ final class SearchVM: ViewModelType {
             .bind(to: output.successSearchEventPublish)
             .disposed(by: disposeBag)
         
+        // 콜렉션 뷰 바인딩 및 검색기록 불러오기
         input.actionViewWillAppearPublish
             .flatMap { [weak self] in
                 return self?.service.loadRecentSearchList() ?? .empty()

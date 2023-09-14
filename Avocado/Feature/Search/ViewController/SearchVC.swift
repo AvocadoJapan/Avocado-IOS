@@ -7,6 +7,7 @@
 
 import UIKit
 import RxDataSources
+import RxKeyboard
 
 final class SearchVC: BaseVC {
     
@@ -15,11 +16,12 @@ final class SearchVC: BaseVC {
         collectionViewLayout: getCompositionalLayout()
     ).then {
         $0.showsVerticalScrollIndicator = false
+        $0.keyboardDismissMode = .interactive
         
         $0.register(
-            SectionTitleReusableView.self,
+            RecentSearchTitleReusableView.self,
             forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader,
-            withReuseIdentifier: SectionTitleReusableView.identifier
+            withReuseIdentifier: RecentSearchTitleReusableView.identifier
         )
         
         $0.register(
@@ -81,28 +83,41 @@ final class SearchVC: BaseVC {
             .bind(to: viewModel.input.searchTextPublish)
             .disposed(by: disposeBag)
         
-        let dataSource = RxCollectionViewSectionedReloadDataSource<RecentSearchSection> { dataSource, collectionView, indexPath, item in
+        let dataSource = RxCollectionViewSectionedReloadDataSource<RecentSearchSection> { [weak self] dataSource, collectionView, indexPath, item in
             let cell = collectionView.dequeueReusableCell(
                 withReuseIdentifier: RecentSearchCVCell.identifier,
                 for: indexPath
             ) as! RecentSearchCVCell
             
-            Logger.d("item.content \(item.content)")
-            
             cell.configure(content: item.content)
+            
+            // 삭제 버튼 클릭 시
+            if let self = self {
+                cell.deleteButtonTapObservable
+                    .subscribe(onNext: {
+                        self.viewModel.input.actionRemoveButtonIndexPublish.accept(item.content)
+                    })
+                    .disposed(by: cell.disposeBag)
+            }
             
             return cell
             
-        } configureSupplementaryView: { dataSource, collectionView, kind, indexPath in
+        } configureSupplementaryView: { [weak self] dataSource, collectionView, kind, indexPath in
             let headerView = collectionView.dequeueReusableSupplementaryView(
                 ofKind: kind,
-                withReuseIdentifier: SectionTitleReusableView.identifier,
+                withReuseIdentifier: RecentSearchTitleReusableView.identifier,
                 for: indexPath
-            ) as! SectionTitleReusableView
+            ) as! RecentSearchTitleReusableView
             
             let data = dataSource[indexPath.section]
             
-            headerView.configure(title: data.header ?? "")
+            headerView.configure(title: data.header ?? "", visible: data.items.count == 0)
+            
+            if let self = self {
+                headerView.deleteAllButtonTapObservable
+                    .bind(to: self.viewModel.input.actionRemoveAllButtonIndexPublish)
+                    .disposed(by: headerView.disposeBag)
+            }
             
             return headerView
         }
@@ -113,6 +128,15 @@ final class SearchVC: BaseVC {
                 .items(dataSource: dataSource)
             )
             .disposed(by: disposeBag)
+        
+        output.successSearchEventPublish
+            .do { [weak self] in self?.searchBar.text = "" }
+            .subscribe(onNext: {
+                
+            })
+            .disposed(by: disposeBag)
+        
+        
     }
 
     
