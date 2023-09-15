@@ -141,6 +141,8 @@
 		B29342132A58810E00F5CF30 /* RegionSettingVM.swift in Sources */ = {isa = PBXBuildFile; fileRef = B29342122A58810E00F5CF30 /* RegionSettingVM.swift */; };
 		B29D78912A2B6FB1008B6945 /* SearchVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = B29D78902A2B6FB1008B6945 /* SearchVC.swift */; };
 		B29D78932A2B6FCF008B6945 /* SearchVM.swift in Sources */ = {isa = PBXBuildFile; fileRef = B29D78922A2B6FCF008B6945 /* SearchVM.swift */; };
+		B29E7A142AB123CC00B02187 /* SingleCategoryCV.swift in Sources */ = {isa = PBXBuildFile; fileRef = B29E7A132AB123CC00B02187 /* SingleCategoryCV.swift */; };
+		B29E7A162AB1240C00B02187 /* SingleCategoryVM.swift in Sources */ = {isa = PBXBuildFile; fileRef = B29E7A152AB1240C00B02187 /* SingleCategoryVM.swift */; };
 		B29EA3F02A9F591500146F38 /* ImageCVCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B29EA3EF2A9F591500146F38 /* ImageCVCell.swift */; };
 		B29EC4742A9338BE001D1E6C /* MainAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = B29EC4732A9338BE001D1E6C /* MainAPI.swift */; };
 		B29EC4762A934991001D1E6C /* EnumCountable+Protocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = B29EC4752A934991001D1E6C /* EnumCountable+Protocol.swift */; };
@@ -302,6 +304,8 @@
 		B29342122A58810E00F5CF30 /* RegionSettingVM.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegionSettingVM.swift; sourceTree = "<group>"; };
 		B29D78902A2B6FB1008B6945 /* SearchVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchVC.swift; sourceTree = "<group>"; };
 		B29D78922A2B6FCF008B6945 /* SearchVM.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchVM.swift; sourceTree = "<group>"; };
+		B29E7A132AB123CC00B02187 /* SingleCategoryCV.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SingleCategoryCV.swift; sourceTree = "<group>"; };
+		B29E7A152AB1240C00B02187 /* SingleCategoryVM.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SingleCategoryVM.swift; sourceTree = "<group>"; };
 		B29EA3EF2A9F591500146F38 /* ImageCVCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageCVCell.swift; sourceTree = "<group>"; };
 		B29EC4732A9338BE001D1E6C /* MainAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainAPI.swift; sourceTree = "<group>"; };
 		B29EC4752A934991001D1E6C /* EnumCountable+Protocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "EnumCountable+Protocol.swift"; sourceTree = "<group>"; };
@@ -374,6 +378,7 @@
 			isa = PBXGroup;
 			children = (
 				04BA13252A2ADAEE0004E2FB /* MainVM.swift */,
+				B29E7A152AB1240C00B02187 /* SingleCategoryVM.swift */,
 				B2CA311E2A91177D00E7700C /* SingleProductVM.swift */,
 			);
 			path = ViewModel;
@@ -394,6 +399,7 @@
 				04BA13272A2AE07E0004E2FB /* View */,
 				04BA13202A2ADA160004E2FB /* MainVC.swift */,
 				B2CA311C2A91105600E7700C /* SingleProductVC.swift */,
+				B29E7A132AB123CC00B02187 /* SingleCategoryCV.swift */,
 			);
 			path = ViewController;
 			sourceTree = "<group>";
@@ -1231,6 +1237,7 @@
 				B240D7262A9F10D400DF171D /* UploadFlow.swift in Sources */,
 				B29342132A58810E00F5CF30 /* RegionSettingVM.swift in Sources */,
 				B1D23D392A4C6245006A2848 /* WelcomeVM.swift in Sources */,
+				B29E7A142AB123CC00B02187 /* SingleCategoryCV.swift in Sources */,
 				04C835F72A2B46B600731E3E /* BannerCVCell.swift in Sources */,
 				B22ECA2F2A75976500CCA794 /* AppStep.swift in Sources */,
 				B1A301BD2A543A2F003834E6 /* BaseVC.swift in Sources */,
@@ -1263,6 +1270,7 @@
 				B1A9D17F2A6BD2400080B818 /* UIView+Animation.swift in Sources */,
 				B1A301BC2A543A2F003834E6 /* BaseModalVC.swift in Sources */,
 				B26A3B612A60A79800AD61A5 /* AuthFlow.swift in Sources */,
+				B29E7A162AB1240C00B02187 /* SingleCategoryVM.swift in Sources */,
 				B1A301AE2A5439F0003834E6 /* Variant.swift in Sources */,
 				9816F6F22A494B3C00A7A284 /* NetworkLoggerPlugin.swift in Sources */,
 				B240D7202A9F108400DF171D /* UploadVM.swift in Sources */,

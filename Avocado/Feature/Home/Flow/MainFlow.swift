@@ -42,7 +42,18 @@ final class MainFlow: Flow {
             return .none
         case .singleProductIsRequired(let product):
             return navigateToSingleProductScreen(product: product)
+        case .singleCategoryIsRequired(let categoryId):
+            return navigateToSingleCategorScreen(with: categoryId)
         }
+    }
+    
+    private func navigateToSingleCategorScreen(with id: String) -> FlowContributors {
+        
+        let service = MainService()
+        let viewModel = SingleCategoryVM(service: service)
+        let viewController = SingleCategoryCV(viewModel: viewModel)
+        
+        return .one(flowContributor: .contribute(withNext: viewController))
     }
     
     private func navigateToFailScreen(with error: NetworkError) -> FlowContributors {

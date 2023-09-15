@@ -10,6 +10,7 @@ import RxSwift
 import RxRelay
 import RxCocoa
 import SnapKit
+import RxCocoa
 
 /**
  *## 화면명: 상품 그룹 해더 ReusableView (그룹 이름 라벨)

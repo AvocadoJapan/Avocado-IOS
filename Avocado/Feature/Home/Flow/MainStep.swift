@@ -20,4 +20,5 @@ import RxSwift
     case errorOccurred(error: NetworkError)
     
     case singleProductIsRequired(product: Product)
+    case singleCategoryIsRequired(id: String)
 }

@@ -32,6 +32,8 @@ final class MainVM: ViewModelType, Stepper {
         let actionMainCategoryRelay = PublishRelay<MainCategoryMenu>()
         // 단일상품 클릭 이벤트 인스턴스
         let actionSingleProductRelay = PublishRelay<Product>()
+        // 단일카테고리 클릭 이벤트 인스턴스
+        let actionSingleCategoryRelay = PublishRelay<String>()
         // viewDidLoad를 감지하는 인스턴스 (초기 data fetching 에 사용)
         let actionViewDidLoad = PublishRelay<Void>()
     }
@@ -88,10 +90,19 @@ final class MainVM: ViewModelType, Stepper {
         }
         .disposed(by: disposeBag)
         
+        // 단일 상품 클릭시 화면이동
         input.actionSingleProductRelay
             .subscribe { [weak self] product in
                 Logger.d("\(product)")
                 self?.steps.accept(MainStep.singleProductIsRequired(product: Product(productId: "smaple", mainImageId: "smaple", imageIds: ["smaple"], name: "smaple", price: "smaple", location: "smaple")))
+            }
+            .disposed(by: disposeBag)
+        
+        // 단일 카테고리 클릭시 화면이동
+        input.actionSingleCategoryRelay
+            .subscribe { [weak self] id in
+                Logger.d("Category ID : \(id)")
+                self?.steps.accept(MainStep.singleCategoryIsRequired(id: id))
             }
             .disposed(by: disposeBag)
         
