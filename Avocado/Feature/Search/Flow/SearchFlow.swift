@@ -33,6 +33,7 @@ final class SearchFlow: Flow {
         case .searchIsRequired: return navigateSearch()
         case .searchIsComplete: return .none
         case .searchResultIsRequired(let content): return navigateSearchResult(content: content)
+        case .productDetail(let product): return navigateProductDetail(product: product)
         }
     }
     
@@ -45,7 +46,12 @@ final class SearchFlow: Flow {
         rootViewController.view.fadeOut()
         rootViewController.setViewControllers([viewController], animated: false)
         
-        return .one(flowContributor: .contribute(withNextPresentable: viewController, withNextStepper: viewModel))
+        return .one(
+            flowContributor: .contribute(
+                withNextPresentable: viewController,
+                withNextStepper: viewModel
+            )
+        )
     }
     
     private func navigateSearchResult(content: String) -> FlowContributors {
@@ -56,6 +62,25 @@ final class SearchFlow: Flow {
         
         rootViewController.pushViewController(viewController, animated: true)
         
-        return .one(flowContributor: .contribute(withNextPresentable: viewController, withNextStepper: viewModel))
+        return .one(
+            flowContributor: .contribute(
+                withNextPresentable: viewController,
+                withNextStepper: viewModel
+            )
+        )
+    }
+    
+    private func navigateProductDetail(product: Product) -> FlowContributors {
+        let service = MainService()
+        let viewModel = SingleProductVM(service: service, product: product)
+        let viewController = SingleProductVC(viewModel: viewModel)
+        rootViewController.pushViewController(viewController, animated: true)
+        
+        return .one(
+            flowContributor: .contribute(
+                withNextPresentable: viewController,
+                withNextStepper: viewModel
+            )
+        )
     }
 }

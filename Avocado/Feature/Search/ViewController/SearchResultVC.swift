@@ -7,6 +7,7 @@
 
 import UIKit
 import RxDataSources
+import RxKeyboard
 
 final class SearchResultVC: BaseVC {
     
@@ -54,6 +55,7 @@ final class SearchResultVC: BaseVC {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        viewModel.input.actionViewDidLoad.accept(())
     }
     
     override func setProperty() {
@@ -82,6 +84,45 @@ final class SearchResultVC: BaseVC {
         searchBar
             .shouldLoadResultObservable
             .bind(to: viewModel.input.userSearchKewordPublish)
+            .disposed(by: disposeBag)
+        
+        // 키보드가 올라왔을 때 collectionView리스트가 다 보이도록
+        RxKeyboard
+            .instance
+            .visibleHeight
+            .drive { [weak self] height in
+                self?.collectionView.contentInset = UIEdgeInsets(
+                    top: 0,
+                    left: 0,
+                    bottom: height,
+                    right: 0
+                )
+            }
+            .disposed(by: disposeBag)
+        
+        // 콜렉션 뷰 셀 클릭
+        collectionView
+            .rx
+            .modelSelected(SearchResultSection.Item.self)
+            .do(onNext: { [weak self] _ in
+                self?.searchBar.resignFirstResponder()
+            })
+            .subscribe { [weak self] item in
+                switch item {
+                case .category(let category):
+                    self?.viewModel
+                        .input
+                        .userSearchKewordPublish
+                        .accept(category)
+                    
+                case .product(let product):
+                    self?.viewModel
+                        .steps
+                        .accept(
+                            SearchStep.productDetail(product: product)
+                        )
+                }
+            }
             .disposed(by: disposeBag)
         
         let dataSources = RxCollectionViewSectionedReloadDataSource<SearchResultSection> { dataSource, collectionview, indexPath, item in
@@ -164,7 +205,7 @@ extension SearchResultVC: CollectionViewLayoutable {
         section.contentInsets = NSDirectionalEdgeInsets(
             top: 10,
             leading: 20,
-            bottom: 10,
+            bottom: 20,
             trailing: 20
         )
         return section
@@ -187,7 +228,7 @@ extension SearchResultVC: CollectionViewLayoutable {
         
         let headerSize = NSCollectionLayoutSize(
             widthDimension: .fractionalWidth(1.0),
-            heightDimension: .absolute(60)
+            heightDimension: .estimated(60)
         )
         
         let header = NSCollectionLayoutBoundarySupplementaryItem(
@@ -198,6 +239,13 @@ extension SearchResultVC: CollectionViewLayoutable {
         
         let section = NSCollectionLayoutSection(group: group)
         section.boundarySupplementaryItems = [header]
+        
+        section.contentInsets = NSDirectionalEdgeInsets(
+            top: 10,
+            leading: 0,
+            bottom: 10,
+            trailing: 0
+        )
         
         return section
     }

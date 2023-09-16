@@ -19,6 +19,7 @@ final class SearchResultVM: ViewModelType {
     
     struct Input {
         let userSearchKewordPublish: BehaviorRelay<String>
+        let actionViewDidLoad  = PublishRelay<Void>()
     }
     
     struct Output {
@@ -33,20 +34,42 @@ final class SearchResultVM: ViewModelType {
     func transform(input: Input) -> Output {
         let output = Output()
         
-        input.userSearchKewordPublish.flatMap { [weak self] keyword in
-            return self?.service.searchResultList(keyword: keyword) ?? .empty()
-        }
-        .map { result -> [SearchResultSection] in
-            let categoryList = result.category.map { SearchResultSection.SearchResultSectionItem.category(data: $0) }
-            let productList = result.products.map { SearchResultSection.SearchResultSectionItem.product(data: $0) }
-            
-            return [
-                SearchResultSection(items: categoryList),
-                SearchResultSection(header: "\(input.userSearchKewordPublish.value) 검색결과", items: productList)
-            ]
-        }
-        .bind(to: output.successSearchResultListPublish)
-        .disposed(by: disposeBag)
+        //FIXME: userSearchKewordPublish 하나로만 가능하도록 고도화 필요
+        input.actionViewDidLoad
+            .flatMap { [weak self] in
+                return self?.service.searchResultList(keyword: input.userSearchKewordPublish.value) ?? .empty()
+            }
+            .map { result -> [SearchResultSection] in
+                let categoryList = result.category.map { SearchResultSection.SearchResultSectionItem.category(data: $0) }
+                let productList = result.products.map { SearchResultSection.SearchResultSectionItem.product(data: $0) }
+                
+                return [
+                    SearchResultSection(items: categoryList),
+                    SearchResultSection(header: "\(input.userSearchKewordPublish.value) 검색결과", items: productList)
+                ]
+            }
+            .bind(to: output.successSearchResultListPublish)
+            .disposed(by: disposeBag)
+        
+        input.userSearchKewordPublish
+            .flatMap { [weak self] keyword in
+                // 키워드 Realm에 저장
+                return self?.service.addRecentSearch(content: keyword)
+                    .flatMap {
+                        return self?.service.searchResultList(keyword: keyword) ?? .empty()
+                    } ?? .empty()
+            }
+            .map { result -> [SearchResultSection] in
+                let categoryList = result.category.map { SearchResultSection.SearchResultSectionItem.category(data: $0) }
+                let productList = result.products.map { SearchResultSection.SearchResultSectionItem.product(data: $0) }
+                
+                return [
+                    SearchResultSection(items: categoryList),
+                    SearchResultSection(header: "\(input.userSearchKewordPublish.value) 검색결과", items: productList)
+                ]
+            }
+            .bind(to: output.successSearchResultListPublish)
+            .disposed(by: disposeBag)
         
         return output
     }

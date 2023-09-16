@@ -12,4 +12,5 @@ import RxFlow
     case searchIsRequired
     case searchIsComplete
     case searchResultIsRequired(content: String)
+    case productDetail(product: Product)
 }

@@ -16,6 +16,7 @@ final class SectionTitleReusableView: UICollectionReusableView {
     private lazy var titleLabel = UILabel().then {
         $0.text = ""
         $0.font = UIFont.boldSystemFont(ofSize: 25)
+        $0.numberOfLines = 0
         $0.textColor = .black
     }
     

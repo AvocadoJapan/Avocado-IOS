@@ -92,13 +92,11 @@ final class SearchVC: BaseVC {
             cell.configure(content: item.content)
             
             // 삭제 버튼 클릭 시
-            if let self = self {
-                cell.deleteButtonTapObservable
-                    .subscribe(onNext: {
-                        self.viewModel.input.actionRemoveButtonIndexPublish.accept(item.content)
-                    })
-                    .disposed(by: cell.disposeBag)
-            }
+            cell.deleteButtonTapObservable
+                .subscribe(onNext: {
+                    self?.viewModel.input.actionRemoveButtonIndexPublish.accept(item.content)
+                })
+                .disposed(by: cell.disposeBag)
             
             return cell
             
@@ -111,7 +109,10 @@ final class SearchVC: BaseVC {
             
             let data = dataSource[indexPath.section]
             
-            headerView.configure(title: data.header ?? "", visible: data.items.count == 0)
+            headerView.configure(
+                title: data.header ?? "",
+                visible: data.items.count == 0
+            )
             
             if let self = self {
                 headerView.deleteAllButtonTapObservable
