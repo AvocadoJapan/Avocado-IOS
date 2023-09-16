@@ -33,7 +33,7 @@ enum TabType : Int{
     var title : String {
         switch self {
         case .home: return "홈"
-        case .search: return "즐겨찾기"
+        case .search: return "검색"
         case .upload: return "업로드"
         case .chat: return "채팅"
         case .myPage: return "프로필"

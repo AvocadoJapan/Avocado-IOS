@@ -74,7 +74,7 @@ final class ProfileVC: BaseVC {
             
             switch item {
             case .buyed(let product):
-                var cell = collectionView.dequeueReusableCell(
+                let cell = collectionView.dequeueReusableCell(
                     withReuseIdentifier: ProductCVCell.identifier,
                     for: indexPath
                 ) as! ProductCVCell
@@ -82,7 +82,7 @@ final class ProfileVC: BaseVC {
                 return cell
                 
             case .selled(let product):
-                var cell = collectionView.dequeueReusableCell(
+                let cell = collectionView.dequeueReusableCell(
                     withReuseIdentifier: ProductCVCell.identifier,
                     for: indexPath
                 ) as! ProductCVCell
@@ -90,7 +90,7 @@ final class ProfileVC: BaseVC {
                 return cell
                 
             case .comment(let comment):
-                var cell = collectionView.dequeueReusableCell(
+                let cell = collectionView.dequeueReusableCell(
                     withReuseIdentifier: ProductCommentCVCell.identifier,
                     for: indexPath
                 ) as! ProductCommentCVCell

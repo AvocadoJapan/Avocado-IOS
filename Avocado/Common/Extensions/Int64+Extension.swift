@@ -18,4 +18,13 @@ extension Int64 {
         return fomatter.string(from: date)
     }
     
+    /**
+     * - description 세자리 수 마다 ,(콤마) 표시 함수
+     */
+    func decimalString() -> String {
+        let numberFormatter = NumberFormatter()
+        numberFormatter.numberStyle = .decimal
+        return numberFormatter.string(from: NSNumber(value: self))!
+    }
+    
 }

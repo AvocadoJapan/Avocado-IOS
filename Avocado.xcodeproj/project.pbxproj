@@ -72,6 +72,24 @@
 		B1AB44DF2A7E52F9004EC75D /* UIImage+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1AB44DE2A7E52F9004EC75D /* UIImage+Extension.swift */; };
 		B1B1EA132A5973C7007B1894 /* SettingTVCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1B1EA122A5973C7007B1894 /* SettingTVCell.swift */; };
 		B1B1EA162A599904007B1894 /* SettingSectionModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1B1EA152A599904007B1894 /* SettingSectionModel.swift */; };
+		B1B8C1F62AAC4DDE00B9E1C3 /* Realm in Frameworks */ = {isa = PBXBuildFile; productRef = B1B8C1F52AAC4DDE00B9E1C3 /* Realm */; };
+		B1B8C1F82AAC4DDE00B9E1C3 /* RealmSwift in Frameworks */ = {isa = PBXBuildFile; productRef = B1B8C1F72AAC4DDE00B9E1C3 /* RealmSwift */; };
+		B1B8C1FB2AAC4E3A00B9E1C3 /* RecentSearchModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1B8C1FA2AAC4E3A00B9E1C3 /* RecentSearchModel.swift */; };
+		B1B8C1FE2AAC533500B9E1C3 /* RecentSearchCVCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1B8C1FD2AAC533500B9E1C3 /* RecentSearchCVCell.swift */; };
+		B1B8C2012AAC57B500B9E1C3 /* SearchService.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1B8C2002AAC57B500B9E1C3 /* SearchService.swift */; };
+		B1B8C2032AAC586C00B9E1C3 /* SearchAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1B8C2022AAC586C00B9E1C3 /* SearchAPI.swift */; };
+		B1B8C2052AAC649B00B9E1C3 /* SectionTitleReusableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1B8C2042AAC649B00B9E1C3 /* SectionTitleReusableView.swift */; };
+		B1B8C2072AAC666F00B9E1C3 /* RecentSearchSectionModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1B8C2062AAC666F00B9E1C3 /* RecentSearchSectionModel.swift */; };
+		B1B8C2092AAC6D1A00B9E1C3 /* RxSearchBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1B8C2082AAC6D1A00B9E1C3 /* RxSearchBar.swift */; };
+		B1B8C20C2AAC74D700B9E1C3 /* SearchFlow.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1B8C20B2AAC74D700B9E1C3 /* SearchFlow.swift */; };
+		B1B8C20E2AAC74DD00B9E1C3 /* SearchStep.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1B8C20D2AAC74DD00B9E1C3 /* SearchStep.swift */; };
+		B1BD333B2AB2AA81003E660D /* RecentSearchTitleReusableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1BD333A2AB2AA81003E660D /* RecentSearchTitleReusableView.swift */; };
+		B1BD333D2AB2D4C1003E660D /* SearchResultVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1BD333C2AB2D4C1003E660D /* SearchResultVC.swift */; };
+		B1BD333F2AB2D98A003E660D /* SearchResultVM.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1BD333E2AB2D98A003E660D /* SearchResultVM.swift */; };
+		B1BD33412AB2DE30003E660D /* SearchResultCVCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1BD33402AB2DE30003E660D /* SearchResultCVCell.swift */; };
+		B1BD33432AB2EA1D003E660D /* SearchResultSectionModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1BD33422AB2EA1D003E660D /* SearchResultSectionModel.swift */; };
+		B1BD33452AB2EB5D003E660D /* SearchResultModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1BD33442AB2EB5D003E660D /* SearchResultModel.swift */; };
+		B1BD33472AB2F7BD003E660D /* CatecogyCVCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1BD33462AB2F7BD003E660D /* CatecogyCVCell.swift */; };
 		B1BFDD672A49CF8100DB4955 /* LoginVM.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1BFDD662A49CF8100DB4955 /* LoginVM.swift */; };
 		B1C35AED2A9DCA1800C97A3D /* ProfileVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1C35AEC2A9DCA1800C97A3D /* ProfileVC.swift */; };
 		B1C35AEF2A9DCA2900C97A3D /* ProfileVM.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1C35AEE2A9DCA2900C97A3D /* ProfileVM.swift */; };
@@ -231,6 +249,22 @@
 		B1AB44DE2A7E52F9004EC75D /* UIImage+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIImage+Extension.swift"; sourceTree = "<group>"; };
 		B1B1EA122A5973C7007B1894 /* SettingTVCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingTVCell.swift; sourceTree = "<group>"; };
 		B1B1EA152A599904007B1894 /* SettingSectionModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingSectionModel.swift; sourceTree = "<group>"; };
+		B1B8C1FA2AAC4E3A00B9E1C3 /* RecentSearchModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecentSearchModel.swift; sourceTree = "<group>"; };
+		B1B8C1FD2AAC533500B9E1C3 /* RecentSearchCVCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecentSearchCVCell.swift; sourceTree = "<group>"; };
+		B1B8C2002AAC57B500B9E1C3 /* SearchService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchService.swift; sourceTree = "<group>"; };
+		B1B8C2022AAC586C00B9E1C3 /* SearchAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchAPI.swift; sourceTree = "<group>"; };
+		B1B8C2042AAC649B00B9E1C3 /* SectionTitleReusableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SectionTitleReusableView.swift; sourceTree = "<group>"; };
+		B1B8C2062AAC666F00B9E1C3 /* RecentSearchSectionModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecentSearchSectionModel.swift; sourceTree = "<group>"; };
+		B1B8C2082AAC6D1A00B9E1C3 /* RxSearchBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RxSearchBar.swift; sourceTree = "<group>"; };
+		B1B8C20B2AAC74D700B9E1C3 /* SearchFlow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchFlow.swift; sourceTree = "<group>"; };
+		B1B8C20D2AAC74DD00B9E1C3 /* SearchStep.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchStep.swift; sourceTree = "<group>"; };
+		B1BD333A2AB2AA81003E660D /* RecentSearchTitleReusableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecentSearchTitleReusableView.swift; sourceTree = "<group>"; };
+		B1BD333C2AB2D4C1003E660D /* SearchResultVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchResultVC.swift; sourceTree = "<group>"; };
+		B1BD333E2AB2D98A003E660D /* SearchResultVM.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchResultVM.swift; sourceTree = "<group>"; };
+		B1BD33402AB2DE30003E660D /* SearchResultCVCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchResultCVCell.swift; sourceTree = "<group>"; };
+		B1BD33422AB2EA1D003E660D /* SearchResultSectionModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchResultSectionModel.swift; sourceTree = "<group>"; };
+		B1BD33442AB2EB5D003E660D /* SearchResultModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchResultModel.swift; sourceTree = "<group>"; };
+		B1BD33462AB2F7BD003E660D /* CatecogyCVCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CatecogyCVCell.swift; sourceTree = "<group>"; };
 		B1BFDD662A49CF8100DB4955 /* LoginVM.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginVM.swift; sourceTree = "<group>"; };
 		B1C35AEC2A9DCA1800C97A3D /* ProfileVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileVC.swift; sourceTree = "<group>"; };
 		B1C35AEE2A9DCA2900C97A3D /* ProfileVM.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileVM.swift; sourceTree = "<group>"; };
@@ -324,8 +358,10 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				B1B8C1F62AAC4DDE00B9E1C3 /* Realm in Frameworks */,
 				B26A3B642A60A7D600AD61A5 /* RxFlow in Frameworks */,
 				04D2FD052A2A529600253028 /* Then in Frameworks */,
+				B1B8C1F82AAC4DDE00B9E1C3 /* RealmSwift in Frameworks */,
 				98C711082A53B48300C99393 /* RxKeyboard in Frameworks */,
 				9816F6E02A494A1B00A7A284 /* Amplify in Frameworks */,
 				04D2FCFC2A2A51F100253028 /* RxSwift in Frameworks */,
@@ -554,8 +590,11 @@
 		B19E83262A6025A6004C5DE2 /* Search */ = {
 			isa = PBXGroup;
 			children = (
+				B1B8C20A2AAC74CE00B9E1C3 /* Flow */,
+				B1B8C1F92AAC4E1200B9E1C3 /* Model */,
 				B19E832F2A602AE2004C5DE2 /* ViewModel */,
 				B19E832C2A60264A004C5DE2 /* ViewController */,
+				B1B8C1FF2AAC576D00B9E1C3 /* Service */,
 			);
 			path = Search;
 			sourceTree = "<group>";
@@ -622,6 +661,7 @@
 			children = (
 				B19E832D2A60265D004C5DE2 /* View */,
 				B29D78902A2B6FB1008B6945 /* SearchVC.swift */,
+				B1BD333C2AB2D4C1003E660D /* SearchResultVC.swift */,
 			);
 			path = ViewController;
 			sourceTree = "<group>";
@@ -630,6 +670,10 @@
 			isa = PBXGroup;
 			children = (
 				B20AFE672A2BAE73004A646B /* SearchBarView.swift */,
+				B1B8C1FD2AAC533500B9E1C3 /* RecentSearchCVCell.swift */,
+				B1BD333A2AB2AA81003E660D /* RecentSearchTitleReusableView.swift */,
+				B1BD33402AB2DE30003E660D /* SearchResultCVCell.swift */,
+				B1BD33462AB2F7BD003E660D /* CatecogyCVCell.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -637,6 +681,7 @@
 		B19E832E2A602694004C5DE2 /* CustomView */ = {
 			isa = PBXGroup;
 			children = (
+				B1B8C2042AAC649B00B9E1C3 /* SectionTitleReusableView.swift */,
 				B19563512AA471E40032FE25 /* CheckedView.swift */,
 				B22222662A55F83300A2B7CB /* PrivacyElementView.swift */,
 				B23B24EC2A8C528800F179A7 /* LegalView.swift */,
@@ -646,6 +691,7 @@
 				B212D58A2A45F1740008DAD1 /* InputView.swift */,
 				B18E035E2AA2FA0700F8F394 /* UserProfileView.swift */,
 				B19563552AA47E520032FE25 /* PaddingLabel.swift */,
+				B1B8C2082AAC6D1A00B9E1C3 /* RxSearchBar.swift */,
 			);
 			path = CustomView;
 			sourceTree = "<group>";
@@ -654,6 +700,7 @@
 			isa = PBXGroup;
 			children = (
 				B29D78922A2B6FCF008B6945 /* SearchVM.swift */,
+				B1BD333E2AB2D98A003E660D /* SearchResultVM.swift */,
 			);
 			path = ViewModel;
 			sourceTree = "<group>";
@@ -743,6 +790,35 @@
 				B1B1EA152A599904007B1894 /* SettingSectionModel.swift */,
 			);
 			path = Model;
+			sourceTree = "<group>";
+		};
+		B1B8C1F92AAC4E1200B9E1C3 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				B1B8C1FA2AAC4E3A00B9E1C3 /* RecentSearchModel.swift */,
+				B1B8C2062AAC666F00B9E1C3 /* RecentSearchSectionModel.swift */,
+				B1BD33422AB2EA1D003E660D /* SearchResultSectionModel.swift */,
+				B1BD33442AB2EB5D003E660D /* SearchResultModel.swift */,
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
+		B1B8C1FF2AAC576D00B9E1C3 /* Service */ = {
+			isa = PBXGroup;
+			children = (
+				B1B8C2002AAC57B500B9E1C3 /* SearchService.swift */,
+				B1B8C2022AAC586C00B9E1C3 /* SearchAPI.swift */,
+			);
+			path = Service;
+			sourceTree = "<group>";
+		};
+		B1B8C20A2AAC74CE00B9E1C3 /* Flow */ = {
+			isa = PBXGroup;
+			children = (
+				B1B8C20B2AAC74D700B9E1C3 /* SearchFlow.swift */,
+				B1B8C20D2AAC74DD00B9E1C3 /* SearchStep.swift */,
+			);
+			path = Flow;
 			sourceTree = "<group>";
 		};
 		B1C35AE62A9DC9C600C97A3D /* Profile */ = {
@@ -1054,6 +1130,8 @@
 				98C711072A53B48300C99393 /* RxKeyboard */,
 				B26A3B632A60A7D600AD61A5 /* RxFlow */,
 				B2382C5F2A6F9A4300A24AE3 /* Localize_Swift */,
+				B1B8C1F52AAC4DDE00B9E1C3 /* Realm */,
+				B1B8C1F72AAC4DDE00B9E1C3 /* RealmSwift */,
 				B2DAFD3F2AA4E47C00F015B5 /* SPIndicator */,
 			);
 			productName = Avocado;
@@ -1141,6 +1219,7 @@
 				98C711062A53B48300C99393 /* XCRemoteSwiftPackageReference "RxKeyboard" */,
 				B26A3B622A60A7D600AD61A5 /* XCRemoteSwiftPackageReference "RxFlow" */,
 				B2382C5E2A6F9A4300A24AE3 /* XCRemoteSwiftPackageReference "Localize-Swift" */,
+				B1B8C1F42AAC4DDE00B9E1C3 /* XCRemoteSwiftPackageReference "realm-swift" */,
 				B2DAFD3E2AA4E47C00F015B5 /* XCRemoteSwiftPackageReference "SPIndicator" */,
 			);
 			productRefGroup = B2198B952A2A36EA0019032D /* Products */;
@@ -1195,6 +1274,7 @@
 				98FD1C232A56AD230031D7C1 /* SettingVC.swift in Sources */,
 				B1C35AEF2A9DCA2900C97A3D /* ProfileVM.swift in Sources */,
 				98FD1C252A56AE860031D7C1 /* SettingVM.swift in Sources */,
+				B1B8C2092AAC6D1A00B9E1C3 /* RxSearchBar.swift in Sources */,
 				B26A3B6B2A60BB6100AD61A5 /* SplashStep.swift in Sources */,
 				981A598A2A494F5C0031A917 /* SignUpVM.swift in Sources */,
 				B2CA311B2A8FD50900E7700C /* UINavigationController+Extension.swift in Sources */,
@@ -1203,13 +1283,17 @@
 				B2689E822AA0641E00151D1D /* TabFlow.swift in Sources */,
 				B2827C2B2A97126D00AC3D4B /* ProductGroupFooterReusableView.swift in Sources */,
 				9816F6ED2A494B0900A7A284 /* BasePagenationResponse.swift in Sources */,
+				B1B8C1FE2AAC533500B9E1C3 /* RecentSearchCVCell.swift in Sources */,
 				B22ECA362A7789F100CCA794 /* MainStep.swift in Sources */,
 				B29EA3F02A9F591500146F38 /* ImageCVCell.swift in Sources */,
+				B1BD33432AB2EA1D003E660D /* SearchResultSectionModel.swift in Sources */,
 				04C835EB2A2B280A00731E3E /* MainSectionModel.swift in Sources */,
 				B19563562AA47E520032FE25 /* PaddingLabel.swift in Sources */,
 				B22ECA2D2A75975C00CCA794 /* AppStepper.swift in Sources */,
 				B22222672A55F83300A2B7CB /* PrivacyElementView.swift in Sources */,
 				B22ECA2B2A75974B00CCA794 /* AppFlow.swift in Sources */,
+				B1B8C2012AAC57B500B9E1C3 /* SearchService.swift in Sources */,
+				B1BD33452AB2EB5D003E660D /* SearchResultModel.swift in Sources */,
 				B2CA311F2A91177D00E7700C /* SingleProductVM.swift in Sources */,
 				B1A301BE2A543A2F003834E6 /* Constant.swift in Sources */,
 				B19563582AA4A3540032FE25 /* CommentModel.swift in Sources */,
@@ -1220,6 +1304,7 @@
 				B1D5350F2AA0D16F001ACE09 /* ProfileStep.swift in Sources */,
 				B2D1309E2A4B4C5800538EFB /* BottomButton.swift in Sources */,
 				B2827C2D2A9712AF00AC3D4B /* ProductGroupHeaderReusableView.swift in Sources */,
+				B1B8C1FB2AAC4E3A00B9E1C3 /* RecentSearchModel.swift in Sources */,
 				B1A301BF2A543A2F003834E6 /* BaseNavigationVC.swift in Sources */,
 				9848A8B82A5D870A008D43F5 /* SplashVM.swift in Sources */,
 				04C835F12A2B2CFA00731E3E /* MainDataModel.swift in Sources */,
@@ -1233,6 +1318,7 @@
 				B1D23D392A4C6245006A2848 /* WelcomeVM.swift in Sources */,
 				04C835F72A2B46B600731E3E /* BannerCVCell.swift in Sources */,
 				B22ECA2F2A75976500CCA794 /* AppStep.swift in Sources */,
+				B1BD33412AB2DE30003E660D /* SearchResultCVCell.swift in Sources */,
 				B1A301BD2A543A2F003834E6 /* BaseVC.swift in Sources */,
 				04BA13292A2AE0990004E2FB /* ProductCVCell.swift in Sources */,
 				B2F3D3642A511F2700FB05E1 /* SubButton.swift in Sources */,
@@ -1241,11 +1327,13 @@
 				B18E035D2AA2137A00F8F394 /* NSMutableAttributedString+Extension.swift in Sources */,
 				B212D58B2A45F1740008DAD1 /* InputView.swift in Sources */,
 				B1B1EA132A5973C7007B1894 /* SettingTVCell.swift in Sources */,
+				B1B8C20E2AAC74DD00B9E1C3 /* SearchStep.swift in Sources */,
 				B240D71E2A9F107600DF171D /* UploadVC.swift in Sources */,
 				04C835FF2A2B5FEF00731E3E /* BannerFooterReusableView.swift in Sources */,
 				B195635A2AA4A54C0032FE25 /* Int64+Extension.swift in Sources */,
 				B1A301972A5437DB003834E6 /* ProfileSettingVC.swift in Sources */,
 				B18DFEDF2A51B53B00CF27FE /* EmailCheckVM.swift in Sources */,
+				B1B8C2032AAC586C00B9E1C3 /* SearchAPI.swift in Sources */,
 				B2198B982A2A36EA0019032D /* AppDelegate.swift in Sources */,
 				B247C7C32A9E25C900303147 /* UserInfoCardView.swift in Sources */,
 				B2CA311D2A91105600E7700C /* SingleProductVC.swift in Sources */,
@@ -1268,9 +1356,12 @@
 				B240D7202A9F108400DF171D /* UploadVM.swift in Sources */,
 				B2E2AC802A4772D3003DAE88 /* WelcomeVC.swift in Sources */,
 				B2198B9A2A2A36EA0019032D /* SceneDelegate.swift in Sources */,
+				B1BD333F2AB2D98A003E660D /* SearchResultVM.swift in Sources */,
 				B19563542AA47B0C0032FE25 /* ProductCommentCVCell.swift in Sources */,
+				B1BD333D2AB2D4C1003E660D /* SearchResultVC.swift in Sources */,
 				B240D7222A9F109200DF171D /* UploadService.swift in Sources */,
 				B22ECA322A7789D900CCA794 /* MainFlow.swift in Sources */,
+				B1BD33472AB2F7BD003E660D /* CatecogyCVCell.swift in Sources */,
 				B1C35AF32A9DCAB200C97A3D /* ProfileService.swift in Sources */,
 				04BA13212A2ADA160004E2FB /* MainVC.swift in Sources */,
 				04BA13262A2ADAEE0004E2FB /* MainVM.swift in Sources */,
@@ -1293,6 +1384,7 @@
 				B248C6A82A86A153006AE008 /* ProductGroupCVCell.swift in Sources */,
 				B29EC4742A9338BE001D1E6C /* MainAPI.swift in Sources */,
 				B1B1EA162A599904007B1894 /* SettingSectionModel.swift in Sources */,
+				B1BD333B2AB2AA81003E660D /* RecentSearchTitleReusableView.swift in Sources */,
 				B2DAFD3D2AA47D7500F015B5 /* ImageDataSection.swift in Sources */,
 				B28892072A6E569800952A10 /* FadeAnimation.swift in Sources */,
 				B1C35AF12A9DCAA800C97A3D /* ProfileAPI.swift in Sources */,
@@ -1305,10 +1397,13 @@
 				9816F6E22A494A5900A7A284 /* BaseAPIService.swift in Sources */,
 				B1C35B002A9DF4A800C97A3D /* ProfileDataModel.swift in Sources */,
 				B293420E2A58579C00F5CF30 /* RegionTVCell.swift in Sources */,
+				B1B8C20C2AAC74D700B9E1C3 /* SearchFlow.swift in Sources */,
+				B1B8C2072AAC666F00B9E1C3 /* RecentSearchSectionModel.swift in Sources */,
 				B22ECA382A778E8000CCA794 /* SettingFlow.swift in Sources */,
 				B1A301A62A5439E7003834E6 /* UIViewController+Extension.swift in Sources */,
 				B18E035F2AA2FA0700F8F394 /* UserProfileView.swift in Sources */,
 				B1C35AF62A9DCEFB00C97A3D /* ProfileHeaderReusableView.swift in Sources */,
+				B1B8C2052AAC649B00B9E1C3 /* SectionTitleReusableView.swift in Sources */,
 				98AD11012A4BF713001C4734 /* UserModel.swift in Sources */,
 				B18F1A002A5ED730003440B6 /* Util.swift in Sources */,
 				B1A301A72A5439E7003834E6 /* UIView+Extension.swift in Sources */,
@@ -1752,6 +1847,14 @@
 				minimumVersion = 2.0.0;
 			};
 		};
+		B1B8C1F42AAC4DDE00B9E1C3 /* XCRemoteSwiftPackageReference "realm-swift" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/realm/realm-swift";
+			requirement = {
+				branch = master;
+				kind = branch;
+			};
+		};
 		B2382C5E2A6F9A4300A24AE3 /* XCRemoteSwiftPackageReference "Localize-Swift" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/marmelroy/Localize-Swift.git";
@@ -1833,6 +1936,16 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 98C711062A53B48300C99393 /* XCRemoteSwiftPackageReference "RxKeyboard" */;
 			productName = RxKeyboard;
+		};
+		B1B8C1F52AAC4DDE00B9E1C3 /* Realm */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = B1B8C1F42AAC4DDE00B9E1C3 /* XCRemoteSwiftPackageReference "realm-swift" */;
+			productName = Realm;
+		};
+		B1B8C1F72AAC4DDE00B9E1C3 /* RealmSwift */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = B1B8C1F42AAC4DDE00B9E1C3 /* XCRemoteSwiftPackageReference "realm-swift" */;
+			productName = RealmSwift;
 		};
 		B2382C5F2A6F9A4300A24AE3 /* Localize_Swift */ = {
 			isa = XCSwiftPackageProductDependency;
