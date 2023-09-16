@@ -1,5 +1,5 @@
 //
-//  SingleCategoryCV.swift
+//  SingleCategoryVC.swift
 //  Avocado
 //
 //  Created by Jayden Jang on 2023/09/13.
@@ -12,7 +12,7 @@ import RxSwift
 import RxRelay
 import RxCocoa
 
-final class SingleCategoryCV: BaseVC {
+final class SingleCategoryVC: BaseVC {
     
     private var viewModel: SingleCategoryVM
     
@@ -52,7 +52,6 @@ final class SingleCategoryCV: BaseVC {
     
     override func setProperty() {
         view.backgroundColor = .white
-        self.navigationController?.isNavigationBarHidden = true
     }
     
     override func setLayout() {
@@ -84,11 +83,11 @@ import SwiftUI
 import RxSwift
 import SPIndicator
 
-struct SingleCategoryCVPreview: PreviewProvider {
+struct SingleCategoryVCPreview: PreviewProvider {
     static var previews: some View {
         
         let viewModel = SingleCategoryVM(service: MainService())
-        return UINavigationController(rootViewController: SingleCategoryCV(viewModel: viewModel)).toPreview()
+        return UINavigationController(rootViewController: SingleCategoryVC(viewModel: viewModel)).toPreview()
     }
 }
 #endif

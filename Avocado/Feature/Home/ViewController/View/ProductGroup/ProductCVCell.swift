@@ -107,7 +107,9 @@ final class ProductCVCell: UICollectionViewCell, CollectionCellIdentifierable {
    }
     
     override func prepareForReuse() {
+        super.prepareForReuse()
         self.product = nil
+        disposeBag = DisposeBag()
     }
 }
 

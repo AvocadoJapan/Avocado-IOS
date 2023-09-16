@@ -155,14 +155,23 @@ final class MainVC: BaseVC {
                 cell.config(product: item)
                 return cell
             },
-            configureSupplementaryView: { dataSource, collectionView, kind, indexPath in
+            configureSupplementaryView: { [weak self] dataSource, collectionView, kind, indexPath in
                 if kind == UICollectionView.elementKindSectionHeader {
                     
                     let headerView = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: ProductGroupHeaderReusableView.identifier, for: indexPath) as! ProductGroupHeaderReusableView
                     
                     let item = dataSource[indexPath.section].header
                     let id = dataSource[indexPath.section].productSectionId
-                    headerView.setProperty(title: item ?? "알수없는 오류", id: id)
+                    headerView.setProperty(title: item, id: id)
+                    
+                    // 삭제 버튼 클릭 시
+                    if let self = self {
+                        headerView.moreButtonTapObservable
+                            .subscribe(onNext: {
+                                self.viewModel.input.actionSingleCategoryRelay.accept(id)
+                            })
+                            .disposed(by: headerView.disposeBag)
+                    }
                     
                     return headerView
                 } else if kind == UICollectionView.elementKindSectionFooter {

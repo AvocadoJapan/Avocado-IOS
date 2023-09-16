@@ -31,7 +31,11 @@ final class ProductGroupHeaderReusableView: UICollectionReusableView {
     
     private lazy var moreButton: SubButton = SubButton(text: "MORE".localized(), fontSize: 14, weight: .bold)
     
-    private let disposeBag = DisposeBag()
+    public var disposeBag = DisposeBag()
+    
+    public var moreButtonTapObservable: Observable<Void> {
+        return moreButton.rx.tap.asObservable()
+    }
     
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -58,5 +62,12 @@ final class ProductGroupHeaderReusableView: UICollectionReusableView {
     func setProperty(title: String, id: String? = nil) {
         titleLabel.text = title
         sectionId = id
+    }
+    
+    override func prepareForReuse() {
+        super.prepareForReuse()
+        titleLabel.text = ""
+        sectionId = nil
+        disposeBag = DisposeBag()
     }
 }
