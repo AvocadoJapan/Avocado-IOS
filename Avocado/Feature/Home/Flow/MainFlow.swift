@@ -50,7 +50,7 @@ final class MainFlow: Flow {
     private func navigateToSingleCategorScreen(with id: String) -> FlowContributors {
         
         let service = MainService()
-        let viewModel = SingleCategoryVM(service: service)
+        let viewModel = SingleCategoryVM(service: service, id: id)
         let viewController = SingleCategoryVC(viewModel: viewModel)
         
         // 탭바 숨기기

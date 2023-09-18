@@ -17,4 +17,10 @@ final class MainService: BaseAPIService<MainAPI> {
         return singleRequest(.main)
                 .asObservable()
     }
+    
+    // ProductSection
+    func getSingleCategoryProductList(id: String) -> Observable<ProductSection> {
+        return singleRequest(.singleCategory(id: id))
+            .asObservable()
+    }
 }

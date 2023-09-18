@@ -21,9 +21,9 @@ final class MainVM: ViewModelType, Stepper {
     
     // 서비스를 제공하는 인스턴스
     let service: MainService
-   
+    
     private(set) var input: Input
-//    private(set) var output: Output
+    //    private(set) var output: Output
     
     struct Input {
         // 배너 클릭 이벤트 인스턴스
@@ -50,7 +50,7 @@ final class MainVM: ViewModelType, Stepper {
     // 생성자
     init(service: MainService) {
         self.service = MainService(isStub: true, sampleStatusCode: 200)
-//        self.service = service
+        //        self.service = service
         
         input = Input()
     }
@@ -58,14 +58,10 @@ final class MainVM: ViewModelType, Stepper {
     func transform(input: Input) -> Output {
         let output = Output()
         
-        //-> Observable<MainDataModel>
-        
-        
+        // viewDidLoad가 실행될때 mainData를 fetch
         input.actionViewDidLoad.flatMap { [weak self] _ in
             guard let self = self else { throw NetworkError.unknown(-1, "유효하지 않은 화면입니다") }
-             let mainData = service.getMain()
-            
-            Logger.d(mainData)
+            let mainData = service.getMain()
             
             return mainData
         }
