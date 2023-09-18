@@ -118,6 +118,12 @@ final class ProfileVC: BaseVC {
                 // 2번째 섹션일 경우 프로필 화면을 보여주지 않도록 모드 변경
                 if indexPath.section != 0 { headerView.changedMode(isProfile: false)}
                 
+                headerView.moreButtonTapObservable
+                    .subscribe(onNext: { [weak self] in
+                        self?.viewModel.steps.accept(ProfileStep.commentListIsRequired)
+                    })
+                    .disposed(by: headerView.disposeBag)
+                
                 headerView.configure(
                     userName: data.userName ?? "",
                     location: "경기도 화성시 병점 1동",

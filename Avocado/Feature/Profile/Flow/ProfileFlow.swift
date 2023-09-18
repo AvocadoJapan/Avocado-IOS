@@ -33,6 +33,7 @@ final class ProfileFlow: Flow {
         case .profileIsRequired: return navigateProfile()
         case .profileIsComplete: return .none
         case .productDetailIsRequired(let product): return navigateProductDetail(product: product)
+        case .commentListIsRequired: return navigateCommentList()
         }
     }
     
@@ -45,7 +46,12 @@ final class ProfileFlow: Flow {
         
         rootViewController.pushViewController(viewController, animated: true)
         
-        return .one(flowContributor: .contribute(withNextPresentable: viewController, withNextStepper: viewModel))
+        return .one(
+            flowContributor: .contribute(
+                withNextPresentable: viewController,
+                withNextStepper: viewModel
+            )
+        )
     }
     
     private func navigateProfile() -> FlowContributors {
@@ -57,6 +63,27 @@ final class ProfileFlow: Flow {
         rootViewController.view.fadeOut()
         rootViewController.setViewControllers([viewController], animated: false)
         
-        return .one(flowContributor: .contribute(withNextPresentable: viewController, withNextStepper: viewModel))
+        return .one(
+            flowContributor: .contribute(
+                withNextPresentable: viewController,
+                withNextStepper: viewModel
+            )
+        )
+    }
+    
+    private func navigateCommentList() -> FlowContributors {
+        let service = ProfileService()
+        let viewModel = CommentListVM(service: service)
+        let viewController = CommentListVC(viewModel: viewModel)
+        let navigationController = BaseNavigationVC(rootViewController: viewController)
+        navigationController.modalPresentationStyle = .automatic
+        rootViewController.present(navigationController, animated: true)
+        
+        return .one(
+            flowContributor: .contribute(
+                withNextPresentable: viewController,
+                withNextStepper: viewModel
+            )
+        )
     }
 }
