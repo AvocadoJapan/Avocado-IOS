@@ -42,7 +42,24 @@ final class MainFlow: Flow {
             return .none
         case .singleProductIsRequired(let product):
             return navigateToSingleProductScreen(product: product)
+        case .singleCategoryIsRequired(let categoryId):
+            return navigateToSingleCategorScreen(with: categoryId)
         }
+    }
+    
+    private func navigateToSingleCategorScreen(with id: String) -> FlowContributors {
+        
+        let service = MainService()
+        let viewModel = SingleCategoryVM(service: service, id: id)
+        let viewController = SingleCategoryVC(viewModel: viewModel)
+        
+        // 탭바 숨기기
+        viewController.hidesBottomBarWhenPushed = true
+        // 뷰컨 푸쉬하기
+        rootViewController.pushViewController(viewController, animated: true)
+
+        return .one(flowContributor: .contribute(withNextPresentable: viewController, withNextStepper: viewModel))
+
     }
     
     private func navigateToFailScreen(with error: NetworkError) -> FlowContributors {

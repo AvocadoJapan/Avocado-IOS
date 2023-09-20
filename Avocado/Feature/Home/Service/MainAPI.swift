@@ -11,6 +11,7 @@ import Moya
 enum MainAPI {
     case main
     case product(id: String)
+    case singleCategory(id: String)
     case event
 }
 
@@ -20,13 +21,14 @@ extension MainAPI: BaseTarget {
         switch self {
         case .main: return "/v1/main"
         case .product(let id): return "/v1/product/\(id)"
+        case .singleCategory(let id): return "/v1/category/\(id)"
         case .event: return "/v1/event"
         }
     }
     
     var method: Moya.Method {
         switch self {
-        case .main, .product, .event:
+        case .main, .product, .event, .singleCategory:
             return .get
         }
     }
@@ -272,6 +274,80 @@ extension MainAPI: BaseTarget {
                     """.data(using: .utf8)!
         case .event, .product:
             return "".data(using: .utf8)!
+        case .singleCategory(let id):
+            return
+                    """
+                    {
+                    "id": "\(id)",
+                    "name": "최근 본 상품",
+                    "products": [
+                          {
+                            "productId": "random-uuid-2201",
+                            "mainImageId": "random-uuid-2201",
+                            "imageIds": ["sample21", "sample22"],
+                            "name": "데모 상품",
+                            "price": "770,000원",
+                            "location": "서울시 종로구"
+                          },
+                          {
+                            "productId": "random-uuid-2201",
+                            "mainImageId": "random-uuid-2201",
+                            "imageIds": ["sample21", "sample22"],
+                            "name": "데모 상품",
+                            "price": "770,000원",
+                            "location": "서울시 종로구"
+                          },
+                          {
+                            "productId": "random-uuid-2201",
+                            "mainImageId": "random-uuid-2201",
+                            "imageIds": ["sample21", "sample22"],
+                            "name": "데모 상품",
+                            "price": "770,000원",
+                            "location": "서울시 종로구"
+                          },
+                          {
+                            "productId": "random-uuid-2201",
+                            "mainImageId": "random-uuid-2201",
+                            "imageIds": ["sample21", "sample22"],
+                            "name": "데모 상품",
+                            "price": "770,000원",
+                            "location": "서울시 종로구"
+                          },
+                          {
+                            "productId": "random-uuid-2201",
+                            "mainImageId": "random-uuid-2201",
+                            "imageIds": ["sample21", "sample22"],
+                            "name": "데모 상품",
+                            "price": "770,000원",
+                            "location": "서울시 종로구"
+                          },
+                          {
+                            "productId": "random-uuid-2201",
+                            "mainImageId": "random-uuid-2201",
+                            "imageIds": ["sample21", "sample22"],
+                            "name": "데모 상품",
+                            "price": "770,000원",
+                            "location": "서울시 종로구"
+                          },
+                          {
+                            "productId": "random-uuid-2201",
+                            "mainImageId": "random-uuid-2201",
+                            "imageIds": ["sample21", "sample22"],
+                            "name": "데모 상품",
+                            "price": "770,000원",
+                            "location": "서울시 종로구"
+                          },
+                          {
+                            "productId": "random-uuid-2201",
+                            "mainImageId": "random-uuid-2201",
+                            "imageIds": ["sample21", "sample22"],
+                            "name": "데모 상품",
+                            "price": "770,000원",
+                            "location": "서울시 종로구"
+                          }
+                    ]
+                    }
+                """.data(using: .utf8)!
         }
     }
     
@@ -282,6 +358,8 @@ extension MainAPI: BaseTarget {
         case .product:
             return .requestPlain
         case .event:
+            return .requestPlain
+        case .singleCategory:
             return .requestPlain
         }
     }

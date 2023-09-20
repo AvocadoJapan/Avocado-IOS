@@ -12,9 +12,6 @@ import RxSwift
 import RxRelay
 import RxCocoa
 
-/**
- *##화면 명: Avocado 메인화면 (배너, 카테고리 별 상품 정보를 확인가능)
- */
 final class SingleProductVC: BaseVC {
     
     private var viewModel: SingleProductVM
@@ -132,12 +129,12 @@ final class SingleProductVC: BaseVC {
     private lazy var productBadgeDemo = ProductBadgeView(type: .avocadoPay)
     private lazy var productBadgeDemo2 = ProductBadgeView(type: .business)
     private lazy var productBadgeDemo3 = ProductBadgeView(type: .fastShipping)
-//    private lazy var productBadgeDemo4 = ProductBadgeView(type: .freeShipping)
-//    private lazy var productBadgeDemo5 = ProductBadgeView(type: .handmade)
-//    private lazy var productBadgeDemo6 = ProductBadgeView(type: .premiumSeller)
-//    private lazy var productBadgeDemo7 = ProductBadgeView(type: .refundable)
-//    private lazy var productBadgeDemo8 = ProductBadgeView(type: .unused)
-//    private lazy var productBadgeDemo9 = ProductBadgeView(type: .verified)
+    private lazy var productBadgeDemo4 = ProductBadgeView(type: .freeShipping)
+    private lazy var productBadgeDemo5 = ProductBadgeView(type: .handmade)
+    private lazy var productBadgeDemo6 = ProductBadgeView(type: .premiumSeller)
+    private lazy var productBadgeDemo7 = ProductBadgeView(type: .refundable)
+    private lazy var productBadgeDemo8 = ProductBadgeView(type: .unused)
+    private lazy var productBadgeDemo9 = ProductBadgeView(type: .verified)
     
     private lazy var descriptionLabel = UILabel().then {
         $0.numberOfLines = 0
