@@ -13,4 +13,8 @@ final class ProfileService: BaseAPIService<ProfileAPI> {
     func getProfilePage() -> Observable<UserProfileDTO> {
         return singleRequest(.userProfile, responseType: UserProfile.self).asObservable()
     }
+    
+    func getCommentList(nextToken: Int) -> Observable<BasePagenationResponse<[Comment]>> {
+        return pagingRequest(.commentList(nextToken: nextToken)).asObservable()
+    }
 }
