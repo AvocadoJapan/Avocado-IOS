@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import RxDataSources
 
 final class CommentListVC: BaseVC {
     
@@ -53,6 +54,61 @@ final class CommentListVC: BaseVC {
     }
     
     override func bindUI() {
+        let output = viewModel.transform(input: viewModel.input)
+        
+        /*
+        FIXME: 추후 페이징 기능 도입 시 적용 예정
+        collectionView
+            .rx
+            .willDisplayCell
+            .subscribe(onNext: { [weak self] (cell, indexPath) in
+                Logger.d(output.successCommentListBehavior.value.count - 1)
+                Logger.d(indexPath.row)
+                if indexPath.row == output.successCommentListBehavior.value.count - 1 {
+                    self?.viewModel.input.currentPageBehavior.accept((self?.viewModel.input.currentPageBehavior.value ?? 0) + 1)
+                }
+            })
+            .disposed(by: disposeBag)
+         */
+        
+        let dataSource = RxCollectionViewSectionedReloadDataSource<CommentListDataSection>(
+            configureCell: { [weak self] dataSource, collectionView, indexPath, item in
+                let cell = collectionView.dequeueReusableCell(
+                    withReuseIdentifier: CommentListCVCell.identifier,
+                    for: indexPath
+                ) as! CommentListCVCell
+                
+                cell.configure(
+                    comment: item.comment,
+                    name: item.name,
+                    creationDate: item.creationDate,
+                    productTitle: item.product.name
+                )
+                
+                cell.productDetailTapObservable
+                    .subscribe(onNext: {
+                        self?.viewModel.steps.accept(ProfileStep.productDetailIsRequired(product: item.product))
+                    })
+                    .disposed(by: cell.disposeBag)
+                
+                return cell
+            }) { dataSource, collectionView, kind, indexPath in
+                let header = collectionView.dequeueReusableSupplementaryView(
+                    ofKind: kind,
+                    withReuseIdentifier: SectionTitleReusableView.identifier,
+                    for: indexPath
+                ) as! SectionTitleReusableView
+                
+                let data = dataSource[indexPath.section]
+                
+                header.configure(title: data.header ?? "")
+                
+                return header
+            }
+        
+        output.successCommentListBehavior
+            .bind(to: collectionView.rx.items(dataSource: dataSource))
+            .disposed(by: disposeBag)
         
     }
 }
@@ -64,14 +120,14 @@ extension CommentListVC: CollectionViewLayoutable {
             
             let itemSize = NSCollectionLayoutSize(
                 widthDimension: .fractionalWidth(1.0),
-                heightDimension: .estimated(150)
+                heightDimension: .estimated(180)
             )
             
             let item = NSCollectionLayoutItem(layoutSize: itemSize)
             
             let groupSize = NSCollectionLayoutSize(
                 widthDimension: .fractionalWidth(1.0),
-                heightDimension: .estimated(150)
+                heightDimension: .estimated(180)
             )
             
             let group = NSCollectionLayoutGroup.vertical(
@@ -93,6 +149,8 @@ extension CommentListVC: CollectionViewLayoutable {
             )
             
             section.boundarySupplementaryItems = [header]
+            // 그룹 별 인셋 설정
+            section.interGroupSpacing = 20
             
             return section
         }
@@ -106,7 +164,10 @@ struct CommentListVCPreview: PreviewProvider {
     static var previews: some View {
         return CommentListVC(
             viewModel: CommentListVM(
-                service: ProfileService()
+                service: ProfileService(
+                    isStub: true,
+                    sampleStatusCode: 200
+                )
             )
         )
         .toPreview()

@@ -44,7 +44,13 @@ final class ProfileFlow: Flow {
         let viewModel = SingleProductVM(service: service, product: product)
         let viewController = SingleProductVC(viewModel: viewModel)
         
-        rootViewController.pushViewController(viewController, animated: true)
+        // 후기 리스트화면에서 띄우는 경우
+        if let navigationController = rootViewController.presentedViewController as? BaseNavigationVC {
+            navigationController.pushViewController(viewController, animated: true)
+        }
+        else {
+            rootViewController.pushViewController(viewController, animated: true)
+        }
         
         return .one(
             flowContributor: .contribute(
@@ -72,7 +78,8 @@ final class ProfileFlow: Flow {
     }
     
     private func navigateCommentList() -> FlowContributors {
-        let service = ProfileService()
+//        let service = ProfileService()
+        let service = ProfileService(isStub: true, sampleStatusCode: 200)
         let viewModel = CommentListVM(service: service)
         let viewController = CommentListVC(viewModel: viewModel)
         let navigationController = BaseNavigationVC(rootViewController: viewController)

@@ -14,19 +14,18 @@ final class CommentListCVCell: UICollectionViewCell {
     
     private lazy var mainContainerStackView = UIStackView().then {
         $0.axis = .vertical
-        $0.distribution = .fill
         $0.spacing = 8
+        $0.layoutMargins = UIEdgeInsets(
+            top: 0,
+            left: 20,
+            bottom: 0,
+            right: 20
+        )
+        $0.isLayoutMarginsRelativeArrangement = true
     }
     private lazy var productContainerStackView = UIStackView().then {
         $0.axis = .horizontal
         $0.spacing = 4
-        $0.layoutMargins = UIEdgeInsets(
-            top: 10,
-            left: 20,
-            bottom: 10,
-            right: 20
-        )
-        $0.isLayoutMarginsRelativeArrangement = true
     }
     private lazy var profileContainerView = UIView()
     private lazy var productImageView = UIImageView().then {
@@ -58,17 +57,12 @@ final class CommentListCVCell: UICollectionViewCell {
         $0.font = .systemFont(ofSize: 10)
         $0.textColor = .gray
     }
-    private lazy var commentLabel = PaddingLabel(
-        padding: UIEdgeInsets(
-            top: 10, left: 10, bottom: 10, right: 10
-        )
-    ).then {
-        $0.text = "정말 좋아요"
+    private lazy var commentLabel = UILabel().then {
+        $0.text = "번창하세요"
         $0.numberOfLines = 0
         $0.font = .systemFont(ofSize: 14)
         $0.textColor = .black
     }
-    
     private lazy var contourView = ContourView()
     
     var disposeBag = DisposeBag()
@@ -87,9 +81,15 @@ final class CommentListCVCell: UICollectionViewCell {
             productContainerStackView.addArrangedSubview($0)
         }
         
+        [profileContainerView, commentLabel, productContainerStackView, contourView].forEach {
+            mainContainerStackView.addArrangedSubview($0)
+        }
+        
+        addSubview(mainContainerStackView)
         
         imageView.snp.makeConstraints {
-            $0.top.bottom.left.equalToSuperview().inset(10)
+            $0.left.equalToSuperview()
+            $0.top.bottom.equalToSuperview().inset(10)
             $0.size.equalTo(60)
         }
         
@@ -112,12 +112,6 @@ final class CommentListCVCell: UICollectionViewCell {
         arrowButton.snp.makeConstraints {
             $0.width.equalTo(20)
         }
-        
-        [profileContainerView, commentLabel, productContainerStackView, contourView].forEach {
-            mainContainerStackView.addArrangedSubview($0)
-        }
-        
-        addSubview(mainContainerStackView)
         
         mainContainerStackView.snp.makeConstraints {
             $0.edges.equalToSuperview()

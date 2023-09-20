@@ -120,7 +120,9 @@ final class ProfileVC: BaseVC {
                 
                 headerView.moreButtonTapObservable
                     .subscribe(onNext: { [weak self] in
-                        self?.viewModel.steps.accept(ProfileStep.commentListIsRequired)
+                        if indexPath.section == 0 {
+                            self?.viewModel.steps.accept(ProfileStep.commentListIsRequired)
+                        }
                     })
                     .disposed(by: headerView.disposeBag)
                 
