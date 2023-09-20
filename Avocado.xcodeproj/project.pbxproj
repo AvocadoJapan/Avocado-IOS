@@ -21,6 +21,12 @@
 		04D2FCFC2A2A51F100253028 /* RxSwift in Frameworks */ = {isa = PBXBuildFile; productRef = 04D2FCFB2A2A51F100253028 /* RxSwift */; };
 		04D2FD022A2A528200253028 /* SnapKit in Frameworks */ = {isa = PBXBuildFile; productRef = 04D2FD012A2A528200253028 /* SnapKit */; };
 		04D2FD052A2A529600253028 /* Then in Frameworks */ = {isa = PBXBuildFile; productRef = 04D2FD042A2A529600253028 /* Then */; };
+		3D97A43B2ABB0AEB00AAECCC /* AccountCenterStep.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D97A43A2ABB0AEB00AAECCC /* AccountCenterStep.swift */; };
+		3D97A43D2ABB0AFC00AAECCC /* AccountCenterFlow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D97A43C2ABB0AFC00AAECCC /* AccountCenterFlow.swift */; };
+		3D97A43F2ABB0B1400AAECCC /* AccountCenterVM.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D97A43E2ABB0B1400AAECCC /* AccountCenterVM.swift */; };
+		3D97A4412ABB0B2800AAECCC /* AccountCenterVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D97A4402ABB0B2800AAECCC /* AccountCenterVC.swift */; };
+		3D97A4432ABB0B3800AAECCC /* AccountCenterService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D97A4422ABB0B3800AAECCC /* AccountCenterService.swift */; };
+		3D97A4462ABB1A6D00AAECCC /* AccountCenterSectionModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D97A4452ABB1A6D00AAECCC /* AccountCenterSectionModel.swift */; };
 		9816F6D62A49491E00A7A284 /* BaseTarget.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9816F6D52A49491E00A7A284 /* BaseTarget.swift */; };
 		9816F6D92A49495500A7A284 /* Moya in Frameworks */ = {isa = PBXBuildFile; productRef = 9816F6D82A49495500A7A284 /* Moya */; };
 		9816F6DB2A49495500A7A284 /* RxMoya in Frameworks */ = {isa = PBXBuildFile; productRef = 9816F6DA2A49495500A7A284 /* RxMoya */; };
@@ -205,6 +211,12 @@
 		04C835F02A2B2CFA00731E3E /* MainDataModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainDataModel.swift; sourceTree = "<group>"; };
 		04C835F62A2B46B600731E3E /* BannerCVCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BannerCVCell.swift; sourceTree = "<group>"; };
 		04C835FE2A2B5FEF00731E3E /* BannerFooterReusableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BannerFooterReusableView.swift; sourceTree = "<group>"; };
+		3D97A43A2ABB0AEB00AAECCC /* AccountCenterStep.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccountCenterStep.swift; sourceTree = "<group>"; };
+		3D97A43C2ABB0AFC00AAECCC /* AccountCenterFlow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccountCenterFlow.swift; sourceTree = "<group>"; };
+		3D97A43E2ABB0B1400AAECCC /* AccountCenterVM.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccountCenterVM.swift; sourceTree = "<group>"; };
+		3D97A4402ABB0B2800AAECCC /* AccountCenterVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccountCenterVC.swift; sourceTree = "<group>"; };
+		3D97A4422ABB0B3800AAECCC /* AccountCenterService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccountCenterService.swift; sourceTree = "<group>"; };
+		3D97A4452ABB1A6D00AAECCC /* AccountCenterSectionModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccountCenterSectionModel.swift; sourceTree = "<group>"; };
 		9816F6D52A49491E00A7A284 /* BaseTarget.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseTarget.swift; sourceTree = "<group>"; };
 		9816F6E12A494A5900A7A284 /* BaseAPIService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseAPIService.swift; sourceTree = "<group>"; };
 		9816F6E82A494AC800A7A284 /* amplifyconfiguration.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = amplifyconfiguration.json; sourceTree = "<group>"; };
@@ -467,6 +479,67 @@
 			path = SupportingFiles;
 			sourceTree = "<group>";
 		};
+		3D97A4342ABB027300AAECCC /* AccountCenter */ = {
+			isa = PBXGroup;
+			children = (
+				3D97A4352ABB028D00AAECCC /* Flow */,
+				3D97A4372ABB029B00AAECCC /* ViewModel */,
+				3D97A4362ABB029300AAECCC /* Model */,
+				3D97A4382ABB02A000AAECCC /* ViewController */,
+				3D97A4392ABB02B200AAECCC /* Service */,
+			);
+			path = AccountCenter;
+			sourceTree = "<group>";
+		};
+		3D97A4352ABB028D00AAECCC /* Flow */ = {
+			isa = PBXGroup;
+			children = (
+				3D97A43A2ABB0AEB00AAECCC /* AccountCenterStep.swift */,
+				3D97A43C2ABB0AFC00AAECCC /* AccountCenterFlow.swift */,
+			);
+			path = Flow;
+			sourceTree = "<group>";
+		};
+		3D97A4362ABB029300AAECCC /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				3D97A4452ABB1A6D00AAECCC /* AccountCenterSectionModel.swift */,
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
+		3D97A4372ABB029B00AAECCC /* ViewModel */ = {
+			isa = PBXGroup;
+			children = (
+				3D97A43E2ABB0B1400AAECCC /* AccountCenterVM.swift */,
+			);
+			path = ViewModel;
+			sourceTree = "<group>";
+		};
+		3D97A4382ABB02A000AAECCC /* ViewController */ = {
+			isa = PBXGroup;
+			children = (
+				3D97A4442ABB19D800AAECCC /* View */,
+				3D97A4402ABB0B2800AAECCC /* AccountCenterVC.swift */,
+			);
+			path = ViewController;
+			sourceTree = "<group>";
+		};
+		3D97A4392ABB02B200AAECCC /* Service */ = {
+			isa = PBXGroup;
+			children = (
+				3D97A4422ABB0B3800AAECCC /* AccountCenterService.swift */,
+			);
+			path = Service;
+			sourceTree = "<group>";
+		};
+		3D97A4442ABB19D800AAECCC /* View */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
 		9816F6D32A4948BE00A7A284 /* Network */ = {
 			isa = PBXGroup;
 			children = (
@@ -570,6 +643,7 @@
 				B22ECA2E2A75976500CCA794 /* AppStep.swift */,
 				B2689E812AA0641E00151D1D /* TabFlow.swift */,
 				B2689E852AA0643800151D1D /* TabStep.swift */,
+				3D97A4342ABB027300AAECCC /* AccountCenter */,
 				B240D7172A9F102100DF171D /* Upload */,
 				B19E83252A6025A2004C5DE2 /* Auth */,
 				04BA131F2A2AD9FB0004E2FB /* Home */,
@@ -1298,6 +1372,7 @@
 				B22ECA2D2A75975C00CCA794 /* AppStepper.swift in Sources */,
 				B22222672A55F83300A2B7CB /* PrivacyElementView.swift in Sources */,
 				B22ECA2B2A75974B00CCA794 /* AppFlow.swift in Sources */,
+				3D97A4432ABB0B3800AAECCC /* AccountCenterService.swift in Sources */,
 				B1B8C2012AAC57B500B9E1C3 /* SearchService.swift in Sources */,
 				B1BD33452AB2EB5D003E660D /* SearchResultModel.swift in Sources */,
 				B2CA311F2A91177D00E7700C /* SingleProductVM.swift in Sources */,
@@ -1306,6 +1381,7 @@
 				981A598D2A494FAE0031A917 /* AuthService.swift in Sources */,
 				B22ECA3D2A778E9800CCA794 /* SettingStep.swift in Sources */,
 				B29D78912A2B6FB1008B6945 /* SearchVC.swift in Sources */,
+				3D97A43D2ABB0AFC00AAECCC /* AccountCenterFlow.swift in Sources */,
 				B1A705142A63C426005CD130 /* ViewModelType.swift in Sources */,
 				B1D5350F2AA0D16F001ACE09 /* ProfileStep.swift in Sources */,
 				B2D1309E2A4B4C5800538EFB /* BottomButton.swift in Sources */,
@@ -1333,6 +1409,7 @@
 				98FD1C2A2A56B3900031D7C1 /* SettingAPI.swift in Sources */,
 				B18E035D2AA2137A00F8F394 /* NSMutableAttributedString+Extension.swift in Sources */,
 				B212D58B2A45F1740008DAD1 /* InputView.swift in Sources */,
+				3D97A4462ABB1A6D00AAECCC /* AccountCenterSectionModel.swift in Sources */,
 				B1B1EA132A5973C7007B1894 /* SettingTVCell.swift in Sources */,
 				B1B8C20E2AAC74DD00B9E1C3 /* SearchStep.swift in Sources */,
 				B240D71E2A9F107600DF171D /* UploadVC.swift in Sources */,
@@ -1345,6 +1422,7 @@
 				B247C7C32A9E25C900303147 /* UserInfoCardView.swift in Sources */,
 				B2CA311D2A91105600E7700C /* SingleProductVC.swift in Sources */,
 				B1A301AA2A5439EC003834E6 /* Logger.swift in Sources */,
+				3D97A4412ABB0B2800AAECCC /* AccountCenterVC.swift in Sources */,
 				9848A8B12A5D848D008D43F5 /* SplashVC.swift in Sources */,
 				B1D5350D2AA0D168001ACE09 /* ProfileFlow.swift in Sources */,
 				B1A301C62A543B15003834E6 /* UIButton+Animation.swift in Sources */,
@@ -1370,6 +1448,7 @@
 				B240D7222A9F109200DF171D /* UploadService.swift in Sources */,
 				B22ECA322A7789D900CCA794 /* MainFlow.swift in Sources */,
 				B1BD33472AB2F7BD003E660D /* CatecogyCVCell.swift in Sources */,
+				3D97A43F2ABB0B1400AAECCC /* AccountCenterVM.swift in Sources */,
 				B1C35AF32A9DCAB200C97A3D /* ProfileService.swift in Sources */,
 				04BA13212A2ADA160004E2FB /* MainVC.swift in Sources */,
 				04BA13262A2ADAEE0004E2FB /* MainVM.swift in Sources */,
@@ -1384,6 +1463,7 @@
 				B26A3B662A60AB8400AD61A5 /* AuthStep.swift in Sources */,
 				98AD11032A4BF8B4001C4734 /* RegionsModel.swift in Sources */,
 				B240FB372A9A7FFC00F365BB /* ContourView.swift in Sources */,
+				3D97A43B2ABB0AEB00AAECCC /* AccountCenterStep.swift in Sources */,
 				B2E186CE2A474B4C00ABE98F /* SignupVC.swift in Sources */,
 				9848A8B32A5D853B008D43F5 /* UIColor+Extension.swift in Sources */,
 				B240D7242A9F10AD00DF171D /* UploadAPI.swift in Sources */,
