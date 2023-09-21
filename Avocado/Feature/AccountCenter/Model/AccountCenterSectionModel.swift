@@ -12,27 +12,11 @@ import Differentiator
  * - Description 계정센터 정적 데이터 모델
  */
 struct AccountCenterData {
-    let title: String // 제목
-    let type: SettingType // 설정 타입
+    let type: AccountCenterDataType
     
-    init(title: String, type: SettingType) {
-        self.title = title
+    init(type: AccountCenterDataType) {
         self.type = type
     }
-}
-/**
- * - Description 계정센터 타입 정보 셀에 대한 행동 정보를 담음
- */
-enum AccountCenterDataType {
-    case findEmail
-    case findPassword
-    
-    case accountLocked
-    case confirmCodeUnvalid
-    
-    case contactCustomerCenter
-    case accountHacked
-    case accountDelete
 }
 
 /**

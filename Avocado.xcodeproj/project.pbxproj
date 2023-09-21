@@ -27,6 +27,8 @@
 		3D97A4412ABB0B2800AAECCC /* AccountCenterVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D97A4402ABB0B2800AAECCC /* AccountCenterVC.swift */; };
 		3D97A4432ABB0B3800AAECCC /* AccountCenterService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D97A4422ABB0B3800AAECCC /* AccountCenterService.swift */; };
 		3D97A4462ABB1A6D00AAECCC /* AccountCenterSectionModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D97A4452ABB1A6D00AAECCC /* AccountCenterSectionModel.swift */; };
+		3D97A4482ABBB93200AAECCC /* AccountMenuTVCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D97A4472ABBB93200AAECCC /* AccountMenuTVCell.swift */; };
+		3D97A44A2ABBB98000AAECCC /* TabelView+Protocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D97A4492ABBB98000AAECCC /* TabelView+Protocol.swift */; };
 		9816F6D62A49491E00A7A284 /* BaseTarget.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9816F6D52A49491E00A7A284 /* BaseTarget.swift */; };
 		9816F6D92A49495500A7A284 /* Moya in Frameworks */ = {isa = PBXBuildFile; productRef = 9816F6D82A49495500A7A284 /* Moya */; };
 		9816F6DB2A49495500A7A284 /* RxMoya in Frameworks */ = {isa = PBXBuildFile; productRef = 9816F6DA2A49495500A7A284 /* RxMoya */; };
@@ -217,6 +219,8 @@
 		3D97A4402ABB0B2800AAECCC /* AccountCenterVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccountCenterVC.swift; sourceTree = "<group>"; };
 		3D97A4422ABB0B3800AAECCC /* AccountCenterService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccountCenterService.swift; sourceTree = "<group>"; };
 		3D97A4452ABB1A6D00AAECCC /* AccountCenterSectionModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccountCenterSectionModel.swift; sourceTree = "<group>"; };
+		3D97A4472ABBB93200AAECCC /* AccountMenuTVCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccountMenuTVCell.swift; sourceTree = "<group>"; };
+		3D97A4492ABBB98000AAECCC /* TabelView+Protocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "TabelView+Protocol.swift"; sourceTree = "<group>"; };
 		9816F6D52A49491E00A7A284 /* BaseTarget.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseTarget.swift; sourceTree = "<group>"; };
 		9816F6E12A494A5900A7A284 /* BaseAPIService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseAPIService.swift; sourceTree = "<group>"; };
 		9816F6E82A494AC800A7A284 /* amplifyconfiguration.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = amplifyconfiguration.json; sourceTree = "<group>"; };
@@ -536,6 +540,7 @@
 		3D97A4442ABB19D800AAECCC /* View */ = {
 			isa = PBXGroup;
 			children = (
+				3D97A4472ABBB93200AAECCC /* AccountMenuTVCell.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -816,6 +821,7 @@
 				B1A301AD2A5439F0003834E6 /* CollectionView+Protocol.swift */,
 				B29EC4752A934991001D1E6C /* EnumCountable+Protocol.swift */,
 				B1A705132A63C426005CD130 /* ViewModelType.swift */,
+				3D97A4492ABBB98000AAECCC /* TabelView+Protocol.swift */,
 			);
 			path = Protocol;
 			sourceTree = "<group>";
@@ -1494,10 +1500,12 @@
 				B1B8C2052AAC649B00B9E1C3 /* SectionTitleReusableView.swift in Sources */,
 				98AD11012A4BF713001C4734 /* UserModel.swift in Sources */,
 				B18F1A002A5ED730003440B6 /* Util.swift in Sources */,
+				3D97A44A2ABBB98000AAECCC /* TabelView+Protocol.swift in Sources */,
 				B1A301A72A5439E7003834E6 /* UIView+Extension.swift in Sources */,
 				B19563522AA471E40032FE25 /* CheckedView.swift in Sources */,
 				B2689E862AA0643800151D1D /* TabStep.swift in Sources */,
 				B2D2764E2A6C4D6A00441719 /* OtherEmailVC.swift in Sources */,
+				3D97A4482ABBB93200AAECCC /* AccountMenuTVCell.swift in Sources */,
 				B1A301AB2A5439EC003834E6 /* KeychainUtil.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
