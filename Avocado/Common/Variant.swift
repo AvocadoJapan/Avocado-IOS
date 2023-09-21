@@ -277,7 +277,7 @@ enum UserBadge: Equatable {
 /**
  * - Description 계정센터 타입 정보 셀에 대한 행동 정보를 담음
  */
-enum AccountCenterDataType {
+enum AccountCenterDataType: CaseCountable {
     case findEmail
     case findPassword
     

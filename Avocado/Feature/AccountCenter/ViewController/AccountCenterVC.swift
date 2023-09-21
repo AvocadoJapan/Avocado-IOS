@@ -12,6 +12,7 @@ import RxRelay
 import RxSwift
 import Then
 import Localize_Swift
+import RxDataSources
 
 final class AccountCenterVC: BaseVC {
     
@@ -27,19 +28,31 @@ final class AccountCenterVC: BaseVC {
         $0.font = UIFont.systemFont(ofSize: 25, weight: .heavy)
     }
     
-//    private lazy var tableView = UITableView().then {
-//        $0.
-//    }
+    private lazy var accountMenuTV = UITableView(frame: .zero, style: .plain).then {
+        $0.showsVerticalScrollIndicator = false
+        $0.isPagingEnabled = true
+        $0.backgroundColor = .systemGray6
+    }
     
-//    private let viewModel: WelcomeVM
+    private let viewModel: AccountCenterVM
     
-    init(viewModel: WelcomeVM? = nil) {
-//        self.viewModel = viewModel
+    init(viewModel: AccountCenterVM) {
+        self.viewModel = viewModel
         super.init(nibName: nil, bundle: nil)
     }
     
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
+    }
+    
+    override func setViewDidLoad() {
+        // 초기 메인데이터 API call]
+        viewModel.input.actionViewDidLoad.accept(())
+    }
+    
+    override func setProperty() {
+        // accountTV 셀등록
+        accountMenuTV.register(AccountMenuTVCell.self, forCellReuseIdentifier: AccountMenuTVCell.identifier)
     }
     
     override func setLayout() {
@@ -61,6 +74,27 @@ final class AccountCenterVC: BaseVC {
             $0.left.equalToSuperview().offset(30)
         }
     }
+    
+    override func bindUI() {
+        let output = viewModel.transform(input: viewModel.input)
+        
+        accountMenuTV.rx.setDelegate(self).disposed(by: disposeBag)
+        
+        let dataSource = RxTableViewSectionedReloadDataSource<AccountCenterDataSection>(
+            configureCell: { dataSource, tableView, indexPath, item in
+                let cell = tableView.dequeueReusableCell(withIdentifier: AccountMenuTVCell.identifier, for: indexPath) as! AccountMenuTVCell
+                
+                cell.configCell(data: item)
+                
+                return cell
+            }
+//            titleForHeaderInSection {}
+        )
+    }
+}
+
+extension AccountCenterVC: UITableViewDelegate {
+    
 }
 
 // MARK: - Preview 관련
@@ -70,7 +104,7 @@ import RxSwift
 import SPIndicator
 struct AccountCenterVCPreview: PreviewProvider {
     static var previews: some View {
-        return AccountCenterVC().toPreview()
+        return AccountCenterVC(viewModel: AccountCenterVM(service: MainService())).toPreview()
     }
 }
 #endif

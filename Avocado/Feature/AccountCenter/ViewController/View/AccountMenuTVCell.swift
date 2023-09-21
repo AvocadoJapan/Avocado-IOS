@@ -15,15 +15,15 @@ final class AccountMenuTVCell: UITableViewCell, TableCellIdentifierable {
     
     var disposeBag = DisposeBag()
     
-    private lazy var titleLabel = UILabel().then { label in
-        label.text = "구글 연동하기"
-        label.font = .boldSystemFont(ofSize: 15)
-        label.textColor = .darkGray
+    private lazy var titleLabel = UILabel().then {
+        $0.text = "구글 연동하기"
+        $0.font = .boldSystemFont(ofSize: 16)
+        $0.textColor = .darkGray
     }
     
-    private lazy var arrowImageView = UIImageView().then { imageView in
-        imageView.image = UIImage(systemName: "chevron.right")
-        imageView.tintColor = .black
+    private lazy var arrowImageView = UIImageView().then {
+        $0.image = UIImage(systemName: "chevron.right")
+        $0.tintColor = .black
     }
     
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
@@ -52,19 +52,23 @@ final class AccountMenuTVCell: UITableViewCell, TableCellIdentifierable {
     }
     
     func setConstraint() {
-        titleLabel.snp.makeConstraints { make in
-            make.left.equalToSuperview().inset(15)
-            make.centerY.equalToSuperview()
+        titleLabel.snp.makeConstraints {
+            $0.left.equalToSuperview().inset(15)
+            $0.centerY.equalToSuperview()
         }
         
-        arrowImageView.snp.makeConstraints { make in
-            make.right.equalToSuperview().inset(15)
-            make.centerY.equalToSuperview()
+        arrowImageView.snp.makeConstraints {
+            $0.right.equalToSuperview().inset(15)
+            $0.centerY.equalToSuperview()
         }
     }
     
-    func configureCell(data: AccountCenterData) {
-        titleLabel.text = data.title
+    func configCell(data: AccountCenterData) {
+        titleLabel.text = data.type.title
+        
+        if data.type.isHighlight {
+            titleLabel.textColor = .systemRed
+        }
     }
 }
 

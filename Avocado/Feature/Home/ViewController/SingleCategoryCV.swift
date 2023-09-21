@@ -66,7 +66,7 @@ final class SingleCategoryVC: BaseVC {
     override func setProperty() {
         view.backgroundColor = .white
         
-        // productGroupCV 셀등록 및 푸터 헤더 등록
+        // productGroupCV 셀등록
         productGroupCV.register(ProductCVCell.self, forCellWithReuseIdentifier: ProductCVCell.identifier)
     }
     
