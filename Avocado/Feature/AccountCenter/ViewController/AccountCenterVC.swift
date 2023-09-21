@@ -51,6 +51,8 @@ final class AccountCenterVC: BaseVC {
     }
     
     override func setProperty() {
+        view.backgroundColor = .white
+        navigationController?.isNavigationBarHidden = true
         // accountTV 셀등록
         accountMenuTV.register(AccountMenuTVCell.self, forCellReuseIdentifier: AccountMenuTVCell.identifier)
     }
@@ -104,7 +106,7 @@ import RxSwift
 import SPIndicator
 struct AccountCenterVCPreview: PreviewProvider {
     static var previews: some View {
-        return AccountCenterVC(viewModel: AccountCenterVM(service: MainService())).toPreview()
+        return AccountCenterVC(viewModel: AccountCenterVM(service: AccountCenterService())).toPreview()
     }
 }
 #endif

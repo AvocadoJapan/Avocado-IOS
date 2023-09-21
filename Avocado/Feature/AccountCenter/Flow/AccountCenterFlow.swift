@@ -31,7 +31,7 @@ final class AccountCenterFlow: Flow {
         guard let step = step as? AccountCenterStep else { return .none }
         
         switch step {
-        case .accountCenterIsRequired: return .none
+        case .accountCenterIsRequired: return navigateToAccountCenterScreen()
         
         case .findEmailIsRequired: return .none
         case .findPasswordIsRequired: return .none
@@ -46,6 +46,20 @@ final class AccountCenterFlow: Flow {
             
         }
     }
+    
+    private func navigateToAccountCenterScreen() -> FlowContributors {
+        let service = AccountCenterService()
+        let viewModel = AccountCenterVM(service: service)
+        let viewController = AccountCenterVC(viewModel: viewModel)
+        
+        // 스무스 애니메이션 적용
+        rootViewController.view.fadeOut()
+        // 커스텀 애니메이션 적용시 animated: false 로 설정
+        rootViewController.setViewControllers([viewController], animated: false)
+        
+        return .one(flowContributor: .contribute(withNextPresentable: viewController, withNextStepper: viewModel))
+    }
+    
 }
 
 

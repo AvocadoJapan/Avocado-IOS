@@ -161,7 +161,7 @@ final class LoginVC: BaseVC {
             .tap
             .asDriver()
             .drive(onNext: { [weak self] _ in
-                self?.navigationController?.popViewController(animated: true)
+                self?.viewModel.steps.accept(AuthStep.accountCenterIsRequired)
             })
             .disposed(by: disposeBag)
         

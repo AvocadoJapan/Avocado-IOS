@@ -51,8 +51,9 @@ final class AuthFlow: Flow {
             return navigateToOtherEmailScreen(email: oldEmail)
         case .regionIsRequired:
             return navigateToRegionSettingScreen()
-        default :
-            return .none
+        case .accountCenterIsRequired:
+            return .end(forwardToParentFlowWithStep: AppStep.accountCenterIsRequired)
+        default: return .none
         }
     }
     

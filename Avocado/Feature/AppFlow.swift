@@ -34,9 +34,11 @@ final class AppFlow: Flow {
         case .appIsStarted:
             return navigateToSplashFlow() //스플래시 화면이동
         case .mainIsRequired:
-            return navigateToMainFlow() // 메인화면이동
+            return navigateToMainWithTabFlow() // 메인화면이동
         case .authIsRequired:
             return navigateToAuthFlow() // 인증화면이동
+        case .accountCenterIsRequired:
+            return navigateToAccountCenterFlow()
             
         case .userLogout:
             return .none
@@ -74,9 +76,9 @@ final class AppFlow: Flow {
     }
     
     /**
-     * - description 메인화면 이동 플로우 함수
+     * - description 메인화면 이동 플로우 함수 via TabFlow
      */
-    private func navigateToMainFlow() -> FlowContributors {
+    private func navigateToMainWithTabFlow() -> FlowContributors {
 //        let mainFlow = MainFlow(root: BaseNavigationVC())
         let tabFlow = TabFlow()
         
@@ -86,6 +88,19 @@ final class AppFlow: Flow {
         })
         
         return .one(flowContributor: .contribute(withNextPresentable: tabFlow, withNextStepper: OneStepper(withSingleStep: TabStep.mainTabIsRequired)))
+    }
+    
+    /**
+     * - description  계정센터 이동 플로우 함수
+     */
+    private func navigateToAccountCenterFlow() -> FlowContributors {
+        let flow = AccountCenterFlow(root: BaseNavigationVC())
+        
+        Flows.use(flow, when: .created) { [unowned self] root in
+            self.window.rootViewController = root
+        }
+        
+        return .one(flowContributor: .contribute(withNextPresentable: flow, withNextStepper: OneStepper(withSingleStep: AccountCenterStep.accountCenterIsRequired)))
     }
     
     
@@ -101,4 +116,5 @@ final class AppFlow: Flow {
         
         return .one(flowContributor: .contribute(withNextPresentable: splashFlow, withNextStepper: OneStepper(withSingleStep: SplashStep.errorOccurred(error: error))))
     }
+
 }

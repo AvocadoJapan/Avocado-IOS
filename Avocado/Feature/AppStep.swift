@@ -17,6 +17,7 @@ import RxSwift
     case appIsStarted   // 스플래시화면
     case mainIsRequired // 메인화면
     case authIsRequired // 인증화면
+    case accountCenterIsRequired //계정센터 화면
     
     // 상황별
     case userLogout

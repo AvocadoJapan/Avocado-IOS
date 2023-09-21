@@ -16,7 +16,7 @@ final class AccountCenterVM: ViewModelType, Stepper {
     var disposeBag = DisposeBag()
     
     // 서비스를 제공하는 인스턴스
-    let service: MainService
+    let service: AccountCenterService
 
     private(set) var input: Input
     
@@ -33,8 +33,8 @@ final class AccountCenterVM: ViewModelType, Stepper {
     }
     
     // 생성자
-    init(service: MainService) {
-        self.service = MainService(isStub: true, sampleStatusCode: 200)
+    init(service: AccountCenterService) {
+        self.service = AccountCenterService(isStub: true, sampleStatusCode: 200)
         
         input = Input()
     }
