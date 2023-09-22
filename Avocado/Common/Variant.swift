@@ -311,6 +311,15 @@ enum AccountCenterDataType: CaseCountable {
     }
 }
 
+/**
+ * - Description 메인화면 및 상품 상세화면등에서 법률정보 표시를 위한 상수
+ */
+enum LegalType {
+    static let title: String = "주식회사 아보카도 사업자정보, 이용약관 및 기타 법적고지".localized()
+    static let discription: String = "주식회사 아보카도(이하 아보카도)는 통신판매중개자이며, 통신판매의 당사자가 아닙니다. 전자상거래 등에서의 소비자보호에 관한 법률 등 관련 법령 및 아보카도의 약관에 따라 상품, 상품정보, 거래에 관한 책임은 개별 판매자에게 귀속하고, 아보카도는 원칙적으로 회원간 거래에 대하여 책임을 지지 않습니다. 다만, 아보카도가 직접 판매하는 상품에 대한 책임은 아보카도에게 귀속합니다.".localized()
+    static let copyright: String = "Copyright 2023 AvocadoLabs All RIGHTS RESERVED".localized()
+}
+
 
 
 /**

@@ -29,6 +29,7 @@
 		3D97A4462ABB1A6D00AAECCC /* AccountCenterSectionModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D97A4452ABB1A6D00AAECCC /* AccountCenterSectionModel.swift */; };
 		3D97A4482ABBB93200AAECCC /* AccountMenuTVCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D97A4472ABBB93200AAECCC /* AccountMenuTVCell.swift */; };
 		3D97A44A2ABBB98000AAECCC /* TabelView+Protocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D97A4492ABBB98000AAECCC /* TabelView+Protocol.swift */; };
+		3D97A44C2ABC655F00AAECCC /* LegalFooterReuseableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D97A44B2ABC655F00AAECCC /* LegalFooterReuseableView.swift */; };
 		9816F6D62A49491E00A7A284 /* BaseTarget.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9816F6D52A49491E00A7A284 /* BaseTarget.swift */; };
 		9816F6D92A49495500A7A284 /* Moya in Frameworks */ = {isa = PBXBuildFile; productRef = 9816F6D82A49495500A7A284 /* Moya */; };
 		9816F6DB2A49495500A7A284 /* RxMoya in Frameworks */ = {isa = PBXBuildFile; productRef = 9816F6DA2A49495500A7A284 /* RxMoya */; };
@@ -221,6 +222,7 @@
 		3D97A4452ABB1A6D00AAECCC /* AccountCenterSectionModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccountCenterSectionModel.swift; sourceTree = "<group>"; };
 		3D97A4472ABBB93200AAECCC /* AccountMenuTVCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccountMenuTVCell.swift; sourceTree = "<group>"; };
 		3D97A4492ABBB98000AAECCC /* TabelView+Protocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "TabelView+Protocol.swift"; sourceTree = "<group>"; };
+		3D97A44B2ABC655F00AAECCC /* LegalFooterReuseableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LegalFooterReuseableView.swift; sourceTree = "<group>"; };
 		9816F6D52A49491E00A7A284 /* BaseTarget.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseTarget.swift; sourceTree = "<group>"; };
 		9816F6E12A494A5900A7A284 /* BaseAPIService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseAPIService.swift; sourceTree = "<group>"; };
 		9816F6E82A494AC800A7A284 /* amplifyconfiguration.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = amplifyconfiguration.json; sourceTree = "<group>"; };
@@ -770,6 +772,7 @@
 				B19563512AA471E40032FE25 /* CheckedView.swift */,
 				B22222662A55F83300A2B7CB /* PrivacyElementView.swift */,
 				B23B24EC2A8C528800F179A7 /* LegalView.swift */,
+				3D97A44B2ABC655F00AAECCC /* LegalFooterReuseableView.swift */,
 				B2D1309D2A4B4C5800538EFB /* BottomButton.swift */,
 				B240FB362A9A7FFC00F365BB /* ContourView.swift */,
 				B2F3D3632A511F2700FB05E1 /* SubButton.swift */,
@@ -1420,6 +1423,7 @@
 				B1B8C20E2AAC74DD00B9E1C3 /* SearchStep.swift in Sources */,
 				B240D71E2A9F107600DF171D /* UploadVC.swift in Sources */,
 				04C835FF2A2B5FEF00731E3E /* BannerFooterReusableView.swift in Sources */,
+				3D97A44C2ABC655F00AAECCC /* LegalFooterReuseableView.swift in Sources */,
 				B195635A2AA4A54C0032FE25 /* Int64+Extension.swift in Sources */,
 				B1A301972A5437DB003834E6 /* ProfileSettingVC.swift in Sources */,
 				B18DFEDF2A51B53B00CF27FE /* EmailCheckVM.swift in Sources */,

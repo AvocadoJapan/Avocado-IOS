@@ -344,6 +344,54 @@ extension MainAPI: BaseTarget {
                             "name": "데모 상품",
                             "price": "770,000원",
                             "location": "서울시 종로구"
+                          },
+                          {
+                            "productId": "random-uuid-2201",
+                            "mainImageId": "random-uuid-2201",
+                            "imageIds": ["sample21", "sample22"],
+                            "name": "데모 상품",
+                            "price": "770,000원",
+                            "location": "서울시 종로구"
+                          },
+                          {
+                            "productId": "random-uuid-2201",
+                            "mainImageId": "random-uuid-2201",
+                            "imageIds": ["sample21", "sample22"],
+                            "name": "데모 상품",
+                            "price": "770,000원",
+                            "location": "서울시 종로구"
+                          },
+                          {
+                            "productId": "random-uuid-2201",
+                            "mainImageId": "random-uuid-2201",
+                            "imageIds": ["sample21", "sample22"],
+                            "name": "데모 상품",
+                            "price": "770,000원",
+                            "location": "서울시 종로구"
+                          },
+                          {
+                            "productId": "random-uuid-2201",
+                            "mainImageId": "random-uuid-2201",
+                            "imageIds": ["sample21", "sample22"],
+                            "name": "데모 상품",
+                            "price": "770,000원",
+                            "location": "서울시 종로구"
+                          },
+                          {
+                            "productId": "random-uuid-2201",
+                            "mainImageId": "random-uuid-2201",
+                            "imageIds": ["sample21", "sample22"],
+                            "name": "데모 상품",
+                            "price": "770,000원",
+                            "location": "서울시 종로구"
+                          },
+                          {
+                            "productId": "random-uuid-2201",
+                            "mainImageId": "random-uuid-2201",
+                            "imageIds": ["sample21", "sample22"],
+                            "name": "데모 상품",
+                            "price": "770,000원",
+                            "location": "서울시 종로구"
                           }
                     ]
                     }

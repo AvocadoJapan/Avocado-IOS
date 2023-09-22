@@ -28,10 +28,12 @@ final class AccountCenterVC: BaseVC {
         $0.font = UIFont.systemFont(ofSize: 25, weight: .heavy)
     }
     
-    private lazy var accountMenuTV = UITableView(frame: .zero, style: .plain).then {
+    private lazy var accountMenuTV = UITableView(frame: .zero, style: .insetGrouped).then {
         $0.showsVerticalScrollIndicator = false
         $0.isPagingEnabled = true
-        $0.backgroundColor = .systemGray6
+        
+        $0.backgroundColor = .white
+        $0.separatorStyle = .none
     }
     
     private let viewModel: AccountCenterVM
@@ -58,14 +60,14 @@ final class AccountCenterVC: BaseVC {
     }
     
     override func setLayout() {
-        [logo, titleLabel].forEach {
+        [logo, titleLabel, accountMenuTV].forEach {
             view.addSubview($0)
         }
     }
     
     override func setConstraint() {
         logo.snp.makeConstraints {
-            $0.top.equalTo(view.safeAreaLayoutGuide).offset(20)
+            $0.top.equalTo(view.safeAreaLayoutGuide).offset(5)
             $0.left.equalToSuperview().offset(30)
             $0.size.equalTo(55)
         }
@@ -74,6 +76,11 @@ final class AccountCenterVC: BaseVC {
             $0.centerX.equalToSuperview()
             $0.top.equalTo(logo.snp.bottom).offset(10)
             $0.left.equalToSuperview().offset(30)
+        }
+        
+        accountMenuTV.snp.makeConstraints {
+            $0.top.equalTo(titleLabel.snp.bottom)
+            $0.left.right.bottom.equalToSuperview()
         }
     }
     
@@ -90,13 +97,18 @@ final class AccountCenterVC: BaseVC {
                 
                 return cell
             }
-//            titleForHeaderInSection {}
         )
+        
+        output.dataSectionPublish
+            .bind(to: accountMenuTV.rx.items(dataSource: dataSource))
+            .disposed(by: disposeBag)
     }
 }
 
 extension AccountCenterVC: UITableViewDelegate {
-    
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        return 50
+    }
 }
 
 // MARK: - Preview 관련

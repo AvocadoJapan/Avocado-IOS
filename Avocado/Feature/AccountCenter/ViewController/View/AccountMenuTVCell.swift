@@ -17,7 +17,7 @@ final class AccountMenuTVCell: UITableViewCell, TableCellIdentifierable {
     
     private lazy var titleLabel = UILabel().then {
         $0.text = "구글 연동하기"
-        $0.font = .boldSystemFont(ofSize: 16)
+        $0.font = .boldSystemFont(ofSize: 14)
         $0.textColor = .darkGray
     }
     
@@ -43,6 +43,7 @@ final class AccountMenuTVCell: UITableViewCell, TableCellIdentifierable {
     
     func setProperty() {
         selectionStyle = .none
+        backgroundColor = .systemGray6
     }
     
     func setLayout() {
@@ -76,7 +77,7 @@ final class AccountMenuTVCell: UITableViewCell, TableCellIdentifierable {
 import SwiftUI
 struct AccountMenuTVCellPreview:PreviewProvider {
     static var previews: some View {
-        return AccountMenuTVCell().toPreview().previewLayout(.fixed(width: 414, height: 50))
+        return AccountMenuTVCell().toPreview().previewLayout(.fixed(width: 314, height: 50))
     }
 }
 #endif

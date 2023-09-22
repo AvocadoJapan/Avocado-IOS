@@ -182,7 +182,7 @@ final class MainVC: BaseVC {
                     
                     return footerView
                 }
-                return UICollectionReusableView()  // 기본적인 reusable view를 반환합니다. 필요하다면 다른 view를 반환할 수도 있습니다.
+                return UICollectionReusableView()  // 기본적인 reusable view를 반환합니다.
             }
         )
         
