@@ -142,15 +142,23 @@ final class MainVC: BaseVC {
         
 //        viewModel.input.actionSingleCategoryRelay.accept(string)
         
+        productGroupCV
+            .rx
+            .modelSelected(ProductDataSection.Item.self)
+            .subscribe { [weak self] item in
+                self?.viewModel.input.actionSingleProductRelay.accept(item)
+            }
+            .disposed(by: disposeBag)
+        
         let dataSource = RxCollectionViewSectionedReloadDataSource<ProductDataSection>(
             configureCell: { dataSource, collectionView, indexPath, item in
                 let cell = collectionView.dequeueReusableCell(withReuseIdentifier: ProductCVCell.identifier, for: indexPath) as! ProductCVCell
                                
-                cell.productSelectedRelay
-                    .subscribe(onNext: { [weak self] in
-                        self?.viewModel.input.actionSingleProductRelay.accept(item)
-                    })
-                    .disposed(by: cell.disposeBag)
+//                cell.productSelectedRelay
+//                    .subscribe(onNext: { [weak self] in
+//                        self?.viewModel.input.actionSingleProductRelay.accept(item)
+//                    })
+//                    .disposed(by: cell.disposeBag)
     
                 cell.config(product: item)
                 return cell

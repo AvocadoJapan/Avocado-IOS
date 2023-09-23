@@ -83,15 +83,23 @@ final class SingleCategoryVC: BaseVC {
         
         productGroupCV.rx.setDelegate(self).disposed(by: disposeBag)
         
+        productGroupCV
+            .rx
+            .modelSelected(ProductDataSection.Item.self)
+            .subscribe { [weak self] item in
+                self?.viewModel.input.actionSingleProductRelay.accept(item)
+            }
+            .disposed(by: disposeBag)
+        
         let dataSource = RxCollectionViewSectionedReloadDataSource<ProductDataSection>(
             configureCell: { dataSource, collectionView, indexPath, item in
                 let cell = collectionView.dequeueReusableCell(withReuseIdentifier: ProductCVCell.identifier, for: indexPath) as! ProductCVCell
                 
-                cell.productSelectedRelay
-                    .subscribe(onNext: { [weak self] in
-                        self?.viewModel.input.actionSingleProductRelay.accept(item)
-                    })
-                    .disposed(by: cell.disposeBag)
+//                cell.productSelectedRelay
+//                    .subscribe(onNext: { [weak self] in
+//                        self?.viewModel.input.actionSingleProductRelay.accept(item)
+//                    })
+//                    .disposed(by: cell.disposeBag)
 
                 cell.config(product: item)
                 return cell
@@ -128,11 +136,8 @@ extension SingleCategoryVC: UICollectionViewDelegateFlowLayout {
     
     // productGroupCV의 푸터 크기 정의
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, referenceSizeForFooterInSection section: Int) -> CGSize {
-        if collectionView == productGroupCV {
-            return CGSize(width: collectionView.frame.width, height: 200)
-        }
         
-        return CGSize(width: 0, height: 0)
+        return CGSize(width: collectionView.frame.width, height: 200)
     }
 }
 
