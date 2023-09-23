@@ -174,20 +174,15 @@ final class UploadVC: BaseVC {
                 
                 let cell = collectionView.dequeueReusableCell(withReuseIdentifier: ImageCVCell.identifier, for: indexPath) as! ImageCVCell
                 
-                cell.delegate = self
                 cell.config(image: item, indexPath: indexPath.row)
                 
-//                Logger.d("\(indexPath.row)")
-//
-//                cell.xButton
-//                    .rx
-//                    .tap
-//                    .map {
-//                        return  indexPath.row }
-//                    .debug("map")
-//                    .bind(to: self.viewModel.input.removeImageAtIndexRelay)
-//                    .disposed(by: DisposeBag())
-    
+                // 삭제 버튼 클릭 시
+                cell.deleteButtonTapObservable
+                    .subscribe(onNext: { [weak self] _ in
+                        self?.viewModel.input.removeImageAtIndexRelay.accept(indexPath.row)
+                    })
+                    .disposed(by: cell.disposeBag)
+                
                 return cell
             }
         )
@@ -204,7 +199,7 @@ final class UploadVC: BaseVC {
         // scrollView에 탭이 감지되면 키보드를 내립니다
         let tapGesture = UITapGestureRecognizer()
         scrollView.addGestureRecognizer(tapGesture)
-
+        
         tapGesture.rx.event
             .bind { [weak self] _ in
                 self?.view.endEditing(true)
@@ -340,12 +335,6 @@ extension UploadVC: PHPickerViewControllerDelegate {
 extension UploadVC: UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         return CGSize(width: 100, height: 100)
-    }
-}
-
-extension UploadVC: AvocadoCellTapDelegate {
-    func touchEvent(indexPath: Int) {
-        self.viewModel.input.removeImageAtIndexRelay.accept(indexPath)
     }
 }
 

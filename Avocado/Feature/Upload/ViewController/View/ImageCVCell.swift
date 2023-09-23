@@ -10,10 +10,6 @@ import RxSwift
 import RxRelay
 import RxCocoa
 
-protocol AvocadoCellTapDelegate: AnyObject {
-    func touchEvent(indexPath: Int)
-}
-
 /**
  * ##화면 명: 상품 셀
  */
@@ -25,8 +21,6 @@ final class ImageCVCell: UICollectionViewCell, CollectionCellIdentifierable {
     
     var indexPath: Int?
     
-    weak var delegate: AvocadoCellTapDelegate?
-    
     private lazy var productImageView = UIImageView().then {
         $0.backgroundColor = .systemGray6
         $0.layer.cornerRadius = 10
@@ -34,20 +28,23 @@ final class ImageCVCell: UICollectionViewCell, CollectionCellIdentifierable {
         $0.contentMode = .scaleAspectFill
     }
     
-    public lazy var xButton = UIButton().then {
+    public lazy var deleteButton = UIButton().then {
         let xSymbol = UIImage(systemName: "xmark.circle.fill")?.withRenderingMode(.alwaysTemplate)
         $0.setImage(xSymbol, for: .normal)
         $0.tintColor = .white
         $0.isHidden = true
     }
     
+    public var deleteButtonTapObservable: Observable<Void> {
+        return deleteButton.rx.tap.asObservable()
+    }
+        
+    
     override init(frame: CGRect) {
 
         super.init(frame: frame)
         setLayout()
         setConstraints()
-        
-        xButton.addTarget(self, action: #selector(xButtonTapped), for: .touchUpInside)
     }
     
     required init?(coder: NSCoder) {
@@ -56,7 +53,7 @@ final class ImageCVCell: UICollectionViewCell, CollectionCellIdentifierable {
     
     private func setLayout() {
         addSubview(productImageView)
-        addSubview(xButton)
+        addSubview(deleteButton)
     }
     
     private func setConstraints() {
@@ -65,35 +62,29 @@ final class ImageCVCell: UICollectionViewCell, CollectionCellIdentifierable {
             $0.size.equalTo(productImageView.snp.width)
         }
         
-        xButton.snp.makeConstraints {
+        deleteButton.snp.makeConstraints {
             $0.top.right.equalToSuperview()
             $0.size.equalTo(30)
         }
     }
     
     private func updateXButtonVisibility() {
-        xButton.isHidden = (productImageView.image == nil)
+        deleteButton.isHidden = (productImageView.image == nil)
     }
 
     func config(image: UIImage, indexPath: Int) {
         productImageView.image = image
         self.indexPath = indexPath
-        xButton.tag = indexPath
+        deleteButton.tag = indexPath
         updateXButtonVisibility()
     }
     
     override func prepareForReuse() {
+        super.prepareForReuse()
         productImageView.image = nil
-        self.indexPath = nil
+        indexPath = nil
         updateXButtonVisibility()
-    }
-    
-    @objc func xButtonTapped() {
-//        productImageView.image = nil
-//        self.indexPath = nil
-//        updateXButtonVisibility()
-        
-        delegate?.touchEvent(indexPath: xButton.tag)
+        disposeBag = DisposeBag()
     }
 }
 
