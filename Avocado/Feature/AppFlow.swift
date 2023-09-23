@@ -37,8 +37,6 @@ final class AppFlow: Flow {
             return navigateToMainWithTabFlow() // 메인화면이동
         case .authIsRequired:
             return navigateToAuthFlow() // 인증화면이동
-        case .accountCenterIsRequired:
-            return navigateToAccountCenterFlow()
             
         case .userLogout:
             return .none
@@ -88,19 +86,6 @@ final class AppFlow: Flow {
         })
         
         return .one(flowContributor: .contribute(withNextPresentable: tabFlow, withNextStepper: OneStepper(withSingleStep: TabStep.mainTabIsRequired)))
-    }
-    
-    /**
-     * - description  계정센터 이동 플로우 함수
-     */
-    private func navigateToAccountCenterFlow() -> FlowContributors {
-        let flow = AccountCenterFlow(root: BaseNavigationVC())
-        
-        Flows.use(flow, when: .created) { [unowned self] root in
-            self.window.rootViewController = root
-        }
-        
-        return .one(flowContributor: .contribute(withNextPresentable: flow, withNextStepper: OneStepper(withSingleStep: AccountCenterStep.accountCenterIsRequired)))
     }
     
     

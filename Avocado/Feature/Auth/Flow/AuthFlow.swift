@@ -52,9 +52,21 @@ final class AuthFlow: Flow {
         case .regionIsRequired:
             return navigateToRegionSettingScreen()
         case .accountCenterIsRequired:
-            return .end(forwardToParentFlowWithStep: AppStep.accountCenterIsRequired)
+            return presentAccountCenter()
         default: return .none
         }
+    }
+    
+    private func presentAccountCenter() -> FlowContributors {
+        let flow = AccountCenterFlow(root: BaseNavigationVC())
+        
+        Flows.use(flow, when: .ready) { [weak self] root in
+            
+            root.modalPresentationStyle = .automatic
+            self?.rootViewController.present(root, animated: true)
+        }
+        
+        return .one(flowContributor: .contribute(withNextPresentable: flow, withNextStepper: OneStepper(withSingleStep: AccountCenterStep.accountCenterIsRequired)))
     }
     
     private func navigateToWelcomScreen() -> FlowContributors {

@@ -24,6 +24,10 @@ final class AccountCenterFlow: Flow {
         Logger.d("MainFlow init")
     }
     
+    deinit {
+        Logger.i("deinit \(self)")
+    }
+    
     private var rootViewController = BaseNavigationVC()
     
     func navigate(to step: Step) -> FlowContributors {
@@ -56,6 +60,7 @@ final class AccountCenterFlow: Flow {
         rootViewController.view.fadeOut()
         // 커스텀 애니메이션 적용시 animated: false 로 설정
         rootViewController.setViewControllers([viewController], animated: false)
+        
         
         return .one(flowContributor: .contribute(withNextPresentable: viewController, withNextStepper: viewModel))
     }
