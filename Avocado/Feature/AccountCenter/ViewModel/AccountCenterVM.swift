@@ -23,6 +23,8 @@ final class AccountCenterVM: ViewModelType, Stepper {
     struct Input {
         // viewDidLoad를 감지하는 인스턴스
         let actionViewDidLoad = PublishRelay<Void>()
+        // 어떤 셀이 눌렸는지 감지하는 인스턴스
+        let actionTVCellRelay = PublishRelay<AccountCenterDataType>()
     }
     
     struct Output {
@@ -44,19 +46,24 @@ final class AccountCenterVM: ViewModelType, Stepper {
 
         input.actionViewDidLoad
             .map {
-                // 1. AccountCenterDataType 의 모든 케이스를 가져온후
-//                let allAccountCenterData: [AccountCenterData] = AccountCenterDataType.allCases.map { AccountCenterData(type: $0) }
-//                
-//                // 2. allAccountCenterData를 DataSection으로 가공합니다.
-//                let accountCenterDataSection = AccountCenterDataSection(items: allAccountCenterData)
-                
-                
-                
-//                Logger.d(accountCenterDataSection)
-                
                 return AccountCenterData.getDataList()
             }
             .bind(to: output.dataSectionPublish)
+            .disposed(by: disposeBag)
+        
+        // TVCell 클릭시 화면이동
+        input.actionTVCellRelay
+            .filter { type in
+                type == .findPassword ||
+                type == .confirmCodeUnvalid ||
+                type == .accountDelete ||
+                type == .accountHacked ||
+                type == .accountLocked
+            }
+            .subscribe(onNext: { [weak self] type in
+                Logger.d("type: \(type)")
+                self?.steps.accept(AccountCenterStep.emailIsRequired(type: type))
+            })
             .disposed(by: disposeBag)
         
         return output

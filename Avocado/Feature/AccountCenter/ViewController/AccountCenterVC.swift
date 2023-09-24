@@ -58,6 +58,14 @@ final class AccountCenterVC: BaseVC {
         viewModel.input.actionViewDidLoad.accept(())
     }
     
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        // 선택된 셀 해제
+        if let selectedIndexPath = accountMenuTV.indexPathForSelectedRow {
+            accountMenuTV.deselectRow(at: selectedIndexPath, animated: false)
+        }
+    }
+    
     override func setProperty() {
         view.backgroundColor = .white
         navigationController?.isNavigationBarHidden = true
@@ -97,6 +105,33 @@ final class AccountCenterVC: BaseVC {
         
         accountMenuTV.rx.setDelegate(self).disposed(by: disposeBag)
         
+        // 셀을 누를 경우 actionTVCellRelay에 타입전달
+        accountMenuTV
+            .rx
+            .modelSelected(AccountCenterDataSection.Item.self)
+            .subscribe { [weak self] item in
+                self?.viewModel.input.actionTVCellRelay.accept(item.element!.type)
+            }
+            .disposed(by: disposeBag)
+        
+        
+        // 아직 지원하지 않는 셀을 누를경우 SPIndicator 표시 후 셀 선택 해제
+        accountMenuTV.rx.modelSelected(AccountCenterDataSection.Item.self)
+            .filter { $0.type == .findEmail ||
+                $0.type == .code2FAUnvalid ||
+                $0.type == .signInError ||
+                $0.type == .signUpError }
+            .do(onNext: { [weak self] _ in
+                if let selectedIndexPath = self?.accountMenuTV.indexPathForSelectedRow {
+                    self?.accountMenuTV.deselectRow(at: selectedIndexPath, animated: false)
+                }
+            })
+            .subscribe(onNext: { _ in
+                SPIndicator.present(title: "앗, 잠시만요", message: "지원하지 않는 기능이에요", preset: .error, haptic: .error)
+            })
+            .disposed(by: disposeBag)
+        
+        // 바인딩을 위한 데이터소스 정의
         let dataSource = RxTableViewSectionedReloadDataSource<AccountCenterDataSection>(
             configureCell: { dataSource, tableView, indexPath, item in
                 let cell = tableView.dequeueReusableCell(withIdentifier: AccountMenuTVCell.identifier, for: indexPath) as! AccountMenuTVCell
@@ -110,6 +145,7 @@ final class AccountCenterVC: BaseVC {
             }
         )
         
+        // dataSectionPublish를 테이블뷰에 바인딩
         output.dataSectionPublish
             .bind(to: accountMenuTV.rx.items(dataSource: dataSource))
             .disposed(by: disposeBag)

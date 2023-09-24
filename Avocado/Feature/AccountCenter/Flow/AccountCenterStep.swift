@@ -25,6 +25,7 @@ import RxSwift
 //    case accountDeleteIsRequired
     
     // 각종 화면별
+    case emailIsRequired(type: AccountCenterDataType)
     case emailCheckIsRequired
     case passwordIsRequired
     case newPasswordIsRequired

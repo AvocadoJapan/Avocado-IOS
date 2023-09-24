@@ -66,6 +66,8 @@ final class ACPasswordVC: BaseVC {
     
     override func setProperty() {
         view.backgroundColor = .white
+        
+        self.navigationController?.isNavigationBarHidden = false
     }
     
     override func setLayout() {
@@ -77,7 +79,7 @@ final class ACPasswordVC: BaseVC {
     override func setConstraint() {
         titleLabel.snp.makeConstraints {
             $0.centerX.equalToSuperview()
-            $0.top.equalToSuperview().offset(30)
+            $0.top.equalTo(view.safeAreaLayoutGuide).offset(20)
             $0.leading.trailing.equalToSuperview().inset(30)
         }
         
@@ -109,14 +111,16 @@ final class ACPasswordVC: BaseVC {
     
     override func bindUI() {
         //키보드 버튼 애니메이션
-        RxKeyboard.instance
-                .visibleHeight
-                .skip(1)
-                .drive(onNext: { [weak self] height in
-                    guard let self = self else { return }
-                    self.confirmButton.keyboardMovement(from:self.view, height: height)
-                })
-                .disposed(by: disposeBag)
+        RxKeyboard.instance.visibleHeight
+            .do(onNext: { [weak self] height in
+                self?.navigationController?.setNavigationBarHidden(height > 0, animated: true)
+            })
+            .skip(1)
+            .drive(onNext: { [weak self] height in
+                guard let self = self else { return }
+                self.confirmButton.keyboardMovement(from: self.view, height: height)
+            })
+            .disposed(by: disposeBag)
     }
 }
 

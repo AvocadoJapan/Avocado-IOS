@@ -42,7 +42,7 @@ final class AccountMenuTVCell: UITableViewCell, TableCellIdentifierable {
     }
     
     func setProperty() {
-        selectionStyle = .none
+        selectionStyle = .default
         backgroundColor = .systemGray6
     }
     

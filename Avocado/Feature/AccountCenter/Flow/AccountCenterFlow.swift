@@ -37,13 +37,15 @@ final class AccountCenterFlow: Flow {
         switch step {
         case .accountCenterIsRequired: return navigateToAccountCenterScreen()
             
-        case .emailCheckIsRequired: return navigateToEmailScreen()
+        case .emailIsRequired(let type): return navigateToEmailScreen(type: type)
+        case .emailCheckIsRequired: return navigateToEmailCheckScreen()
         case .passwordIsRequired: return navigateToPasswordScreen()
         case .newPasswordIsRequired: return navigateToNewPasswordScreen()
         case .doneIsRequired: return navigateToDoneScreen()
         case .contactIsRequired: return navigateToContactScreen()
             
         case .errorOccurred(let error): return .none
+
         }
     }
     
@@ -60,7 +62,7 @@ final class AccountCenterFlow: Flow {
         return .one(flowContributor: .contribute(withNextPresentable: viewController, withNextStepper: viewModel))
     }
     
-    private func navigateToEmailScreen() -> FlowContributors {
+    private func navigateToEmailScreen(type: AccountCenterDataType) -> FlowContributors {
         let service = AccountCenterService()
         let viewModel = ACEmailVM(service: service)
         let viewController = ACEmailVC(viewModel: viewModel)
