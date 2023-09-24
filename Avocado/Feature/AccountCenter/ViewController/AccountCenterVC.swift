@@ -28,6 +28,14 @@ final class AccountCenterVC: BaseVC {
         $0.font = UIFont.systemFont(ofSize: 25, weight: .heavy)
     }
     
+    private lazy var descriptionLabel = UILabel().then {
+        $0.text = "계정관련 도움이 필요하신가요?"
+        $0.numberOfLines = 0
+        $0.textAlignment = .left
+        $0.textColor = .darkGray
+        $0.font = UIFont.systemFont(ofSize: 14, weight: .semibold)
+    }
+    
     private lazy var accountMenuTV = UITableView(frame: .zero, style: .insetGrouped).then {
         $0.showsVerticalScrollIndicator = false
         $0.isPagingEnabled = true
@@ -60,26 +68,27 @@ final class AccountCenterVC: BaseVC {
     }
     
     override func setLayout() {
-        [logo, titleLabel, accountMenuTV].forEach {
+        [titleLabel, descriptionLabel,  accountMenuTV].forEach {
             view.addSubview($0)
         }
     }
     
     override func setConstraint() {
-        logo.snp.makeConstraints {
-            $0.top.equalTo(view.safeAreaLayoutGuide).offset(5)
-            $0.left.equalToSuperview().offset(30)
-            $0.size.equalTo(55)
-        }
         
         titleLabel.snp.makeConstraints {
             $0.centerX.equalToSuperview()
-            $0.top.equalTo(logo.snp.bottom).offset(10)
+            $0.top.equalToSuperview().offset(30)
+            $0.left.equalToSuperview().offset(30)
+        }
+        
+        descriptionLabel.snp.makeConstraints {
+            $0.centerX.equalToSuperview()
+            $0.top.equalTo(titleLabel.snp.bottom).offset(10)
             $0.left.equalToSuperview().offset(30)
         }
         
         accountMenuTV.snp.makeConstraints {
-            $0.top.equalTo(titleLabel.snp.bottom)
+            $0.top.equalTo(descriptionLabel.snp.bottom)
             $0.left.right.bottom.equalToSuperview()
         }
     }
@@ -96,6 +105,9 @@ final class AccountCenterVC: BaseVC {
                 cell.configCell(data: item)
                 
                 return cell
+            }, // configureCell
+            titleForHeaderInSection: { dataSource, index in
+                return dataSource.sectionModels[index].title
             }
         )
         

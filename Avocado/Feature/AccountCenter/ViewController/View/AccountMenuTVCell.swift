@@ -61,6 +61,8 @@ final class AccountMenuTVCell: UITableViewCell, TableCellIdentifierable {
         arrowImageView.snp.makeConstraints {
             $0.right.equalToSuperview().inset(15)
             $0.centerY.equalToSuperview()
+            $0.width.equalTo(10)
+            $0.height.equalTo(15)
         }
     }
     

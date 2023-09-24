@@ -281,11 +281,10 @@ enum AccountCenterDataType: CaseCountable {
     case findEmail
     case findPassword
     
-    case accountLocked
     case confirmCodeUnvalid
     case code2FAUnvalid
     
-    case contactCustomerCenter
+    case accountLocked
     case accountHacked
     case accountDelete
     
@@ -293,10 +292,11 @@ enum AccountCenterDataType: CaseCountable {
         switch self {
         case .findEmail: return "이메일이 기억나지 않아요"
         case .findPassword: return "비밀번호가 기억나지 않아요"
-        case .accountLocked: return "계정이 비활성화 되었어요"
+            
         case .confirmCodeUnvalid: return "확인코드가 유효하지 않아요"
         case .code2FAUnvalid: return "2FA인증에 접근할 수 없어요"
-        case .contactCustomerCenter: return "고객센터"
+            
+        case .accountLocked: return "계정이 비활성화 되었어요"
         case .accountHacked: return "계정이 해킹된것 같아요"
         case .accountDelete: return "계정을 지우고 싶어요"
         }
@@ -308,6 +308,10 @@ enum AccountCenterDataType: CaseCountable {
         case .accountDelete: return true
         default: return false
         }
+    }
+    
+    func getData() -> AccountCenterData {
+        AccountCenterData(type: self)
     }
 }
 

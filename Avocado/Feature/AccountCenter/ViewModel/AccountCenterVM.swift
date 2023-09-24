@@ -45,14 +45,16 @@ final class AccountCenterVM: ViewModelType, Stepper {
         input.actionViewDidLoad
             .map {
                 // 1. AccountCenterDataType 의 모든 케이스를 가져온후
-                let allAccountCenterData: [AccountCenterData] = AccountCenterDataType.allCases.map { AccountCenterData(type: $0) }
+//                let allAccountCenterData: [AccountCenterData] = AccountCenterDataType.allCases.map { AccountCenterData(type: $0) }
+//                
+//                // 2. allAccountCenterData를 DataSection으로 가공합니다.
+//                let accountCenterDataSection = AccountCenterDataSection(items: allAccountCenterData)
                 
-                // 2. allAccountCenterData를 DataSection으로 가공합니다.
-                let accountCenterDataSection = AccountCenterDataSection(items: allAccountCenterData)
                 
-                Logger.d(accountCenterDataSection)
                 
-                return [accountCenterDataSection]
+//                Logger.d(accountCenterDataSection)
+                
+                return AccountCenterData.getDataList()
             }
             .bind(to: output.dataSectionPublish)
             .disposed(by: disposeBag)
