@@ -1,5 +1,5 @@
 //
-//  EmailCheckVC.swift
+//  ACEmailCheckVC.swift
 //  Avocado
 //
 //  Created by Jayden Jang on 2023/09/24.
@@ -13,7 +13,7 @@ import RxSwift
 import Then
 import RxKeyboard
 
-final class EmailCheckVC: BaseVC {
+final class ACEmailCheckVC: BaseVC {
     
     private lazy var titleLabel = UILabel().then {
         $0.text = "앗, 잠시만요"
@@ -52,14 +52,7 @@ final class EmailCheckVC: BaseVC {
     
     private lazy var reqNewCodeButton: SubButton = SubButton(text: "인증번호 다시 보내기")
     
-    private lazy var otherEmailButton: SubButton = SubButton(text: "다른 이메일로 인증하기")
-    
-    private lazy var accountCenterButton: SubButton = SubButton(text: "계정 센터")
-    
-    let viewModel: EmailCheckVM
-    
-    init(viewModel: EmailCheckVM) {
-        self.viewModel = viewModel
+    init() {
         super.init(nibName: nil, bundle: nil)
     }
     
@@ -70,7 +63,6 @@ final class EmailCheckVC: BaseVC {
     
     override func setProperty() {
         view.backgroundColor = .white
-        self.navigationController?.isNavigationBarHidden = true
     }
     
     override func setLayout() {
@@ -78,7 +70,7 @@ final class EmailCheckVC: BaseVC {
             view.addSubview($0)
         }
         
-        [reqNewCodeButton, otherEmailButton, accountCenterButton].forEach {
+        [reqNewCodeButton].forEach {
             subButtonStackView.addArrangedSubview($0)
         }
     }
@@ -86,7 +78,7 @@ final class EmailCheckVC: BaseVC {
     override func setConstraint() {
         titleLabel.snp.makeConstraints {
             $0.centerX.equalToSuperview()
-            $0.top.equalTo(view.safeAreaLayoutGuide).offset(20)
+            $0.top.equalToSuperview().offset(30)
             $0.leading.trailing.equalToSuperview().inset(30)
         }
         
@@ -120,96 +112,8 @@ final class EmailCheckVC: BaseVC {
         }
     }
     
+    
     override func bindUI() {
-        let output = viewModel.transform(input: viewModel.input)
-        
-        viewModel.input.userEmailRelay
-            .bind(to: emailLabel.rx.text)
-            .disposed(by: disposeBag)
-        
-        confirmCodeInput
-            .userInput
-            .bind(to: viewModel.input.confirmCodeRelay)
-            .disposed(by: disposeBag)
-        
-        // 이메일 재 전송
-        output
-            .successEmailResendPublish
-            .asSignal()
-            .emit(onNext: { _ in
-//                let alertController = UIAlertController(title: "", message: "인증번호를 다시 보냈습니다!", preferredStyle: .alert)
-//                alertController.addAction(UIAlertAction(title: "확인", style: .default))
-//
-//                self?.present(alertController, animated: true)
-                
-                SPIndicator.present(title: "성공", message: "인증번호를 다시 보냈습니다", preset: .done, haptic: .success)
-            })
-            .disposed(by: disposeBag)
-        
-        // 다른 이메일로 인증
-        output
-            .successDeleteTepmAccount
-            .asSignal()
-            .emit(onNext: { [weak self] _ in
-                guard let self = self else { return }
-                self.viewModel.steps.accept(AuthStep.otherEmailIsRequired(oldEmail: self.viewModel.input.userEmailRelay.value))
-            })
-            .disposed(by: disposeBag)
-        
-        // 이메일 인증 성공
-        output
-            .successEmailCheckPublish
-            .asSignal()
-            .emit(onNext: { [weak self] _ in
-                self?.viewModel.steps.accept(AuthStep.regionIsRequired)
-            })
-            .disposed(by: disposeBag)
-        
-        output
-            .errEventPublish
-            .asSignal()
-            .emit(onNext: { err in
-//                let alertController = UIAlertController(title: "", message: err.errorDescription, preferredStyle: .alert)
-//                alertController.addAction(UIAlertAction(title: "확인", style: .default))
-//
-//                self?.present(alertController, animated: true)
-                SPIndicator.present(title: "알 수 없는 에러", message: err.errorDescription, preset: .error, haptic: .error)
-            })
-            .disposed(by: disposeBag)
-        
-        confirmButton
-            .rx
-            .tap
-            .asDriver()
-            .throttle(.seconds(3), latest: false)
-            .drive(onNext: { [weak self] void in
-                self?.viewModel.input.actionConfirmSignUpCodeRelay.accept(void)
-                /* Mocking
-                self?.viewModel.steps.accept(AuthStep.regionIsRequired)
-                 */
-            })
-            .disposed(by: disposeBag)
-        
-        reqNewCodeButton
-            .rx
-            .tap
-            .asDriver()
-            .throttle(.seconds(3), latest: false)
-            .drive(onNext: { [weak self] void in
-                self?.viewModel.input.actionResendSignUpCodeRelay.accept(void)
-            })
-            .disposed(by: disposeBag)
-        
-        otherEmailButton
-            .rx
-            .tap
-            .asDriver()
-            .throttle(.seconds(3), latest: false)
-            .drive(onNext: { [weak self] _ in
-                self?.viewModel.input.actionOtherEmailSignUpRelay.accept(())
-            })
-            .disposed(by: disposeBag)
-        
         //키보드 버튼 애니메이션
         RxKeyboard.instance
                 .visibleHeight
@@ -219,22 +123,7 @@ final class EmailCheckVC: BaseVC {
                     self.confirmButton.keyboardMovement(from:self.view, height: height)
                 })
                 .disposed(by: disposeBag)
-                
-        // Notification
-        NotificationCenter
-                .default
-                .rx
-                .notification(Notification.Name("reloadEmailCheck"))
-                .withUnretained(self)
-                .bind { [weak self] (_, notification) in
-                    guard let self = self else { return }
-                    let newEmail = notification.object as! String
-                    self.viewModel.input.userEmailRelay.accept(newEmail)
-                }
-                .disposed(by: disposeBag)
-                
     }
-
 }
 
 // MARK: - Preview 관련
@@ -242,9 +131,9 @@ final class EmailCheckVC: BaseVC {
 import SwiftUI
 import RxSwift
 import SPIndicator
-struct EmailCheckVCPreview: PreviewProvider {
+struct ACEmailCheckVCPreview: PreviewProvider {
     static var previews: some View {
-        return EmailCheckVC(viewModel: EmailCheckVM(service: AuthService(), email: "", password: "")).toPreview()
+        return ACEmailCheckVC().toPreview()
     }
 }
 #endif

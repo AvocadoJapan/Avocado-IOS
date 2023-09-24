@@ -16,11 +16,6 @@ import RxDataSources
 
 final class AccountCenterVC: BaseVC {
     
-    private lazy var logo = UIImageView().then {
-        $0.image = UIImage(named: "logo_avocado")
-        $0.contentMode = .scaleAspectFit
-    }
-    
     private lazy var titleLabel = UILabel().then {
         $0.text = "계정 센터"
         $0.numberOfLines = 0
