@@ -34,6 +34,12 @@ struct AccountCenterData {
         ])
         sections.append(unvalidSection)
         
+        let errorSection = AccountCenterDataSection(title: "에러 관련", items: [
+            AccountCenterDataType.signInError.getData(),
+            AccountCenterDataType.signUpError.getData(),
+        ])
+        sections.append(errorSection)
+        
         let accountSection = AccountCenterDataSection(title: "계정지원 관련", items: [
             AccountCenterDataType.accountLocked.getData(),
             AccountCenterDataType.accountHacked.getData(),

@@ -88,7 +88,7 @@ final class AccountCenterVC: BaseVC {
         }
         
         accountMenuTV.snp.makeConstraints {
-            $0.top.equalTo(descriptionLabel.snp.bottom)
+            $0.top.equalTo(descriptionLabel.snp.bottom).offset(15)
             $0.left.right.bottom.equalToSuperview()
         }
     }
