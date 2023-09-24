@@ -19,7 +19,8 @@ final class ACNewPasswordVC: BaseVC {
         $0.text = "비빌번호 설정"
         $0.numberOfLines = 1
         $0.textAlignment = .left
-        $0.font = UIFont.systemFont(ofSize: 25, weight: .heavy)
+        $0.font = UIFont.systemFont(ofSize: 25,
+                                    weight: .heavy)
     }
     
     private lazy var inputField = UIStackView().then {
@@ -45,7 +46,8 @@ final class ACNewPasswordVC: BaseVC {
         $0.numberOfLines = 1
         $0.textAlignment = .left
         $0.textColor = .darkGray
-        $0.font = UIFont.systemFont(ofSize: 14, weight: .semibold)
+        $0.font = UIFont.systemFont(ofSize: 14,
+                                    weight: .semibold)
     }
     
     private lazy var descriptionLabel = UILabel().then {
@@ -53,11 +55,17 @@ final class ACNewPasswordVC: BaseVC {
         $0.numberOfLines = 0
         $0.textAlignment = .left
         $0.textColor = .darkGray
-        $0.font = UIFont.systemFont(ofSize: 14, weight: .semibold)
+        $0.font = UIFont.systemFont(ofSize: 14,
+                                    weight: .semibold)
     }
     
-    init() {
-        super.init(nibName: nil, bundle: nil)
+    private let viewModel: ACNewPasswordVM
+    
+    init(viewModel: ACNewPasswordVM) {
+        self.viewModel = viewModel
+        
+        super.init(nibName: nil,
+                   bundle: nil)
     }
     
     required init?(coder: NSCoder) {
@@ -97,13 +105,7 @@ final class ACNewPasswordVC: BaseVC {
             $0.top.equalTo(emailLabel.snp.bottom).offset(5)
             $0.leading.trailing.equalToSuperview().inset(30)
         }
-
-        passwordInput.snp.makeConstraints {
-            $0.centerX.equalToSuperview()
-            $0.top.equalTo(descriptionLabel.snp.bottom).offset(30)
-            $0.leading.equalToSuperview().offset(20)
-        }
-
+        
         confirmButton.snp.makeConstraints {
             $0.centerX.equalToSuperview()
             $0.bottom.equalTo(view.safeAreaLayoutGuide).inset(20)
@@ -113,8 +115,7 @@ final class ACNewPasswordVC: BaseVC {
         // FIXME : 좌우 같은 인셋을 주지 못하는 문제
         inputField.snp.makeConstraints {
             $0.top.equalTo(descriptionLabel.snp.bottom).offset(20)
-            $0.trailing.equalToSuperview().inset(20)
-            $0.leading.equalToSuperview()
+            $0.horizontalEdges.equalToSuperview().inset(20)
         }
     }
     
@@ -139,7 +140,10 @@ import RxSwift
 import SPIndicator
 struct ACNewPasswordVCPreview: PreviewProvider {
     static var previews: some View {
-        return ACNewPasswordVC().toPreview()
+        let service = AccountCenterService()
+        let viewModel = ACNewPasswordVM(service: service)
+        
+        return ACNewPasswordVC(viewModel: viewModel).toPreview()
     }
 }
 #endif

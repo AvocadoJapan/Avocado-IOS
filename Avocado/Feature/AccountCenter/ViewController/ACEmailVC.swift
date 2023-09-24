@@ -41,7 +41,10 @@ final class ACEmailVC: BaseVC {
     
     private lazy var confirmButton = BottomButton(text: "확인")
     
-    init() {
+    private let viewModel: ACEmailVM
+    
+    init(viewModel: ACEmailVM) {
+        self.viewModel = viewModel
         super.init(nibName: nil,
                    bundle: nil)
     }
@@ -95,7 +98,10 @@ import RxSwift
 import SPIndicator
 struct ACEmailVCPreview: PreviewProvider {
     static var previews: some View {
-        return ACEmailVC().toPreview()
+        let service = AccountCenterService()
+        let viewModel = ACEmailVM(service: service)
+        
+        return ACEmailVC(viewModel: viewModel).toPreview()
     }
 }
 #endif

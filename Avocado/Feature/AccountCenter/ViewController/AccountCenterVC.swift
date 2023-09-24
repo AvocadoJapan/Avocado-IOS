@@ -20,7 +20,8 @@ final class AccountCenterVC: BaseVC {
         $0.text = "계정 센터"
         $0.numberOfLines = 0
         $0.textAlignment = .left
-        $0.font = UIFont.systemFont(ofSize: 25, weight: .heavy)
+        $0.font = UIFont.systemFont(ofSize: 25,
+                                    weight: .heavy)
     }
     
     private lazy var descriptionLabel = UILabel().then {
@@ -28,7 +29,8 @@ final class AccountCenterVC: BaseVC {
         $0.numberOfLines = 0
         $0.textAlignment = .left
         $0.textColor = .darkGray
-        $0.font = UIFont.systemFont(ofSize: 14, weight: .semibold)
+        $0.font = UIFont.systemFont(ofSize: 14,
+                                    weight: .semibold)
     }
     
     private lazy var accountMenuTV = UITableView(frame: .zero, style: .insetGrouped).then {
@@ -43,7 +45,8 @@ final class AccountCenterVC: BaseVC {
     
     init(viewModel: AccountCenterVM) {
         self.viewModel = viewModel
-        super.init(nibName: nil, bundle: nil)
+        super.init(nibName: nil,
+                   bundle: nil)
     }
     
     required init?(coder: NSCoder) {
@@ -59,11 +62,12 @@ final class AccountCenterVC: BaseVC {
         view.backgroundColor = .white
         navigationController?.isNavigationBarHidden = true
         // accountTV 셀등록
-        accountMenuTV.register(AccountMenuTVCell.self, forCellReuseIdentifier: AccountMenuTVCell.identifier)
+        accountMenuTV.register(AccountMenuTVCell.self,
+                               forCellReuseIdentifier: AccountMenuTVCell.identifier)
     }
     
     override func setLayout() {
-        [titleLabel, descriptionLabel,  accountMenuTV].forEach {
+        [titleLabel, descriptionLabel, accountMenuTV].forEach {
             view.addSubview($0)
         }
     }

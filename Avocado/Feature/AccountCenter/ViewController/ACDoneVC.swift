@@ -35,7 +35,11 @@ final class ACDoneVC: BaseVC {
     
     private lazy var confirmButton = BottomButton(text: "확인")
     
-    init() {
+    private let viewModel: ACDoneVM
+    
+    init(viewModel: ACDoneVM) {
+        self.viewModel = viewModel
+        
         super.init(nibName: nil,
                    bundle: nil)
     }
@@ -83,7 +87,10 @@ import RxSwift
 import SPIndicator
 struct ACDoneVCPreview: PreviewProvider {
     static var previews: some View {
-        return ACDoneVC().toPreview()
+        let service = AccountCenterService()
+        let viewModel = ACDoneVM(service: service)
+        
+        return ACDoneVC(viewModel: viewModel).toPreview()
     }
 }
 #endif

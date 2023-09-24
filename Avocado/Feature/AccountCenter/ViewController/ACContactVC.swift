@@ -38,7 +38,8 @@ final class ACContactVC: BaseVC {
         $0.numberOfLines = 1
         $0.textAlignment = .left
         $0.textColor = .black
-        $0.font = UIFont.systemFont(ofSize: 16, weight: .bold)
+        $0.font = UIFont.systemFont(ofSize: 16,
+                                    weight: .bold)
     }
     
     private lazy var guideLabel = UILabel().then {
@@ -46,12 +47,17 @@ final class ACContactVC: BaseVC {
         $0.numberOfLines = 0
         $0.textAlignment = .left
         $0.textColor = .darkGray
-        $0.font = UIFont.systemFont(ofSize: 14, weight: .semibold)
+        $0.font = UIFont.systemFont(ofSize: 14,
+                                    weight: .semibold)
     }
     
     private lazy var confirmButton = BottomButton(text: "확인")
     
-    init() {
+    private let viewModel: ACContactVM
+    
+    init(viewModel: ACContactVM) {
+        self.viewModel = viewModel
+        
         super.init(nibName: nil,
                    bundle: nil)
     }
@@ -111,7 +117,10 @@ import RxSwift
 import SPIndicator
 struct ACContactVCPreview: PreviewProvider {
     static var previews: some View {
-        return ACContactVC().toPreview()
+        let service = AccountCenterService()
+        let viewModel = ACContactVM(service: service)
+        
+        return ACContactVC(viewModel: viewModel).toPreview()
     }
 }
 #endif

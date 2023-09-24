@@ -52,8 +52,13 @@ final class ACEmailCheckVC: BaseVC {
     
     private lazy var reqNewCodeButton: SubButton = SubButton(text: "인증번호 다시 보내기")
     
-    init() {
-        super.init(nibName: nil, bundle: nil)
+    private let viewModel: ACEmailCheckVM
+    
+    init(viewModel: ACEmailCheckVM) {
+        self.viewModel = viewModel
+        
+        super.init(nibName: nil,
+                   bundle: nil)
     }
     
     required init?(coder: NSCoder) {
@@ -133,7 +138,10 @@ import RxSwift
 import SPIndicator
 struct ACEmailCheckVCPreview: PreviewProvider {
     static var previews: some View {
-        return ACEmailCheckVC().toPreview()
+        let service = AccountCenterService()
+        let viewModel = ACEmailCheckVM(service: service)
+        
+        return ACEmailCheckVC(viewModel: viewModel).toPreview()
     }
 }
 #endif

@@ -27,6 +27,12 @@
 		3D32862C2AC039980057B9D7 /* ACDoneVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D32862B2AC039980057B9D7 /* ACDoneVC.swift */; };
 		3D32862E2AC039AF0057B9D7 /* ACContactVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D32862D2AC039AF0057B9D7 /* ACContactVC.swift */; };
 		3D3286302AC03A390057B9D7 /* ACNewPasswordVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D32862F2AC03A390057B9D7 /* ACNewPasswordVC.swift */; };
+		3D952A362AC0A018004731D5 /* ACEmailVM.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D952A352AC0A018004731D5 /* ACEmailVM.swift */; };
+		3D952A382AC0A021004731D5 /* ACEmailCheckVM.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D952A372AC0A021004731D5 /* ACEmailCheckVM.swift */; };
+		3D952A3A2AC0A02A004731D5 /* ACPasswordVM.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D952A392AC0A02A004731D5 /* ACPasswordVM.swift */; };
+		3D952A3C2AC0A035004731D5 /* ACNewPasswordVM.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D952A3B2AC0A035004731D5 /* ACNewPasswordVM.swift */; };
+		3D952A3E2AC0A03E004731D5 /* ACDoneVM.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D952A3D2AC0A03E004731D5 /* ACDoneVM.swift */; };
+		3D952A402AC0A045004731D5 /* ACContactVM.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D952A3F2AC0A045004731D5 /* ACContactVM.swift */; };
 		3D97A43B2ABB0AEB00AAECCC /* AccountCenterStep.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D97A43A2ABB0AEB00AAECCC /* AccountCenterStep.swift */; };
 		3D97A43D2ABB0AFC00AAECCC /* AccountCenterFlow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D97A43C2ABB0AFC00AAECCC /* AccountCenterFlow.swift */; };
 		3D97A43F2ABB0B1400AAECCC /* AccountCenterVM.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D97A43E2ABB0B1400AAECCC /* AccountCenterVM.swift */; };
@@ -226,6 +232,12 @@
 		3D32862B2AC039980057B9D7 /* ACDoneVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ACDoneVC.swift; sourceTree = "<group>"; };
 		3D32862D2AC039AF0057B9D7 /* ACContactVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ACContactVC.swift; sourceTree = "<group>"; };
 		3D32862F2AC03A390057B9D7 /* ACNewPasswordVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ACNewPasswordVC.swift; sourceTree = "<group>"; };
+		3D952A352AC0A018004731D5 /* ACEmailVM.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ACEmailVM.swift; sourceTree = "<group>"; };
+		3D952A372AC0A021004731D5 /* ACEmailCheckVM.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ACEmailCheckVM.swift; sourceTree = "<group>"; };
+		3D952A392AC0A02A004731D5 /* ACPasswordVM.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ACPasswordVM.swift; sourceTree = "<group>"; };
+		3D952A3B2AC0A035004731D5 /* ACNewPasswordVM.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ACNewPasswordVM.swift; sourceTree = "<group>"; };
+		3D952A3D2AC0A03E004731D5 /* ACDoneVM.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ACDoneVM.swift; sourceTree = "<group>"; };
+		3D952A3F2AC0A045004731D5 /* ACContactVM.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ACContactVM.swift; sourceTree = "<group>"; };
 		3D97A43A2ABB0AEB00AAECCC /* AccountCenterStep.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccountCenterStep.swift; sourceTree = "<group>"; };
 		3D97A43C2ABB0AFC00AAECCC /* AccountCenterFlow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccountCenterFlow.swift; sourceTree = "<group>"; };
 		3D97A43E2ABB0B1400AAECCC /* AccountCenterVM.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccountCenterVM.swift; sourceTree = "<group>"; };
@@ -530,6 +542,12 @@
 			isa = PBXGroup;
 			children = (
 				3D97A43E2ABB0B1400AAECCC /* AccountCenterVM.swift */,
+				3D952A352AC0A018004731D5 /* ACEmailVM.swift */,
+				3D952A372AC0A021004731D5 /* ACEmailCheckVM.swift */,
+				3D952A392AC0A02A004731D5 /* ACPasswordVM.swift */,
+				3D952A3B2AC0A035004731D5 /* ACNewPasswordVM.swift */,
+				3D952A3D2AC0A03E004731D5 /* ACDoneVM.swift */,
+				3D952A3F2AC0A045004731D5 /* ACContactVM.swift */,
 			);
 			path = ViewModel;
 			sourceTree = "<group>";
@@ -1430,11 +1448,13 @@
 				04C835F72A2B46B600731E3E /* BannerCVCell.swift in Sources */,
 				B22ECA2F2A75976500CCA794 /* AppStep.swift in Sources */,
 				B1BD33412AB2DE30003E660D /* SearchResultCVCell.swift in Sources */,
+				3D952A402AC0A045004731D5 /* ACContactVM.swift in Sources */,
 				B1A301BD2A543A2F003834E6 /* BaseVC.swift in Sources */,
 				04BA13292A2AE0990004E2FB /* ProductCVCell.swift in Sources */,
 				B2F3D3642A511F2700FB05E1 /* SubButton.swift in Sources */,
 				B20A176D2A9DB36D000FD85B /* UserBadgeView.swift in Sources */,
 				98FD1C2A2A56B3900031D7C1 /* SettingAPI.swift in Sources */,
+				3D952A3E2AC0A03E004731D5 /* ACDoneVM.swift in Sources */,
 				B18E035D2AA2137A00F8F394 /* NSMutableAttributedString+Extension.swift in Sources */,
 				B212D58B2A45F1740008DAD1 /* InputView.swift in Sources */,
 				3D97A4462ABB1A6D00AAECCC /* AccountCenterSectionModel.swift in Sources */,
@@ -1454,6 +1474,7 @@
 				B2CA311D2A91105600E7700C /* SingleProductVC.swift in Sources */,
 				B1A301AA2A5439EC003834E6 /* Logger.swift in Sources */,
 				3D97A4412ABB0B2800AAECCC /* AccountCenterVC.swift in Sources */,
+				3D952A3A2AC0A02A004731D5 /* ACPasswordVM.swift in Sources */,
 				9848A8B12A5D848D008D43F5 /* SplashVC.swift in Sources */,
 				B1D5350D2AA0D168001ACE09 /* ProfileFlow.swift in Sources */,
 				B1A301C62A543B15003834E6 /* UIButton+Animation.swift in Sources */,
@@ -1490,6 +1511,7 @@
 				B2689E882AA0740200151D1D /* BaseTabBarController.swift in Sources */,
 				B26A3B692A60BB5100AD61A5 /* SplashFlow.swift in Sources */,
 				B2F3F47A2A4B6570007994DC /* EmailCheckVC.swift in Sources */,
+				3D952A362AC0A018004731D5 /* ACEmailVM.swift in Sources */,
 				B1C35AFE2A9DF45700C97A3D /* ProfileDataSectionModel.swift in Sources */,
 				B20AFE682A2BAE73004A646B /* SearchBarView.swift in Sources */,
 				98AD10FF2A4BF2E7001C4734 /* AuthAPI.swift in Sources */,
@@ -1509,6 +1531,7 @@
 				B2DAFD3D2AA47D7500F015B5 /* ImageDataSection.swift in Sources */,
 				3D3286302AC03A390057B9D7 /* ACNewPasswordVC.swift in Sources */,
 				B28892072A6E569800952A10 /* FadeAnimation.swift in Sources */,
+				3D952A3C2AC0A035004731D5 /* ACNewPasswordVM.swift in Sources */,
 				B1C35AF12A9DCAA800C97A3D /* ProfileAPI.swift in Sources */,
 				B29EC4762A934991001D1E6C /* EnumCountable+Protocol.swift in Sources */,
 				B248C6AB2A86C918006AE008 /* MainService.swift in Sources */,
@@ -1530,6 +1553,7 @@
 				B18F1A002A5ED730003440B6 /* Util.swift in Sources */,
 				3D97A44A2ABBB98000AAECCC /* TabelView+Protocol.swift in Sources */,
 				B1A301A72A5439E7003834E6 /* UIView+Extension.swift in Sources */,
+				3D952A382AC0A021004731D5 /* ACEmailCheckVM.swift in Sources */,
 				B19563522AA471E40032FE25 /* CheckedView.swift in Sources */,
 				B2689E862AA0643800151D1D /* TabStep.swift in Sources */,
 				B2D2764E2A6C4D6A00441719 /* OtherEmailVC.swift in Sources */,

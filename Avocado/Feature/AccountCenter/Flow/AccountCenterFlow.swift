@@ -36,18 +36,14 @@ final class AccountCenterFlow: Flow {
         
         switch step {
         case .accountCenterIsRequired: return navigateToAccountCenterScreen()
-        
-        case .findEmailIsRequired: return .none
-        case .findPasswordIsRequired: return .none
-        case .accountLockedIsRequired: return .none
-        case .confirmCodeUnvalidIsRequired: return .none
-        case .code2FAUnvalidIsRequired: return .none
-        case .contactCustomerCenterIsRequired: return .none
-        case .accountHackedIsRequired: return .none
-        case .accountDeleteIsRequired: return .none
-        
-        case .errorOccurred(let error): return .none
             
+        case .emailCheckIsRequired: return navigateToEmailScreen()
+        case .passwordIsRequired: return navigateToPasswordScreen()
+        case .newPasswordIsRequired: return navigateToNewPasswordScreen()
+        case .doneIsRequired: return navigateToDoneScreen()
+        case .contactIsRequired: return navigateToContactScreen()
+            
+        case .errorOccurred(let error): return .none
         }
     }
     
@@ -61,7 +57,60 @@ final class AccountCenterFlow: Flow {
         // 커스텀 애니메이션 적용시 animated: false 로 설정
         rootViewController.setViewControllers([viewController], animated: false)
         
+        return .one(flowContributor: .contribute(withNextPresentable: viewController, withNextStepper: viewModel))
+    }
+    
+    private func navigateToEmailScreen() -> FlowContributors {
+        let service = AccountCenterService()
+        let viewModel = ACEmailVM(service: service)
+        let viewController = ACEmailVC(viewModel: viewModel)
         
+        rootViewController.pushViewController(viewController, animated: true)
+        return .one(flowContributor: .contribute(withNextPresentable: viewController, withNextStepper: viewModel))
+    }
+    
+    private func navigateToEmailCheckScreen() -> FlowContributors {
+        let service = AccountCenterService()
+        let viewModel = ACEmailCheckVM(service: service)
+        let viewController = ACEmailCheckVC(viewModel: viewModel)
+        
+        rootViewController.pushViewController(viewController, animated: true)
+        return .one(flowContributor: .contribute(withNextPresentable: viewController, withNextStepper: viewModel))
+    }
+    
+    private func navigateToPasswordScreen() -> FlowContributors {
+        let service = AccountCenterService()
+        let viewModel = ACPasswordVM(service: service)
+        let viewController = ACPasswordVC(viewModel: viewModel)
+        
+        rootViewController.pushViewController(viewController, animated: true)
+        return .one(flowContributor: .contribute(withNextPresentable: viewController, withNextStepper: viewModel))
+    }
+    
+    private func navigateToNewPasswordScreen() -> FlowContributors {
+        let service = AccountCenterService()
+        let viewModel = ACNewPasswordVM(service: service)
+        let viewController = ACNewPasswordVC(viewModel: viewModel)
+        
+        rootViewController.pushViewController(viewController, animated: true)
+        return .one(flowContributor: .contribute(withNextPresentable: viewController, withNextStepper: viewModel))
+    }
+    
+    private func navigateToDoneScreen() -> FlowContributors {
+        let service = AccountCenterService()
+        let viewModel = ACDoneVM(service: service)
+        let viewController = ACDoneVC(viewModel: viewModel)
+        
+        rootViewController.pushViewController(viewController, animated: true)
+        return .one(flowContributor: .contribute(withNextPresentable: viewController, withNextStepper: viewModel))
+    }
+    
+    private func navigateToContactScreen() -> FlowContributors {
+        let service = AccountCenterService()
+        let viewModel = ACContactVM(service: service)
+        let viewController = ACContactVC(viewModel: viewModel)
+        
+        rootViewController.pushViewController(viewController, animated: true)
         return .one(flowContributor: .contribute(withNextPresentable: viewController, withNextStepper: viewModel))
     }
     

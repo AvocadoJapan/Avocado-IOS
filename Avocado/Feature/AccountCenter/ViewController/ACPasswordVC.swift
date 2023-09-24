@@ -19,7 +19,8 @@ final class ACPasswordVC: BaseVC {
         $0.text = "비밀번호 확인"
         $0.numberOfLines = 1
         $0.textAlignment = .left
-        $0.font = UIFont.systemFont(ofSize: 25, weight: .heavy)
+        $0.font = UIFont.systemFont(ofSize: 25,
+                                    weight: .heavy)
     }
     
     private lazy var passwordInput = InputView(label: "비밀번호",
@@ -35,7 +36,8 @@ final class ACPasswordVC: BaseVC {
         $0.numberOfLines = 1
         $0.textAlignment = .left
         $0.textColor = .darkGray
-        $0.font = UIFont.systemFont(ofSize: 14, weight: .semibold)
+        $0.font = UIFont.systemFont(ofSize: 14,
+                                    weight: .semibold)
     }
     
     private lazy var descriptionLabel = UILabel().then {
@@ -43,11 +45,18 @@ final class ACPasswordVC: BaseVC {
         $0.numberOfLines = 0
         $0.textAlignment = .left
         $0.textColor = .darkGray
-        $0.font = UIFont.systemFont(ofSize: 14, weight: .semibold)
+        $0.font = UIFont.systemFont(ofSize: 14,
+                                    weight: .semibold)
     }
     
-    init() {
-        super.init(nibName: nil, bundle: nil)
+    private let viewModel: ACPasswordVM
+    
+    init(viewModel: ACPasswordVM) {
+        self.viewModel = viewModel
+        
+        super.init(nibName: nil,
+                   bundle: nil)
+        
     }
     
     required init?(coder: NSCoder) {
@@ -118,7 +127,10 @@ import RxSwift
 import SPIndicator
 struct ACPasswordVCPreview: PreviewProvider {
     static var previews: some View {
-        return ACPasswordVC().toPreview()
+        let service = AccountCenterService()
+        let viewModel = ACPasswordVM(service: service)
+        
+        return ACPasswordVC(viewModel: viewModel).toPreview()
     }
 }
 #endif
