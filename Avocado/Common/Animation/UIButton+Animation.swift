@@ -9,7 +9,7 @@ import Foundation
 import UIKit
 
 extension UIButton {
-    func keyboardMovement(from view: UIView, height: CGFloat, updateValue: CGFloat = 20) {
+    func keyboardMovement(from view: UIView, height: CGFloat, updateValue: CGFloat = 25) {
         let updateHeight = height > 0 ? height - view.safeAreaInsets.bottom : updateValue
         let constraint = height > 0 ? 0 : updateValue
 

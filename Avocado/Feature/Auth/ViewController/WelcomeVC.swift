@@ -49,7 +49,7 @@ final class WelcomeVC: BaseVC {
         $0.backgroundColor = .white
         $0.setTitleColor(.black, for: .normal)
         $0.titleLabel?.font = UIFont.boldSystemFont(ofSize: 13)
-        $0.layer.cornerRadius = 20
+        $0.layer.cornerRadius = 25
         $0.layer.borderWidth = 1
         
         let appleLogo = UIImage(named: "btn_apple")
@@ -65,7 +65,7 @@ final class WelcomeVC: BaseVC {
         $0.backgroundColor = .white
         $0.setTitleColor(.black, for: .normal)
         $0.titleLabel?.font = UIFont.boldSystemFont(ofSize: 13)
-        $0.layer.cornerRadius = 20
+        $0.layer.cornerRadius = 25
         $0.layer.borderWidth = 1
         
         let googleLogo = UIImage(named: "btn_google")
