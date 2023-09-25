@@ -239,7 +239,7 @@ extension SearchResultVC: CollectionViewLayoutable {
         
         let section = NSCollectionLayoutSection(group: group)
         section.boundarySupplementaryItems = [header]
-        
+        header.pinToVisibleBounds = true
         section.contentInsets = NSDirectionalEdgeInsets(
             top: 10,
             leading: 0,

@@ -156,21 +156,20 @@ extension SearchVC: CollectionViewLayoutable {
         return UICollectionViewCompositionalLayout { section, env in
             
             let itemSize = NSCollectionLayoutSize(
-                widthDimension: .fractionalWidth(1.0),
+                widthDimension: .estimated(120),
                 heightDimension: .absolute(60)
             )
             
             let item = NSCollectionLayoutItem(layoutSize: itemSize)
             
             let groupSize = NSCollectionLayoutSize(
-                widthDimension: .fractionalWidth(1.0),
+                widthDimension: .estimated(120),
                 heightDimension: .absolute(60)
             )
             
             let group = NSCollectionLayoutGroup.horizontal(
                 layoutSize: groupSize,
-                subitem: item,
-                count: 2
+                subitems: [item]
             )
             
             let headerSize = NSCollectionLayoutSize(
@@ -185,7 +184,7 @@ extension SearchVC: CollectionViewLayoutable {
             )
             
             let section = NSCollectionLayoutSection(group: group)
-            
+            section.orthogonalScrollingBehavior = .continuous
             section.boundarySupplementaryItems = [header]
             
             return section

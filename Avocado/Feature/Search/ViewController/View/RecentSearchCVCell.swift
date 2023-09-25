@@ -15,6 +15,7 @@ final class RecentSearchCVCell: UICollectionViewCell {
     private lazy var containerStackView = UIStackView().then {
         $0.axis = .horizontal
         $0.distribution = .fill
+        $0.spacing = 5
         $0.layoutMargins = UIEdgeInsets(
             top: 0,
             left: 10,
@@ -25,7 +26,7 @@ final class RecentSearchCVCell: UICollectionViewCell {
         
         $0.layer.borderColor = UIColor.systemGray6.cgColor
         $0.layer.borderWidth = 1
-        $0.layer.cornerRadius = 8
+        $0.layer.cornerRadius = 20
         $0.layer.masksToBounds = true
     }
     
@@ -33,11 +34,10 @@ final class RecentSearchCVCell: UICollectionViewCell {
         $0.text = "아이폰 12프로 맥스"
         $0.font = UIFont.systemFont(ofSize: 12)
         $0.textColor = .black
-        
     }
     
     private lazy var deleteButton = UIButton().then {
-        $0.setImage(UIImage(systemName: "xmark"), for: .normal)
+        $0.setImage(UIImage(systemName: "xmark.circle"), for: .normal)
         $0.tintColor = .gray
     }
     
@@ -56,7 +56,8 @@ final class RecentSearchCVCell: UICollectionViewCell {
         addSubview(containerStackView)
         
         containerStackView.snp.makeConstraints {
-            $0.edges.equalToSuperview().inset(10)
+            $0.top.left.bottom.equalToSuperview().inset(10)
+            $0.right.equalToSuperview()
         }
         
         deleteButton.snp.makeConstraints {
@@ -86,7 +87,7 @@ struct RecentSearchCVCellPreview: PreviewProvider {
         return RecentSearchCVCell()
             .toPreview()
             .previewLayout(
-                .fixed(width: 200, height: 50)
+                .fixed(width: 200, height: 60)
             )
     }
 }

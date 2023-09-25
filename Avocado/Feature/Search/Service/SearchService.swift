@@ -19,6 +19,8 @@ final class SearchService:BaseAPIService<SearchAPI> {
             
             let task = Task {
                 let instance = try Realm()
+                // 검색 리스트
+                let recentSearchList = Array(instance.objects(RecentSearchEntity.self))
                 
                 // 중복된 값이 있을 경우 값을 업데이트
                 let searchData = RecentSearchEntity()
@@ -28,7 +30,19 @@ final class SearchService:BaseAPIService<SearchAPI> {
 //                Logger.d("SearchData = \(searchData)")
 //                Logger.d("file Path = \(Realm.Configuration.defaultConfiguration.fileURL)")
                 
+                // 데이터 삽입
                 try? instance.write { instance.add(searchData, update: .modified) }
+                
+                // 검색 리스트의 개수가 6개 초과할 경우 가장 오래된 데이터를 삭제
+                if recentSearchList.count > 6 {
+                    if let lastData = instance
+                            .objects(RecentSearchEntity.self)
+                            .sorted(byKeyPath: "createdAt", ascending: false)
+                            .last {
+                        
+                        try? instance.write { instance.delete(lastData) }
+                    }
+                }
                 
                 observer.onNext(())
                 observer.onCompleted()
@@ -85,7 +99,12 @@ final class SearchService:BaseAPIService<SearchAPI> {
         return Observable.create { observer in
             
             let instance = try! Realm()
-            let recentSearchList = Array(instance.objects(RecentSearchEntity.self))
+            
+            let searchResult = instance
+                .objects(RecentSearchEntity.self)
+                .sorted(byKeyPath: "createdAt", ascending: false)
+            
+            let recentSearchList = Array(searchResult)
 //            Logger.d("recent = \(recentSearchList)")
             observer.onNext(recentSearchList)
             observer.onCompleted()

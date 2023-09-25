@@ -21,6 +21,14 @@ final class RxSearchBar: UISearchBar {
     override init(frame: CGRect) {
         super.init(frame: frame)
         
+        // 기본 UI 설정
+        setImage(UIImage(), for: .search, state: .normal)
+        searchTextField.font = UIFont.boldSystemFont(ofSize: 14)
+        searchTextField.backgroundColor = .systemGray6
+        searchTextField.layer.cornerRadius = 20
+        searchTextField.layer.masksToBounds = true
+        searchTextField.borderStyle = .roundedRect
+        
         // 유저가 검색버튼 클릭 시 실행
         self.rx.searchButtonClicked.asObservable()
             .bind(to: searchButtonTappedPublish)
