@@ -63,11 +63,14 @@ final class ACPasswordVC: BaseVC {
         fatalError("init(coder:) has not been implemented")
     }
     
+    override func setViewDidLoad() {
+        viewModel.input.actionViewDidLoadPublish.accept(())
+        
+        self.navigationController?.isNavigationBarHidden = false
+    }
     
     override func setProperty() {
         view.backgroundColor = .white
-        
-        self.navigationController?.isNavigationBarHidden = false
     }
     
     override func setLayout() {
@@ -110,11 +113,26 @@ final class ACPasswordVC: BaseVC {
     
     
     override func bindUI() {
+        let output = viewModel.transform(input: viewModel.input)
+        
+        viewModel
+            .input
+            .emailBehavior
+            .bind(to: emailLabel.rx.text)
+            .disposed(by: disposeBag)
+        
+//        Logger.d(output)
+//        
+//        output.emailPublish
+//            .subscribe(onNext: { [weak self] email in
+//                Logger.d(email)
+//                self?.emailLabel.text = email
+//            })
+//            .disposed(by: disposeBag)
+        
+        
         //키보드 버튼 애니메이션
         RxKeyboard.instance.visibleHeight
-            .do(onNext: { [weak self] height in
-                self?.navigationController?.setNavigationBarHidden(height > 0, animated: true)
-            })
             .skip(1)
             .drive(onNext: { [weak self] height in
                 guard let self = self else { return }
@@ -132,7 +150,9 @@ import SPIndicator
 struct ACPasswordVCPreview: PreviewProvider {
     static var previews: some View {
         let service = AccountCenterService()
-        let viewModel = ACPasswordVM(service: service)
+        let viewModel = ACPasswordVM(service: service,
+                                     email: "sample@avocadojp.com",
+                                     type: .accountDelete)
         
         return ACPasswordVC(viewModel: viewModel).toPreview()
     }

@@ -76,7 +76,7 @@ final class ACNewPasswordVC: BaseVC {
     override func setProperty() {
         view.backgroundColor = .white
         
-        self.navigationController?.isNavigationBarHidden = false
+        self.navigationController?.isNavigationBarHidden = true
     }
     
     override func setLayout() {
@@ -122,12 +122,10 @@ final class ACNewPasswordVC: BaseVC {
     }
     
     
+    
     override func bindUI() {
         //키보드 버튼 애니메이션
         RxKeyboard.instance.visibleHeight
-            .do(onNext: { [weak self] height in
-                self?.navigationController?.setNavigationBarHidden(height > 0, animated: true)
-            })
             .skip(1)
             .drive(onNext: { [weak self] height in
                 guard let self = self else { return }
@@ -145,7 +143,7 @@ import SPIndicator
 struct ACNewPasswordVCPreview: PreviewProvider {
     static var previews: some View {
         let service = AccountCenterService()
-        let viewModel = ACNewPasswordVM(service: service)
+        let viewModel = ACNewPasswordVM(service: service, type: .accountDelete)
         
         return ACNewPasswordVC(viewModel: viewModel).toPreview()
     }

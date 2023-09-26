@@ -53,6 +53,10 @@ final class ACEmailVC: BaseVC {
         fatalError("init(coder:) has not been implemented")
     }
     
+    override func setViewDidLoad() {
+        viewModel.input.actionViewDidLoadPublish.accept(())
+    }
+    
     override func setProperty() {
         view.backgroundColor = .white
         
@@ -69,14 +73,14 @@ final class ACEmailVC: BaseVC {
         
         titleLabel.snp.makeConstraints {
             $0.centerX.equalToSuperview()
-            $0.top.equalTo(view.safeAreaLayoutGuide).offset(20)
-            $0.left.equalToSuperview().offset(30)
+            $0.top.equalTo(view.safeAreaLayoutGuide).offset(30)
+//            $0.left.equalToSuperview().offset(30)
         }
         
         descriptionLabel.snp.makeConstraints {
             $0.centerX.equalToSuperview()
             $0.top.equalTo(titleLabel.snp.bottom).offset(10)
-            $0.left.equalToSuperview().offset(30)
+//            $0.left.equalToSuperview().offset(30)
         }
         
         emailInput.snp.makeConstraints {
@@ -93,11 +97,61 @@ final class ACEmailVC: BaseVC {
     }
     
     override func bindUI() {
+        let output = viewModel.transform(input: viewModel.input)
+        
+        // confirmButton을 누를 때 동작
+        confirmButton
+            .rx
+            .tap
+            .asDriver()
+            .throttle(.seconds(3), latest: false)
+            .do(onNext: { [weak self] in
+                self?.emailInput.keyboardHidden()
+            })
+
+            .drive { [weak self] void in
+                self?.viewModel.input.actionConfirmPublish.accept(void)
+            }
+            .disposed(by: disposeBag)
+        
+        // emailInput의 입력값을 emailBehavior에 바인딩
+        emailInput
+            .userInput
+            .bind(to: viewModel.input.emailBehavior)
+            .disposed(by: disposeBag)
+        
+        // emailInput 유효성체크후 emailVaildBehavior에 바인딩
+        emailInput
+            .isVaild
+            .bind(to: viewModel.input.emailVaildBehavior)
+            .disposed(by: disposeBag)
+        
+        // 인풋창의 유효성에 따라 버튼 활성화 여부 관리
+        output.confirmEnabledPublish
+            .subscribe(onNext: { [weak self] isEnabled in
+                self?.confirmButton.backgroundColor = isEnabled ? .black : .lightGray
+                self?.confirmButton.isEnabled = isEnabled
+            })
+            .disposed(by: disposeBag)
+        
+        output.navigationTitlePublish
+            .subscribe(onNext: { [weak self] title in
+                
+                // navigationBar title 폰트가 변하지 않음
+                
+//                let attributes: [NSAttributedString.Key: Any] = [
+//                    .foregroundColor: UIColor.darkGray,
+//                    .font: UIFont.systemFont(ofSize: 13, weight: .bold)
+//                ]
+//                
+//                self?.navigationController?.navigationBar.titleTextAttributes = attributes
+                
+                self?.navigationItem.title = title
+            })
+            .disposed(by: disposeBag)
+        
         //키보드 버튼 애니메이션
         RxKeyboard.instance.visibleHeight
-            .do(onNext: { [weak self] height in
-                self?.navigationController?.setNavigationBarHidden(height > 0, animated: true)
-            })
             .skip(1)
             .drive(onNext: { [weak self] height in
                 guard let self = self else { return }
@@ -116,7 +170,7 @@ import RxKeyboard
 struct ACEmailVCPreview: PreviewProvider {
     static var previews: some View {
         let service = AccountCenterService()
-        let viewModel = ACEmailVM(service: service)
+        let viewModel = ACEmailVM(service: service, type: .findPassword)
         
         return ACEmailVC(viewModel: viewModel).toPreview()
     }

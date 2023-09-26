@@ -19,7 +19,7 @@ final class AccountCenterVC: BaseVC {
     private lazy var titleLabel = UILabel().then {
         $0.text = "계정 센터"
         $0.numberOfLines = 0
-        $0.textAlignment = .left
+        $0.textAlignment = .center
         $0.font = UIFont.systemFont(ofSize: 25,
                                     weight: .heavy)
     }
@@ -27,7 +27,7 @@ final class AccountCenterVC: BaseVC {
     private lazy var descriptionLabel = UILabel().then {
         $0.text = "계정관련 도움이 필요하신가요?"
         $0.numberOfLines = 0
-        $0.textAlignment = .left
+        $0.textAlignment = .center
         $0.textColor = .darkGray
         $0.font = UIFont.systemFont(ofSize: 14,
                                     weight: .semibold)
@@ -55,7 +55,9 @@ final class AccountCenterVC: BaseVC {
     
     override func setViewDidLoad() {
         // 초기 메인데이터 API call]
-        viewModel.input.actionViewDidLoad.accept(())
+        viewModel.input.actionViewDidLoadPublish.accept(())
+        
+        self.navigationController?.isNavigationBarHidden = true
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -84,14 +86,14 @@ final class AccountCenterVC: BaseVC {
         
         titleLabel.snp.makeConstraints {
             $0.centerX.equalToSuperview()
-            $0.top.equalToSuperview().offset(30)
-            $0.left.equalToSuperview().offset(30)
+            $0.top.equalToSuperview().offset(40)
+//            $0.left.equalToSuperview().offset(30)
         }
         
         descriptionLabel.snp.makeConstraints {
             $0.centerX.equalToSuperview()
             $0.top.equalTo(titleLabel.snp.bottom).offset(10)
-            $0.left.equalToSuperview().offset(30)
+//            $0.left.equalToSuperview().offset(30)
         }
         
         accountMenuTV.snp.makeConstraints {

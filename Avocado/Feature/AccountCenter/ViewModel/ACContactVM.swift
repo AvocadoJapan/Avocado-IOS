@@ -17,22 +17,30 @@ final class ACContactVM: ViewModelType, Stepper {
     
     // 서비스를 제공하는 인스턴스
     let service: AccountCenterService
+    
+    // 어떤 메뉴를 통해 들어왔는지 관리하는 인스턴스
+    let type: AccountCenterDataType
 
     private(set) var input: Input
     
     struct Input {
         // viewDidLoad를 감지하는 인스턴스
-        let actionViewDidLoad = PublishRelay<Void>()
+        let actionViewDidLoadPublish = PublishRelay<Void>()
     }
     
     struct Output {
+        // 문의용 에러코드를 전달하는 인스턴스 (AVCD-0024)
+        let errorCodePublish = PublishRelay<String>()
         // 에러 이벤트를 전달하는 인스턴스
         let errEventPublish = PublishRelay<AvocadoError>()
     }
     
     // 생성자
-    init(service: AccountCenterService) {
-        self.service = AccountCenterService(isStub: true, sampleStatusCode: 200)
+    init(service: AccountCenterService,
+         type: AccountCenterDataType) {
+        self.service = AccountCenterService(isStub: true,
+                                            sampleStatusCode: 200)
+        self.type = type
         
         input = Input()
     }

@@ -22,7 +22,7 @@ final class AccountCenterVM: ViewModelType, Stepper {
     
     struct Input {
         // viewDidLoad를 감지하는 인스턴스
-        let actionViewDidLoad = PublishRelay<Void>()
+        let actionViewDidLoadPublish = PublishRelay<Void>()
         // 어떤 셀이 눌렸는지 감지하는 인스턴스
         let actionTVCellRelay = PublishRelay<AccountCenterDataType>()
     }
@@ -44,7 +44,7 @@ final class AccountCenterVM: ViewModelType, Stepper {
     func transform(input: Input) -> Output {
         let output = Output()
 
-        input.actionViewDidLoad
+        input.actionViewDidLoadPublish
             .map {
                 return AccountCenterData.getDataList()
             }

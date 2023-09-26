@@ -50,6 +50,8 @@ final class ACDoneVC: BaseVC {
     
     override func setProperty() {
         view.backgroundColor = .white
+        
+        self.navigationController?.isNavigationBarHidden = true
     }
     
     override func setLayout() {
@@ -88,7 +90,7 @@ import SPIndicator
 struct ACDoneVCPreview: PreviewProvider {
     static var previews: some View {
         let service = AccountCenterService()
-        let viewModel = ACDoneVM(service: service)
+        let viewModel = ACDoneVM(service: service, type: .accountHacked)
         
         return ACDoneVC(viewModel: viewModel).toPreview()
     }

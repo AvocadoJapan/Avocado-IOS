@@ -68,6 +68,8 @@ final class ACContactVC: BaseVC {
     
     override func setProperty() {
         view.backgroundColor = .white
+        
+        self.navigationController?.isNavigationBarHidden = true
     }
     
     override func setLayout() {
@@ -118,7 +120,7 @@ import SPIndicator
 struct ACContactVCPreview: PreviewProvider {
     static var previews: some View {
         let service = AccountCenterService()
-        let viewModel = ACContactVM(service: service)
+        let viewModel = ACContactVM(service: service, type: .accountDelete)
         
         return ACContactVC(viewModel: viewModel).toPreview()
     }

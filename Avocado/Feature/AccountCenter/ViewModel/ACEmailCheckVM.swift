@@ -17,12 +17,15 @@ final class ACEmailCheckVM: ViewModelType, Stepper {
     
     // 서비스를 제공하는 인스턴스
     let service: AccountCenterService
+    
+    // 어떤 메뉴를 통해 들어왔는지 관리하는 인스턴스
+    let type: AccountCenterDataType
 
     private(set) var input: Input
     
     struct Input {
         // viewDidLoad를 감지하는 인스턴스
-        let actionViewDidLoad = PublishRelay<Void>()
+        let actionViewDidLoadPublish = PublishRelay<Void>()
     }
     
     struct Output {
@@ -31,8 +34,11 @@ final class ACEmailCheckVM: ViewModelType, Stepper {
     }
     
     // 생성자
-    init(service: AccountCenterService) {
-        self.service = AccountCenterService(isStub: true, sampleStatusCode: 200)
+    init(service: AccountCenterService,
+         type: AccountCenterDataType) {
+        self.service = AccountCenterService(isStub: true,
+                                            sampleStatusCode: 200)
+        self.type = type
         
         input = Input()
     }

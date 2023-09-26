@@ -12,4 +12,8 @@ final class AccountCenterService: BaseAPIService<MainAPI> {
     
     // Observable처리 disposeBag
     private let disposeBag = DisposeBag()
+    
+    func checkEmailState() -> String {
+        return "OK"
+    }
 }

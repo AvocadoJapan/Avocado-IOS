@@ -38,11 +38,11 @@ final class AccountCenterFlow: Flow {
         case .accountCenterIsRequired: return navigateToAccountCenterScreen()
             
         case .emailIsRequired(let type): return navigateToEmailScreen(type: type)
-        case .emailCheckIsRequired: return navigateToEmailCheckScreen()
-        case .passwordIsRequired: return navigateToPasswordScreen()
-        case .newPasswordIsRequired: return navigateToNewPasswordScreen()
-        case .doneIsRequired: return navigateToDoneScreen()
-        case .contactIsRequired: return navigateToContactScreen()
+        case .emailCheckIsRequired(let type): return navigateToEmailCheckScreen(type: type)
+        case .passwordIsRequired(let type, let email): return navigateToPasswordScreen(type: type, email: email)
+        case .newPasswordIsRequired(let type): return navigateToNewPasswordScreen(type: type)
+        case .doneIsRequired(let type): return navigateToDoneScreen(type: type)
+        case .contactIsRequired(let type): return navigateToContactScreen(type: type)
             
         case .errorOccurred(let error): return .none
 
@@ -64,52 +64,52 @@ final class AccountCenterFlow: Flow {
     
     private func navigateToEmailScreen(type: AccountCenterDataType) -> FlowContributors {
         let service = AccountCenterService()
-        let viewModel = ACEmailVM(service: service)
+        let viewModel = ACEmailVM(service: service, type: type)
         let viewController = ACEmailVC(viewModel: viewModel)
         
         rootViewController.pushViewController(viewController, animated: true)
         return .one(flowContributor: .contribute(withNextPresentable: viewController, withNextStepper: viewModel))
     }
     
-    private func navigateToEmailCheckScreen() -> FlowContributors {
+    private func navigateToEmailCheckScreen(type: AccountCenterDataType) -> FlowContributors {
         let service = AccountCenterService()
-        let viewModel = ACEmailCheckVM(service: service)
+        let viewModel = ACEmailCheckVM(service: service, type: type)
         let viewController = ACEmailCheckVC(viewModel: viewModel)
         
         rootViewController.pushViewController(viewController, animated: true)
         return .one(flowContributor: .contribute(withNextPresentable: viewController, withNextStepper: viewModel))
     }
     
-    private func navigateToPasswordScreen() -> FlowContributors {
+    private func navigateToPasswordScreen(type: AccountCenterDataType, email: String) -> FlowContributors {
         let service = AccountCenterService()
-        let viewModel = ACPasswordVM(service: service)
+        let viewModel = ACPasswordVM(service: service, email: email, type: type)
         let viewController = ACPasswordVC(viewModel: viewModel)
         
         rootViewController.pushViewController(viewController, animated: true)
         return .one(flowContributor: .contribute(withNextPresentable: viewController, withNextStepper: viewModel))
     }
     
-    private func navigateToNewPasswordScreen() -> FlowContributors {
+    private func navigateToNewPasswordScreen(type: AccountCenterDataType) -> FlowContributors {
         let service = AccountCenterService()
-        let viewModel = ACNewPasswordVM(service: service)
+        let viewModel = ACNewPasswordVM(service: service, type: type)
         let viewController = ACNewPasswordVC(viewModel: viewModel)
         
         rootViewController.pushViewController(viewController, animated: true)
         return .one(flowContributor: .contribute(withNextPresentable: viewController, withNextStepper: viewModel))
     }
     
-    private func navigateToDoneScreen() -> FlowContributors {
+    private func navigateToDoneScreen(type: AccountCenterDataType) -> FlowContributors {
         let service = AccountCenterService()
-        let viewModel = ACDoneVM(service: service)
+        let viewModel = ACDoneVM(service: service, type: type)
         let viewController = ACDoneVC(viewModel: viewModel)
         
         rootViewController.pushViewController(viewController, animated: true)
         return .one(flowContributor: .contribute(withNextPresentable: viewController, withNextStepper: viewModel))
     }
     
-    private func navigateToContactScreen() -> FlowContributors {
+    private func navigateToContactScreen(type: AccountCenterDataType) -> FlowContributors {
         let service = AccountCenterService()
-        let viewModel = ACContactVM(service: service)
+        let viewModel = ACContactVM(service: service, type: type)
         let viewController = ACContactVC(viewModel: viewModel)
         
         rootViewController.pushViewController(viewController, animated: true)

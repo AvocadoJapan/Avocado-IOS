@@ -308,6 +308,23 @@ enum AccountCenterDataType: CaseCountable {
         }
     }
     
+    var navigationTitle: String {
+        switch self {
+        case .findEmail: return "이메일 찾기"
+        case .findPassword: return "비밀번호 찾기"
+            
+        case .confirmCodeUnvalid: return "이메일 상태"
+        case .code2FAUnvalid: return "2FA인증"
+            
+        case .accountLocked: return "비활성화 해제"
+        case .accountHacked: return "계정 상태"
+        case .accountDelete: return "계정 삭제"
+            
+        case .signInError: return "회원가입 에러"
+        case .signUpError: return "로그인 에러"
+        }
+    }
+    
     var isHighlight: Bool {
         switch self {
         case .accountHacked: return true

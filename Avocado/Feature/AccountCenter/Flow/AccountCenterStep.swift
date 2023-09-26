@@ -26,11 +26,11 @@ import RxSwift
     
     // 각종 화면별
     case emailIsRequired(type: AccountCenterDataType)
-    case emailCheckIsRequired
-    case passwordIsRequired
-    case newPasswordIsRequired
-    case doneIsRequired
-    case contactIsRequired
+    case emailCheckIsRequired(type: AccountCenterDataType)
+    case passwordIsRequired(type: AccountCenterDataType, email: String)
+    case newPasswordIsRequired(type: AccountCenterDataType)
+    case doneIsRequired(type: AccountCenterDataType)
+    case contactIsRequired(type: AccountCenterDataType)
     
     case errorOccurred(error: NetworkError)
 }
