@@ -19,8 +19,7 @@ final class SearchResultCVCell: UICollectionViewCell {
     
     private lazy var containerStackView = UIStackView().then {
         $0.axis = .vertical
-        $0.distribution = .fill
-        $0.spacing = 5
+        $0.distribution = .fillEqually
     }
     
     private lazy var productTitleLabel = UILabel().then {
@@ -43,7 +42,7 @@ final class SearchResultCVCell: UICollectionViewCell {
     
     private lazy var productPriceLabel = UILabel().then {
         $0.text = "1,298,000"
-        $0.font = UIFont.boldSystemFont(ofSize: 20)
+        $0.font = UIFont.boldSystemFont(ofSize: 16)
         $0.textColor = .black
     }
     
@@ -64,7 +63,8 @@ final class SearchResultCVCell: UICollectionViewCell {
         
         containerStackView.snp.makeConstraints {
             $0.left.equalTo(productImageView.snp.right).offset(10)
-            $0.top.bottom.right.equalToSuperview().inset(10)
+            $0.top.equalToSuperview().offset(10)
+            $0.bottom.right.equalToSuperview().inset(20)
         }
     }
     

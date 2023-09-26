@@ -17,11 +17,16 @@ final class CatecogyCVCell: UICollectionViewCell {
         right: 10)
     ).then {
         $0.text = "iphone 13"
+//        $0.font = UIFont.systemFont(ofSize: 12, weight: .semibold)
         $0.font = UIFont.boldSystemFont(ofSize: 12)
-        $0.layer.cornerRadius = 16
+        $0.layer.cornerRadius = 20
+        $0.layer.borderColor = UIColor.systemGray6.cgColor
+        $0.layer.borderWidth = 1
         $0.layer.masksToBounds = true
-        $0.textColor = UIColor(hexCode: "4d7c0f")
-        $0.backgroundColor = UIColor(hexCode: "ecfccb")
+//        $0.textColor = UIColor(hexCode: "4d7c0f")
+        $0.textColor = .darkGray
+//        $0.backgroundColor = UIColor(hexCode: "ecfccb")
+        $0.backgroundColor = .systemGray6
     }
     
     override init(frame: CGRect) {

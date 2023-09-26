@@ -163,7 +163,7 @@ extension SearchVC: CollectionViewLayoutable {
             let item = NSCollectionLayoutItem(layoutSize: itemSize)
             
             let groupSize = NSCollectionLayoutSize(
-                widthDimension: .estimated(120),
+                widthDimension: .fractionalWidth(1.0),
                 heightDimension: .absolute(60)
             )
             
@@ -184,7 +184,6 @@ extension SearchVC: CollectionViewLayoutable {
             )
             
             let section = NSCollectionLayoutSection(group: group)
-            section.orthogonalScrollingBehavior = .continuous
             section.boundarySupplementaryItems = [header]
             
             return section

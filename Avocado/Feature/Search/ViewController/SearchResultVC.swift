@@ -162,7 +162,10 @@ final class SearchResultVC: BaseVC {
             
             let data = dataSource[indexPath.section]
             
-            headerView.configure(title: data.header ?? "")
+            headerView.configure(
+                title: data.header ?? "",
+                font: UIFont.systemFont(ofSize: 20, weight: .heavy)
+            )
             
             return headerView
         }
@@ -221,7 +224,7 @@ extension SearchResultVC: CollectionViewLayoutable {
         
         let groupSize = NSCollectionLayoutSize(
             widthDimension: .fractionalWidth(1.0),
-            heightDimension: .estimated(120)
+            heightDimension: .estimated(110)
         )
         
         let group = NSCollectionLayoutGroup.horizontal(layoutSize: groupSize, subitems: [item])
