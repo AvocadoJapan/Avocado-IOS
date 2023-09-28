@@ -13,18 +13,14 @@ import Differentiator
  */
 struct SearchResultSection {
     var header: String?
-    var items: [Item]
-    
-    enum SearchResultSectionItem {
-        case category(data: String)
-        case product(data: Product)
-    }
+    var categorys: [String]?
+    var items: [Product]
 }
 
 extension SearchResultSection: SectionModelType {
-    typealias Item = SearchResultSectionItem
+    typealias Item = Product
     
-    init(original: SearchResultSection, items: [SearchResultSectionItem]) {
+    init(original: SearchResultSection, items: [Product]) {
         self = original
         self.items = items
     }

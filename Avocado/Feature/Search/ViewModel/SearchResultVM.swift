@@ -40,12 +40,12 @@ final class SearchResultVM: ViewModelType {
                 return self?.service.searchResultList(keyword: input.userSearchKewordPublish.value) ?? .empty()
             }
             .map { result -> [SearchResultSection] in
-                let categoryList = result.category.map { SearchResultSection.SearchResultSectionItem.category(data: $0) }
-                let productList = result.products.map { SearchResultSection.SearchResultSectionItem.product(data: $0) }
-                
                 return [
-                    SearchResultSection(items: categoryList),
-                    SearchResultSection(header: "\(input.userSearchKewordPublish.value) 검색결과", items: productList)
+                    SearchResultSection(
+                        header: input.userSearchKewordPublish.value,
+                        categorys: result.category,
+                        items: result.products
+                    )
                 ]
             }
             .bind(to: output.successSearchResultListPublish)
@@ -56,16 +56,19 @@ final class SearchResultVM: ViewModelType {
                 // 키워드 Realm에 저장
                 return self?.service.addRecentSearch(content: keyword)
                     .flatMap {
-                        return self?.service.searchResultList(keyword: keyword) ?? .empty()
+                        return self?.service.searchResultList(keyword: keyword)
+                            .catch { _ in
+                                return .empty()
+                            } ?? .empty()
                     } ?? .empty()
             }
             .map { result -> [SearchResultSection] in
-                let categoryList = result.category.map { SearchResultSection.SearchResultSectionItem.category(data: $0) }
-                let productList = result.products.map { SearchResultSection.SearchResultSectionItem.product(data: $0) }
-                
                 return [
-                    SearchResultSection(items: categoryList),
-                    SearchResultSection(header: "\(input.userSearchKewordPublish.value) 검색결과", items: productList)
+                    SearchResultSection(
+                        header: input.userSearchKewordPublish.value,
+                        categorys: result.category,
+                        items: result.products
+                    )
                 ]
             }
             .bind(to: output.successSearchResultListPublish)

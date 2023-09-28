@@ -15,19 +15,14 @@ final class SearchResultVC: BaseVC {
         $0.showsVerticalScrollIndicator = false
         
         $0.register(
-            CatecogyCVCell.self,
-            forCellWithReuseIdentifier: CatecogyCVCell.identifier
-        )
-        
-        $0.register(
             SearchResultCVCell.self,
             forCellWithReuseIdentifier: SearchResultCVCell.identifier
         )
         
         $0.register(
-            SectionTitleReusableView.self,
+            SearchResultReuseableView.self,
             forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader,
-            withReuseIdentifier: SectionTitleReusableView.identifier
+            withReuseIdentifier: SearchResultReuseableView.identifier
         )
     }
     
@@ -107,65 +102,48 @@ final class SearchResultVC: BaseVC {
             .do(onNext: { [weak self] _ in
                 self?.searchBar.resignFirstResponder()
             })
-            .subscribe { [weak self] item in
-                switch item {
-                case .category(let category):
-                    self?.viewModel
-                        .input
-                        .userSearchKewordPublish
-                        .accept(category)
-                    
-                case .product(let product):
-                    self?.viewModel
-                        .steps
-                        .accept(
-                            SearchStep.productDetail(product: product)
-                        )
-                }
+            .subscribe { [weak self] product in
+                self?.viewModel
+                    .steps
+                    .accept(SearchStep.productDetail(product: product))
             }
             .disposed(by: disposeBag)
         
         let dataSources = RxCollectionViewSectionedReloadDataSource<SearchResultSection> { dataSource, collectionview, indexPath, item in
-            switch item {
-            case .category(let category):
-                let cell = collectionview.dequeueReusableCell(
-                    withReuseIdentifier: CatecogyCVCell.identifier,
-                    for: indexPath
-                ) as! CatecogyCVCell
-                
-                cell.configure(title: category)
-                
-                return cell
-                
-            case .product(let product):
-                let cell = collectionview.dequeueReusableCell(
-                    withReuseIdentifier: SearchResultCVCell.identifier,
-                    for: indexPath
-                ) as! SearchResultCVCell
-                
-                cell.configure(
-                    title: product.name,
-                    category: "ipad",
-                    location: product.location,
-                    price: 100000
-                )
-                
-                return cell
-            }
-        } configureSupplementaryView: { dataSource, collectionView, kind, indexPath in
+            let cell = collectionview.dequeueReusableCell(
+                withReuseIdentifier: SearchResultCVCell.identifier,
+                for: indexPath
+            ) as! SearchResultCVCell
+            
+            cell.configure(
+                title: item.name,
+                category: "ipad",
+                location: item.location,
+                price: 100000
+            )
+            
+            return cell
+        } configureSupplementaryView: { [weak self] dataSource, collectionView, kind, indexPath in
             
             let headerView = collectionView.dequeueReusableSupplementaryView(
                 ofKind: kind,
-                withReuseIdentifier: SectionTitleReusableView.identifier,
+                withReuseIdentifier: SearchResultReuseableView.identifier,
                 for: indexPath
-            ) as! SectionTitleReusableView
+            ) as! SearchResultReuseableView
             
             let data = dataSource[indexPath.section]
             
             headerView.configure(
                 title: data.header ?? "",
-                font: UIFont.systemFont(ofSize: 20, weight: .heavy)
+                categories: data.categorys ?? []
             )
+            
+            // 카테고리 클릭 시 검색 진행
+            headerView.categoryTapPublish
+                .subscribe(onNext: { category in
+                    self?.viewModel.input.userSearchKewordPublish.accept(category)
+                })
+                .disposed(by: headerView.disposeBag)
             
             return headerView
         }
@@ -181,39 +159,7 @@ final class SearchResultVC: BaseVC {
 }
 
 extension SearchResultVC: CollectionViewLayoutable {
-    private func categoryLayout() -> NSCollectionLayoutSection {
-        let itemSize = NSCollectionLayoutSize(
-            widthDimension: .estimated(60),
-            heightDimension: .absolute(40)
-        )
-        
-        let item = NSCollectionLayoutItem(layoutSize: itemSize)
-
-        let groupSize = NSCollectionLayoutSize(
-            widthDimension: .estimated(60),
-            heightDimension: .absolute(40)
-        )
-        
-        let group = NSCollectionLayoutGroup
-            .horizontal(
-                layoutSize: groupSize,
-                subitems: [item]
-            )
-        
-        group.interItemSpacing = .fixed(8)
-        
-        let section = NSCollectionLayoutSection(group: group)
-        section.orthogonalScrollingBehavior = .continuous
-        section.interGroupSpacing = 12
-        section.contentInsets = NSDirectionalEdgeInsets(
-            top: 10,
-            leading: 20,
-            bottom: 20,
-            trailing: 20
-        )
-        return section
-    }
-    
+ 
     private func searchProductLayout() -> NSCollectionLayoutSection {
         let itemSize = NSCollectionLayoutSize(
             widthDimension: .fractionalWidth(1.0),
@@ -231,7 +177,7 @@ extension SearchResultVC: CollectionViewLayoutable {
         
         let headerSize = NSCollectionLayoutSize(
             widthDimension: .fractionalWidth(1.0),
-            heightDimension: .estimated(60)
+            heightDimension: .estimated(100)
         )
         
         let header = NSCollectionLayoutBoundarySupplementaryItem(
@@ -240,9 +186,11 @@ extension SearchResultVC: CollectionViewLayoutable {
             alignment: .top
         )
         
+        header.pinToVisibleBounds = true
+        
         let section = NSCollectionLayoutSection(group: group)
         section.boundarySupplementaryItems = [header]
-        header.pinToVisibleBounds = true
+        
         section.contentInsets = NSDirectionalEdgeInsets(
             top: 10,
             leading: 0,
@@ -256,14 +204,7 @@ extension SearchResultVC: CollectionViewLayoutable {
     
     func getCompositionalLayout() -> UICollectionViewCompositionalLayout {
         return UICollectionViewCompositionalLayout { [weak self] section, env in
-            switch section {
-            case 0:
-                return self?.categoryLayout()
-                
-            default:
-                return self?.searchProductLayout()
-                
-            }
+            return self?.searchProductLayout()
         }
     }
 }
@@ -272,10 +213,15 @@ import SwiftUI
 import RxSwift
 struct SearchResultVCPreview: PreviewProvider {
     static var previews: some View {
-        return SearchResultVC(
-            viewModel: SearchResultVM(
-                service: SearchService(),
-                keyword: ""
+        return BaseNavigationVC(
+            rootViewController: SearchResultVC(
+                viewModel: SearchResultVM(
+                    service: SearchService(
+                        isStub: true,
+                        sampleStatusCode: 200
+                    ),
+                    keyword: ""
+                )
             )
         )
         .toPreview()
