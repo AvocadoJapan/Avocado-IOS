@@ -125,6 +125,13 @@ final class ACEmailCheckVC: BaseVC {
     
     
     override func bindUI() {
+        
+        viewModel
+            .input
+            .emailBehavior
+            .bind(to: emailLabel.rx.text)
+            .disposed(by: disposeBag)
+        
         //키보드 버튼 애니메이션
         RxKeyboard.instance.visibleHeight
             .skip(1)
@@ -144,7 +151,7 @@ import SPIndicator
 struct ACEmailCheckVCPreview: PreviewProvider {
     static var previews: some View {
         let service = AccountCenterService()
-        let viewModel = ACEmailCheckVM(service: service, type: .accountDelete)
+        let viewModel = ACEmailCheckVM(service: service, type: .accountDelete, email: "")
         
         return ACEmailCheckVC(viewModel: viewModel).toPreview()
     }

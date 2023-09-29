@@ -26,7 +26,7 @@ import RxSwift
     
     // 각종 화면별
     case emailIsRequired(type: AccountCenterDataType)
-    case emailCheckIsRequired(type: AccountCenterDataType)
+    case emailCheckIsRequired(type: AccountCenterDataType, email: String)
     case passwordIsRequired(type: AccountCenterDataType, email: String)
     case newPasswordIsRequired(type: AccountCenterDataType)
     case doneIsRequired(type: AccountCenterDataType)

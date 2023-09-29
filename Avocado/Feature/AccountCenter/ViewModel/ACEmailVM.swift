@@ -20,7 +20,7 @@ final class ACEmailVM: ViewModelType, Stepper {
     
     // 어떤 메뉴를 통해 들어왔는지 관리하는 인스턴스
     let type: AccountCenterDataType
-
+    
     private(set) var input: Input
     
     struct Input {
@@ -61,14 +61,15 @@ final class ACEmailVM: ViewModelType, Stepper {
             .subscribe(onNext: { [weak self] _ in
                 guard let self = self else { return }
                 
-                // 비밀번호 찾기일 경우
+                // 타입 검사
                 if self.type == .findPassword {
                     // 이메일 인증화면으로 이동
-                    self.steps.accept(AccountCenterStep.emailCheckIsRequired(type: self.type))
+                    self.steps.accept(AccountCenterStep.emailCheckIsRequired(type: self.type,
+                                                                             email: self.input.emailBehavior.value))
                 } else {
                     // 비밀번호 입력 화면으로 이동
                     self.steps.accept(AccountCenterStep.passwordIsRequired(type: self.type,
-                                                                          email: self.input.emailBehavior.value))
+                                                                           email: self.input.emailBehavior.value))
                 }
             })
             .disposed(by: disposeBag)

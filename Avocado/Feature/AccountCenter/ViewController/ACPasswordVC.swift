@@ -121,16 +121,6 @@ final class ACPasswordVC: BaseVC {
             .bind(to: emailLabel.rx.text)
             .disposed(by: disposeBag)
         
-//        Logger.d(output)
-//        
-//        output.emailPublish
-//            .subscribe(onNext: { [weak self] email in
-//                Logger.d(email)
-//                self?.emailLabel.text = email
-//            })
-//            .disposed(by: disposeBag)
-        
-        
         //키보드 버튼 애니메이션
         RxKeyboard.instance.visibleHeight
             .skip(1)
@@ -151,8 +141,8 @@ struct ACPasswordVCPreview: PreviewProvider {
     static var previews: some View {
         let service = AccountCenterService()
         let viewModel = ACPasswordVM(service: service,
-                                     email: "sample@avocadojp.com",
-                                     type: .accountDelete)
+                                     type: .accountDelete,
+                                     email: "sample@avocadojp.com")
         
         return ACPasswordVC(viewModel: viewModel).toPreview()
     }

@@ -41,12 +41,12 @@ final class ACEmailVC: BaseVC {
     
     private lazy var confirmButton = BottomButton(text: "확인")
     
-    private let viewModel: ACEmailVM
-    
+    private var viewModel: ACEmailVM
+
     init(viewModel: ACEmailVM) {
         self.viewModel = viewModel
-        super.init(nibName: nil,
-                   bundle: nil)
+            super.init(nibName: nil,
+                       bundle: nil)
     }
     
     required init?(coder: NSCoder) {
@@ -54,7 +54,17 @@ final class ACEmailVC: BaseVC {
     }
     
     override func setViewDidLoad() {
-        viewModel.input.actionViewDidLoadPublish.accept(())
+//        let type = type(of: viewModel)
+////        switch type {
+////        case ACEmailVM :
+////        case ACEmailCodeUnableVM:
+////            
+////        }
+//        if let emailVM = viewModel as? ACEmailVM {
+//            emailVM.input.actionViewDidLoadPublish.accept(())
+//        }
+        
+        viewModel.input.actionViewDidLoadPublish.accept(())  
     }
     
     override func setProperty() {

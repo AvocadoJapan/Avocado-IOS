@@ -38,8 +38,10 @@ final class AccountCenterFlow: Flow {
         case .accountCenterIsRequired: return navigateToAccountCenterScreen()
             
         case .emailIsRequired(let type): return navigateToEmailScreen(type: type)
-        case .emailCheckIsRequired(let type): return navigateToEmailCheckScreen(type: type)
-        case .passwordIsRequired(let type, let email): return navigateToPasswordScreen(type: type, email: email)
+        case .emailCheckIsRequired(let type, let email): return navigateToEmailCheckScreen(type: type,
+                                                                                           email: email)
+        case .passwordIsRequired(let type, let email): return navigateToPasswordScreen(type: type,
+                                                                                       email: email)
         case .newPasswordIsRequired(let type): return navigateToNewPasswordScreen(type: type)
         case .doneIsRequired(let type): return navigateToDoneScreen(type: type)
         case .contactIsRequired(let type): return navigateToContactScreen(type: type)
@@ -59,43 +61,57 @@ final class AccountCenterFlow: Flow {
         // 커스텀 애니메이션 적용시 animated: false 로 설정
         rootViewController.setViewControllers([viewController], animated: false)
         
-        return .one(flowContributor: .contribute(withNextPresentable: viewController, withNextStepper: viewModel))
+        return .one(flowContributor: .contribute(withNextPresentable: viewController,
+                                                 withNextStepper: viewModel))
     }
     
     private func navigateToEmailScreen(type: AccountCenterDataType) -> FlowContributors {
         let service = AccountCenterService()
-        let viewModel = ACEmailVM(service: service, type: type)
+        let viewModel = ACEmailVM(service: service,
+                                  type: type)
         let viewController = ACEmailVC(viewModel: viewModel)
         
         rootViewController.pushViewController(viewController, animated: true)
-        return .one(flowContributor: .contribute(withNextPresentable: viewController, withNextStepper: viewModel))
+        return .one(flowContributor: .contribute(withNextPresentable: viewController,
+                                                 withNextStepper: viewModel))
     }
     
-    private func navigateToEmailCheckScreen(type: AccountCenterDataType) -> FlowContributors {
+    private func navigateToEmailCheckScreen(type: AccountCenterDataType, email: String) -> FlowContributors {
         let service = AccountCenterService()
-        let viewModel = ACEmailCheckVM(service: service, type: type)
+        let viewModel = ACEmailCheckVM(service: service,
+                                       type: type,
+                                       email: email)
         let viewController = ACEmailCheckVC(viewModel: viewModel)
         
-        rootViewController.pushViewController(viewController, animated: true)
-        return .one(flowContributor: .contribute(withNextPresentable: viewController, withNextStepper: viewModel))
+        rootViewController.pushViewController(viewController,
+                                              animated: true)
+        return .one(flowContributor: .contribute(withNextPresentable: viewController,
+                                                 withNextStepper: viewModel))
     }
     
     private func navigateToPasswordScreen(type: AccountCenterDataType, email: String) -> FlowContributors {
         let service = AccountCenterService()
-        let viewModel = ACPasswordVM(service: service, email: email, type: type)
+        let viewModel = ACPasswordVM(service: service,
+                                     type: type,
+                                     email: email)
         let viewController = ACPasswordVC(viewModel: viewModel)
         
-        rootViewController.pushViewController(viewController, animated: true)
-        return .one(flowContributor: .contribute(withNextPresentable: viewController, withNextStepper: viewModel))
+        rootViewController.pushViewController(viewController,
+                                              animated: true)
+        return .one(flowContributor: .contribute(withNextPresentable: viewController,
+                                                 withNextStepper: viewModel))
     }
     
     private func navigateToNewPasswordScreen(type: AccountCenterDataType) -> FlowContributors {
         let service = AccountCenterService()
-        let viewModel = ACNewPasswordVM(service: service, type: type)
+        let viewModel = ACNewPasswordVM(service: service,
+                                        type: type)
         let viewController = ACNewPasswordVC(viewModel: viewModel)
         
-        rootViewController.pushViewController(viewController, animated: true)
-        return .one(flowContributor: .contribute(withNextPresentable: viewController, withNextStepper: viewModel))
+        rootViewController.pushViewController(viewController,
+                                              animated: true)
+        return .one(flowContributor: .contribute(withNextPresentable: viewController,
+                                                 withNextStepper: viewModel))
     }
     
     private func navigateToDoneScreen(type: AccountCenterDataType) -> FlowContributors {
@@ -104,7 +120,8 @@ final class AccountCenterFlow: Flow {
         let viewController = ACDoneVC(viewModel: viewModel)
         
         rootViewController.pushViewController(viewController, animated: true)
-        return .one(flowContributor: .contribute(withNextPresentable: viewController, withNextStepper: viewModel))
+        return .one(flowContributor: .contribute(withNextPresentable: viewController,
+                                                 withNextStepper: viewModel))
     }
     
     private func navigateToContactScreen(type: AccountCenterDataType) -> FlowContributors {
@@ -113,7 +130,8 @@ final class AccountCenterFlow: Flow {
         let viewController = ACContactVC(viewModel: viewModel)
         
         rootViewController.pushViewController(viewController, animated: true)
-        return .one(flowContributor: .contribute(withNextPresentable: viewController, withNextStepper: viewModel))
+        return .one(flowContributor: .contribute(withNextPresentable: viewController,
+                                                 withNextStepper: viewModel))
     }
     
 }
