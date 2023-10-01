@@ -17,37 +17,26 @@ final class SingleCategoryVC: BaseVC {
     
     private var viewModel: SingleCategoryVM
     
-    private lazy var scrollView = UIScrollView().then {
-        $0.showsVerticalScrollIndicator = false
-        $0.contentInsetAdjustmentBehavior = .never
-    }
-    private lazy var stackView = UIStackView().then {
-        $0.axis = .vertical
-        $0.spacing = 20
-    }
-    
     private lazy var titleLabel = UILabel().then {
         $0.text = "카테고리 데모"
         $0.numberOfLines = 1
         $0.textAlignment = .left
         $0.font = UIFont.systemFont(ofSize: 25, 
                                     weight: .heavy)
+        $0.textAlignment = .natural
     }
     
     private lazy var productGroupCVLayout = UICollectionViewFlowLayout().then {
         $0.scrollDirection = .vertical
-        $0.sectionInset = UIEdgeInsets(top: 0, 
+        $0.sectionInset = UIEdgeInsets(top: 10,
                                        left: 10,
-                                       bottom: 0,
+                                       bottom: 10,
                                        right: 10)
     }
     private lazy var productGroupCV = UICollectionView(frame: .zero, collectionViewLayout: self.productGroupCVLayout).then {
         $0.showsVerticalScrollIndicator = false
-        $0.isPagingEnabled = true
         $0.backgroundColor = .clear
     }
-    
-    private let legalView = LegalView()
     
     init(viewModel: SingleCategoryVM) {
         self.viewModel = viewModel
@@ -66,33 +55,17 @@ final class SingleCategoryVC: BaseVC {
     override func setProperty() {
         view.backgroundColor = .white
         
-        // productGroupCV 셀등록 및 푸터 헤더 등록
+        // productGroupCV 셀등록
         productGroupCV.register(ProductCVCell.self, forCellWithReuseIdentifier: ProductCVCell.identifier)
+        productGroupCV.register(LegalFooterReuseableView.self, forSupplementaryViewOfKind: UICollectionView.elementKindSectionFooter, withReuseIdentifier: LegalFooterReuseableView.identifier)
     }
     
     override func setLayout() {
-        view.addSubview(scrollView)
         view.addSubview(titleLabel)
-        scrollView.addSubview(stackView)
-        
-        [productGroupCV, legalView].forEach {
-            stackView.addArrangedSubview($0)
-        }
+        view.addSubview(productGroupCV)
     }
     
     override func setConstraint() {
-        // 스크롤뷰 제약 조건 설정
-        scrollView.snp.makeConstraints {
-            $0.top.equalTo(titleLabel.snp.bottom).offset(10)
-            $0.horizontalEdges.equalToSuperview()
-            $0.bottom.equalToSuperview()
-        }
-        
-        // 스택뷰 제약 조건 설정
-        stackView.snp.makeConstraints {
-            $0.edges.equalToSuperview()
-            $0.width.equalTo(scrollView.snp.width) // 스택뷰의 너비는 스크롤뷰와 같게
-        }
         
         titleLabel.snp.makeConstraints {
             $0.top.equalTo(view.safeAreaLayoutGuide.snp.top)
@@ -100,8 +73,8 @@ final class SingleCategoryVC: BaseVC {
         }
         
         productGroupCV.snp.makeConstraints {
-            $0.width.equalToSuperview() // Adjust the width as needed
-            $0.height.greaterThanOrEqualTo(productGroupCV.snp.width).multipliedBy(1.5)
+            $0.top.equalTo(titleLabel.snp.bottom)
+            $0.left.right.bottom.equalToSuperview()
          }
     }
     
@@ -110,18 +83,33 @@ final class SingleCategoryVC: BaseVC {
         
         productGroupCV.rx.setDelegate(self).disposed(by: disposeBag)
         
+        productGroupCV
+            .rx
+            .modelSelected(ProductDataSection.Item.self)
+            .subscribe { [weak self] item in
+                self?.viewModel.input.actionSingleProductRelay.accept(item)
+            }
+            .disposed(by: disposeBag)
+        
         let dataSource = RxCollectionViewSectionedReloadDataSource<ProductDataSection>(
             configureCell: { dataSource, collectionView, indexPath, item in
                 let cell = collectionView.dequeueReusableCell(withReuseIdentifier: ProductCVCell.identifier, for: indexPath) as! ProductCVCell
                 
-                cell.productSelectedRelay
-                    .subscribe(onNext: { [weak self] in
-                        self?.viewModel.input.actionSingleProductRelay.accept(item)
-                    })
-                    .disposed(by: cell.disposeBag)
+//                cell.productSelectedRelay
+//                    .subscribe(onNext: { [weak self] in
+//                        self?.viewModel.input.actionSingleProductRelay.accept(item)
+//                    })
+//                    .disposed(by: cell.disposeBag)
 
                 cell.config(product: item)
                 return cell
+            },
+            configureSupplementaryView: { dataSource, collectionView, kind, indexPath in
+                
+                
+                    let footerView = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: LegalFooterReuseableView.identifier, for: indexPath) as! LegalFooterReuseableView
+                    
+                    return footerView
             }
         )
         
@@ -144,6 +132,12 @@ extension SingleCategoryVC: UICollectionViewDelegateFlowLayout {
 
             let width = collectionView.frame.width/3 - 14
             return CGSize(width: width , height: width * 1.6) // ProductCVCell의 사이즈
+    }
+    
+    // productGroupCV의 푸터 크기 정의
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, referenceSizeForFooterInSection section: Int) -> CGSize {
+        
+        return CGSize(width: collectionView.frame.width, height: 200)
     }
 }
 

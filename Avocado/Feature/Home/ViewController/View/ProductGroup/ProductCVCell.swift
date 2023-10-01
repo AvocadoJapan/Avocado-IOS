@@ -12,7 +12,7 @@ final class ProductCVCell: UICollectionViewCell, CollectionCellIdentifierable {
 
     var disposeBag = DisposeBag()
     
-    let productSelectedRelay = PublishRelay<Void>()
+//    let productSelectedRelay = PublishRelay<Void>()
     
     private var product: Product?
     
@@ -52,8 +52,8 @@ final class ProductCVCell: UICollectionViewCell, CollectionCellIdentifierable {
         setConstraints()
         setProperties()
 
-        let tapRecognizer = UITapGestureRecognizer(target: self, action: #selector(handleTap))
-        self.addGestureRecognizer(tapRecognizer)
+//        let tapRecognizer = UITapGestureRecognizer(target: self, action: #selector(handleTap))
+//        self.addGestureRecognizer(tapRecognizer)
     }
     
     required init?(coder: NSCoder) {
@@ -102,9 +102,9 @@ final class ProductCVCell: UICollectionViewCell, CollectionCellIdentifierable {
         priceLabel.text = product.price
     }
     
-    @objc private func handleTap() {
-        productSelectedRelay.accept(())
-   }
+//    @objc private func handleTap() {
+//        productSelectedRelay.accept(())
+//   }
     
     override func prepareForReuse() {
         super.prepareForReuse()

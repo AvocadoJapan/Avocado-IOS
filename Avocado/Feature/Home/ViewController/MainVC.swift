@@ -39,7 +39,9 @@ final class MainVC: BaseVC {
     private lazy var bannerCV = UICollectionView(frame: .zero, collectionViewLayout: self.bannerCVLayout).then {
         $0.showsHorizontalScrollIndicator = false
         $0.isPagingEnabled = true
-        $0.backgroundColor = .clear
+        $0.backgroundColor = .yellow
+        $0.bounces = false
+        $0.contentMode = .scaleAspectFill
     }
     
     
@@ -85,13 +87,13 @@ final class MainVC: BaseVC {
         
         navigationController?.setupNavbar(with: "Avocado Beta", logoImage: UIImage(systemName: "apple.logo"))
         
-
+        
         
         // mainCategoryCV delegate설정, 셀등록
         mainCategoryCV.delegate = self
         mainCategoryCV.dataSource = self
         mainCategoryCV.register(MainSubMenuCVCell.self, forCellWithReuseIdentifier: MainSubMenuCVCell.identifier)
-
+        
         // bannerCV 셀등록
         bannerCV.register(BannerCVCell.self, forCellWithReuseIdentifier: BannerCVCell.identifier)
         
@@ -122,7 +124,7 @@ final class MainVC: BaseVC {
         
         productGroupCV.snp.makeConstraints {
             $0.height.equalTo(productGroupCV.snp.width).multipliedBy(5.4)
-         }
+        }
         
         bannerCV.snp.makeConstraints {
             $0.height.equalTo(300)
@@ -140,18 +142,26 @@ final class MainVC: BaseVC {
         bannerCV.rx.setDelegate(self).disposed(by: disposeBag)
         
         
-//        viewModel.input.actionSingleCategoryRelay.accept(string)
+        //        viewModel.input.actionSingleCategoryRelay.accept(string)
+        
+        productGroupCV
+            .rx
+            .modelSelected(ProductDataSection.Item.self)
+            .subscribe { [weak self] item in
+                self?.viewModel.input.actionSingleProductRelay.accept(item)
+            }
+            .disposed(by: disposeBag)
         
         let dataSource = RxCollectionViewSectionedReloadDataSource<ProductDataSection>(
             configureCell: { dataSource, collectionView, indexPath, item in
                 let cell = collectionView.dequeueReusableCell(withReuseIdentifier: ProductCVCell.identifier, for: indexPath) as! ProductCVCell
-                               
-                cell.productSelectedRelay
-                    .subscribe(onNext: { [weak self] in
-                        self?.viewModel.input.actionSingleProductRelay.accept(item)
-                    })
-                    .disposed(by: cell.disposeBag)
-    
+                
+                //                cell.productSelectedRelay
+                //                    .subscribe(onNext: { [weak self] in
+                //                        self?.viewModel.input.actionSingleProductRelay.accept(item)
+                //                    })
+                //                    .disposed(by: cell.disposeBag)
+                
                 cell.config(product: item)
                 return cell
             },
@@ -178,19 +188,19 @@ final class MainVC: BaseVC {
                     let footerView = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: ProductGroupFooterReusableView.identifier, for: indexPath) as! ProductGroupFooterReusableView
                     
                     let item = dataSource[indexPath.section].productSectionId
-//                    footerView.setProperty(id: item)
+                    //                    footerView.setProperty(id: item)
                     
                     return footerView
                 }
-                return UICollectionReusableView()  // 기본적인 reusable view를 반환합니다. 필요하다면 다른 view를 반환할 수도 있습니다.
+                return UICollectionReusableView()  // 기본적인 reusable view를 반환합니다.
             }
         )
         
         output.productSectionDataPublish
             .bind(to: productGroupCV.rx.items(dataSource: dataSource))
             .disposed(by: disposeBag)
-    
-
+        
+        
         
         output.bannerSectionDataPublish
             .bind(to: bannerCV.rx.items(cellIdentifier: BannerCVCell.identifier, cellType: BannerCVCell.self)) { index, model, cell in
@@ -211,6 +221,24 @@ extension MainVC: UIScrollViewDelegate {
     // MARK: - UIScrollViewDelegate
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
         navigationController?.setTransitAlpha(yOffset: scrollView.contentOffset.y)
+
+        let lowerThanTop = scrollView.contentOffset.y < 0
+
+        if lowerThanTop {
+            let offsetY = scrollView.contentOffset.y
+
+            let minBannerHeight: CGFloat = 0
+            let maxBannerHeight: CGFloat = 300
+
+            // Calculate the new height of the banner based on the offset
+            let newBannerHeight = max(minBannerHeight, maxBannerHeight - offsetY)
+
+            // Calculate the scale based on the new height
+            let scale = newBannerHeight / maxBannerHeight
+
+            // Apply the scale transformation to the banner
+            bannerCV.transform = CGAffineTransform(scaleX: scale, y: scale)
+        }
     }
 }
 
@@ -219,9 +247,9 @@ extension MainVC: UICollectionViewDelegateFlowLayout {
         if collectionView == bannerCV {
             return collectionView.frame.size //bannerCV의 사이즈
         }
-         else if collectionView == mainCategoryCV {
-             return CGSize(width: 60, height: 75) //mainCategoryCV의 사이즈
-         }
+        else if collectionView == mainCategoryCV {
+            return CGSize(width: 60, height: 75) //mainCategoryCV의 사이즈
+        }
         else {
             let width = collectionView.frame.width/3 - 14
             return CGSize(width: width , height: width * 1.8) // ProductCVCell의 사이즈

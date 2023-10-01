@@ -65,7 +65,7 @@ final class LegalView: UIView {
         }
         
         self.snp.makeConstraints {
-            $0.height.equalTo(300)
+            $0.height.equalTo(200)
         }
     }
     required init?(coder: NSCoder) {

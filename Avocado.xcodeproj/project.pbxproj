@@ -21,6 +21,27 @@
 		04D2FCFC2A2A51F100253028 /* RxSwift in Frameworks */ = {isa = PBXBuildFile; productRef = 04D2FCFB2A2A51F100253028 /* RxSwift */; };
 		04D2FD022A2A528200253028 /* SnapKit in Frameworks */ = {isa = PBXBuildFile; productRef = 04D2FD012A2A528200253028 /* SnapKit */; };
 		04D2FD052A2A529600253028 /* Then in Frameworks */ = {isa = PBXBuildFile; productRef = 04D2FD042A2A529600253028 /* Then */; };
+		3D3286262AC039530057B9D7 /* ACEmailVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D3286252AC039530057B9D7 /* ACEmailVC.swift */; };
+		3D3286282AC0395B0057B9D7 /* ACEmailCheckVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D3286272AC0395B0057B9D7 /* ACEmailCheckVC.swift */; };
+		3D32862A2AC039620057B9D7 /* ACPasswordVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D3286292AC039620057B9D7 /* ACPasswordVC.swift */; };
+		3D32862C2AC039980057B9D7 /* ACDoneVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D32862B2AC039980057B9D7 /* ACDoneVC.swift */; };
+		3D32862E2AC039AF0057B9D7 /* ACContactVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D32862D2AC039AF0057B9D7 /* ACContactVC.swift */; };
+		3D3286302AC03A390057B9D7 /* ACNewPasswordVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D32862F2AC03A390057B9D7 /* ACNewPasswordVC.swift */; };
+		3D952A362AC0A018004731D5 /* ACEmailVM.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D952A352AC0A018004731D5 /* ACEmailVM.swift */; };
+		3D952A382AC0A021004731D5 /* ACEmailCheckVM.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D952A372AC0A021004731D5 /* ACEmailCheckVM.swift */; };
+		3D952A3A2AC0A02A004731D5 /* ACPasswordVM.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D952A392AC0A02A004731D5 /* ACPasswordVM.swift */; };
+		3D952A3C2AC0A035004731D5 /* ACNewPasswordVM.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D952A3B2AC0A035004731D5 /* ACNewPasswordVM.swift */; };
+		3D952A3E2AC0A03E004731D5 /* ACDoneVM.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D952A3D2AC0A03E004731D5 /* ACDoneVM.swift */; };
+		3D952A402AC0A045004731D5 /* ACContactVM.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D952A3F2AC0A045004731D5 /* ACContactVM.swift */; };
+		3D97A43B2ABB0AEB00AAECCC /* AccountCenterStep.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D97A43A2ABB0AEB00AAECCC /* AccountCenterStep.swift */; };
+		3D97A43D2ABB0AFC00AAECCC /* AccountCenterFlow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D97A43C2ABB0AFC00AAECCC /* AccountCenterFlow.swift */; };
+		3D97A43F2ABB0B1400AAECCC /* AccountCenterVM.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D97A43E2ABB0B1400AAECCC /* AccountCenterVM.swift */; };
+		3D97A4412ABB0B2800AAECCC /* AccountCenterVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D97A4402ABB0B2800AAECCC /* AccountCenterVC.swift */; };
+		3D97A4432ABB0B3800AAECCC /* AccountCenterService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D97A4422ABB0B3800AAECCC /* AccountCenterService.swift */; };
+		3D97A4462ABB1A6D00AAECCC /* AccountCenterSectionModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D97A4452ABB1A6D00AAECCC /* AccountCenterSectionModel.swift */; };
+		3D97A4482ABBB93200AAECCC /* AccountMenuTVCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D97A4472ABBB93200AAECCC /* AccountMenuTVCell.swift */; };
+		3D97A44A2ABBB98000AAECCC /* TabelView+Protocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D97A4492ABBB98000AAECCC /* TabelView+Protocol.swift */; };
+		3D97A44C2ABC655F00AAECCC /* LegalFooterReuseableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D97A44B2ABC655F00AAECCC /* LegalFooterReuseableView.swift */; };
 		9816F6D62A49491E00A7A284 /* BaseTarget.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9816F6D52A49491E00A7A284 /* BaseTarget.swift */; };
 		9816F6D92A49495500A7A284 /* Moya in Frameworks */ = {isa = PBXBuildFile; productRef = 9816F6D82A49495500A7A284 /* Moya */; };
 		9816F6DB2A49495500A7A284 /* RxMoya in Frameworks */ = {isa = PBXBuildFile; productRef = 9816F6DA2A49495500A7A284 /* RxMoya */; };
@@ -210,6 +231,27 @@
 		04C835F02A2B2CFA00731E3E /* MainDataModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainDataModel.swift; sourceTree = "<group>"; };
 		04C835F62A2B46B600731E3E /* BannerCVCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BannerCVCell.swift; sourceTree = "<group>"; };
 		04C835FE2A2B5FEF00731E3E /* BannerFooterReusableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BannerFooterReusableView.swift; sourceTree = "<group>"; };
+		3D3286252AC039530057B9D7 /* ACEmailVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ACEmailVC.swift; sourceTree = "<group>"; };
+		3D3286272AC0395B0057B9D7 /* ACEmailCheckVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ACEmailCheckVC.swift; sourceTree = "<group>"; };
+		3D3286292AC039620057B9D7 /* ACPasswordVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ACPasswordVC.swift; sourceTree = "<group>"; };
+		3D32862B2AC039980057B9D7 /* ACDoneVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ACDoneVC.swift; sourceTree = "<group>"; };
+		3D32862D2AC039AF0057B9D7 /* ACContactVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ACContactVC.swift; sourceTree = "<group>"; };
+		3D32862F2AC03A390057B9D7 /* ACNewPasswordVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ACNewPasswordVC.swift; sourceTree = "<group>"; };
+		3D952A352AC0A018004731D5 /* ACEmailVM.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ACEmailVM.swift; sourceTree = "<group>"; };
+		3D952A372AC0A021004731D5 /* ACEmailCheckVM.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ACEmailCheckVM.swift; sourceTree = "<group>"; };
+		3D952A392AC0A02A004731D5 /* ACPasswordVM.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ACPasswordVM.swift; sourceTree = "<group>"; };
+		3D952A3B2AC0A035004731D5 /* ACNewPasswordVM.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ACNewPasswordVM.swift; sourceTree = "<group>"; };
+		3D952A3D2AC0A03E004731D5 /* ACDoneVM.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ACDoneVM.swift; sourceTree = "<group>"; };
+		3D952A3F2AC0A045004731D5 /* ACContactVM.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ACContactVM.swift; sourceTree = "<group>"; };
+		3D97A43A2ABB0AEB00AAECCC /* AccountCenterStep.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccountCenterStep.swift; sourceTree = "<group>"; };
+		3D97A43C2ABB0AFC00AAECCC /* AccountCenterFlow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccountCenterFlow.swift; sourceTree = "<group>"; };
+		3D97A43E2ABB0B1400AAECCC /* AccountCenterVM.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccountCenterVM.swift; sourceTree = "<group>"; };
+		3D97A4402ABB0B2800AAECCC /* AccountCenterVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccountCenterVC.swift; sourceTree = "<group>"; };
+		3D97A4422ABB0B3800AAECCC /* AccountCenterService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccountCenterService.swift; sourceTree = "<group>"; };
+		3D97A4452ABB1A6D00AAECCC /* AccountCenterSectionModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccountCenterSectionModel.swift; sourceTree = "<group>"; };
+		3D97A4472ABBB93200AAECCC /* AccountMenuTVCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccountMenuTVCell.swift; sourceTree = "<group>"; };
+		3D97A4492ABBB98000AAECCC /* TabelView+Protocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "TabelView+Protocol.swift"; sourceTree = "<group>"; };
+		3D97A44B2ABC655F00AAECCC /* LegalFooterReuseableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LegalFooterReuseableView.swift; sourceTree = "<group>"; };
 		9816F6D52A49491E00A7A284 /* BaseTarget.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseTarget.swift; sourceTree = "<group>"; };
 		9816F6E12A494A5900A7A284 /* BaseAPIService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseAPIService.swift; sourceTree = "<group>"; };
 		9816F6E82A494AC800A7A284 /* amplifyconfiguration.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = amplifyconfiguration.json; sourceTree = "<group>"; };
@@ -477,6 +519,80 @@
 			path = SupportingFiles;
 			sourceTree = "<group>";
 		};
+		3D97A4342ABB027300AAECCC /* AccountCenter */ = {
+			isa = PBXGroup;
+			children = (
+				3D97A4352ABB028D00AAECCC /* Flow */,
+				3D97A4372ABB029B00AAECCC /* ViewModel */,
+				3D97A4362ABB029300AAECCC /* Model */,
+				3D97A4382ABB02A000AAECCC /* ViewController */,
+				3D97A4392ABB02B200AAECCC /* Service */,
+			);
+			path = AccountCenter;
+			sourceTree = "<group>";
+		};
+		3D97A4352ABB028D00AAECCC /* Flow */ = {
+			isa = PBXGroup;
+			children = (
+				3D97A43A2ABB0AEB00AAECCC /* AccountCenterStep.swift */,
+				3D97A43C2ABB0AFC00AAECCC /* AccountCenterFlow.swift */,
+			);
+			path = Flow;
+			sourceTree = "<group>";
+		};
+		3D97A4362ABB029300AAECCC /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				3D97A4452ABB1A6D00AAECCC /* AccountCenterSectionModel.swift */,
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
+		3D97A4372ABB029B00AAECCC /* ViewModel */ = {
+			isa = PBXGroup;
+			children = (
+				3D97A43E2ABB0B1400AAECCC /* AccountCenterVM.swift */,
+				3D952A352AC0A018004731D5 /* ACEmailVM.swift */,
+				3D952A372AC0A021004731D5 /* ACEmailCheckVM.swift */,
+				3D952A392AC0A02A004731D5 /* ACPasswordVM.swift */,
+				3D952A3B2AC0A035004731D5 /* ACNewPasswordVM.swift */,
+				3D952A3D2AC0A03E004731D5 /* ACDoneVM.swift */,
+				3D952A3F2AC0A045004731D5 /* ACContactVM.swift */,
+			);
+			path = ViewModel;
+			sourceTree = "<group>";
+		};
+		3D97A4382ABB02A000AAECCC /* ViewController */ = {
+			isa = PBXGroup;
+			children = (
+				3D97A4442ABB19D800AAECCC /* View */,
+				3D97A4402ABB0B2800AAECCC /* AccountCenterVC.swift */,
+				3D3286252AC039530057B9D7 /* ACEmailVC.swift */,
+				3D3286272AC0395B0057B9D7 /* ACEmailCheckVC.swift */,
+				3D3286292AC039620057B9D7 /* ACPasswordVC.swift */,
+				3D32862F2AC03A390057B9D7 /* ACNewPasswordVC.swift */,
+				3D32862B2AC039980057B9D7 /* ACDoneVC.swift */,
+				3D32862D2AC039AF0057B9D7 /* ACContactVC.swift */,
+			);
+			path = ViewController;
+			sourceTree = "<group>";
+		};
+		3D97A4392ABB02B200AAECCC /* Service */ = {
+			isa = PBXGroup;
+			children = (
+				3D97A4422ABB0B3800AAECCC /* AccountCenterService.swift */,
+			);
+			path = Service;
+			sourceTree = "<group>";
+		};
+		3D97A4442ABB19D800AAECCC /* View */ = {
+			isa = PBXGroup;
+			children = (
+				3D97A4472ABBB93200AAECCC /* AccountMenuTVCell.swift */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
 		9816F6D32A4948BE00A7A284 /* Network */ = {
 			isa = PBXGroup;
 			children = (
@@ -580,6 +696,7 @@
 				B22ECA2E2A75976500CCA794 /* AppStep.swift */,
 				B2689E812AA0641E00151D1D /* TabFlow.swift */,
 				B2689E852AA0643800151D1D /* TabStep.swift */,
+				3D97A4342ABB027300AAECCC /* AccountCenter */,
 				B240D7172A9F102100DF171D /* Upload */,
 				B19E83252A6025A2004C5DE2 /* Auth */,
 				04BA131F2A2AD9FB0004E2FB /* Home */,
@@ -702,6 +819,7 @@
 				B19563512AA471E40032FE25 /* CheckedView.swift */,
 				B22222662A55F83300A2B7CB /* PrivacyElementView.swift */,
 				B23B24EC2A8C528800F179A7 /* LegalView.swift */,
+				3D97A44B2ABC655F00AAECCC /* LegalFooterReuseableView.swift */,
 				B2D1309D2A4B4C5800538EFB /* BottomButton.swift */,
 				B240FB362A9A7FFC00F365BB /* ContourView.swift */,
 				B2F3D3632A511F2700FB05E1 /* SubButton.swift */,
@@ -753,6 +871,7 @@
 				B1A301AD2A5439F0003834E6 /* CollectionView+Protocol.swift */,
 				B29EC4752A934991001D1E6C /* EnumCountable+Protocol.swift */,
 				B1A705132A63C426005CD130 /* ViewModelType.swift */,
+				3D97A4492ABBB98000AAECCC /* TabelView+Protocol.swift */,
 			);
 			path = Protocol;
 			sourceTree = "<group>";
@@ -1293,6 +1412,7 @@
 				B2118D0E2AACC78100871A40 /* UploadBadge.swift in Sources */,
 				B240FB352A994C8E00F365BB /* ProductBadgeView.swift in Sources */,
 				B22222652A55F40100A2B7CB /* PrivacyAccessVC.swift in Sources */,
+				3D32862E2AC039AF0057B9D7 /* ACContactVC.swift in Sources */,
 				98FD1C232A56AD230031D7C1 /* SettingVC.swift in Sources */,
 				B1C35AEF2A9DCA2900C97A3D /* ProfileVM.swift in Sources */,
 				98FD1C252A56AE860031D7C1 /* SettingVM.swift in Sources */,
@@ -1314,6 +1434,7 @@
 				B22ECA2D2A75975C00CCA794 /* AppStepper.swift in Sources */,
 				B22222672A55F83300A2B7CB /* PrivacyElementView.swift in Sources */,
 				B22ECA2B2A75974B00CCA794 /* AppFlow.swift in Sources */,
+				3D97A4432ABB0B3800AAECCC /* AccountCenterService.swift in Sources */,
 				B1B8C2012AAC57B500B9E1C3 /* SearchService.swift in Sources */,
 				B1BD33452AB2EB5D003E660D /* SearchResultModel.swift in Sources */,
 				B2CA311F2A91177D00E7700C /* SingleProductVM.swift in Sources */,
@@ -1322,6 +1443,7 @@
 				981A598D2A494FAE0031A917 /* AuthService.swift in Sources */,
 				B22ECA3D2A778E9800CCA794 /* SettingStep.swift in Sources */,
 				B29D78912A2B6FB1008B6945 /* SearchVC.swift in Sources */,
+				3D97A43D2ABB0AFC00AAECCC /* AccountCenterFlow.swift in Sources */,
 				B1A705142A63C426005CD130 /* ViewModelType.swift in Sources */,
 				B1D5350F2AA0D16F001ACE09 /* ProfileStep.swift in Sources */,
 				B2D1309E2A4B4C5800538EFB /* BottomButton.swift in Sources */,
@@ -1342,27 +1464,35 @@
 				04C835F72A2B46B600731E3E /* BannerCVCell.swift in Sources */,
 				B22ECA2F2A75976500CCA794 /* AppStep.swift in Sources */,
 				B1BD33412AB2DE30003E660D /* SearchResultCVCell.swift in Sources */,
+				3D952A402AC0A045004731D5 /* ACContactVM.swift in Sources */,
 				B1A301BD2A543A2F003834E6 /* BaseVC.swift in Sources */,
 				04BA13292A2AE0990004E2FB /* ProductCVCell.swift in Sources */,
 				B2F3D3642A511F2700FB05E1 /* SubButton.swift in Sources */,
 				B20A176D2A9DB36D000FD85B /* UserBadgeView.swift in Sources */,
 				98FD1C2A2A56B3900031D7C1 /* SettingAPI.swift in Sources */,
+				3D952A3E2AC0A03E004731D5 /* ACDoneVM.swift in Sources */,
 				B18E035D2AA2137A00F8F394 /* NSMutableAttributedString+Extension.swift in Sources */,
 				B212D58B2A45F1740008DAD1 /* InputView.swift in Sources */,
+				3D97A4462ABB1A6D00AAECCC /* AccountCenterSectionModel.swift in Sources */,
 				B1B1EA132A5973C7007B1894 /* SettingTVCell.swift in Sources */,
+				3D32862A2AC039620057B9D7 /* ACPasswordVC.swift in Sources */,
 				B1B8C20E2AAC74DD00B9E1C3 /* SearchStep.swift in Sources */,
 				B240D71E2A9F107600DF171D /* UploadVC.swift in Sources */,
 				04C835FF2A2B5FEF00731E3E /* BannerFooterReusableView.swift in Sources */,
 				B1F0E6FC2AB89E2400E87140 /* CommentListVM.swift in Sources */,
+				3D97A44C2ABC655F00AAECCC /* LegalFooterReuseableView.swift in Sources */,
 				B195635A2AA4A54C0032FE25 /* Int64+Extension.swift in Sources */,
 				B1A301972A5437DB003834E6 /* ProfileSettingVC.swift in Sources */,
 				B1F0E6FA2AB8939700E87140 /* CommentListCVCell.swift in Sources */,
 				B18DFEDF2A51B53B00CF27FE /* EmailCheckVM.swift in Sources */,
 				B1B8C2032AAC586C00B9E1C3 /* SearchAPI.swift in Sources */,
+				3D3286262AC039530057B9D7 /* ACEmailVC.swift in Sources */,
 				B2198B982A2A36EA0019032D /* AppDelegate.swift in Sources */,
 				B247C7C32A9E25C900303147 /* UserInfoCardView.swift in Sources */,
 				B2CA311D2A91105600E7700C /* SingleProductVC.swift in Sources */,
 				B1A301AA2A5439EC003834E6 /* Logger.swift in Sources */,
+				3D97A4412ABB0B2800AAECCC /* AccountCenterVC.swift in Sources */,
+				3D952A3A2AC0A02A004731D5 /* ACPasswordVM.swift in Sources */,
 				9848A8B12A5D848D008D43F5 /* SplashVC.swift in Sources */,
 				B1D5350D2AA0D168001ACE09 /* ProfileFlow.swift in Sources */,
 				B1A301C62A543B15003834E6 /* UIButton+Animation.swift in Sources */,
@@ -1386,10 +1516,14 @@
 				B1BD333F2AB2D98A003E660D /* SearchResultVM.swift in Sources */,
 				B19563542AA47B0C0032FE25 /* ProductCommentCVCell.swift in Sources */,
 				B1BD333D2AB2D4C1003E660D /* SearchResultVC.swift in Sources */,
+				3D32862C2AC039980057B9D7 /* ACDoneVC.swift in Sources */,
 				B240D7222A9F109200DF171D /* UploadService.swift in Sources */,
 				B22ECA322A7789D900CCA794 /* MainFlow.swift in Sources */,
 				B1BD33472AB2F7BD003E660D /* CategoryView.swift in Sources */,
+				B1BD33472AB2F7BD003E660D /* CatecogyCVCell.swift in Sources */,
+				3D97A43F2ABB0B1400AAECCC /* AccountCenterVM.swift in Sources */,
 				B1C35AF32A9DCAB200C97A3D /* ProfileService.swift in Sources */,
+				3D3286282AC0395B0057B9D7 /* ACEmailCheckVC.swift in Sources */,
 				04BA13212A2ADA160004E2FB /* MainVC.swift in Sources */,
 				04BA13262A2ADAEE0004E2FB /* MainVM.swift in Sources */,
 				B21E58F42A574A46007CCAA0 /* RegionSettingVC.swift in Sources */,
@@ -1397,12 +1531,14 @@
 				B2689E882AA0740200151D1D /* BaseTabBarController.swift in Sources */,
 				B26A3B692A60BB5100AD61A5 /* SplashFlow.swift in Sources */,
 				B2F3F47A2A4B6570007994DC /* EmailCheckVC.swift in Sources */,
+				3D952A362AC0A018004731D5 /* ACEmailVM.swift in Sources */,
 				B1C35AFE2A9DF45700C97A3D /* ProfileDataSectionModel.swift in Sources */,
 				B20AFE682A2BAE73004A646B /* SearchBarView.swift in Sources */,
 				98AD10FF2A4BF2E7001C4734 /* AuthAPI.swift in Sources */,
 				B26A3B662A60AB8400AD61A5 /* AuthStep.swift in Sources */,
 				98AD11032A4BF8B4001C4734 /* RegionsModel.swift in Sources */,
 				B240FB372A9A7FFC00F365BB /* ContourView.swift in Sources */,
+				3D97A43B2ABB0AEB00AAECCC /* AccountCenterStep.swift in Sources */,
 				B2E186CE2A474B4C00ABE98F /* SignupVC.swift in Sources */,
 				9848A8B32A5D853B008D43F5 /* UIColor+Extension.swift in Sources */,
 				B240D7242A9F10AD00DF171D /* UploadAPI.swift in Sources */,
@@ -1413,7 +1549,9 @@
 				B1B1EA162A599904007B1894 /* SettingSectionModel.swift in Sources */,
 				B1BD333B2AB2AA81003E660D /* RecentSearchTitleReusableView.swift in Sources */,
 				B2DAFD3D2AA47D7500F015B5 /* ImageDataSection.swift in Sources */,
+				3D3286302AC03A390057B9D7 /* ACNewPasswordVC.swift in Sources */,
 				B28892072A6E569800952A10 /* FadeAnimation.swift in Sources */,
+				3D952A3C2AC0A035004731D5 /* ACNewPasswordVM.swift in Sources */,
 				B1C35AF12A9DCAA800C97A3D /* ProfileAPI.swift in Sources */,
 				B29EC4762A934991001D1E6C /* EnumCountable+Protocol.swift in Sources */,
 				B248C6AB2A86C918006AE008 /* MainService.swift in Sources */,
@@ -1434,10 +1572,13 @@
 				98AD11012A4BF713001C4734 /* UserModel.swift in Sources */,
 				B1BB2E592ABB27B20068AC4A /* CommentDataSectionModel.swift in Sources */,
 				B18F1A002A5ED730003440B6 /* Util.swift in Sources */,
+				3D97A44A2ABBB98000AAECCC /* TabelView+Protocol.swift in Sources */,
 				B1A301A72A5439E7003834E6 /* UIView+Extension.swift in Sources */,
+				3D952A382AC0A021004731D5 /* ACEmailCheckVM.swift in Sources */,
 				B19563522AA471E40032FE25 /* CheckedView.swift in Sources */,
 				B2689E862AA0643800151D1D /* TabStep.swift in Sources */,
 				B2D2764E2A6C4D6A00441719 /* OtherEmailVC.swift in Sources */,
+				3D97A4482ABBB93200AAECCC /* AccountMenuTVCell.swift in Sources */,
 				B1A301AB2A5439EC003834E6 /* KeychainUtil.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

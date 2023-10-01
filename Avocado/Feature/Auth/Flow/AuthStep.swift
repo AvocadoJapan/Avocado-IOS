@@ -48,4 +48,7 @@ import RxSwift
     // Profile
     case profileIsRequired
     case profileIsComplete
+    
+    // Account Center
+    case accountCenterIsRequired
 }

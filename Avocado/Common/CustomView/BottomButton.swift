@@ -24,7 +24,7 @@ final class BottomButton: UIButton {
         
         self.setTitle(text, for: .normal)
         self.titleLabel?.font = UIFont.boldSystemFont(ofSize: 13)
-        self.layer.cornerRadius = 20
+        self.layer.cornerRadius = 25
         
         self.backgroundColor = buttonType.bgColor
         self.setTitleColor(buttonType.tintColor, for: .normal)

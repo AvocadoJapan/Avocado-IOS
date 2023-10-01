@@ -154,14 +154,12 @@ final class LoginVC: BaseVC {
             })
             .disposed(by: disposeBag)
         
-        // accountCenter 옵션
-        // FIXME: 계정 센터 VC를 만들면 나중에 거기로 연결해야함
         accountCenterButton
             .rx
             .tap
             .asDriver()
             .drive(onNext: { [weak self] _ in
-                self?.navigationController?.popViewController(animated: true)
+                self?.viewModel.steps.accept(AuthStep.accountCenterIsRequired)
             })
             .disposed(by: disposeBag)
         

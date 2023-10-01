@@ -34,7 +34,7 @@ final class AppFlow: Flow {
         case .appIsStarted:
             return navigateToSplashFlow() //스플래시 화면이동
         case .mainIsRequired:
-            return navigateToMainFlow() // 메인화면이동
+            return navigateToMainWithTabFlow() // 메인화면이동
         case .authIsRequired:
             return navigateToAuthFlow() // 인증화면이동
             
@@ -74,9 +74,9 @@ final class AppFlow: Flow {
     }
     
     /**
-     * - description 메인화면 이동 플로우 함수
+     * - description 메인화면 이동 플로우 함수 via TabFlow
      */
-    private func navigateToMainFlow() -> FlowContributors {
+    private func navigateToMainWithTabFlow() -> FlowContributors {
 //        let mainFlow = MainFlow(root: BaseNavigationVC())
         let tabFlow = TabFlow()
         
@@ -101,4 +101,5 @@ final class AppFlow: Flow {
         
         return .one(flowContributor: .contribute(withNextPresentable: splashFlow, withNextStepper: OneStepper(withSingleStep: SplashStep.errorOccurred(error: error))))
     }
+
 }

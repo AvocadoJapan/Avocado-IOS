@@ -275,6 +275,81 @@ enum UserBadge: Equatable {
 }
 
 /**
+ * - Description 계정센터 타입 정보 셀에 대한 행동 정보를 담음
+ */
+enum AccountCenterDataType: CaseCountable {
+    case findEmail
+    case findPassword
+    
+    case confirmCodeUnvalid
+    case code2FAUnvalid
+    
+    case accountLocked
+    case accountHacked
+    case accountDelete
+    
+    case signInError
+    case signUpError
+    
+    var title: String {
+        switch self {
+        case .findEmail: return "이메일이 기억나지 않아요"
+        case .findPassword: return "비밀번호가 기억나지 않아요"
+            
+        case .confirmCodeUnvalid: return "이메일 확인코드가 유효하지 않아요"
+        case .code2FAUnvalid: return "2FA인증에 접근할 수 없어요"
+            
+        case .accountLocked: return "계정이 비활성화 되었어요"
+        case .accountHacked: return "계정이 해킹된것 같아요"
+        case .accountDelete: return "계정을 지우고 싶어요"
+            
+        case .signInError: return "회원가입 도중 에러가 발생했어요"
+        case .signUpError: return "로그인 도중 에러가 발생했어요"
+        }
+    }
+    
+    var navigationTitle: String {
+        switch self {
+        case .findEmail: return "이메일 찾기"
+        case .findPassword: return "비밀번호 찾기"
+            
+        case .confirmCodeUnvalid: return "이메일 상태"
+        case .code2FAUnvalid: return "2FA인증"
+            
+        case .accountLocked: return "비활성화 해제"
+        case .accountHacked: return "계정 상태"
+        case .accountDelete: return "계정 삭제"
+            
+        case .signInError: return "회원가입 에러"
+        case .signUpError: return "로그인 에러"
+        }
+    }
+    
+    var isHighlight: Bool {
+        switch self {
+        case .accountHacked: return true
+        case .accountDelete: return true
+        default: return false
+        }
+    }
+    
+    func getData() -> AccountCenterData {
+        AccountCenterData(type: self)
+    }
+}
+
+/**
+ * - Description 메인화면 및 상품 상세화면등에서 법률정보 표시를 위한 상수
+ */
+enum LegalType {
+    static let title: String = "주식회사 아보카도 사업자정보, 이용약관 및 기타 법적고지".localized()
+    static let discription: String = "주식회사 아보카도(이하 아보카도)는 통신판매중개자이며, 통신판매의 당사자가 아닙니다. 전자상거래 등에서의 소비자보호에 관한 법률 등 관련 법령 및 아보카도의 약관에 따라 상품, 상품정보, 거래에 관한 책임은 개별 판매자에게 귀속하고, 아보카도는 원칙적으로 회원간 거래에 대하여 책임을 지지 않습니다. 다만, 아보카도가 직접 판매하는 상품에 대한 책임은 아보카도에게 귀속합니다.".localized()
+    static let copyright: String = "Copyright 2023 AvocadoLabs All RIGHTS RESERVED".localized()
+}
+
+
+
+/**
  - Description: 유저 권한 enum (현재 사용하지 않음)
  */
 enum PrivacyType {
