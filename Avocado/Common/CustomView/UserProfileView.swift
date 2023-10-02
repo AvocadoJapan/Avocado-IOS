@@ -13,26 +13,22 @@ final class UserProfileView: UIControl {
     
     private lazy var profileImageView = UIImageView().then {
         $0.image = UIImage(named: "cat_demo")
-        $0.layer.cornerRadius = 60/2
+        $0.layer.cornerRadius = 45/2
         $0.layer.masksToBounds = true
     }
     
-    private lazy var nameLabel = UILabel().then {
+    private lazy var nameLabel = UILabel(labelAprearance: .title).then {
         $0.text = "Avocado Demo"
-        $0.font = UIFont.boldSystemFont(ofSize: 16)
-        $0.textColor = .black
     }
     
-    private lazy var detailLabel = UILabel().then {
+    private lazy var detailLabel = UILabel(labelAprearance: .subtitle).then {
         $0.text = "후기 300+ 평점 4.8"
-        $0.font = UIFont.systemFont(ofSize: 12)
-        $0.textColor = .gray
     }
     
     private lazy var nameContainerStackView = UIStackView().then {
         $0.axis = .vertical
         $0.distribution = .fill
-        $0.spacing = 15
+        $0.spacing = 5
     }
     
     private lazy var arrowButton = UIButton().then {
@@ -43,7 +39,7 @@ final class UserProfileView: UIControl {
     private lazy var verifiedImageView = UIImageView().then {
         $0.image = UIImage(systemName: "checkmark.shield.fill")
         $0.tintColor = UIColor(hexCode: "00CC66", alpha: 1.0)
-        $0.layer.cornerRadius = 40/2
+        $0.layer.cornerRadius = 45/2
         $0.backgroundColor = .white
 //        $0.image = UIImage(systemName: "exclamationmark.shield.fill")
 //        $0.tintColor = UIColor(hexCode: "FF3333", alpha: 1.0)
@@ -84,17 +80,17 @@ final class UserProfileView: UIControl {
     private func setContraint() {
         profileImageView.snp.makeConstraints {
             $0.centerY.equalToSuperview()
-            $0.size.equalTo(60)
+            $0.size.equalTo(45)
             $0.left.equalToSuperview().offset(20)
         }
         
         nameContainerStackView.snp.makeConstraints {
             $0.centerY.equalToSuperview()
-            $0.left.equalTo(profileImageView.snp.right).offset(10)
+            $0.left.equalTo(profileImageView.snp.right).offset(20)
         }
         
         arrowButton.snp.makeConstraints {
-            $0.right.equalToSuperview().inset(10)
+            $0.right.equalToSuperview().inset(20)
             $0.size.equalTo(20)
             $0.centerY.equalToSuperview()
         }
@@ -128,7 +124,7 @@ import SwiftUI
 import RxSwift
 struct ProileViewPreview: PreviewProvider {
     static var previews: some View {
-        return UserProfileView(isShowArrow: false).toPreview().previewLayout(.fixed(width: 414, height: 100))
+        return UserProfileView(isShowArrow: true).toPreview().previewLayout(.fixed(width: 414, height: 50))
     }
 }
 #endif

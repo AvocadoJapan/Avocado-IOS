@@ -25,18 +25,14 @@ final class ProductBadgeView: UIView {
         $0.spacing = 5
     }
     
-    private lazy var titleLabel = UILabel().then{
+    private lazy var titleLabel = UILabel(labelAprearance: .title).then{
         $0.numberOfLines = 1
-        $0.font = .systemFont(ofSize: 15, weight: .semibold)
         $0.text = "알 수 없는 오류"
-        $0.textColor = .darkText
     }
     
-    private lazy var descriptionLabel = UILabel().then{
+    private lazy var descriptionLabel = UILabel(labelAprearance: .subtitle).then{
         $0.numberOfLines = 2
-        $0.font = .systemFont(ofSize: 12, weight: .regular)
         $0.text = "오류가 발생했어요"
-        $0.textColor = .gray
     }
     
     private lazy var mainStackView = UIStackView().then {

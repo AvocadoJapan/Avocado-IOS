@@ -85,10 +85,6 @@ final class MainVC: BaseVC {
     override func setProperty() {
         view.backgroundColor = .white
         
-        navigationController?.setupNavbar(with: "Avocado Beta", logoImage: UIImage(systemName: "apple.logo"))
-        
-        
-        
         // mainCategoryCV delegate설정, 셀등록
         mainCategoryCV.delegate = self
         mainCategoryCV.dataSource = self
@@ -213,15 +209,21 @@ final class MainVC: BaseVC {
 
 extension MainVC {
     override func viewWillAppear(_ animated: Bool) {
-        navigationController?.setTransitAlpha(yOffset: scrollView.contentOffset.y)
+        let yOffset = scrollView.contentOffset.y - 300 + 200
+        
+        navigationController?.setTransitAlpha(yOffset: yOffset)
     }
 }
 
 extension MainVC: UIScrollViewDelegate {
     // MARK: - UIScrollViewDelegate
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
-        navigationController?.setTransitAlpha(yOffset: scrollView.contentOffset.y)
+        let bannerHeight = bannerCV.frame.size.height
+        let yOffset = scrollView.contentOffset.y - bannerHeight + 200
+        
+        navigationController?.setTransitAlpha(yOffset: yOffset)
 
+        // 오버스크롤시 배너 늘리기
         let lowerThanTop = scrollView.contentOffset.y < 0
 
         if lowerThanTop {

@@ -67,6 +67,34 @@ enum ButtonColorType {
     }
 }
 
+enum AvocadoLabel {
+    case header
+    case subtitle
+    case sectionTitle
+    case title
+    case normal
+    
+    var color: UIColor {
+        switch self {
+        case .header: return UIColor(hexCode: "141414")
+        case .subtitle: return UIColor(hexCode: "787878")
+        case .sectionTitle: return UIColor(hexCode: "141414")
+        case .normal: return UIColor(hexCode: "141D28") // PANTONE 7547 C
+        case .title: return UIColor(hexCode: "10181F") // PANTONE BLACK 6 C
+        }
+    }
+    
+    var font: UIFont {
+        switch self {
+        case .header: return .systemFont(ofSize: 20, weight: .medium)
+        case .subtitle: return .systemFont(ofSize: 12, weight: .regular)
+        case .sectionTitle: return .systemFont(ofSize: 20, weight: .medium)
+        case .normal: return .systemFont(ofSize: 14, weight: .regular)
+        case .title: return .systemFont(ofSize: 14  , weight: .medium)
+        }
+    }
+}
+
 /**
  - Description: 정규식 체크 룰
  */

@@ -10,14 +10,16 @@ import UIKit
 
 extension UIColor {
     
-    convenience init(hexCode: String, alpha: CGFloat = 1.0) {
+    convenience init(hexCode: String,
+                     alpha: CGFloat = 1.0) {
         var hexFormatted: String = hexCode.trimmingCharacters(in: CharacterSet.whitespacesAndNewlines).uppercased()
         
         if hexFormatted.hasPrefix("#") {
             hexFormatted = String(hexFormatted.dropFirst())
         }
         
-        assert(hexFormatted.count == 6, "Invalid hex code used.")
+        assert(hexFormatted.count == 6,
+               "Invalid hex code used.")
         
         var rgbValue: UInt64 = 0
         Scanner(string: hexFormatted).scanHexInt64(&rgbValue)

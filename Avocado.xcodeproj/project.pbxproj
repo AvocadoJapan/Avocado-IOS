@@ -42,6 +42,7 @@
 		3D97A4482ABBB93200AAECCC /* AccountMenuTVCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D97A4472ABBB93200AAECCC /* AccountMenuTVCell.swift */; };
 		3D97A44A2ABBB98000AAECCC /* TabelView+Protocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D97A4492ABBB98000AAECCC /* TabelView+Protocol.swift */; };
 		3D97A44C2ABC655F00AAECCC /* LegalFooterReuseableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D97A44B2ABC655F00AAECCC /* LegalFooterReuseableView.swift */; };
+		3DE8916B2ACABC74008136FE /* UILabel+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3DE8916A2ACABC74008136FE /* UILabel+Extension.swift */; };
 		9816F6D62A49491E00A7A284 /* BaseTarget.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9816F6D52A49491E00A7A284 /* BaseTarget.swift */; };
 		9816F6D92A49495500A7A284 /* Moya in Frameworks */ = {isa = PBXBuildFile; productRef = 9816F6D82A49495500A7A284 /* Moya */; };
 		9816F6DB2A49495500A7A284 /* RxMoya in Frameworks */ = {isa = PBXBuildFile; productRef = 9816F6DA2A49495500A7A284 /* RxMoya */; };
@@ -252,6 +253,7 @@
 		3D97A4472ABBB93200AAECCC /* AccountMenuTVCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccountMenuTVCell.swift; sourceTree = "<group>"; };
 		3D97A4492ABBB98000AAECCC /* TabelView+Protocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "TabelView+Protocol.swift"; sourceTree = "<group>"; };
 		3D97A44B2ABC655F00AAECCC /* LegalFooterReuseableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LegalFooterReuseableView.swift; sourceTree = "<group>"; };
+		3DE8916A2ACABC74008136FE /* UILabel+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UILabel+Extension.swift"; sourceTree = "<group>"; };
 		9816F6D52A49491E00A7A284 /* BaseTarget.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseTarget.swift; sourceTree = "<group>"; };
 		9816F6E12A494A5900A7A284 /* BaseAPIService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseAPIService.swift; sourceTree = "<group>"; };
 		9816F6E82A494AC800A7A284 /* amplifyconfiguration.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = amplifyconfiguration.json; sourceTree = "<group>"; };
@@ -847,6 +849,7 @@
 				B1A301A52A5439E7003834E6 /* UIViewController+Extension.swift */,
 				B2CA311A2A8FD50900E7700C /* UINavigationController+Extension.swift */,
 				9848A8B22A5D853B008D43F5 /* UIColor+Extension.swift */,
+				3DE8916A2ACABC74008136FE /* UILabel+Extension.swift */,
 				B1AB44DE2A7E52F9004EC75D /* UIImage+Extension.swift */,
 				B18E035C2AA2137A00F8F394 /* NSMutableAttributedString+Extension.swift */,
 				B19563592AA4A54C0032FE25 /* Int64+Extension.swift */,
@@ -1471,6 +1474,7 @@
 				B20A176D2A9DB36D000FD85B /* UserBadgeView.swift in Sources */,
 				98FD1C2A2A56B3900031D7C1 /* SettingAPI.swift in Sources */,
 				3D952A3E2AC0A03E004731D5 /* ACDoneVM.swift in Sources */,
+				3DE8916B2ACABC74008136FE /* UILabel+Extension.swift in Sources */,
 				B18E035D2AA2137A00F8F394 /* NSMutableAttributedString+Extension.swift in Sources */,
 				B212D58B2A45F1740008DAD1 /* InputView.swift in Sources */,
 				3D97A4462ABB1A6D00AAECCC /* AccountCenterSectionModel.swift in Sources */,
@@ -1520,7 +1524,7 @@
 				B240D7222A9F109200DF171D /* UploadService.swift in Sources */,
 				B22ECA322A7789D900CCA794 /* MainFlow.swift in Sources */,
 				B1BD33472AB2F7BD003E660D /* CategoryView.swift in Sources */,
-				B1BD33472AB2F7BD003E660D /* CatecogyCVCell.swift in Sources */,
+				B1BD33472AB2F7BD003E660D /* CategoryView.swift in Sources */,
 				3D97A43F2ABB0B1400AAECCC /* AccountCenterVM.swift in Sources */,
 				B1C35AF32A9DCAB200C97A3D /* ProfileService.swift in Sources */,
 				3D3286282AC0395B0057B9D7 /* ACEmailCheckVC.swift in Sources */,

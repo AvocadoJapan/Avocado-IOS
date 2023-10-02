@@ -24,7 +24,7 @@ final class LegalView: UIView {
         $0.text = self.title
         $0.numberOfLines = 1
         $0.textAlignment = .left
-        $0.font = UIFont.systemFont(ofSize: 11, weight: .semibold)
+        $0.font = UIFont.systemFont(ofSize: 11, weight: .medium)
         $0.textColor = .darkGray
     }
     
@@ -32,7 +32,7 @@ final class LegalView: UIView {
         $0.text = self.discription
         $0.numberOfLines = 0
         $0.textAlignment = .left
-        $0.font = UIFont.systemFont(ofSize: 10, weight: .medium)
+        $0.font = UIFont.systemFont(ofSize: 10, weight: .regular)
         $0.textColor = .systemGray
     }
     
@@ -40,7 +40,7 @@ final class LegalView: UIView {
         $0.text = self.copyright
         $0.numberOfLines = 0
         $0.textAlignment = .left
-        $0.font = UIFont.systemFont(ofSize: 10, weight: .medium)
+        $0.font = UIFont.systemFont(ofSize: 10, weight: .regular)
         $0.textColor = .systemGray
     }
     
@@ -61,11 +61,11 @@ final class LegalView: UIView {
         
         stackView.snp.makeConstraints { make in
             make.top.equalToSuperview().inset(20)
-            make.left.right.equalToSuperview().inset(10)
+            make.horizontalEdges.equalToSuperview().inset(20)
         }
         
         self.snp.makeConstraints {
-            $0.height.equalTo(200)
+            $0.height.equalTo(250)
         }
     }
     required init?(coder: NSCoder) {

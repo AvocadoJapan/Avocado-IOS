@@ -13,7 +13,8 @@ final class ContourView: UIView {
     
     // 구분선 화면
     private lazy var lineView = UIView().then {
-        $0.backgroundColor = .systemGray6
+        $0.backgroundColor = .systemGray5
+        $0.layer.cornerRadius = 0.5
     }
     
     init(inset: UIEdgeInsets) {

@@ -23,7 +23,7 @@ final class SingleProductVC: BaseVC {
     }
     private lazy var stackView = UIStackView().then {
         $0.axis = .vertical
-        $0.spacing = 20
+        $0.spacing = 22
     }
     
     private lazy var productImageCVLayout = UICollectionViewFlowLayout().then {
@@ -45,12 +45,10 @@ final class SingleProductVC: BaseVC {
         $0.isLayoutMarginsRelativeArrangement = true
     }
     
-    private lazy var titleLabel = UILabel().then {
-        $0.text = "아이패드 프로 6세대 11인치 128기가 셀룰러 미개봉"
+    private lazy var titleLabel = UILabel(labelAprearance: .header).then {
+        $0.text = "아이패드 프로 12.9 5세대"
         $0.lineBreakMode = .byCharWrapping
         $0.numberOfLines = 2
-        $0.font = .systemFont(ofSize: 19, weight: .bold)
-        $0.textColor = .darkText
     }
     
     private lazy var titleSubInfoStackView = UIStackView().then {
@@ -58,32 +56,24 @@ final class SingleProductVC: BaseVC {
         $0.alignment = .leading
     }
     
-    private lazy var locationLabel = UILabel().then {
+    private lazy var locationLabel = UILabel(labelAprearance: .subtitle).then {
         $0.text = "서울특별시 성북구 안암동"
         $0.numberOfLines = 1
-        $0.font = .systemFont(ofSize: 12, weight: .regular)
-        $0.textColor = .gray
     }
     
-    private lazy var dotLabel = UILabel().then {
+    private lazy var dotLabel = UILabel(labelAprearance: .subtitle).then {
         $0.text = " ・ "
         $0.numberOfLines = 1
-        $0.font = .systemFont(ofSize: 12, weight: .regular)
-        $0.textColor = .darkGray
     }
     
-    private lazy var updateAtLabel = UILabel().then {
+    private lazy var updateAtLabel = UILabel(labelAprearance: .subtitle).then {
         $0.text = "20시간 전"
         $0.numberOfLines = 1
-        $0.font = .systemFont(ofSize: 12, weight: .regular)
-        $0.textColor = .gray
     }
     
-    private lazy var priceLabel = UILabel().then {
+    private lazy var priceLabel = UILabel(labelAprearance: .header).then {
         $0.text = "1,298,000원"
         $0.numberOfLines = 1
-        $0.font = .systemFont(ofSize: 22, weight: .bold)
-        $0.textColor = .darkText
     }
     
     private lazy var uploaderProfileView = UserProfileView()
@@ -94,9 +84,9 @@ final class SingleProductVC: BaseVC {
     }
     
     private lazy var contourView = ContourView()
-    private lazy var contourView2 = ContourView(inset: UIEdgeInsets(top: 0, left: 40, bottom: 0, right: 40))
-    private lazy var contourView3 = ContourView(inset: UIEdgeInsets(top: 0, left: 40, bottom: 0, right: 40))
-    private lazy var contourView4 = ContourView(inset: UIEdgeInsets(top: 0, left: 40, bottom: 0, right: 40))
+    private lazy var contourView2 = ContourView(inset: UIEdgeInsets(top: 0, left: 20, bottom: 0, right: 20))
+    private lazy var contourView3 = ContourView(inset: UIEdgeInsets(top: 0, left: 20, bottom: 0, right: 20))
+    private lazy var contourView4 = ContourView(inset: UIEdgeInsets(top: 0, left: 20, bottom: 0, right: 20))
     
     private lazy var buttomButtonStackView = UIStackView().then {
         $0.axis = .horizontal
@@ -113,7 +103,7 @@ final class SingleProductVC: BaseVC {
         $0.axis = .vertical
         $0.spacing = 10
         $0.alignment = .leading
-        $0.layoutMargins = UIEdgeInsets(top: 0, left: 15, bottom: 0, right: 15)
+        $0.layoutMargins = UIEdgeInsets(top: 0, left: 20, bottom: 0, right: 20)
         $0.isLayoutMarginsRelativeArrangement = true
     }
     
@@ -122,7 +112,7 @@ final class SingleProductVC: BaseVC {
         $0.alignment = .leading
         $0.spacing = 15
         $0.distribution = .fillEqually
-        $0.layoutMargins = UIEdgeInsets(top: 0, left: 15, bottom: 0, right: 15)
+        $0.layoutMargins = UIEdgeInsets(top: 0, left: 20, bottom: 0, right: 20)
         $0.isLayoutMarginsRelativeArrangement = true
     }
     
@@ -136,10 +126,8 @@ final class SingleProductVC: BaseVC {
     private lazy var productBadgeDemo8 = ProductBadgeView(type: .unused)
     private lazy var productBadgeDemo9 = ProductBadgeView(type: .verified)
     
-    private lazy var descriptionLabel = UILabel().then {
+    private lazy var descriptionLabel = UILabel(labelAprearance: .normal).then {
         $0.numberOfLines = 0
-        $0.font = .systemFont(ofSize: 14.5, weight: .regular)
-        $0.textColor = .darkGray
         $0.text =
         """
         2023년 4월 말에 구입
@@ -148,21 +136,9 @@ final class SingleProductVC: BaseVC {
         - 외관 S급입니다. 기능 이상 없습니다.
         - 배터리효율 85퍼센트입니다.
         - 구성은 풀박스에 펜슬수납 가능 케이스 함께 드립니다.
-        - 일산 직거래, 그 외 지역 택배거래합니다.
-        - 편하게 문의주세요.
-        
         
         오늘(27일) 구입한 아이패드 미니6 와이파이버전 64기가 모델을 팝니다..
         오늘 쿠팡에서 새걸로 구입한 겁니다..
-
-        게임용도로만 쓰려고 구입한건데, 문제는 제가 아이패드류는 처음써보는 거라는 겁니다..
-        안드로이드만 써 오다가 애플제품 한번 질러본건데
-        뒤로가기도 모르겠고 게임을 실행해도 그래서 게임종료도 못하겠고
-        짜증만 나고 화딱지만 나네요..
-
-        그래서 바로 방출하렵니다..
-
-        상태는 당연히 100프로 수준이고 강화유리 바로 붙였습니다..
 
         박스 내용물 다 있습니다..
         바로 가져가실분 연락주세요..
@@ -284,7 +260,7 @@ final class SingleProductVC: BaseVC {
         }
         
         bottomView.snp.makeConstraints {
-            $0.height.equalTo(80)
+            $0.height.equalTo(70)
             $0.horizontalEdges.equalToSuperview()
             $0.bottom.equalTo(self.view.safeAreaLayoutGuide.snp.bottom)
         }
@@ -300,7 +276,7 @@ final class SingleProductVC: BaseVC {
         }
         
         uploaderProfileView.snp.makeConstraints {
-            $0.height.equalTo(60)
+            $0.height.equalTo(50)
         }
     }
 }
@@ -325,50 +301,20 @@ extension SingleProductVC: UICollectionViewDelegateFlowLayout {
 
 extension SingleProductVC {
     override func viewWillAppear(_ animated: Bool) {
-        let yOffset = scrollView.contentOffset.y
-        let threshold: CGFloat = 100
-        var alpha: CGFloat = yOffset / threshold
+        let photoWidth = self.view.frame.width
+        let yOffset = scrollView.contentOffset.y - photoWidth + 200
         
-        alpha = min(1.0, max(0.0, alpha))
-        
-        let appearance = UINavigationBarAppearance()
-        appearance.configureWithOpaqueBackground()
-        
-        if alpha >= 1.0 {
-            appearance.backgroundColor = .white
-            appearance.shadowColor = .systemGray6
-        } else {
-            appearance.backgroundColor = UIColor(white: 1.0, alpha: alpha)
-            appearance.shadowColor = .clear
-        }
-
-        navigationController?.navigationBar.standardAppearance = appearance
-        navigationController?.navigationBar.scrollEdgeAppearance = appearance
+        navigationController?.setTransitAlpha(yOffset: yOffset)
     }
 }
 
 extension SingleProductVC: UIScrollViewDelegate {
     // MARK: - UIScrollViewDelegate
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
-        let yOffset = scrollView.contentOffset.y
-        let threshold: CGFloat = 100
-        var alpha: CGFloat = yOffset / threshold
+        let photoWidth = self.view.frame.width
+        let yOffset = scrollView.contentOffset.y - photoWidth + 200
         
-        alpha = min(1.0, max(0.0, alpha))
-        
-        let appearance = UINavigationBarAppearance()
-        appearance.configureWithOpaqueBackground()
-        
-        if alpha >= 1.0 {
-            appearance.backgroundColor = .white
-            appearance.shadowColor = .systemGray6
-        } else {
-            appearance.backgroundColor = UIColor(white: 1.0, alpha: alpha)
-            appearance.shadowColor = .clear
-        }
-
-        navigationController?.navigationBar.standardAppearance = appearance
-        navigationController?.navigationBar.scrollEdgeAppearance = appearance
+        navigationController?.setTransitAlpha(yOffset: yOffset)
     }
 }
 
