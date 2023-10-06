@@ -7,6 +7,7 @@
 
 import UIKit
 import RxSwift
+import MapKit
 
 final class ProfileHeaderReusableView: UICollectionReusableView {
     static var identifier = "ProfileHeaderReusableView"
@@ -19,17 +20,23 @@ final class ProfileHeaderReusableView: UICollectionReusableView {
     private lazy var userCardView = UserInfoCardView()
     // 거래희망 장소 라벨
     private lazy var faivortePayLocationLabel = UILabel().then {
-        $0.attributedText = NSMutableAttributedString()
-            .regular(string: "거래를 선호하는 지역은\n", fontSize: 16)
-            .bold(string: "경기도 화성시 정남면", fontSize: 20)
-            .regular(string: "입니다", fontSize: 16)
+        $0.font = UIFont.boldSystemFont(ofSize: 16)
+        $0.text = "거래 희망 장소"
         $0.textColor = .black
         $0.numberOfLines = 0
     }
+    
+    private lazy var mapView = MKMapView().then {
+        $0.isScrollEnabled = false
+        $0.isRotateEnabled = false
+        $0.isZoomEnabled = false
+        $0.layer.cornerRadius = 10
+    }
+    
     // 본인인증 타이틀
     private lazy var userVerifiedTitleLabel = UILabel().then {
         $0.text = "Avocado Demo의 인증 정보"
-        $0.font = UIFont.boldSystemFont(ofSize: 20)
+        $0.font = UIFont.boldSystemFont(ofSize: 16)
         $0.textColor = .black
         $0.numberOfLines = 0
     }
@@ -101,12 +108,15 @@ final class ProfileHeaderReusableView: UICollectionReusableView {
         }
         
         // 유저 정보
-        [userCardView,
-         faivortePayLocationLabel,
-         underLineView,
-         userVerifiedTitleLabel,
-         userVerfiedContainerStackView,
-         underLineView2].forEach {
+        [
+            userCardView,
+            userVerifiedTitleLabel,
+            userVerfiedContainerStackView,
+            underLineView2,
+            faivortePayLocationLabel,
+            mapView,
+            underLineView
+        ].forEach {
             userProfileConatainerStackView.addArrangedSubview($0)
         }
         
@@ -130,6 +140,10 @@ final class ProfileHeaderReusableView: UICollectionReusableView {
                 $0.height.equalTo(40)
             }
         }
+        
+        mapView.snp.makeConstraints {
+            $0.height.equalTo(100)
+        }
        
     }
     /**
@@ -151,11 +165,16 @@ final class ProfileHeaderReusableView: UICollectionReusableView {
         
         userVerifiedTitleLabel.text = "\(userName)의 인증정보"
         
-        faivortePayLocationLabel.attributedText = NSMutableAttributedString()
-            .regular(string: "거래를 선호하는 지역은\n", fontSize: 16)
-            .bold(string: "\(location)", fontSize: 20)
-            .regular(string: "입니다", fontSize: 16)
+        setRegion(
+            xPos: 37.206823,
+            yPos: 127.033422
+        )
         
+        setAnotation(
+            xPos: 37.206823,
+            yPos: 127.033422,
+            title: "병점역"
+        )
         productTitleLabel.text = productTitle
         
     }
@@ -169,6 +188,36 @@ final class ProfileHeaderReusableView: UICollectionReusableView {
         productContainerStackView.isHidden = isProfile
     }
     
+    
+    private func setRegion(xPos: Double, yPos: Double) {
+        let pLocation = CLLocationCoordinate2DMake(
+            xPos,
+            yPos
+        )
+        
+        // 반경 100미터를 보여줌
+        let pRegion = MKCoordinateRegion(
+            center: pLocation,
+            latitudinalMeters: 100,
+            longitudinalMeters: 100
+        )
+        
+        mapView.setRegion(pRegion, animated: true)
+    }
+    
+    private func setAnotation(xPos: Double, yPos: Double, title: String) {
+        
+        mapView.removeAnnotations(mapView.annotations)
+        
+        let annotation = MKPointAnnotation()
+        annotation.coordinate = CLLocationCoordinate2DMake(
+            xPos,
+            yPos
+        )
+        
+        annotation.title = title
+        mapView.addAnnotation(annotation)
+    }
 }
 
 #if DEBUG && canImport(SwiftUI)

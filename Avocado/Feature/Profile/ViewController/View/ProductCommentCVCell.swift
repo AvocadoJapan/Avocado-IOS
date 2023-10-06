@@ -14,9 +14,8 @@ final class ProductCommentCVCell: UICollectionViewCell {
         $0.axis = .vertical
         $0.spacing = 10
         $0.layer.cornerRadius = 16
-        $0.layer.shadowOpacity = 0.3
-        $0.layer.shadowColor = UIColor.black.cgColor
-        $0.layer.shadowRadius = 5
+        $0.layer.borderWidth = 1
+        $0.layer.borderColor = UIColor.systemGray6.cgColor
         $0.layer.masksToBounds = false
         $0.backgroundColor = .white
     }
@@ -45,40 +44,10 @@ final class ProductCommentCVCell: UICollectionViewCell {
         $0.numberOfLines = 1
     }
     
-    private lazy var productContainerViewStackView = UIStackView().then {
-        $0.axis = .horizontal
-        $0.spacing = 4
-        $0.layoutMargins = UIEdgeInsets(top: 0, left: 20, bottom: 10, right: 20)
-        $0.isLayoutMarginsRelativeArrangement = true
-    }
-    
-    private lazy var productImageView = UIImageView().then {
-        $0.image = UIImage(named: "cat_demo")
-        $0.layer.cornerRadius = 8
-        $0.layer.masksToBounds = true
-    }
-    
-    private lazy var productNameLabel = UILabel().then {
-        $0.text = "필립스 휴 그라디언트 라이트 스트립 65인치"
-        $0.font = UIFont.systemFont(ofSize: 12)
-        $0.textColor = .gray
-    }
-    
-    private lazy var arrowButton = UIButton().then {
-        $0.setImage(UIImage(systemName: "chevron.right"), for: .normal)
-        $0.tintColor = .black
-    }
-    
     override init(frame: CGRect) {
         super.init(frame: frame)
         
-        [productImageView, productNameLabel, arrowButton].forEach {
-            productContainerViewStackView.addArrangedSubview($0)
-        }
-        
-        [commentLabel,
-         userInfoLabel,
-         productContainerViewStackView,].forEach {
+        [commentLabel, userInfoLabel].forEach {
             containerStackView.addArrangedSubview($0)
         }
         
@@ -88,12 +57,8 @@ final class ProductCommentCVCell: UICollectionViewCell {
             $0.edges.equalToSuperview()
         }
         
-        productImageView.snp.makeConstraints {
-            $0.size.equalTo(30)
-        }
-        
-        arrowButton.snp.makeConstraints {
-            $0.width.equalTo(20)
+        userInfoLabel.snp.makeConstraints {
+            $0.height.equalTo(40)
         }
         
     }
@@ -108,7 +73,6 @@ final class ProductCommentCVCell: UICollectionViewCell {
                    productTitle: String) {
         commentLabel.text = "\"\(comment)\""
         userInfoLabel.text = "\(name) ・ \(creationDate)"
-        productNameLabel.text = productTitle
     }
     
 }
