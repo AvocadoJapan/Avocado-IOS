@@ -68,11 +68,11 @@ enum ButtonColorType {
 }
 
 enum AvocadoLabel {
-    case header
-    case subtitle
-    case sectionTitle
-    case title
-    case normal
+    case title // 뷰컨전체에서의 제목부분 (타이틀)
+    case header // 그룹의 제목
+    case subtitle // 그룹의 설명
+    case sectionTitle //
+    case normal // 일반 글자
     
     var color: UIColor {
         switch self {

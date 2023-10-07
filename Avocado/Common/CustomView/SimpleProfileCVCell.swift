@@ -1,15 +1,20 @@
 //
-//  UserProfileView.swift
+//  SimpleProfileCVCell.swift
 //  Avocado
 //
 //  Created by NUNU:D on 2023/09/02.
-//
+//  Modified by Jayden Jang on 2023/10/06.
 
 import Foundation
 /**
  * - description 유저 정보가 간략하게 보여지는 프로필 화면
  */
-final class UserProfileView: UIControl {
+final class SimpleProfileCVCell: UICollectionViewCell {
+    
+    // 식별자 스태틱으로 선언
+    static var identifier = "SimpleProfileCVCell"
+    // 디스포즈백
+    public var disposeBag = DisposeBag()
     
     private lazy var profileImageView = UIImageView().then {
         $0.image = UIImage(named: "cat_demo")
@@ -41,8 +46,6 @@ final class UserProfileView: UIControl {
         $0.tintColor = UIColor(hexCode: "00CC66", alpha: 1.0)
         $0.layer.cornerRadius = 45/2
         $0.backgroundColor = .white
-//        $0.image = UIImage(systemName: "exclamationmark.shield.fill")
-//        $0.tintColor = UIColor(hexCode: "FF3333", alpha: 1.0)
     }
     
     /**
@@ -124,7 +127,7 @@ import SwiftUI
 import RxSwift
 struct ProileViewPreview: PreviewProvider {
     static var previews: some View {
-        return UserProfileView(isShowArrow: true).toPreview().previewLayout(.fixed(width: 414, height: 50))
+        return SimpleProfileCVCell(isShowArrow: true).toPreview().previewLayout(.fixed(width: 394, height: 50))
     }
 }
 #endif

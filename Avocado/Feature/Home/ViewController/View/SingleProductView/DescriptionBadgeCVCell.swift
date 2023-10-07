@@ -1,5 +1,5 @@
 //
-//  ProductBadgeView.swift
+//  DescriptionBadgeCVCell.swift
 //  Avocado
 //
 //  Created by Jayden Jang on 2023/08/26.
@@ -12,7 +12,16 @@ import Then
 import RxSwift
 import RxCocoa
 
-final class ProductBadgeView: UIView {
+/**
+ *## description: 상품 상세화면에 사용할 상품 베지 셀
+ *## function : 이미지, 제목, 설명
+ */
+final class DescriptionBadgeCVCell: UICollectionViewCell {
+    
+    // 식별자 스태틱으로 선언
+    static var identifier = "DescriptionBadgeCVCell"
+    // 디스포즈백
+    public var disposeBag = DisposeBag()
     
     private lazy var imageView = UIImageView().then {
         $0.image = UIImage(named: "bolt_solid")
@@ -84,7 +93,7 @@ final class ProductBadgeView: UIView {
 import SwiftUI
 struct ProductBadgeViewPreview: PreviewProvider {
     static var previews: some View {
-        return ProductBadgeView().toPreview().previewLayout(.fixed(width: 300, height: 50))
+        return DescriptionBadgeCVCell().toPreview().previewLayout(.fixed(width: 300, height: 50))
     }
 }
 #endif
