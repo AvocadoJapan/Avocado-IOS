@@ -27,11 +27,11 @@ final class ProductTitleCVCell: UICollectionViewCell {
         $0.axis = .vertical
         $0.distribution = .fill
         $0.spacing = 10
-//        $0.layoutMargins = UIEdgeInsets(top: 0,
+//        $0.layoutMargins = UIEdgeInsets(top: 20,
 //                                        left: 20,
-//                                        bottom: 0,
+//                                        bottom: 20,
 //                                        right: 20)
-        $0.isLayoutMarginsRelativeArrangement = true
+//        $0.isLayoutMarginsRelativeArrangement = false
     }
     
     private lazy var titleLabel = UILabel(labelAprearance: .header).then {
@@ -94,11 +94,7 @@ final class ProductTitleCVCell: UICollectionViewCell {
         updateAtLabel.setContentHuggingPriority(UILayoutPriority(750), for: .horizontal)
         
         titleStackView.snp.makeConstraints {
-            $0.edges.equalToSuperview()
-        }
-        
-        self.snp.makeConstraints {
-            $0.height.equalTo(80)
+            $0.edges.equalToSuperview().inset(20)
         }
     }
     

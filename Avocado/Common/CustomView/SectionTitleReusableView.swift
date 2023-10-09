@@ -3,6 +3,7 @@
 //  Avocado
 //
 //  Created by NUNU:D on 2023/09/09.
+//  Modified by Jayden Jang on 2023/10/09.
 //
 
 import UIKit
@@ -54,7 +55,8 @@ final class SectionTitleReusableView: UICollectionReusableView {
     }
     
     func configure(title: String,
-                   font: UIFont = UIFont.boldSystemFont(ofSize: 25),
+//                   font: UIFont = UIFont.boldSystemFont(ofSize: 25),
+                   labelAprearance: AvocadoLabel = .sectionTitle,
                    padding: UIEdgeInsets = UIEdgeInsets(
                     top: 0,
                     left: 20,
@@ -63,9 +65,22 @@ final class SectionTitleReusableView: UICollectionReusableView {
                    )
     ) {
         titleLabel.text = title
-        titleLabel.font = font
+        titleLabel.font = labelAprearance.font
+        titleLabel.textColor = labelAprearance.color
         titleLabel.snp.updateConstraints {
             $0.edges.equalToSuperview().inset(padding)
         }
     }
 }
+
+#if DEBUG && canImport(SwiftUI)
+import SwiftUI
+struct SectionTitleReusableViewPreview: PreviewProvider {
+    static var previews: some View {
+        return SectionTitleReusableView()
+            .toPreview()
+            .previewLayout(.fixed(width: 300,
+                                  height: 50))
+    }
+}
+#endif

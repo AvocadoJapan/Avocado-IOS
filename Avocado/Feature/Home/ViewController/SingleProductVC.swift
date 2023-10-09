@@ -134,10 +134,6 @@ final class SingleProductVC: BaseVC {
                     let cell = collectionView.dequeueReusableCell(withReuseIdentifier: SimpleProfileCVCell.identifier, for: indexPath) as! SimpleProfileCVCell
                     
                     return cell
-                case .profile(let data):
-                    let cell = collectionView.dequeueReusableCell(withReuseIdentifier: ProductTitleCVCell.identifier, for: indexPath) as! ProductTitleCVCell
-                    
-                    return cell
                 case .badge(let data):
                     let cell = collectionView.dequeueReusableCell(withReuseIdentifier: DescriptionBadgeCVCell.identifier, for: indexPath) as! DescriptionBadgeCVCell
                
@@ -196,24 +192,18 @@ extension SingleProductVC: CollectionViewLayoutable {
         // 그룹사이즈 설정
         let groupSize = NSCollectionLayoutSize(
             widthDimension: .fractionalWidth(1.0),
-            heightDimension: .estimated(180)
+            heightDimension: .estimated(200)
         )
         let group = NSCollectionLayoutGroup.vertical(layoutSize: groupSize,
                                                        subitems: [item])
         
         let section = NSCollectionLayoutSection(group: group)
-        section.contentInsets = NSDirectionalEdgeInsets(
-            top: 0,
-            leading: 20,
-            bottom: 20,
-            trailing: 0
-        )
         
         
         // 헤더 설정
         let headerSize = NSCollectionLayoutSize(
             widthDimension: .fractionalWidth(1.0),
-            heightDimension: .estimated(30)
+            heightDimension: .estimated(40)
         )
         let header = NSCollectionLayoutBoundarySupplementaryItem(
             layoutSize: headerSize,
@@ -286,7 +276,7 @@ extension SingleProductVC: CollectionViewLayoutable {
         // 헤더 설정
         let headerSize = NSCollectionLayoutSize(
             widthDimension: .fractionalWidth(1.0),
-            heightDimension: .estimated(30)
+            heightDimension: .estimated(40)
         )
         let header = NSCollectionLayoutBoundarySupplementaryItem(
             layoutSize: headerSize,
@@ -322,19 +312,13 @@ extension SingleProductVC: CollectionViewLayoutable {
         // 그룹사이즈 설정
         let groupSize = NSCollectionLayoutSize(
             widthDimension: .fractionalWidth(1.0),
-            heightDimension: .estimated(80)
+            heightDimension: .estimated(120)
         )
         let group = NSCollectionLayoutGroup.horizontal(layoutSize: groupSize,
                                                        subitems: [item])
         
         let section = NSCollectionLayoutSection(group: group)
         section.orthogonalScrollingBehavior = .groupPaging
-        section.contentInsets = NSDirectionalEdgeInsets(
-            top: 0,
-            leading: 20,
-            bottom: 0,
-            trailing: 20
-        )
         
         return section
     }
@@ -356,17 +340,11 @@ extension SingleProductVC: CollectionViewLayoutable {
                                                        subitems: [item])
         
         let section = NSCollectionLayoutSection(group: group)
-        section.contentInsets = NSDirectionalEdgeInsets(
-            top: 0,
-            leading: 20,
-            bottom: 0,
-            trailing: 20
-        )
         
         // 헤더 설정
         let headerSize = NSCollectionLayoutSize(
             widthDimension: .fractionalWidth(1.0),
-            heightDimension: .estimated(30)
+            heightDimension: .estimated(40)
         )
         let header = NSCollectionLayoutBoundarySupplementaryItem(
             layoutSize: headerSize,
@@ -390,23 +368,17 @@ extension SingleProductVC: CollectionViewLayoutable {
         // 그룹사이즈 설정
         let groupSize = NSCollectionLayoutSize(
             widthDimension: .fractionalWidth(1.0),
-            heightDimension: .estimated(300)
+            heightDimension: .estimated(100)
         )
         let group = NSCollectionLayoutGroup.horizontal(layoutSize: groupSize,
                                                        subitems: [item])
         
         let section = NSCollectionLayoutSection(group: group)
-        section.contentInsets = NSDirectionalEdgeInsets(
-            top: 0,
-            leading: 20,
-            bottom: 0,
-            trailing: 20
-        )
         
         // 헤더 설정
         let headerSize = NSCollectionLayoutSize(
             widthDimension: .fractionalWidth(1.0),
-            heightDimension: .estimated(30)
+            heightDimension: .estimated(40)
         )
         let header = NSCollectionLayoutBoundarySupplementaryItem(
             layoutSize: headerSize,

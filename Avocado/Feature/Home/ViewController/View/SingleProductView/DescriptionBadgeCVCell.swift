@@ -49,6 +49,11 @@ final class DescriptionBadgeCVCell: UICollectionViewCell {
         $0.spacing = 15
         $0.alignment = .center
         $0.distribution = .fill
+//        $0.layoutMargins = UIEdgeInsets(top: 0,
+//                                        left: 20,
+//                                        bottom: 0,
+//                                        right: 20)
+//        $0.isLayoutMarginsRelativeArrangement = true
     }
     
     override init(frame: CGRect) {
@@ -62,16 +67,12 @@ final class DescriptionBadgeCVCell: UICollectionViewCell {
         mainStackView.addArrangedSubview(imageView)
         mainStackView.addArrangedSubview(labelStackView)
         
-        self.snp.makeConstraints {
-            $0.height.equalTo(50)
-        }
-        
         imageView.snp.makeConstraints {
             $0.size.equalTo(self.snp.height).dividedBy(1.7)
         }
         
         mainStackView.snp.makeConstraints {
-            $0.horizontalEdges.equalToSuperview()
+            $0.horizontalEdges.equalToSuperview().inset(20)
             $0.centerY.equalToSuperview()
         }
     }

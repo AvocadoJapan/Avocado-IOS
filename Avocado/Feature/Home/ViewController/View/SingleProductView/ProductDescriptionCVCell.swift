@@ -60,7 +60,7 @@ final class ProductDescriptionCVCell: UICollectionViewCell {
     private func setConstraint() {
         descriptionLabel.snp.makeConstraints {
             $0.horizontalEdges.equalToSuperview().inset(20)
-            $0.top.equalToSuperview()
+            $0.verticalEdges.equalToSuperview()
         }
     }
     

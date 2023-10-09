@@ -88,7 +88,7 @@ enum AvocadoLabel {
         switch self {
         case .header: return .systemFont(ofSize: 20, weight: .medium)
         case .subtitle: return .systemFont(ofSize: 12, weight: .regular)
-        case .sectionTitle: return .systemFont(ofSize: 20, weight: .medium)
+        case .sectionTitle: return .systemFont(ofSize: 18, weight: .medium)
         case .normal: return .systemFont(ofSize: 14, weight: .regular)
         case .title: return .systemFont(ofSize: 14  , weight: .medium)
         }
