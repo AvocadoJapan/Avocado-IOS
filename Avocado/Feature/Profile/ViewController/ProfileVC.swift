@@ -2,7 +2,7 @@
 //  ProfileVC.swift
 //  Avocado
 //
-//  Created by NUNU:D on 2023/08/29.
+//  Created by NUNU:D on 2023/10/09.
 //
 
 import UIKit
@@ -12,9 +12,10 @@ final class ProfileVC: BaseVC {
 
     private lazy var collectionView = UICollectionView(
         frame: .zero,
-        collectionViewLayout: self.getCompositionalLayout()
-    ).then {
-        $0.showsVerticalScrollIndicator = false
+        collectionViewLayout: getCompositionalLayout()
+    )
+    .then {
+        
         $0.register(
             ProfileHeaderReusableView.self,
             forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader,
@@ -22,21 +23,12 @@ final class ProfileVC: BaseVC {
         )
         
         $0.register(
-            ProductGroupFooterReusableView.self,
-            forSupplementaryViewOfKind: UICollectionView.elementKindSectionFooter,
-            withReuseIdentifier: ProductGroupFooterReusableView.identifier
+            SettingCVCell.self,
+            forCellWithReuseIdentifier: SettingCVCell.identifier
         )
-        
-        $0.register(
-            ProductCVCell.self,
-            forCellWithReuseIdentifier: ProductCVCell.identifier)
-        
-        $0.register(
-            ProductCommentCVCell.self,
-            forCellWithReuseIdentifier: ProductCommentCVCell.identifier)
     }
     
-    let viewModel: ProfileVM
+    private let viewModel: ProfileVM
     
     init(viewModel: ProfileVM) {
         self.viewModel = viewModel
@@ -49,7 +41,6 @@ final class ProfileVC: BaseVC {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        viewModel.input.actionViewDidLoad.accept(())
     }
     
     override func setProperty() {
@@ -70,269 +61,165 @@ final class ProfileVC: BaseVC {
     override func bindUI() {
         let output = viewModel.transform(input: viewModel.input)
         
-        let dataSource = RxCollectionViewSectionedReloadDataSource<UserProfileDataSection> { dataSource, collectionView, indexPath, item in
+        let dataSource = RxCollectionViewSectionedReloadDataSource<SettingDataSection> { dataSource, collectionView, indexPath, item in
             
-            switch item {
-            case .buyed(let product):
-                let cell = collectionView.dequeueReusableCell(
-                    withReuseIdentifier: ProductCVCell.identifier,
-                    for: indexPath
-                ) as! ProductCVCell
-                cell.config(product: product)
-                return cell
-                
-            case .selled(let product):
-                let cell = collectionView.dequeueReusableCell(
-                    withReuseIdentifier: ProductCVCell.identifier,
-                    for: indexPath
-                ) as! ProductCVCell
-                cell.config(product: product)
-                return cell
-                
-            case .comment(let comment):
-                let cell = collectionView.dequeueReusableCell(
-                    withReuseIdentifier: ProductCommentCVCell.identifier,
-                    for: indexPath
-                ) as! ProductCommentCVCell
-                
-                cell.configure(
-                    comment: comment.comment,
-                    name: comment.name,
-                    creationDate: comment.creationDate,
-                    productTitle: comment.product.name
-                )
-                return cell
-            }
+            let cell = collectionView.dequeueReusableCell(
+                withReuseIdentifier: SettingCVCell.identifier,
+                for: indexPath
+            ) as! SettingCVCell
             
-        } configureSupplementaryView: { [weak self] dataSource, collectionView, kind, indexPath in
+            // cell configure
+            cell.configureCell(
+                data: item,
+                type: item.type
+            )
             
-            if (kind == UICollectionView.elementKindSectionHeader) {
-                let headerView = collectionView.dequeueReusableSupplementaryView(
-                    ofKind: kind,
-                    withReuseIdentifier: ProfileHeaderReusableView.identifier,
-                    for: indexPath
-                ) as! ProfileHeaderReusableView
-                
-                let data = dataSource[indexPath.section]
-                
-                // 2번째 섹션일 경우 프로필 화면을 보여주지 않도록 모드 변경
-                if indexPath.section != 0 { headerView.changedMode(isProfile: false)}
-                
-                headerView.moreButtonTapObservable
-                    .subscribe(onNext: { [weak self] in
-                        if indexPath.section == 0 {
-                            self?.viewModel.steps.accept(ProfileStep.commentListIsRequired)
-                        }
-                    })
-                    .disposed(by: headerView.disposeBag)
-                
-                headerView.configure(
-                    userName: data.userName ?? "",
-                    location: "경기도 화성시 병점 1동",
-                    creationDate: data.creationDate ?? "",
-                    commentCount: data.items.count,
-                    userRate: 4.0,
-                    productTitle: data.header ?? ""
-                )
-                
-                return headerView
-            }
-            else {
-                let footerView = collectionView.dequeueReusableSupplementaryView(
-                    ofKind: kind,
-                    withReuseIdentifier: ProductGroupFooterReusableView.identifier,
-                    for: indexPath
-                ) as! ProductGroupFooterReusableView
-                
-                let data = dataSource[indexPath.section]
-                
-                footerView.configure(
-                    data:self?.viewModel.input.currentPageBehavior.asObservable() ?? .just(0),
-                    totalPage: data.items.count/6
-                )
-                
-                return footerView
-            }
+            return cell
+            
+        } configureSupplementaryView: { dataSource, collectionView, kind, indexPath in
+            let headerView = collectionView.dequeueReusableSupplementaryView(
+                ofKind: kind, withReuseIdentifier: ProfileHeaderReusableView.identifier,
+                for: indexPath
+            ) as! ProfileHeaderReusableView
+            
+            headerView.configure(
+                userName: "test",
+                description: "test",
+                settingTitle: "사용자 지원",
+                verified: true
+            )
+                    
+            return headerView
         }
         
         collectionView
             .rx
-            .modelSelected(UserProfileDataSection.Item.self)
-            .asDriver()
-            .drive(onNext: { [weak self] item in
-                switch item {
-                case .buyed(let product):
-                    self?.viewModel.steps.accept(ProfileStep.productDetailIsRequired(product: product))
+            .modelSelected(SettingData.self)
+            .subscribe(onNext: { [weak self] data in
+                switch data.type {
+                case .syncSocial(type: let type): // 소셜 연동하기
+                    self?.viewModel.input.actionSocialSync.accept(type)
                     
-                case .selled(let product):
-                    self?.viewModel.steps.accept(ProfileStep.productDetailIsRequired(product: product))
+                case .userLogOut: // 유저 로그아웃
+                    self?.viewModel.input.actionUserLogout.accept(())
                     
-                case .comment(let comment):
-                    self?.viewModel.steps.accept(ProfileStep.productDetailIsRequired(product: comment.product))
+                case .deleteAccount: // 유저 계정 탈퇴
+                    let alertController = UIAlertController(
+                        title: "",
+                        message: "'Avocado'를 탈퇴하시겠습니까?",
+                        preferredStyle: .alert
+                    )
+                    
+                    alertController.addAction(
+                        UIAlertAction(
+                            title: "확인",
+                            style: .default,
+                            handler: { _ in
+                                self?.viewModel.input.actionUserDeleteAccount.accept(())
+                            }
+                        )
+                    )
+                    
+                    alertController.addAction(
+                        UIAlertAction(
+                            title: "취소",
+                            style: .cancel
+                        )
+                    )
+                    
+                    self?.present(alertController, animated: true)
+                    
                 }
             })
             .disposed(by: disposeBag)
         
-        output.successProfileEventDateSourcePublish
-            .bind(to: collectionView.rx.items(dataSource: dataSource))
+        // Output
+        output.staticSettingData
+            .bind(
+                to:
+                    collectionView.rx.items(
+                        dataSource: dataSource
+                    )
+            )
+            .disposed(by: disposeBag)
+        
+        // 소셜 연동
+        output.successSocialSyncEvent
+            .asSignal()
+            .emit(onNext: { [weak self] url in
+                guard let url = URL(string: url) else { return }
+                Logger.d(url)
+                let safariViewController = SFSafariViewController(url: url)
+                self?.present(safariViewController, animated: true)
+            })
+            .disposed(by: disposeBag)
+        
+        // 로그아웃
+        output.successLogOutEvent
+            .asSignal()
+            .emit(onNext: { [weak self] _ in
+                self?.viewModel.steps.accept(ProfileStep.profileIsComplete)
+            })
+            .disposed(by: disposeBag)
+        
+        // 계정 삭제
+        output.successDeleteAccountEvent
+            .asSignal()
+            .emit(onNext: { [weak self] _ in
+                let service = AuthService()
+                let welcomeVM = WelcomeVM(service: service)
+                let welcomeVC = WelcomeVC(viewModel: welcomeVM)
+                let baseNavigationController = welcomeVC.makeBaseNavigationController()
+                baseNavigationController.modalPresentationStyle = .fullScreen
+                self?.present(baseNavigationController, animated: true)
+            })
             .disposed(by: disposeBag)
     }
-    
 }
 
 extension ProfileVC: CollectionViewLayoutable {
-    
-    private func commentLayout() -> NSCollectionLayoutSection {
-        // 셀 사이즈 설정
-        let itemSize = NSCollectionLayoutSize(
-            widthDimension: .fractionalWidth(1.0),
-            heightDimension: .fractionalHeight(1.0)
-        )
-        
-        let item = NSCollectionLayoutItem(layoutSize: itemSize)
-        
-        // 셀간 간격 설정
-        item.contentInsets = NSDirectionalEdgeInsets(
-            top: 8,
-            leading: 10,
-            bottom: 8,
-            trailing: 10
-        )
-        
-        // 셀을 담을 gruop size 설정
-        let groupSize = NSCollectionLayoutSize(
-            widthDimension: .fractionalWidth(0.9), // 90퍼센트만 채움 (여백)
-            heightDimension: .estimated(200)
-        )
-        
-        let group = NSCollectionLayoutGroup.horizontal(
-            layoutSize: groupSize,
-            subitem: item,
-            count: 1
-        )
-        
-        let headerSize = NSCollectionLayoutSize(
-            widthDimension: .fractionalWidth(1.0),
-            heightDimension: .estimated(200)
-        )
-        
-        let header = NSCollectionLayoutBoundarySupplementaryItem(
-            layoutSize: headerSize,
-            elementKind: UICollectionView.elementKindSectionHeader,
-            alignment: .top
-        )
-        
-        let section = NSCollectionLayoutSection(group: group)
-        section.orthogonalScrollingBehavior = .groupPagingCentered
-        section.boundarySupplementaryItems = [header]
-        
-//        section.visibleItemsInvalidationHandler = { [weak self] _, contentOffset, environment in
-//            let bannerIndex = Int(max(0, round(contentOffset.x/environment.container.contentSize.width)))
-//
-//            // 가로 스크롤일 경우에만 뷰모델에 현재 페이지 정보 값 전달
-//            if (environment.container.contentSize.height == containerSize.heightDimension.dimension) {
-//                self?.viewModel.input.currentPageBehavior.accept(bannerIndex)
-//            }
-//        }
-//
-        return section
-    }
-    
-    private func productLayout() -> NSCollectionLayoutSection {
-        // 셀 사이즈 설정
-        let itemSize = NSCollectionLayoutSize(
-            widthDimension: .fractionalWidth(1.0),
-            heightDimension: .fractionalHeight(1.0)
-        )
-        
-        let item = NSCollectionLayoutItem(layoutSize: itemSize)
-        
-        // 셀간 간격 설정
-        item.contentInsets = NSDirectionalEdgeInsets(
-            top: 0,
-            leading: 10,
-            bottom: 0,
-            trailing: 0
-        )
-        
-        // 셀을 담을 gruop size 설정
-        let groupSize = NSCollectionLayoutSize(
-            widthDimension: .fractionalWidth(1.0),
-            heightDimension: .estimated(220)
-        )
-        
-        let firstGroup = NSCollectionLayoutGroup.horizontal(
-            layoutSize: groupSize,
-            subitem: item,
-            count: 3
-        )
-        
-        let secondGroup = NSCollectionLayoutGroup.horizontal(
-            layoutSize: groupSize,
-            subitem: item,
-            count: 3
-        )
-        
-        let headerSize = NSCollectionLayoutSize(
-            widthDimension: .fractionalWidth(1.0),
-            heightDimension: .estimated(190)
-        )
-        
-        let header = NSCollectionLayoutBoundarySupplementaryItem(
-            layoutSize: headerSize,
-            elementKind: UICollectionView.elementKindSectionHeader,
-            alignment: .top
-        )
-        
-        let footerSize = NSCollectionLayoutSize(
-            widthDimension: .fractionalWidth(1.0),
-            heightDimension: .absolute(30)
-        )
-        
-        let footer = NSCollectionLayoutBoundarySupplementaryItem(
-            layoutSize: footerSize,
-            elementKind: UICollectionView.elementKindSectionFooter,
-            alignment: .bottom
-        )
-        
-        let containerSize =  NSCollectionLayoutSize(
-            widthDimension: .fractionalWidth(1.0),
-            heightDimension: .estimated(440)
-        )
-        
-        let containerGroup = NSCollectionLayoutGroup.vertical(
-            layoutSize:containerSize,
-            subitems: [firstGroup, secondGroup]
-        )
-        
-        let section = NSCollectionLayoutSection(group: containerGroup)
-        section.orthogonalScrollingBehavior = .groupPagingCentered
-        section.boundarySupplementaryItems = [header, footer]
-        section.contentInsets = NSDirectionalEdgeInsets(
-            top: 0,
-            leading: 0,
-            bottom: 0,
-            trailing: 10
-        )
-        
-        section.visibleItemsInvalidationHandler = { [weak self] _, contentOffset, environment in
-            let bannerIndex = Int(max(0, round(contentOffset.x/environment.container.contentSize.width)))
-            
-            // 가로 스크롤일 경우에만 뷰모델에 현재 페이지 정보 값 전달
-            if (environment.container.contentSize.height == containerSize.heightDimension.dimension) {
-                self?.viewModel.input.currentPageBehavior.accept(bannerIndex)
-            }
-        }
-        
-        return section
-    }
-    
     func getCompositionalLayout() -> UICollectionViewCompositionalLayout {
-        return UICollectionViewCompositionalLayout { [weak self] section, env in
-            switch section {
-            case 0: return self?.commentLayout()
-            default: return self?.productLayout()
-            }
+        return UICollectionViewCompositionalLayout { section, env in
+            
+            let itemSize = NSCollectionLayoutSize(
+                widthDimension: .fractionalWidth(1.0),
+                heightDimension: .absolute(60)
+            )
+            
+            let item = NSCollectionLayoutItem(layoutSize: itemSize)
+            
+            let groupSize = NSCollectionLayoutSize(
+                widthDimension: .fractionalWidth(1.0),
+                heightDimension: .fractionalHeight(1.0)
+            )
+            
+            let group = NSCollectionLayoutGroup.vertical(
+                layoutSize: groupSize,
+                subitems: [item]
+            )
+            
+            group.contentInsets = NSDirectionalEdgeInsets(
+                top: 0,
+                leading: 0,
+                bottom: 0,
+                trailing: 10
+            )
+            
+            let headerSize = NSCollectionLayoutSize(
+                widthDimension: .fractionalWidth(1.0),
+                heightDimension: .estimated(200)
+            )
+            
+            let header = NSCollectionLayoutBoundarySupplementaryItem(
+                layoutSize: headerSize,
+                elementKind: UICollectionView.elementKindSectionHeader,
+                alignment: .top
+            )
+
+            let section = NSCollectionLayoutSection(group: group)
+            section.boundarySupplementaryItems = [header]
+            
+            return section
         }
     }
 }
@@ -340,12 +227,13 @@ extension ProfileVC: CollectionViewLayoutable {
 #if DEBUG && canImport(SwiftUI)
 import SwiftUI
 import RxSwift
+import SafariServices
 struct ProfileVCPreview: PreviewProvider {
     static var previews: some View {
         return UINavigationController(
             rootViewController: ProfileVC(
                 viewModel: ProfileVM(
-                    service: ProfileService()
+                    service: AuthService()
                 )
             )
         ).toPreview()

@@ -64,21 +64,18 @@ final class TabFlow: Flow {
         let searchFlow = SearchFlow()
         let uploadFlow = UploadFlow(root: BaseNavigationVC())
         let profileFlow = ProfileFlow()
-        let settingFlow = SettingFlow(root: BaseNavigationVC())
 
         Flows.use(
             mainFlow,
             searchFlow,
             uploadFlow,
             profileFlow,
-            settingFlow,
             when: .created)
         { [unowned self] (
             home: UINavigationController,
             search: UINavigationController,
             upload: UINavigationController,
-            myPage: UINavigationController,
-            setting: UINavigationController
+            myPage: UINavigationController
         )  in
             
             home.tabBarItem = TabType.home.tabBarItem
@@ -93,10 +90,7 @@ final class TabFlow: Flow {
             myPage.tabBarItem = TabType.myPage.tabBarItem
             myPage.title = TabType.myPage.title
             
-            setting.tabBarItem = TabType.setting.tabBarItem
-            setting.title = TabType.setting.title
-            
-            self.rootViewController.setViewControllers([home, search, upload, myPage, setting], animated: false)
+            self.rootViewController.setViewControllers([home, search, upload, myPage], animated: false)
             self.rootViewController.selectedIndex = focusedTab.rawValue
             
         }
@@ -106,7 +100,6 @@ final class TabFlow: Flow {
             .contribute(withNextPresentable: searchFlow, withNextStepper: OneStepper(withSingleStep: SearchStep.searchIsRequired)),
             .contribute(withNextPresentable: uploadFlow, withNextStepper: OneStepper(withSingleStep: UploadStep.uploadIsRequired)),
             .contribute(withNextPresentable: profileFlow, withNextStepper: OneStepper(withSingleStep: ProfileStep.profileIsRequired)),
-            .contribute(withNextPresentable: settingFlow, withNextStepper: OneStepper(withSingleStep: SettingStep.settingIsRequired))
         ])
     }
     

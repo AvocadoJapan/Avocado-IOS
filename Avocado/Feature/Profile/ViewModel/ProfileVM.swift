@@ -2,73 +2,124 @@
 //  ProfileVM.swift
 //  Avocado
 //
-//  Created by NUNU:D on 2023/08/29.
+//  Created by NUNU:D on 2023/10/09.
 //
 
 import Foundation
 import RxSwift
-import RxCocoa
+import RxRelay
 import RxFlow
 
 final class ProfileVM: ViewModelType {
-    let service: ProfileService
+    let service: AuthService
     var disposeBag = DisposeBag()
-    var steps = PublishRelay<Step>()
+    let steps = PublishRelay<Step>()
     private(set) var input: Input
     
     struct Input {
         let actionViewDidLoad = PublishRelay<Void>()
-        let currentPageBehavior = BehaviorRelay<Int>(value: 0)
+        let actionSocialSync = PublishRelay<SocialType>()
+        let actionUserLogout = PublishRelay<Void>()
+        let actionUserDeleteAccount = PublishRelay<Void>()
     }
     
     struct Output {
-        let successProfileEventDateSourcePublish = PublishRelay<[UserProfileDataSection]>()
+        let successDeleteAccountEvent = PublishRelay<Void>()
+        let successSocialSyncEvent = PublishRelay<String>()
+        let successLogOutEvent = PublishRelay<Void>()
+        
+        let staticSettingData = BehaviorRelay<[SettingDataSection]>(value: [
+            SettingDataSection(title: "사용자 지원", items: [
+                SettingData(
+                    title: "구글 연동하기",
+                    imageName: "btn_google",
+                    type: .syncSocial(type: .google)
+                ),
+                SettingData(
+                    title: "Apple 연동하기",
+                    imageName: "btn_apple",
+                    type: .syncSocial(type: .apple)
+                ),
+                SettingData(
+                    title: "사용자 로그아웃",
+                    type: .userLogOut
+                ),
+                SettingData(
+                    title: "계정 탈퇴",
+                    type: .deleteAccount
+                ),
+            ])
+        ])
+        
         let errorEventPublish = PublishRelay<AvocadoError>()
+        
     }
     
-    init(service: ProfileService) {
-//        self.service = service
-        self.service = ProfileService(isStub: true, sampleStatusCode: 200) // Mocking Code
+    init(service: AuthService) {
+        self.service = service
         input = Input()
     }
     
     func transform(input: Input) -> Output {
         let output = Output()
         
-        input.actionViewDidLoad
-            .flatMap { [weak self] _ in
-                return self?.service.getProfilePage()
-                    .catch { error in
-                        if let error = error as? AvocadoError { output.errorEventPublish.accept(error) }
+        // 소셜 연동
+        input.actionSocialSync
+            .flatMap { [weak self] type in
+                return self?.service.socialSync(
+                    provider: type,
+                    callBack: "avocado://socialSync"
+                )
+                .catch {
+                    guard let avocadoError = $0 as? AvocadoError else {
+                        return .empty()
+                    }
+                    
+                    output.errorEventPublish.accept(avocadoError)
+                    return .empty()
+                } ?? .empty()
+            }
+            .subscribe(onNext: { response in
+                output.successSocialSyncEvent.accept(response.url)
+            })
+            .disposed(by: disposeBag)
+        
+        // 계정 삭제
+        input.actionUserDeleteAccount
+            .flatMap { [weak self] in
+                return self?.service.deleteAccount()
+                    .catch {
+                        guard let avocadoError = $0 as? AvocadoError else {
+                            return .empty()
+                        }
+                        
+                        output.errorEventPublish.accept(avocadoError)
+                        return .empty()
+                    } ?? .empty()
+            }
+            .subscribe(onNext: { _ in
+                output.successDeleteAccountEvent.accept(())
+            })
+            .disposed(by: disposeBag)
+        
+        // 사용자 로그아웃
+        input.actionUserLogout
+            .flatMap { [weak self] in
+                return self?.service.logout()
+                    .catch {
+                        guard let avocadoError = $0 as? AvocadoError else {
+                            return .empty()
+                        }
+                        
+                        output.errorEventPublish.accept(avocadoError)
                         return .empty()
                     } ?? .empty()
             }
             .subscribe(onNext: {
-                Logger.d($0)
-                let buyProduct = $0.buyProduct.map { UserProfileDataSection.ProductSectionItem.buyed(data: $0) }
-                let sellProduct = $0.sellProduct.map { UserProfileDataSection.ProductSectionItem.selled(data: $0) }
-                let comment = $0.comments.map { UserProfileDataSection.ProductSectionItem.comment(data: $0) }
-                
-                output.successProfileEventDateSourcePublish.accept([
-                    UserProfileDataSection(
-                        userName: $0.name,
-                        creationDate: $0.creationDate,
-                        header: "\($0.name)와 거래 후기",
-                        items: comment
-                    ),
-                    
-                    UserProfileDataSection(
-                        header: "현재 판매중인 상품",
-                        items: sellProduct
-                    ),
-                    
-                    UserProfileDataSection(
-                        header: "현재 판매완료 된 상품",
-                        items: buyProduct
-                    )
-                ])
+                output.successLogOutEvent.accept(())
             })
             .disposed(by: disposeBag)
+        
         
         return output
     }

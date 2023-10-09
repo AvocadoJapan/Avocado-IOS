@@ -31,7 +31,8 @@ final class ProfileFlow: Flow {
         
         switch step {
         case .profileIsRequired: return navigateProfile()
-        case .profileIsComplete: return .none
+        case .profileIsComplete: return .end(forwardToParentFlowWithStep: AppStep.authIsRequired)
+        case .profileDetailIsRequired: return navigateProfileDetail()
         case .productDetailIsRequired(let product): return navigateProductDetail(product: product)
         case .commentListIsRequired: return navigateCommentList()
         }
@@ -61,9 +62,26 @@ final class ProfileFlow: Flow {
     }
     
     private func navigateProfile() -> FlowContributors {
-        let service = ProfileService()
+        let service = AuthService()
         let viewModel = ProfileVM(service: service)
         let viewController = ProfileVC(viewModel: viewModel)
+        
+        // 스무스 애니메이션 적용
+        rootViewController.view.fadeOut()
+        rootViewController.setViewControllers([viewController], animated: false)
+        
+        return .one(
+            flowContributor: .contribute(
+                withNextPresentable: viewController,
+                withNextStepper: viewModel
+            )
+        )
+    }
+    
+    private func navigateProfileDetail() -> FlowContributors {
+        let service = ProfileService(isStub: true, sampleStatusCode: 200)
+        let viewModel = ProfileDetailVM(service: service)
+        let viewController = ProfileDetailVC(viewModel: viewModel)
         
         // 스무스 애니메이션 적용
         rootViewController.view.fadeOut()

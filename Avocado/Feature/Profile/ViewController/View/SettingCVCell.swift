@@ -1,5 +1,5 @@
 //
-//  SettingTC.swift
+//  SettingCVCell.swift
 //  Avocado
 //
 //  Created by NUNU:D on 2023/07/08.
@@ -8,7 +8,7 @@
 import UIKit
 import Foundation
 
-final class SettingTVCell: UITableViewCell {
+final class SettingCVCell: UICollectionViewCell {
     static let identifier = "SettingTC"
     
     private lazy var titleLabel = UILabel().then { label in
@@ -26,46 +26,53 @@ final class SettingTVCell: UITableViewCell {
         imageView.tintColor = .black
     }
     
-    override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
-        super.init(style: style, reuseIdentifier: reuseIdentifier)
+    private lazy var underLineView = ContourView()
+
+    override init(frame: CGRect) {
+        super.init(frame: frame)
         setUpUI()
     }
-
+    
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
     
-    func setUpUI() {
-        setProperty()
+    private func setUpUI() {
         setLayout()
         setConstraint()
     }
     
-    func setProperty() {
-        selectionStyle = .none
-    }
-    
-    func setLayout() {
-        [titleLabel, settingImageView, arrowImageView].forEach {
+    private func setLayout() {
+        [titleLabel,
+         settingImageView,
+         arrowImageView,
+         underLineView
+        ].forEach {
             addSubview($0)
         }
     }
     
-    func setConstraint() {
-        settingImageView.snp.makeConstraints { make in
-            make.top.left.bottom.equalToSuperview().inset(20)
-            make.width.equalTo(20)
+    private func setConstraint() {
+        settingImageView.snp.makeConstraints {
+            $0.left.equalToSuperview().inset(20)
+            $0.verticalEdges.equalToSuperview()
+            $0.width.equalTo(20)
         }
         
-        titleLabel.snp.makeConstraints { make in
-            make.top.bottom.equalToSuperview()
-            make.left.equalTo(settingImageView.snp.right).offset(10)
-            make.right.equalTo(arrowImageView.snp.left)
+        titleLabel.snp.makeConstraints {
+            $0.verticalEdges.equalTo(settingImageView)
+            $0.left.equalTo(settingImageView.snp.right).offset(10)
+            $0.right.equalTo(arrowImageView.snp.left)
         }
         
-        arrowImageView.snp.makeConstraints { make in
-            make.top.bottom.equalToSuperview().inset(20)
-            make.right.equalToSuperview().inset(10)
+        arrowImageView.snp.makeConstraints {
+            $0.top.bottom.equalToSuperview().inset(20)
+            $0.right.equalToSuperview().inset(10)
+        }
+        
+        underLineView.snp.makeConstraints {
+            $0.top.equalTo(titleLabel.snp.bottom)
+            $0.left.right.equalToSuperview().inset(20)
         }
     }
     
@@ -75,7 +82,7 @@ final class SettingTVCell: UITableViewCell {
         }
     }
     
-    func configureCell(data: SettingData) {
+    func configureCell(data: SettingData, type: SettingType) {
         setImageVisible(visible: !data.imageName.isEmpty)
         
         titleLabel.text = data.title
@@ -85,6 +92,13 @@ final class SettingTVCell: UITableViewCell {
             settingImageView.image = UIImage(named: data.imageName)
         }
         
+        switch type {
+        case .userLogOut, .deleteAccount:
+            titleLabel.textColor = .red
+        default:
+            titleLabel.textColor = .black
+        }
+        
     }
 }
 
@@ -92,7 +106,14 @@ final class SettingTVCell: UITableViewCell {
 import SwiftUI
 struct SettingTCPreview:PreviewProvider {
     static var previews: some View {
-        return SettingTVCell().toPreview().previewLayout(.fixed(width: 414, height: 60))
+        return SettingCVCell()
+            .toPreview()
+            .previewLayout(
+                .fixed(
+                    width: 414,
+                    height: 60
+                )
+            )
     }
 }
 #endif

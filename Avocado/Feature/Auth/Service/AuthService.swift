@@ -161,51 +161,66 @@ final class AuthService: BaseAPIService<AuthAPI> {
      * - Description 사용자 로그아웃 함수
      * - Returns 로그아웃 성공여부
      */
-    @discardableResult
-    private func logout() async throws -> Bool {
-        let result = await Amplify.Auth.signOut()
-        guard let signOutResult = result as? AWSCognitoSignOutResult else {
-            Logger.e("SignOut Faild")
-            throw UserAuthError.userLogoutFailed
-        }
-        
-        switch signOutResult {
-        case .complete:
-            Logger.d("signOut Success")
-            // accessToken, refreshToken delete
-            let isDeleted = KeychainUtil.loginTokenDelete()
-            if !isDeleted {
-                throw UserAuthError.deleteTokenFailed
-            }
-            else {
-                return true
+    func logout() -> Observable<Void> {
+        return Observable.create { [weak self] observer in
+            guard let self = self else {
+                return Disposables.create()
             }
             
-        case let .partial(revokeTokenError, globalSignOutError, _):
-            // accessToken, refreshToken delete
-            KeychainUtil.loginTokenDelete()
-            
-            // 각종 에러 처리
-            if let revokeTokenError = revokeTokenError {
-                Logger.e("revokeToken Error \(revokeTokenError)")
-                let convertError = self.cognitoAuthErrorHandling(error: revokeTokenError.error)
-                throw convertError
+            let task = Task {
+                let result = await Amplify.Auth.signOut()
+                guard let signOutResult = result as? AWSCognitoSignOutResult else {
+                    Logger.e("SignOut Faild")
+                    observer.onError(UserAuthError.userLogoutFailed)
+                    return
+                }
+                
+                switch signOutResult {
+                case .complete:
+                    Logger.d("signOut Success")
+                    // accessToken, refreshToken delete
+                    let isDeleted = KeychainUtil.loginTokenDelete()
+                    if !isDeleted {
+                        observer.onError(UserAuthError.deleteTokenFailed)
+                    }
+                    else {
+                        observer.onNext(())
+                        observer.onCompleted()
+                    }
+                    
+                case let .partial(revokeTokenError, globalSignOutError, _):
+                    // accessToken, refreshToken delete
+                    KeychainUtil.loginTokenDelete()
+                    
+                    // 각종 에러 처리
+                    if let revokeTokenError = revokeTokenError {
+                        Logger.e("revokeToken Error \(revokeTokenError)")
+                        let convertError = self.cognitoAuthErrorHandling(error: revokeTokenError.error)
+                        observer.onError(convertError)
+                    }
+                    
+                    if let globalSignOutError = globalSignOutError {
+                        Logger.e("globalSignOut Error \(globalSignOutError)")
+                        let convertError = self.cognitoAuthErrorHandling(error: globalSignOutError.error)
+                        observer.onError(convertError)
+                    }
+                    
+                    //에러가 없을 경우
+                    Logger.d("signOut Success")
+                    observer.onNext(())
+                    observer.onCompleted()
+                    
+                case let .failed(error):
+                    Logger.e("Sign Out failed with \(error)")
+                    let convertError = self.cognitoAuthErrorHandling(error: error)
+                    observer.onError(convertError)
+                }
             }
             
-            if let globalSignOutError = globalSignOutError {
-                Logger.e("globalSignOut Error \(globalSignOutError)")
-                let convertError = self.cognitoAuthErrorHandling(error: globalSignOutError.error)
-                throw convertError
+            return Disposables.create {
+                task.cancel()
             }
             
-            //에러가 없을 경우
-            Logger.d("signOut Success")
-            return true
-            
-        case let .failed(error):
-            Logger.e("Sign Out failed with \(error)")
-            let convertError = self.cognitoAuthErrorHandling(error: error)
-            throw convertError
         }
     }
     
@@ -433,14 +448,17 @@ final class AuthService: BaseAPIService<AuthAPI> {
                                 Logger.e("token retry failed with error \(error.errorDescription)")
                                 
                                 // 로그아웃 후 에러 리턴
-                                do {
-                                    try await self.logout()
+                                self.logout().subscribe {
                                     let convertError = self.cognitoAuthErrorHandling(error: error)
                                     observer.onError(convertError) //로그아웃 성공 후 이전 에러를 그대로 리턴
+                                } onError: {
+                                    let networkError = $0 as! NetworkError
+                                    observer.onError(networkError)
+                                } onDisposed: {
+                                    Logger.i("dispose in checkLoginSession")
                                 }
-                                catch let networkerror as NetworkError {
-                                    observer.onError(networkerror) // 로그아웃에 실패한 경우 에러 리턴
-                                }
+                                .disposed(by: self.disposeBag)
+
                             }
                         }
                     }
@@ -532,15 +550,12 @@ final class AuthService: BaseAPIService<AuthAPI> {
                         .catch { [unowned self] error in
                             let networkError = error as! NetworkError
                             if case .pageNotFound = networkError {
-                                Task {
-                                    do {
-                                        try await self.logout()
-                                        observable.onError(networkError)
-                                    }
-                                    catch {
-                                        observable.onError(networkError)
-                                    }
+                                self.logout().subscribe {
+                                    observable.onError(networkError)
+                                } onError: { _ in
+                                    observable.onError(networkError)
                                 }
+                                .disposed(by: disposeBag)
                             }
                             
                             return .empty()
@@ -751,6 +766,10 @@ final class AuthService: BaseAPIService<AuthAPI> {
             }
             
         }
+    }
+    
+    func socialSync(provider: SocialType, callBack:String) -> Observable<Common.SingleURL> {
+        return singleRequest(.socialSync(provider: provider, callback: callBack)).asObservable()
     }
     
     /**

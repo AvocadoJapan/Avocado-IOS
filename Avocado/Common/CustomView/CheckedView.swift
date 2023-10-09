@@ -17,7 +17,7 @@ final class CheckedView: UIView {
     }
     lazy var verifiedTitleLabel = UILabel().then {
         $0.text = "이메일 주소"
-        $0.font = UIFont.boldSystemFont(ofSize: 16)
+        $0.font = UIFont.boldSystemFont(ofSize: 14)
     }
     
     override init(frame: CGRect) {
@@ -47,12 +47,12 @@ final class CheckedView: UIView {
         checkImageView.snp.makeConstraints {
             $0.left.equalToSuperview().offset(0)
             $0.centerY.equalToSuperview()
-            $0.size.equalTo(30)
+            $0.size.equalTo(20)
         }
         
         verifiedTitleLabel.snp.makeConstraints {
             $0.right.top.bottom.equalToSuperview()
-            $0.left.equalTo(checkImageView.snp.right).offset(20)
+            $0.left.equalTo(checkImageView.snp.right).offset(10)
         }
     }
     
@@ -63,7 +63,7 @@ import SwiftUI
 import RxSwift
 struct CheckedViewPreview: PreviewProvider {
     static var previews: some View {
-        return CheckedView().toPreview().previewLayout(.fixed(width: 414, height: 100))
+        return CheckedView().toPreview().previewLayout(.fixed(width: 414, height: 30))
     }
 }
 #endif

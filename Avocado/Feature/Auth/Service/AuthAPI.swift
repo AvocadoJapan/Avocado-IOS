@@ -14,6 +14,7 @@ enum AuthAPI {
     case changeAvatar(imageId: String)
     case region(searchkeyword: String, depth: Int)
     case uploadAvatar(type: String, size: Int64)
+    case socialSync(provider: SocialType, callback: String)
 }
 
 extension AuthAPI: BaseTarget {
@@ -33,6 +34,9 @@ extension AuthAPI: BaseTarget {
             
         case .uploadAvatar:
             return "/v1/images"
+            
+        case .socialSync:
+            return "/v1/auth"
         }
     }
     
@@ -41,7 +45,7 @@ extension AuthAPI: BaseTarget {
         case .profile, .region:
             return .get
             
-        case .uploadAvatar, .signUp:
+        case .uploadAvatar, .signUp, .socialSync:
             return .post
             
         case .changeAvatar:
@@ -76,6 +80,12 @@ extension AuthAPI: BaseTarget {
                 "type": type,
                 "size": "\(size)"
             ])
+            
+        case .socialSync(let provider, let callback):
+            return .requestParameters(parameters: [
+                "provider": provider.name,
+                "redirectUri": callback
+            ], encoding: JSONEncoding())
         }
     }
 }

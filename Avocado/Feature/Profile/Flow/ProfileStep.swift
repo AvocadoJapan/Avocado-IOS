@@ -12,6 +12,7 @@ import RxFlow
     
     case profileIsRequired
     case profileIsComplete
+    case profileDetailIsRequired
     case productDetailIsRequired(product: Product)
     case commentListIsRequired
 }
