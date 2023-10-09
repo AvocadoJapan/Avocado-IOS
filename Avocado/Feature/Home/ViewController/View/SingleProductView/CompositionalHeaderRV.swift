@@ -42,7 +42,7 @@ final class CompositionalHeaderRV: UICollectionReusableView {
     
     private func setConstraint() {
         titleLabel.snp.makeConstraints {
-            $0.horizontalEdges.equalToSuperview().inset(20)
+            $0.horizontalEdges.equalToSuperview()
             $0.centerY.equalToSuperview()
         }
     }

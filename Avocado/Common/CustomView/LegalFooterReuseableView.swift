@@ -3,7 +3,7 @@
 //  Avocado
 //
 //  Created by Jayden Jang on 2023/09/21.
-//
+//  Modified by Jayden Jang on 2023/10/09.
 
 import Foundation
 import UIKit
@@ -22,7 +22,7 @@ final class LegalFooterReuseableView: UICollectionReusableView {
         $0.text = LegalType.title
         $0.numberOfLines = 1
         $0.textAlignment = .left
-        $0.font = UIFont.systemFont(ofSize: 11, weight: .semibold)
+        $0.font = UIFont.systemFont(ofSize: 11, weight: .medium)
         $0.textColor = .darkGray
     }
     
@@ -30,7 +30,7 @@ final class LegalFooterReuseableView: UICollectionReusableView {
         $0.text = LegalType.discription
         $0.numberOfLines = 0
         $0.textAlignment = .left
-        $0.font = UIFont.systemFont(ofSize: 10, weight: .medium)
+        $0.font = UIFont.systemFont(ofSize: 10, weight: .regular)
         $0.textColor = .systemGray
     }
     
@@ -38,38 +38,51 @@ final class LegalFooterReuseableView: UICollectionReusableView {
         $0.text = LegalType.copyright
         $0.numberOfLines = 0
         $0.textAlignment = .left
-        $0.font = UIFont.systemFont(ofSize: 10, weight: .medium)
+        $0.font = UIFont.systemFont(ofSize: 10, weight: .regular)
         $0.textColor = .systemGray
     }
     
     override init(frame: CGRect) {
+        
         super.init(frame: .zero)
         
-        setProperty()
-        setLayout()
-        setConstraint()
+        self.backgroundColor = .systemGray6
+        
+        //MARK: - UI 설정
+        let stackView = buildStackView()
+        self.addSubview(stackView)
+        
+        stackView.snp.makeConstraints { make in
+            make.top.equalToSuperview().inset(20)
+            make.horizontalEdges.equalToSuperview().inset(20)
+        }
+        
+        self.snp.makeConstraints {
+            $0.height.equalTo(250)
+        }
     }
-    
     required init?(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
+        super.init(coder: coder)
     }
     
-    private func setProperty() {
-        backgroundColor = .systemGray6
-    }
-    
-    private func setLayout() {
+    private func buildStackView() -> UIStackView {
         
-    }
-    
-    private func setConstraint() {
+        let wapperView = UIStackView().then {
+            $0.axis = .vertical
+            $0.alignment = .leading
+            $0.distribution = .fill
+            $0.spacing = 10
+            $0.addArrangedSubview(titleLabel)
+            $0.addArrangedSubview(discriptionLabel)
+            $0.addArrangedSubview(copyrightLabel)
+        }
         
+        return wapperView
     }
-    
-//    override func prepareForReuse() {
-//        super.prepareForReuse()
-//    }
 }
+
+
+
 
 // MARK: - Preview 관련
 #if DEBUG && canImport(SwiftUI)

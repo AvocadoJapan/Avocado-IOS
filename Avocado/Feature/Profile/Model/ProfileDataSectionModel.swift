@@ -9,7 +9,7 @@ import Foundation
 import Differentiator
 
 /**
- * - description 프로필 패이지 collectionview에 보여줄 정보
+ * - description 프로필 페이지 collectionview에 보여줄 정보
  */
 struct UserProfileDataSection {
     var userName: String?

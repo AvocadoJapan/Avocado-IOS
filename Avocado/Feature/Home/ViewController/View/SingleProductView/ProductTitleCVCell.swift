@@ -27,10 +27,10 @@ final class ProductTitleCVCell: UICollectionViewCell {
         $0.axis = .vertical
         $0.distribution = .fill
         $0.spacing = 10
-        $0.layoutMargins = UIEdgeInsets(top: 0,
-                                        left: 20,
-                                        bottom: 0,
-                                        right: 20)
+//        $0.layoutMargins = UIEdgeInsets(top: 0,
+//                                        left: 20,
+//                                        bottom: 0,
+//                                        right: 20)
         $0.isLayoutMarginsRelativeArrangement = true
     }
     
@@ -96,6 +96,10 @@ final class ProductTitleCVCell: UICollectionViewCell {
         titleStackView.snp.makeConstraints {
             $0.edges.equalToSuperview()
         }
+        
+        self.snp.makeConstraints {
+            $0.height.equalTo(80)
+        }
     }
     
     override func prepareForReuse() {
@@ -113,4 +117,3 @@ struct ProductTitleCVCellPreview: PreviewProvider {
     }
 }
 #endif
-

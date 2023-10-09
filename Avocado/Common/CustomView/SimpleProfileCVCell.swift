@@ -84,7 +84,8 @@ final class SimpleProfileCVCell: UICollectionViewCell {
         profileImageView.snp.makeConstraints {
             $0.centerY.equalToSuperview()
             $0.size.equalTo(45)
-            $0.left.equalToSuperview().offset(20)
+            $0.left.equalToSuperview()
+//                .offset(20)
         }
         
         nameContainerStackView.snp.makeConstraints {
@@ -93,7 +94,8 @@ final class SimpleProfileCVCell: UICollectionViewCell {
         }
         
         arrowButton.snp.makeConstraints {
-            $0.right.equalToSuperview().inset(20)
+            $0.right.equalToSuperview()
+//                .inset(20)
             $0.size.equalTo(20)
             $0.centerY.equalToSuperview()
         }

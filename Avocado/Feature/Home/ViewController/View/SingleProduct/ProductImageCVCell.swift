@@ -8,7 +8,7 @@
 import UIKit
 import RxSwift
 /**
- *## 화면명: 단일 상품, 상품 이미지 셀ㅇ
+ *## 화면명: 단일 상품, 상품 이미지 셀
  */
 final class ProductImageCVCell: UICollectionViewCell, CollectionCellIdentifierable {
     typealias T = UIImage
