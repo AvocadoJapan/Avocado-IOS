@@ -31,7 +31,7 @@ final class ProductTitleCVCell: UICollectionViewCell {
 //                                        left: 20,
 //                                        bottom: 0,
 //                                        right: 20)
-        $0.isLayoutMarginsRelativeArrangement = true
+//        $0.isLayoutMarginsRelativeArrangement = true
     }
     
     private lazy var titleLabel = UILabel(labelAprearance: .header).then {
