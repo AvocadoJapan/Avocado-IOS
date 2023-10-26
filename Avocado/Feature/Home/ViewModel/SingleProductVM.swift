@@ -106,6 +106,16 @@ final class SingleProductVM: ViewModelType, Stepper {
                                                  .recomendation(data: demoProduct),
                                                  .recomendation(data: demoProduct),
                                                  .recomendation(data: demoProduct),
+                                                 .recomendation(data: demoProduct),.recomendation(data: demoProduct),
+                                                 .recomendation(data: demoProduct),
+                                                 .recomendation(data: demoProduct),
+                                                 .recomendation(data: demoProduct),
+                                                 .recomendation(data: demoProduct),
+                                                 .recomendation(data: demoProduct),.recomendation(data: demoProduct),
+                                                 .recomendation(data: demoProduct),
+                                                 .recomendation(data: demoProduct),
+                                                 .recomendation(data: demoProduct),
+                                                 .recomendation(data: demoProduct),
                                                  .recomendation(data: demoProduct)])
             ])
             

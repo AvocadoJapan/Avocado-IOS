@@ -27,11 +27,6 @@ final class ProductTitleCVCell: UICollectionViewCell {
         $0.axis = .vertical
         $0.distribution = .fill
         $0.spacing = 10
-//        $0.layoutMargins = UIEdgeInsets(top: 20,
-//                                        left: 20,
-//                                        bottom: 20,
-//                                        right: 20)
-//        $0.isLayoutMarginsRelativeArrangement = false
     }
     
     private lazy var titleLabel = UILabel(labelAprearance: .header).then {
@@ -65,6 +60,11 @@ final class ProductTitleCVCell: UICollectionViewCell {
         $0.numberOfLines = 1
     }
     
+    private lazy var contourView = ContourView(inset: UIEdgeInsets(top: 0,
+                                                                   left: 20,
+                                                                   bottom: 0,
+                                                                   right: 20))
+    
     override init(frame: CGRect) {
         super.init(frame: frame)
         
@@ -78,6 +78,7 @@ final class ProductTitleCVCell: UICollectionViewCell {
     
     private func setLayout() {
         addSubview(titleStackView)
+        addSubview(contourView)
         
         [titleLabel, titleSubInfoStackView, priceLabel].forEach {
             titleStackView.addArrangedSubview($0)
@@ -95,6 +96,11 @@ final class ProductTitleCVCell: UICollectionViewCell {
         
         titleStackView.snp.makeConstraints {
             $0.edges.equalToSuperview().inset(20)
+        }
+        
+        contourView.snp.makeConstraints {
+            $0.bottom.equalToSuperview()
+            $0.horizontalEdges.equalToSuperview()
         }
     }
     

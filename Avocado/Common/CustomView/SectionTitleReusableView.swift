@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import SnapKit
 /**
  * - description collectionView section에 타이틀만 존재하는 UICollectionReusableView
  */
@@ -15,8 +16,7 @@ final class SectionTitleReusableView: UICollectionReusableView {
     static var identifier = "SectionTitleReusableView"
     
     private lazy var titleLabel = UILabel().then {
-        $0.text = ""
-        $0.font = UIFont.boldSystemFont(ofSize: 25)
+        $0.text = "알 수 없는 오류"
         $0.numberOfLines = 0
         $0.textColor = .black
     }
@@ -41,7 +41,7 @@ final class SectionTitleReusableView: UICollectionReusableView {
         titleLabel.snp.makeConstraints {
             $0.edges.equalToSuperview().inset(
                 UIEdgeInsets(
-                    top: 0,
+                    top: 20,
                     left: 20,
                     bottom: 0,
                     right: 20
@@ -58,7 +58,7 @@ final class SectionTitleReusableView: UICollectionReusableView {
 //                   font: UIFont = UIFont.boldSystemFont(ofSize: 25),
                    labelAprearance: AvocadoLabel = .sectionTitle,
                    padding: UIEdgeInsets = UIEdgeInsets(
-                    top: 0,
+                    top: 20,
                     left: 20,
                     bottom: 0,
                     right: 20

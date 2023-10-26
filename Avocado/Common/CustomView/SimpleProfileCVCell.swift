@@ -16,6 +16,8 @@ final class SimpleProfileCVCell: UICollectionViewCell {
     // 디스포즈백
     public var disposeBag = DisposeBag()
     
+    private lazy var profileView = UIView()
+    
     private lazy var profileImageView = UIImageView().then {
         $0.image = UIImage(named: "cat_demo")
         $0.layer.cornerRadius = 45/2
@@ -48,6 +50,11 @@ final class SimpleProfileCVCell: UICollectionViewCell {
         $0.backgroundColor = .white
     }
     
+    private lazy var contourView = ContourView(inset: UIEdgeInsets(top: 0,
+                                                                   left: 20,
+                                                                   bottom: 0,
+                                                                   right: 20))
+    
     /**
      * - description 화살표 화면을 showing 여부 함수
      * - parameters isShowArrow: 화살표 화면 showing 여부
@@ -76,31 +83,45 @@ final class SimpleProfileCVCell: UICollectionViewCell {
         }
         
         [profileImageView, nameContainerStackView, arrowButton, verifiedImageView].forEach {
-            addSubview($0)
+            profileView.addSubview($0)
         }
+        
+        addSubview(profileView)
+        addSubview(contourView)
     }
     
     private func setContraint() {
         profileImageView.snp.makeConstraints {
             $0.centerY.equalToSuperview()
             $0.size.equalTo(45)
-            $0.left.equalToSuperview().offset(20)
+            $0.left.equalToSuperview()
         }
         
         nameContainerStackView.snp.makeConstraints {
             $0.centerY.equalToSuperview()
-            $0.left.equalTo(profileImageView.snp.right).offset(20)
+            $0.left.equalTo(profileImageView.snp.right).offset(10)
         }
         
         arrowButton.snp.makeConstraints {
-            $0.right.equalToSuperview().inset(20)
+            $0.right.equalToSuperview()
             $0.size.equalTo(20)
             $0.centerY.equalToSuperview()
         }
         
         verifiedImageView.snp.makeConstraints {
-            $0.centerX.equalTo(profileImageView.snp.centerX).offset(20)
+            $0.right.equalTo(profileImageView.snp.right)
             $0.bottom.equalTo(profileImageView.snp.bottom)
+        }
+        
+        profileView.snp.makeConstraints {
+            $0.horizontalEdges.equalToSuperview().inset(20)
+            $0.top.equalToSuperview().inset(10)
+            $0.bottom.equalToSuperview().inset(20)
+        }
+        
+        contourView.snp.makeConstraints {
+            $0.bottom.equalToSuperview()
+            $0.horizontalEdges.equalToSuperview()
         }
     }
     

@@ -71,7 +71,7 @@ enum AvocadoLabel {
     case title // 뷰컨전체에서의 제목부분 (타이틀)
     case header // 그룹의 제목
     case subtitle // 그룹의 설명
-    case sectionTitle //
+    case sectionTitle // 컴포지셔널 섹션의 타이틀
     case normal // 일반 글자
     
     var color: UIColor {
@@ -88,7 +88,7 @@ enum AvocadoLabel {
         switch self {
         case .header: return .systemFont(ofSize: 20, weight: .medium)
         case .subtitle: return .systemFont(ofSize: 12, weight: .regular)
-        case .sectionTitle: return .systemFont(ofSize: 18, weight: .medium)
+        case .sectionTitle: return .systemFont(ofSize: 16, weight: .medium)
         case .normal: return .systemFont(ofSize: 14, weight: .regular)
         case .title: return .systemFont(ofSize: 14  , weight: .medium)
         }
