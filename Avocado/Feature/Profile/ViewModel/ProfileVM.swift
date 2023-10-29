@@ -29,7 +29,7 @@ final class ProfileVM: ViewModelType {
         let successLogOutEvent = PublishRelay<Void>()
         
         let staticSettingData = BehaviorRelay<[SettingDataSection]>(value: [
-            SettingDataSection(title: "사용자 지원", items: [
+            SettingDataSection(title: "소셜 연동하기", items: [
                 SettingData(
                     title: "구글 연동하기",
                     imageName: "btn_google",
@@ -39,7 +39,9 @@ final class ProfileVM: ViewModelType {
                     title: "Apple 연동하기",
                     imageName: "btn_apple",
                     type: .syncSocial(type: .apple)
-                ),
+                )
+            ]),
+            SettingDataSection(title: "사용자 지원", items: [
                 SettingData(
                     title: "사용자 로그아웃",
                     type: .userLogOut
@@ -47,7 +49,7 @@ final class ProfileVM: ViewModelType {
                 SettingData(
                     title: "계정 탈퇴",
                     type: .deleteAccount
-                ),
+                )
             ])
         ])
         

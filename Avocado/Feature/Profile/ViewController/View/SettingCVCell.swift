@@ -23,7 +23,7 @@ final class SettingCVCell: UICollectionViewCell {
     
     private lazy var arrowImageView = UIImageView().then { imageView in
         imageView.image = UIImage(systemName: "chevron.right")
-        imageView.tintColor = .black
+        imageView.tintColor = .gray
     }
     
     private lazy var underLineView = ContourView()
@@ -67,7 +67,7 @@ final class SettingCVCell: UICollectionViewCell {
         
         arrowImageView.snp.makeConstraints {
             $0.top.bottom.equalToSuperview().inset(20)
-            $0.right.equalToSuperview().inset(10)
+            $0.right.equalToSuperview().inset(20)
         }
         
         underLineView.snp.makeConstraints {

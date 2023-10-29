@@ -15,7 +15,7 @@ final class ProfileVC: BaseVC {
         collectionViewLayout: getCompositionalLayout()
     )
     .then {
-        
+        $0.bounces = false
         $0.register(
             ProfileHeaderReusableView.self,
             forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader,
@@ -39,13 +39,9 @@ final class ProfileVC: BaseVC {
         fatalError("init(coder:) has not been implemented")
     }
     
-    override func viewDidLoad() {
-        super.viewDidLoad()
-    }
-    
-    override func setProperty() {
-        title = "프로필"
-        navigationController?.navigationBar.prefersLargeTitles = true
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        navigationController?.setNavigationColor(color: .black)
     }
     
     override func setLayout() {
@@ -76,18 +72,30 @@ final class ProfileVC: BaseVC {
             
             return cell
             
-        } configureSupplementaryView: { dataSource, collectionView, kind, indexPath in
+        } configureSupplementaryView: { [weak self] dataSource, collectionView, kind, indexPath in
             let headerView = collectionView.dequeueReusableSupplementaryView(
                 ofKind: kind, withReuseIdentifier: ProfileHeaderReusableView.identifier,
                 for: indexPath
             ) as! ProfileHeaderReusableView
             
+            let data = dataSource[indexPath.section]
+            
+            if indexPath.section == 0 {
+                headerView.profileImageControlViewTapObservable
+                    .observe(on: MainScheduler.instance)
+                    .subscribe(onNext: {
+                        self?.viewModel.steps.accept(ProfileStep.profileDetailIsRequired)
+                    })
+                    .disposed(by: headerView.disposeBag)
+            }
+            
             headerView.configure(
-                userName: "test",
-                description: "test",
-                settingTitle: "사용자 지원",
-                verified: true
+                userName: "호두마루 님",
+                creationDate: "2022.10.10",
+                settingTitle: data.title
             )
+            
+            headerView.changeMode(isShowProfile: indexPath.section == 0)
                     
             return headerView
         }
@@ -166,12 +174,7 @@ final class ProfileVC: BaseVC {
         output.successDeleteAccountEvent
             .asSignal()
             .emit(onNext: { [weak self] _ in
-                let service = AuthService()
-                let welcomeVM = WelcomeVM(service: service)
-                let welcomeVC = WelcomeVC(viewModel: welcomeVM)
-                let baseNavigationController = welcomeVC.makeBaseNavigationController()
-                baseNavigationController.modalPresentationStyle = .fullScreen
-                self?.present(baseNavigationController, animated: true)
+                self?.viewModel.steps.accept(ProfileStep.profileIsComplete)
             })
             .disposed(by: disposeBag)
     }
@@ -190,7 +193,7 @@ extension ProfileVC: CollectionViewLayoutable {
             
             let groupSize = NSCollectionLayoutSize(
                 widthDimension: .fractionalWidth(1.0),
-                heightDimension: .fractionalHeight(1.0)
+                heightDimension: .absolute(60)
             )
             
             let group = NSCollectionLayoutGroup.vertical(
@@ -205,10 +208,17 @@ extension ProfileVC: CollectionViewLayoutable {
                 trailing: 10
             )
             
-            let headerSize = NSCollectionLayoutSize(
+            var headerSize = NSCollectionLayoutSize(
                 widthDimension: .fractionalWidth(1.0),
-                heightDimension: .estimated(200)
+                heightDimension: .estimated(160)
             )
+            
+            if section == 1 {
+                headerSize = NSCollectionLayoutSize(
+                    widthDimension: .fractionalWidth(1.0),
+                    heightDimension: .absolute(60)
+                )
+            }
             
             let header = NSCollectionLayoutBoundarySupplementaryItem(
                 layoutSize: headerSize,

@@ -63,9 +63,21 @@ extension UINavigationController {
             appearance.backgroundColor = .white
             appearance.shadowColor = .systemGray6
         } else {
-            appearance.backgroundColor = UIColor(white: 1.0, alpha: alpha)
+            appearance.backgroundColor = color.withAlphaComponent(alpha)
             appearance.shadowColor = .clear
         }
+        
+        navigationBar.standardAppearance = appearance
+        navigationBar.scrollEdgeAppearance = appearance
+    }
+    
+    // 네비게이션 색상 지정 메서드
+    func setNavigationColor(color: UIColor = .white, shadowColor: UIColor = .clear) {
+        let appearance = UINavigationBarAppearance()
+        appearance.configureWithOpaqueBackground()
+        
+        appearance.backgroundColor = color
+        appearance.shadowColor = shadowColor
         
         navigationBar.standardAppearance = appearance
         navigationBar.scrollEdgeAppearance = appearance
